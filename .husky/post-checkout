@@ -1,0 +1,2 @@
+git config pull.rebase true
+git config core.ignorecase false
