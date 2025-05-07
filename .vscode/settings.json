@@ -1,0 +1,11 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "npm.packageManager": "pnpm",
+  "editor.wordWrap": "on",
+
+  "editor.renderFinalNewline": "dimmed",
+  "[html][typescript][typescriptreact][javascript][javascriptreact][css][json]": {
+    "files.eol": "\n"
+  }
+}

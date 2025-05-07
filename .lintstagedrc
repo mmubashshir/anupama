@@ -1,0 +1,5 @@
+{
+  "src/**/*.{html,css,js,mjs,cjs,jsx,ts,tsx,json}": [
+    "prettier  --write --no-error-on-unmatched-pattern"
+  ]
+}

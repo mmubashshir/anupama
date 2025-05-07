@@ -1,0 +1,29 @@
+# Enforce LF line endings for all text files
+* text=auto eol=lf
+
+# Treat all binary files as binary and prevent line ending conversions
+
+# Images
+*.jpg  -text
+*.JPG  -text
+*.jpeg -text
+*.JPEG -text
+*.png  -text
+*.PNG  -text
+*.gif  -text
+*.GIF  -text
+*.webp -text
+*.WEBP -text
+*.ico  -text
+*.ICO  -text
+
+# Fonts
+*.ttf   -text
+*.TTF   -text
+*.woff2 -text
+*.WOFF2 -text
+
+# Documents
+*.pdf  -text
+*.PDF  -text
+
