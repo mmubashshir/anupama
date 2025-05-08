@@ -1,27 +1,34 @@
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { FlatCompat } from '@eslint/eslintrc';
+import gvseslint from '@glasshouse/style-guide/eslint';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
-import { defineConfig } from 'eslint/config';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = defineConfig([
-  ...compat.config({
-    extends: [
-      'next',
-      'eslint-config-next',
-      'next/core-web-vitals',
-      'next/typescript',
-    ],
-  }),
-
+/** @type {import('eslint').Linter.Config[]} */
+export default [
+  {
+    files: ['src/**/*.{js,mjs,cjs,ts,mts,cts}'],
+    ignores: ['eslint.config.mjs'],
+  },
+  ...gvseslint.configs.flat.browser,
+  ...gvseslint.configs.flat.react,
+  ...gvseslint.configs.flat.typescript,
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+  ...gvseslint.configs.flat.next,
   eslintConfigPrettier,
-]);
-
-export default eslintConfig;
+  {
+    rules: {
+      'react/function-component-definition': 'off',
+      'simple-import-sort/imports': 'off',
+      'react/jsx-no-useless-fragment': 'off',
+      'import/no-default-export': 'off',
+      'react/jsx-sort-props': 'off',
+      'padding-line-between-statements': 'off',
+      camelcase: 'off',
+    },
+  },
+];
