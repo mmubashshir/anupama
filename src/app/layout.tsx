@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Baloo_Tamma_2 } from 'next/font/google';
 
 import type { Metadata } from 'next';
 
@@ -6,13 +6,10 @@ import './globals.css';
 
 import { BASE_URL } from '~/constants';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
+import Header from '~/components/header';
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const balooTamma = Baloo_Tamma_2({
+  variable: '--font-baloo-tamma',
   subsets: ['latin'],
 });
 
@@ -67,7 +64,6 @@ export default function RootLayout({
           type="image/png"
         />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-
         <link href="/favicon.ico" rel="shortcut icon" />
         <link
           href="/apple-touch-icon.png"
@@ -76,9 +72,8 @@ export default function RootLayout({
         />
         <link href="/site.webmanifest" rel="manifest" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${balooTamma.variable} antialiased`}>
+        <Header />
         {children}
       </body>
     </html>
