@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 import './globals.css';
 
-import { BASE_URL } from '../constants';
+import { BASE_URL } from '~/constants';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: `${''}/tac-hero-og.jpg`,
+        url: `/tac-hero-og.jpg`,
       },
     ],
   },
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     description: `ಅನುಪಮ ಮಹಿಳಾ ಮಾಸಿಕ ಪತ್ರಿಕೆಯು, ಕರ್ನಾಟಕದ ಏಕೈಕ ಮಹಿಳಾ ಪತ್ರಿಕೆಯಾಗಿದ್ದು, ಇದು ಕೌಟುಂಬಿಕ ಮಾಸ ಪತ್ರಿಕೆ. ಮಾನವ ಸೌಹಾರ್ದ, ಸಾಮಾಜಿಕ ಶಾಂತಿ ಅನುಪಮ'ದ ಗುರಿ.`,
     images: [
       {
-        url: `${''}/tac-hero-og.jpg`,
+        url: `/tac-hero-og.jpg`,
       },
     ],
   },
@@ -61,20 +61,20 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link
-          rel="icon"
-          type="image/png"
           href="/favicon-96x96.png"
+          rel="icon"
           sizes="96x96"
+          type="image/png"
         />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 
-        <link rel="shortcut icon" href="/favicon.ico" />
+        <link href="/favicon.ico" rel="shortcut icon" />
         <link
+          href="/apple-touch-icon.png"
           rel="apple-touch-icon"
           sizes="180x180"
-          href="/apple-touch-icon.png"
         />
-        <link rel="manifest" href="/site.webmanifest" />
+        <link href="/site.webmanifest" rel="manifest" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

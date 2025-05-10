@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div>ANUPAMA</div>;
+  return <div className="text-center text-7xl text-cyan-500">ANUPAMA</div>;
 }
