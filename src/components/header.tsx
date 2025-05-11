@@ -6,8 +6,26 @@ import Link from 'next/link';
 export default function Header() {
   return (
     <header className="w-full">
-      {/* Top bar */}
-      <div className="container mx-auto flex items-center justify-between px-2 py-12">
+      {/* Mobile Top Bar */}
+      <div className="container mx-auto flex items-center justify-between border-b-2 border-gray-500 px-2 py-6 md:hidden md:px-0 md:py-0">
+        {/* Logo on left */}
+        <Image
+          className="select-none"
+          draggable="false"
+          src="/anupama-logo.png"
+          alt="Anupama Logo"
+          width={140}
+          height={40}
+        />
+
+        {/* Hamburger Menu */}
+        <button>
+          <Menu className="h-7 w-7" />
+        </button>
+      </div>
+
+      {/* Desktop Top Bar */}
+      <div className="container mx-auto hidden items-center justify-between px-2 py-12 md:flex">
         {/* Left section - Date */}
         <div className="flex items-center gap-3">
           <Calendar className="h-7 w-7" />
@@ -31,7 +49,7 @@ export default function Header() {
 
         {/* Right section - Subscribe */}
         <div className="flex items-center gap-4">
-          <Link href="/subscribe" className="hidden sm:flex">
+          <Link href="/subscribe">
             <div className="flex items-center gap-2 border-b border-current pb-0.5">
               <Mail className="h-5 w-5" />
               <span className="font-medium uppercase">Subscribe</span>
@@ -45,7 +63,7 @@ export default function Header() {
   );
 }
 
-// Dekstop Navigation
+// Desktop Navigation
 export const Navbar = () => {
   return (
     <div className="hidden border-t border-b-2 border-gray-500 border-t-gray-300 md:block">
@@ -84,9 +102,7 @@ export const Navbar = () => {
                       <li key={sublink.href}>
                         <Link
                           href={sublink.href}
-                          className={`block px-4 py-2 hover:text-red-500 ${
-                            index === 0 ? 'font-semibold' : 'text-current'
-                          }`}
+                          className={`block px-4 py-2 hover:text-red-500 ${index === 0 ? 'font-semibold' : 'text-current'}`}
                         >
                           {sublink.title}
                         </Link>

@@ -73,7 +73,7 @@ export default function RootLayout({
         <link href="/site.webmanifest" rel="manifest" />
       </head>
       <body
-        className={`${balooTamma.variable} mx-auto max-w-6xl px-10 antialiased xl:px-0`}
+        className={`${balooTamma.variable} mx-auto max-w-6xl antialiased xl:px-0`}
       >
         <Header />
         {children}
