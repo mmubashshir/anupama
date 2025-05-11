@@ -64,7 +64,7 @@ export default function Header() {
 }
 
 // Desktop Navigation
-export const Navbar = () => {
+export function Navbar() {
   return (
     <div className="hidden border-t border-b-2 border-gray-500 border-t-gray-300 md:block">
       <div className="container mx-auto">
@@ -117,4 +117,4 @@ export const Navbar = () => {
       </div>
     </div>
   );
-};
+}
