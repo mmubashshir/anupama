@@ -22,12 +22,14 @@ export default [
   eslintConfigPrettier,
   {
     rules: {
-      'react/function-component-definition': 'off',
+      'react/function-component-definition': [
+        'error',
+        { namedComponents: 'function-declaration' },
+      ],
       'simple-import-sort/imports': 'off',
       'react/jsx-no-useless-fragment': 'off',
       'import/no-default-export': 'off',
       'react/jsx-sort-props': 'off',
-      'padding-line-between-statements': 'off',
       camelcase: 'off',
     },
   },
