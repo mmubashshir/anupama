@@ -8,7 +8,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-baloo-tamma: var(--font-baloo-tamma);
+  --font-primary: var(--font-primary);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +22,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-baloo-tamma), sans-serif;
+  font-family: var(--font-primary), sans-serif;
 }

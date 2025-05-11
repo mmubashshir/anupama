@@ -9,7 +9,7 @@ import { BASE_URL } from '~/constants';
 import Header from '~/components/header';
 
 const balooTamma = Baloo_Tamma_2({
-  variable: '--font-baloo-tamma',
+  variable: '--font-primary',
   subsets: ['latin'],
 });
 
