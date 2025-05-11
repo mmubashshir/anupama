@@ -1,13 +1,21 @@
 export interface NavLink {
   title: string;
-  href: string;
-  sublinks?: NavLink[];
+  href: `/${string}`;
 }
 
-export const navLinks: NavLink[] = [
+export interface NavWithoutSubLink extends NavLink {
+  type: 'navWithoutSubLink';
+}
+
+export interface NavWithSubLink extends Omit<NavLink, 'href'> {
+  type: 'navWithSubLink';
+  sublinks: NavLink[];
+}
+
+export const navLinks: (NavWithoutSubLink | NavWithSubLink)[] = [
   {
+    type: 'navWithSubLink',
     title: 'ಸುದ್ದಿ',
-    href: '/1',
     sublinks: [
       {
         title: 'ದಿನನಿತ್ಯದ ಸುದ್ದಿ',
@@ -20,16 +28,18 @@ export const navLinks: NavLink[] = [
     ],
   },
   {
+    type: 'navWithSubLink',
     title: 'ಆರೋಗ್ಯ ಮತ್ತು ವೈದ್ಯಕೀಯ',
-    href: '/2',
+
     sublinks: [
       { title: 'ಆರೋಗ್ಯ', href: '/health' },
       { title: 'ವೈದ್ಯಕೀಯ', href: '/medical' },
     ],
   },
   {
+    type: 'navWithSubLink',
     title: 'ಜೀವನಶೈಲಿ',
-    href: '/3',
+
     sublinks: [
       { title: 'ಸಾಮಾಜಿಕ', href: '/samaajika' },
       { title: 'ಸರಣಿಗಳು', href: '/saranigalu' },
@@ -37,20 +47,26 @@ export const navLinks: NavLink[] = [
     ],
   },
   {
+    type: 'navWithSubLink',
     title: 'ಕಥೆಗಳು',
-    href: '/4',
+
     sublinks: [
       { title: 'ಕಥೆಗಳು', href: '/stories' },
-      { title: 'ಹೃದಯಸ್ಪರ್ಶಿ ಕಥೆಗಳು', href: '/heart-stories' },
+      {
+        title: 'ಹೃದಯಸ್ಪರ್ಶಿ ಕಥೆಗಳು',
+        href: '/heart-stories',
+      },
       { title: 'ಮಕ್ಕಳ ಲೋಕ', href: '/childrens-world' },
     ],
   },
   {
+    type: 'navWithoutSubLink',
     title: 'ಲೆಖನಗಳು',
     href: '/articles',
   },
   {
+    type: 'navWithoutSubLink',
     title: 'ಸಂಪರ್ಕಿಸಿ',
     href: '/contact',
   },
-];
+] as const;
