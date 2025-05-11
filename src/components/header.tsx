@@ -19,7 +19,7 @@ export default function Header() {
         />
 
         {/* Hamburger Menu */}
-        <button>
+        <button type="button">
           <Menu className="h-7 w-7" />
         </button>
       </div>
@@ -70,7 +70,7 @@ export const Navbar = () => {
       <div className="container mx-auto">
         <nav className="flex items-center gap-4 text-sm font-semibold">
           {/* Hamburger Menu */}
-          <button className="hover:cursor-pointer">
+          <button type="button" className="hover:cursor-pointer">
             <Menu className="h-5 w-5" />
           </button>
 
@@ -91,12 +91,12 @@ export const Navbar = () => {
                   className="mx-3 my-4 flex items-center transition duration-300 hover:text-red-500"
                 >
                   {link.title}
-                  {link.sublinks && (
+                  {link.sublinks ? (
                     <ChevronDown className="h-3 w-3 text-gray-400" />
-                  )}
+                  ) : null}
                 </Link>
 
-                {link.sublinks && (
+                {link.sublinks ? (
                   <ul className="absolute left-0 z-50 hidden w-40 border-t-2 border-red-500 bg-white py-2 text-sm shadow-lg transition-all delay-100 duration-200 group-hover:block">
                     {link.sublinks.map((sublink, index) => (
                       <li key={sublink.href}>
@@ -109,7 +109,7 @@ export const Navbar = () => {
                       </li>
                     ))}
                   </ul>
-                )}
+                ) : null}
               </li>
             ))}
           </ul>

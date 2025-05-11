@@ -3,7 +3,7 @@ import Script from 'next/script';
 import { env } from '~/env';
 
 function MicrosoftClarity() {
-  if (process.env.NODE_ENV === 'production') {
+  if (env.NEXT_PUBLIC_MODE === 'production') {
     return (
       <Script id="microsoft-clarity-script" strategy="afterInteractive">
         {`
