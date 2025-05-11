@@ -1,9 +1,16 @@
+'use client';
+
+import { useState } from 'react';
 import { navLinks } from '~/constants/nav-links';
-import { Calendar, ChevronDown, Home, Mail, Menu } from 'lucide-react';
+import { Calendar, ChevronDown, Home, Mail, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import type {} from '~/constants/nav-links';
+
 export default function Header() {
+  const [isNavBarOpen, setIsNavBarOpen] = useState(false);
+
   return (
     <header className="w-full">
       {/* Mobile Top Bar */}
@@ -19,7 +26,12 @@ export default function Header() {
         />
 
         {/* Hamburger Menu */}
-        <button type="button">
+        <button
+          type="button"
+          onClick={() => {
+            setIsNavBarOpen((prev) => !prev);
+          }}
+        >
           <Menu className="h-7 w-7" />
         </button>
       </div>
@@ -58,13 +70,42 @@ export default function Header() {
         </div>
       </div>
 
-      <Navbar />
+      <DesktopNavbar />
     </header>
   );
 }
 
+//Mobile navigation
+function MobileNavBar(props: { onNavBarClose?: () => void }) {
+  const { onNavBarClose } = props;
+
+  return (
+    <nav>
+      <div>
+        <button type="button" onClick={onNavBarClose}>
+          <X />
+        </button>
+      </div>
+      <ul>
+        {navLinks.map((itm) => {
+          if (itm.type === 'navWithSubLink') {
+            return (
+              <div key={itm.title}>
+                <li key={itm.title}>{itm.title}</li>
+              </div>
+            );
+          }
+
+          return <li key={itm.title}>{itm.title}</li>;
+        })}
+      </ul>
+    </nav>
+  );
+}
+function MobileSubNav({ subLinks }: {}) {}
+
 // Desktop Navigation
-export function Navbar() {
+export function DesktopNavbar() {
   return (
     <div className="hidden border-t border-b-2 border-gray-500 border-t-gray-300 md:block">
       <div className="container mx-auto">
