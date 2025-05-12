@@ -76,33 +76,33 @@ export default function Header() {
 }
 
 //Mobile navigation
-function MobileNavBar(props: { onNavBarClose?: () => void }) {
-  const { onNavBarClose } = props;
+// function MobileNavBar(props: { onNavBarClose?: () => void }) {
+//   const { onNavBarClose } = props;
 
-  return (
-    <nav>
-      <div>
-        <button type="button" onClick={onNavBarClose}>
-          <X />
-        </button>
-      </div>
-      <ul>
-        {navLinks.map((itm) => {
-          if (itm.type === 'navWithSubLink') {
-            return (
-              <div key={itm.title}>
-                <li key={itm.title}>{itm.title}</li>
-              </div>
-            );
-          }
+//   return (
+//     <nav>
+//       <div>
+//         <button type="button" onClick={onNavBarClose}>
+//           <X />
+//         </button>
+//       </div>
+//       <ul>
+//         {navLinks.map((itm) => {
+//           if (itm.type === 'navWithSubLink') {
+//             return (
+//               <div key={itm.title}>
+//                 <li key={itm.title}>{itm.title}</li>
+//               </div>
+//             );
+//           }
 
-          return <li key={itm.title}>{itm.title}</li>;
-        })}
-      </ul>
-    </nav>
-  );
-}
-function MobileSubNav({ subLinks }: {}) {}
+//           return <li key={itm.title}>{itm.title}</li>;
+//         })}
+//       </ul>
+//     </nav>
+//   );
+// }
+// function MobileSubNav({ subLinks }: {}) {}
 
 // Desktop Navigation
 export function DesktopNavbar() {
@@ -124,11 +124,11 @@ export function DesktopNavbar() {
             </li>
             {navLinks.map((link) => (
               <li
-                key={link.href}
+                key={link.title}
                 className="group relative hover:cursor-pointer first:hover:text-red-500"
               >
                 <Link
-                  href={link.href}
+                  href={link.title}
                   className="mx-3 my-4 flex items-center transition duration-300 hover:text-red-500"
                 >
                   {link.title}
@@ -142,7 +142,7 @@ export function DesktopNavbar() {
                     {link.sublinks.map((sublink, index) => (
                       <li key={sublink.href}>
                         <Link
-                          href={sublink.href}
+                          href={sublink.title}
                           className={`block px-4 py-2 hover:text-red-500 ${index === 0 ? 'font-semibold' : 'text-current'}`}
                         >
                           {sublink.title}
