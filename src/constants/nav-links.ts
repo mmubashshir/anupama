@@ -1,20 +1,27 @@
 export interface NavLink {
   title: string;
-  href: `/${string}`;
+  href?: `/${string}`;
+  sublinks?: NavLink[];
 }
 
-export interface NavWithoutSubLink extends NavLink {
-  type: 'navWithoutSubLink';
+enum NavLinkType {
+  NavWithoutSubLink,
+  NavWithSubLink,
 }
 
-export interface NavWithSubLink extends Omit<NavLink, 'href'> {
-  type: 'navWithSubLink';
-  sublinks: NavLink[];
-}
+// export interface NavWithoutSubLink extends NavLink {
+//   type: NavLinkType.NavWithoutSubLink;
+//   sublinks?: never;
+// }
 
-export const navLinks: (NavWithoutSubLink | NavWithSubLink)[] = [
+// export interface NavWithSubLink extends Omit<NavLink, 'href'> {
+//   type: NavLinkType.NavWithSubLink;
+//   sublinks: NavLink[];
+// }
+
+export const navLinks: NavLink[] = [
   {
-    type: 'navWithSubLink',
+    // type: 'navWithSubLink',
     title: 'ಸುದ್ದಿ',
     sublinks: [
       {
@@ -28,7 +35,7 @@ export const navLinks: (NavWithoutSubLink | NavWithSubLink)[] = [
     ],
   },
   {
-    type: 'navWithSubLink',
+    // type: 'navWithSubLink',
     title: 'ಆರೋಗ್ಯ ಮತ್ತು ವೈದ್ಯಕೀಯ',
 
     sublinks: [
@@ -37,7 +44,7 @@ export const navLinks: (NavWithoutSubLink | NavWithSubLink)[] = [
     ],
   },
   {
-    type: 'navWithSubLink',
+    // type: 'navWithSubLink',
     title: 'ಜೀವನಶೈಲಿ',
 
     sublinks: [
@@ -47,7 +54,7 @@ export const navLinks: (NavWithoutSubLink | NavWithSubLink)[] = [
     ],
   },
   {
-    type: 'navWithSubLink',
+    // type: 'navWithSubLink',
     title: 'ಕಥೆಗಳು',
 
     sublinks: [
@@ -60,12 +67,12 @@ export const navLinks: (NavWithoutSubLink | NavWithSubLink)[] = [
     ],
   },
   {
-    type: 'navWithoutSubLink',
+    // type: 'navWithoutSubLink',
     title: 'ಲೆಖನಗಳು',
     href: '/articles',
   },
   {
-    type: 'navWithoutSubLink',
+    // type: 'navWithoutSubLink',
     title: 'ಸಂಪರ್ಕಿಸಿ',
     href: '/contact',
   },
