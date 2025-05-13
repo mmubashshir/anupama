@@ -4,21 +4,6 @@ export interface NavLink {
   sublinks?: NavLink[];
 }
 
-enum NavLinkType {
-  NavWithoutSubLink,
-  NavWithSubLink,
-}
-
-// export interface NavWithoutSubLink extends NavLink {
-//   type: NavLinkType.NavWithoutSubLink;
-//   sublinks?: never;
-// }
-
-// export interface NavWithSubLink extends Omit<NavLink, 'href'> {
-//   type: NavLinkType.NavWithSubLink;
-//   sublinks: NavLink[];
-// }
-
 export const navLinks: NavLink[] = [
   {
     // type: 'navWithSubLink',

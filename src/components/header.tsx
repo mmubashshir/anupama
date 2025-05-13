@@ -25,15 +25,24 @@ export default function Header() {
         />
 
         {/* Hamburger Menu */}
-        <button type="button" onClick={() => setIsNavBarOpen(true)}>
+        <button
+          type="button"
+          onClick={() => {
+            setIsNavBarOpen(true);
+          }}
+        >
           <Menu className="h-7 w-7" />
         </button>
       </div>
 
       {/* Show mobile nav only if open */}
-      {isNavBarOpen && (
-        <MobileNavbar onNavBarClose={() => setIsNavBarOpen(false)} />
-      )}
+      {isNavBarOpen ? (
+        <MobileNavbar
+          onNavBarClose={() => {
+            setIsNavBarOpen(false);
+          }}
+        />
+      ) : null}
 
       {/* Desktop Top Bar */}
       <div className="container mx-auto hidden items-center justify-between px-2 py-12 md:flex">
@@ -87,7 +96,7 @@ function MobileNavbar({ onNavBarClose }: { onNavBarClose: () => void }) {
     <div className="fixed inset-0 z-50 overflow-y-auto bg-white p-6">
       {/* Close Button */}
       <div className="mb-4 flex justify-end">
-        <button onClick={onNavBarClose}>
+        <button type="button" onClick={onNavBarClose}>
           <X className="h-6 w-6" />
         </button>
       </div>
@@ -96,9 +105,12 @@ function MobileNavbar({ onNavBarClose }: { onNavBarClose: () => void }) {
       <ul className="text-md space-y-2 pt-8 font-semibold text-gray-500">
         {navLinks.map((item) => (
           <li key={item.title}>
-            <div
-              onClick={() => toggleSection(item.title)}
-              className="flex cursor-pointer items-center justify-between border-b border-gray-200 py-2"
+            <button
+              type="button"
+              onClick={() => {
+                toggleSection(item.title);
+              }}
+              className="flex w-full cursor-pointer items-center justify-between border-b border-gray-200 py-2"
             >
               <span>{item.title}</span>
               {item.sublinks ? (
@@ -108,9 +120,9 @@ function MobileNavbar({ onNavBarClose }: { onNavBarClose: () => void }) {
                   }`}
                 />
               ) : null}
-            </div>
+            </button>
 
-            {item.sublinks && openSection === item.title && (
+            {item.sublinks && openSection === item.title ? (
               <ul className="text-md space-y-2 border-b border-gray-200 pt-2 pl-4 text-gray-500">
                 {item.sublinks.map((sub) => (
                   <li key={sub.title}>
@@ -124,7 +136,7 @@ function MobileNavbar({ onNavBarClose }: { onNavBarClose: () => void }) {
                   </li>
                 ))}
               </ul>
-            )}
+            ) : null}
           </li>
         ))}
       </ul>
@@ -170,7 +182,7 @@ export function DesktopNavbar() {
                     {link.sublinks.map((sublink, index) => (
                       <li key={sublink.href}>
                         <Link
-                          href={sublink.href}
+                          href={sublink.href ?? '/'}
                           className={`block px-4 py-2 hover:text-red-500 ${
                             index === 0 ? 'font-semibold' : 'text-current'
                           }`}
