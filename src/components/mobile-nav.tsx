@@ -9,14 +9,14 @@ export default function MobileNavbar({
 }: {
   onNavBarClose: () => void;
 }) {
-  const [openSection, setOpenSection] = useState<string | null>('HOME');
+  const [openSection, setOpenSection] = useState<string | null>(null);
 
   const toggleSection = (title: string) => {
-    setOpenSection(openSection === title ? null : title);
+    setOpenSection((prev) => (prev === title ? null : title));
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-white p-6">
+    <div className="animate-in slide-in-from-right slide-out-to-left fixed inset-0 z-50 overflow-y-auto bg-white p-6">
       {/* Close Button */}
       <div className="mb-4 flex justify-end">
         <button type="button" onClick={onNavBarClose}>

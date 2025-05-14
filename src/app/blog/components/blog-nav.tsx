@@ -6,7 +6,9 @@ import { ChevronDown, Home, Menu } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import MobileNavbar from './mobile-nav';
+import MobileNavbar from '~/components/mobile-nav';
+
+import { cn } from '~/utils/cn';
 
 export default function DesktopBlogNav() {
   const [isNavBarOpen, setIsNavBarOpen] = useState(false);
@@ -34,7 +36,7 @@ export default function DesktopBlogNav() {
             setIsNavBarOpen(true);
           }}
         >
-          <Menu className="h-7 w-7" />
+          <Menu className="size-7" />
         </button>
       </div>
 
@@ -68,7 +70,7 @@ export default function DesktopBlogNav() {
               href="/"
               className="flex items-center text-red-500 hover:opacity-80"
             >
-              <Home className="h-5 w-5" />
+              <Home className="size-5" />
             </Link>
 
             {navLinks.map((link) => (
@@ -78,9 +80,9 @@ export default function DesktopBlogNav() {
                   className="flex items-center gap-1 transition hover:text-red-500"
                 >
                   {link.title}
-                  {Array.isArray(link.sublinks) && link.sublinks.length > 0 && (
-                    <ChevronDown className="h-3 w-3 text-gray-400" />
-                  )}
+                  {Array.isArray(link.sublinks) && link.sublinks.length > 0 ? (
+                    <ChevronDown className="size-3 text-gray-400" />
+                  ) : null}
                 </Link>
 
                 {link.sublinks ? (
@@ -89,9 +91,12 @@ export default function DesktopBlogNav() {
                       <li key={sublink.href}>
                         <Link
                           href={sublink.href ?? '/'}
-                          className={`block px-4 py-2 hover:text-red-500 ${
-                            index === 0 ? 'font-semibold' : 'text-current'
-                          }`}
+                          className={cn(
+                            'block px-4 py-2 text-current hover:text-red-500',
+                            {
+                              'font-semibold': index === 0,
+                            },
+                          )}
                         >
                           {sublink.title}
                         </Link>
