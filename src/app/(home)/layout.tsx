@@ -9,7 +9,7 @@ export default function HomeLayout({
   return (
     <div className="mx-auto max-w-6xl xl:px-0">
       <Header />
-      {children}
+      <main>{children}</main>
     </div>
   );
 }
