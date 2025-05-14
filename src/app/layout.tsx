@@ -6,8 +6,6 @@ import './globals.css';
 
 import { BASE_URL } from '~/constants';
 
-import Header from '~/components/header';
-
 const balooTamma = Baloo_Tamma_2({
   variable: '--font-primary',
   subsets: ['latin'],
@@ -72,12 +70,7 @@ export default function RootLayout({
         />
         <link href="/site.webmanifest" rel="manifest" />
       </head>
-      <body
-        className={`${balooTamma.variable} mx-auto max-w-6xl antialiased xl:px-0`}
-      >
-        <Header />
-        {children}
-      </body>
+      <body className={`${balooTamma.variable} antialiased`}>{children}</body>
     </html>
   );
 }
