@@ -11,11 +11,11 @@ export const navLinks: NavLink[] = [
     sublinks: [
       {
         title: 'ದಿನನಿತ್ಯದ ಸುದ್ದಿ',
-        href: '/daily-news',
+        href: '/blog',
       },
       {
         title: 'ವಿಡಿಯೋ ಸುದ್ದಿ',
-        href: '/video-news',
+        href: '/blog-1',
       },
     ],
   },
