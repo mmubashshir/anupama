@@ -9,7 +9,7 @@ export default function BlogLayout({
   return (
     <>
       <BlogNav />
-      <main>{children}</main>
+      <main className="mx-auto max-w-6xl">{children}</main>
     </>
   );
 }

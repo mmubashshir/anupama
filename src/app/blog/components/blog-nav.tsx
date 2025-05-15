@@ -50,7 +50,7 @@ export default function DesktopBlogNav() {
       ) : null}
 
       {/* Desktop Top Bar */}
-      <div className="hidden md:block">
+      <div className="hidden border-b border-gray-300 md:block">
         <div className="container mx-auto flex items-center justify-between px-15 py-5">
           {/* Logo */}
           <Link href="/">
@@ -69,6 +69,8 @@ export default function DesktopBlogNav() {
             <Link
               href="/"
               className="flex items-center text-red-500 hover:opacity-80"
+              title="Home"
+              aria-label="Home"
             >
               <Home className="size-5" />
             </Link>
@@ -86,7 +88,7 @@ export default function DesktopBlogNav() {
                 </Link>
 
                 {link.sublinks ? (
-                  <ul className="absolute left-0 z-50 hidden w-40 border-t-2 border-red-500 bg-white py-2 text-sm shadow-lg transition-all delay-100 duration-200 group-hover:block">
+                  <ul className="absolute left-0 z-50 mt-5 hidden w-40 border-t-2 border-red-500 bg-white py-2 text-sm shadow-lg transition-all delay-100 duration-200 group-hover:block">
                     {link.sublinks.map((sublink, index) => (
                       <li key={sublink.href}>
                         <Link
