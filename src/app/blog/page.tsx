@@ -14,12 +14,10 @@ import Link from 'next/link';
 
 export default function Blog() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-12 md:px-20 md:py-16">
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* Main Content */}
         <div className="w-full lg:w-2/3">
-          <h1 className="mb-8 text-3xl font-bold">Blog</h1>
-
           <div className="space-y-12">
             {blogPosts.map((post) => (
               <article key={post.id} className="pb-8">
@@ -54,7 +52,9 @@ export default function Blog() {
                   </div>
                 </div>
 
-                <p className="mb-4 text-gray-700">{post.excerpt}</p>
+                <p className="mb-4 whitespace-pre-line text-gray-700">
+                  {post.excerpt}
+                </p>
               </article>
             ))}
           </div>
