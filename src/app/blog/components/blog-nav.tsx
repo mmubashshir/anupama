@@ -1,15 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { navLinks } from '~/constants/nav-links';
-import { ChevronDown, Home, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { DesktopNavLinks } from '~/components/header';
 import MobileNavbar from '~/components/mobile-nav';
-
-import { cn } from '~/utils/cn';
 
 export default function DesktopBlogNav() {
   const [isNavBarOpen, setIsNavBarOpen] = useState(false);

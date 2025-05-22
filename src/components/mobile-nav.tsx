@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { navLinks } from '~/constants/nav-links';
 import { ChevronDown, X } from 'lucide-react';
 import Link from 'next/link';
+
+import type { ComponentRef } from 'react';
 
 // Mobile Navigation
 export default function MobileNavbar({
@@ -10,16 +12,43 @@ export default function MobileNavbar({
   onNavBarClose: () => void;
 }) {
   const [openSection, setOpenSection] = useState<string | null>(null);
+  const mobileNavRef = useRef<ComponentRef<'div'>>(null);
+
+  useEffect(() => {
+    function callBack(event: HTMLElementEventMap['animationend']) {
+      if (event.animationName !== 'exit') {
+        return;
+      }
+
+      onNavBarClose();
+    }
+
+    mobileNavRef.current?.addEventListener('animationend', callBack);
+
+    return () =>
+      mobileNavRef.current?.removeEventListener('animationend', callBack);
+  }, []);
 
   const toggleSection = (title: string) => {
     setOpenSection((prev) => (prev === title ? null : title));
   };
 
   return (
-    <div className="animate-in slide-in-from-right slide-out-to-left fixed inset-0 z-50 overflow-y-auto bg-white p-6">
+    <div
+      ref={mobileNavRef}
+      className="animate-in slide-in-from-right fill-mode-forwards slide-out-to-right fixed inset-0 z-50 overflow-y-auto bg-white p-6"
+    >
       {/* Close Button */}
       <div className="mb-4 flex justify-end">
-        <button type="button" onClick={onNavBarClose}>
+        <button
+          type="button"
+          onClick={() => {
+            mobileNavRef.current?.classList.replace(
+              'animate-in',
+              'animate-out',
+            );
+          }}
+        >
           <X className="h-6 w-6" />
         </button>
       </div>
