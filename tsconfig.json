@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@payload-config": ["./src/payload.config.ts"]
     }
   },
   "include": [
@@ -28,7 +29,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "**/*.mjs"
+    "**/*.mjs",
+    "src/app/(payload)/admin/importMap.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,0 +1,15 @@
+name: anupama
+services:
+  postgress:
+    image: postgres:14-alpine
+    ports:
+      - 5433:5432
+    volumes:
+      - anupama-db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=anupama
+
+volumes:
+  anupama-db:
