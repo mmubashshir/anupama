@@ -1,5 +1,7 @@
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { Posts } from '~/schemas/posts';
+import { Users } from '~/schemas/users';
 import { buildConfig } from 'payload';
 import sharp from 'sharp';
 
@@ -8,7 +10,7 @@ export default buildConfig({
   editor: lexicalEditor(),
 
   // Define and configure your collections in this array
-  collections: [],
+  collections: [Users, Posts],
 
   secret: '01100f67-31eb-42ff-a76b-d709eb45d197',
 
