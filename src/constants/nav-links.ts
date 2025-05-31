@@ -7,7 +7,7 @@ export interface NavLink {
 export const navLinks: NavLink[] = [
   {
     // type: 'navWithSubLink',
-    title: 'ಸುದ್ದಿ',
+    title: 'ಸುದ್ದಿಗಳು',
     sublinks: [
       {
         title: 'ದಿನನಿತ್ಯದ ಸುದ್ದಿ',
@@ -15,50 +15,104 @@ export const navLinks: NavLink[] = [
       },
       {
         title: 'ವಿಡಿಯೋ ಸುದ್ದಿ',
-        href: '/blog-1',
+        href: '/video-news',
       },
     ],
   },
   {
     // type: 'navWithSubLink',
     title: 'ಆರೋಗ್ಯ ಮತ್ತು ವೈದ್ಯಕೀಯ',
-
     sublinks: [
-      { title: 'ಆರೋಗ್ಯ', href: '/health' },
-      { title: 'ವೈದ್ಯಕೀಯ', href: '/medical' },
+      {
+        title: 'ಆರೋಗ್ಯ',
+        href: '/health',
+      },
+      {
+        title: 'ವೈದ್ಯಕೀಯ',
+        href: '/medical',
+      },
     ],
   },
   {
     // type: 'navWithSubLink',
     title: 'ಜೀವನಶೈಲಿ',
-
     sublinks: [
-      { title: 'ಸಾಮಾಜಿಕ', href: '/samaajika' },
-      { title: 'ಸರಣಿಗಳು', href: '/saranigalu' },
-      { title: 'ಬಹುಮುಖ', href: '/bahumukha' },
+      {
+        title: 'ಸಾಮಾಜಿಕ',
+        href: '/social',
+      },
+      {
+        title: 'ಅಡುಗೆ',
+        href: '/cooking',
+      },
+      {
+        title: 'ಬಹಿರ್ಮುಖ',
+        href: '/editorial',
+      },
+      {
+        title: 'ಬಾಲಬುತ್ತಿ',
+        href: '/childrens-corner',
+      },
     ],
   },
   {
     // type: 'navWithSubLink',
     title: 'ಕಥೆಗಳು',
-
     sublinks: [
-      { title: 'ಕಥೆಗಳು', href: '/stories' },
       {
-        title: 'ಹೃದಯಸ್ಪರ್ಶಿ ಕಥೆಗಳು',
-        href: '/heart-stories',
+        title: 'ಕಥಾಲೋಕ',
+        href: '/story-world',
       },
-      { title: 'ಮಕ್ಕಳ ಲೋಕ', href: '/childrens-world' },
+      {
+        title: 'ಮಕ್ಕಳ ರಂಗ',
+        href: '/childrens-arena',
+      },
     ],
   },
   {
     // type: 'navWithoutSubLink',
     title: 'ಲೆಖನಗಳು',
-    href: '/articles',
+    sublinks: [
+      {
+        title: 'ಅಂಕಣಗಳು',
+        href: '/columns',
+      },
+      {
+        title: 'ಪ್ರತಿಭೆ',
+        href: '/talent',
+      },
+      {
+        title: 'ಸಾಧನೆ',
+        href: '/achievements',
+      },
+      {
+        title: 'ಈ ಸಮಾಜ',
+        href: '/this-society',
+      },
+      {
+        title: 'ಪ್ರತಿಬಿಂಬ',
+        href: '/reflection',
+      },
+    ],
   },
   {
     // type: 'navWithoutSubLink',
-    title: 'ಸಂಪರ್ಕಿಸಿ',
+    title: 'ಗಣ್ಯರ ಅಭಿಪ್ರಾಯ',
+    sublinks: [
+      {
+        title: 'ನಿಮ್ಮ ಪತ್ರ',
+        href: '/your-letter',
+      },
+    ],
+  },
+  {
+    // type: 'navWithoutSubLink',
+    title: 'ಸಂಪರ್ಕ',
     href: '/contact',
+  },
+  {
+    // type: 'navWithoutSubLink',
+    title: 'ಬರಹಗಾರರು',
+    href: '/writers',
   },
 ] as const;
