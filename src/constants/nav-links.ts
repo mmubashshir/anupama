@@ -11,7 +11,7 @@ export const navLinks: NavLink[] = [
     sublinks: [
       {
         title: 'ದಿನನಿತ್ಯದ ಸುದ್ದಿ',
-        href: '/blog',
+        href: '/daily-news',
       },
       {
         title: 'ವಿಡಿಯೋ ಸುದ್ದಿ',
