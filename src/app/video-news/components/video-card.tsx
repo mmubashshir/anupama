@@ -32,7 +32,7 @@ export default function VideoCard({ title, imageUrl }: VideoCardProps) {
         {/* Text */}
         <div className="text-left">
           <span className="text-sm font-medium">ವಿಡಿಯೋ</span>
-          <h3 className="mt-1 text-lg font-extrabold group-hover:underline">
+          <h3 className="mt-1 text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline">
             {title}
           </h3>
         </div>

@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t-1 border-gray-900 bg-gray-200 px-4 pt-18 pb-8 md:px-6 lg:px-18">
+    <footer className="w-full bg-gray-200 px-4 pt-18 pb-8 md:px-6 lg:px-18">
       {/* Newsletter Section */}
       <div className="mx-auto mb-16 max-w-6xl">
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
