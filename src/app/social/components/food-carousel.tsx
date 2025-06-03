@@ -40,16 +40,38 @@ export function FoodCarousel({ items }: FoodCarouselProps) {
 
       {/* Mobile Carousel */}
       <div className="relative block md:hidden">
-        {/* Image and buttons wrapper */}
-        <div className="relative aspect-square overflow-hidden">
-          <Image
-            src={items[currentIndex]?.image || '/placeholder.svg'}
-            alt={items[currentIndex]?.title}
-            fill
-            className="object-cover"
-          />
+        <div className="relative overflow-hidden">
+          {/* Slider Container */}
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{
+              width: `${items.length * 100}%`,
+              transform: `translateX(-${currentIndex * (100 / items.length)}%)`,
+            }}
+          >
+            {items.map((item) => (
+              <div
+                key={item.title}
+                className="w-full flex-shrink-0 flex-grow-0 basis-full"
+              >
+                <div className="relative aspect-square w-full">
+                  <Image
+                    src={item.image || '/placeholder.svg'}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-3">
+                  <h3 className="text-center text-2xl font-black">
+                    {item.title}
+                  </h3>
+                </div>
+              </div>
+            ))}
+          </div>
 
-          {/* Navigation Buttons - Positioned over the image */}
+          {/* Navigation Buttons */}
           <button
             type="button"
             onClick={handlePrev}
@@ -64,13 +86,6 @@ export function FoodCarousel({ items }: FoodCarouselProps) {
           >
             <ChevronRight size={20} />
           </button>
-        </div>
-
-        {/* Title below image */}
-        <div className="p-3">
-          <h3 className="text-center text-2xl font-black">
-            {items[currentIndex]?.title}
-          </h3>
         </div>
       </div>
 
