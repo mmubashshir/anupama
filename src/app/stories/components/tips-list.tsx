@@ -1,15 +1,15 @@
 import { CircleNumber } from './circle-number';
 
-interface HealthTip {
+interface MoreStory {
   id: number;
   text: string;
 }
 
-interface HealthTipsListProps {
-  tips: HealthTip[];
+interface MoreStoriesProps {
+  tips: MoreStory[];
 }
 
-export default function HealthTipsList({ tips }: HealthTipsListProps) {
+export default function MoreStories({ tips }: MoreStoriesProps) {
   return (
     <div className="space-y-4">
       {tips.map((tip) => (

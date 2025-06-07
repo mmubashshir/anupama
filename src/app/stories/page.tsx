@@ -1,36 +1,17 @@
-export default function Page() {
-  // Health tips data
-  const healthTips = [
-    {
-      id: 1,
-      text: 'ಬಾಯಲ್ಲಿದ ಆಚಿಕೆ ಮಾರಾಟದ ದಿನ',
-    },
-    {
-      id: 2,
-      text: 'ಅಲೆಮಾರಿ ನಾಯಿ ಪದುಗಿದ ಮನೆ',
-    },
-    {
-      id: 3,
-      text: 'ಅಜ್ಞಾತ ಜೀನುತುಪ್ಪದ ರಹಸ್ಯ',
-    },
-    {
-      id: 4,
-      text: 'ಮಳೆ ಬಿದ್ದಾಗ ಹಾದುವ ಮರ',
-    },
-    {
-      id: 5,
-      text: 'ಕಾಗೆ ಮತ್ತು ಕಲರವದ ಕಥೆಯಂಟ',
-    },
-  ];
+import { moreStories } from '~/constants/more-stories';
 
+import FeaturedArticle from './components/featured-article';
+import HealthTipsList from './components/tips-list';
+
+export default function Page() {
   // Featured article data
   const featuredArticle = {
-    title: 'ಚಿಕಿತ್ಸೆಯ',
-    subtitle: 'ಭಯ ಗೀಡ ಮತ್ತು ಮಿತಿಯಿನ ಗಳತನ',
+    title: 'ಚಿಟ್ಕಿ ಗಿಡ ಮತ್ತು ಮೀನಿನ ಗೆಳೆತನ',
+    subtitle: 'ಬಹಿರ್ಮುಖ',
     description:
       'ಈ ಪ್ರಾಥಮಿಕ ಆರೋಗ್ಯದ ಪರಿಚಯ ಮನೆಗಳ ಇಂದಿನೋಲ್ ಪ್ರದೇಶದಲ್ಲಿ ನಿಮ್ಮ ಸಂಪೂರ್ಣ ಭಾವನಾ ವಿಮರ್ಶೆಗಳನ್ನು',
-    readMoreText: 'ಮುಂದುವರೆದ ಓದಿಸುವ',
-    imageUrl: '/images/mental-health.png',
+    author: '-ಮ್ಯಾಥ್ಯೂ ಜೇಮ್ಸ್',
+    imageUrl: '/anupama-4.jpg',
   };
 
   return (
@@ -43,7 +24,7 @@ export default function Page() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           {/* Health Tips List - Takes 7 columns on large screens */}
           <div className="lg:col-span-7">
-            <HealthTipsList tips={healthTips} />
+            <HealthTipsList tips={moreStories} />
           </div>
 
           {/* Featured Article - Takes 5 columns on large screens */}
