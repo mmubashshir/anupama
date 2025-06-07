@@ -1,6 +1,6 @@
 // src/app/blog/layout.tsx
 
-import BlogNav from './components/blog-nav';
+import BlogNav from '~/components/blog-nav';
 
 export default function BlogLayout({
   children,

@@ -40,21 +40,19 @@ export function FoodCarousel({ items }: FoodCarouselProps) {
 
       {/* Mobile Carousel */}
       <div className="relative block md:hidden">
-        <div className="relative overflow-hidden">
+        <div className="relative mx-auto max-w-sm overflow-hidden px-2">
           {/* Slider Container */}
           <div
             className="flex transition-transform duration-500 ease-in-out"
-            style={{
-              width: `${items.length * 100}%`,
-              transform: `translateX(-${currentIndex * (100 / items.length)}%)`,
-            }}
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
+            {' '}
             {items.map((item) => (
               <div
                 key={item.title}
-                className="w-full flex-shrink-0 flex-grow-0 basis-full"
+                className="w-full shrink-0 grow-0 basis-full"
               >
-                <div className="relative aspect-square w-full">
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
                   <Image
                     src={item.image || '/placeholder.svg'}
                     alt={item.title}
@@ -62,8 +60,8 @@ export function FoodCarousel({ items }: FoodCarouselProps) {
                     className="object-cover"
                   />
                 </div>
-                <div className="p-3">
-                  <h3 className="text-center text-2xl font-black">
+                <div className="pt-3">
+                  <h3 className="text-center text-lg font-bold">
                     {item.title}
                   </h3>
                 </div>
@@ -75,14 +73,14 @@ export function FoodCarousel({ items }: FoodCarouselProps) {
           <button
             type="button"
             onClick={handlePrev}
-            className="absolute top-1/2 left-2 -translate-y-1/2 rounded-full bg-white p-2 shadow"
+            className="absolute top-1/2 left-1 -translate-y-1/2 rounded-full bg-white p-1 shadow"
           >
             <ChevronLeft size={20} />
           </button>
           <button
             type="button"
             onClick={handleNext}
-            className="absolute top-1/2 right-2 -translate-y-1/2 rounded-full bg-white p-2 shadow"
+            className="absolute top-1/2 right-1 -translate-y-1/2 rounded-full bg-white p-1 shadow"
           >
             <ChevronRight size={20} />
           </button>
@@ -94,7 +92,7 @@ export function FoodCarousel({ items }: FoodCarouselProps) {
         {items.map((item) => (
           <div key={item.title} className="overflow-hidden">
             <div className="p-0">
-              <div className="relative h-[440px] w-[320px]">
+              <div className="relative aspect-[3/2] w-full">
                 <Image
                   src={item.image || '/placeholder.svg'}
                   alt={item.title}
