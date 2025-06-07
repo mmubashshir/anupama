@@ -1,8 +1,8 @@
-// import { foodItems } from '~/constants/food-items';
+import { foodItems } from '~/constants/food-items';
 import { sideCardData } from '~/constants/side-card';
 import { socialCardsData } from '~/constants/social-news';
 
-// import { FoodCarousel } from './components/food-carousel';
+import { FoodCarousel } from './components/food-carousel';
 import { SocialCards } from './components/social-card';
 
 export default function Page() {
@@ -16,7 +16,7 @@ export default function Page() {
 
         <SocialCards mainCards={socialCardsData} sideCard={sideCardData} />
 
-        {/* <FoodCarousel items={foodItems} /> */}
+        <FoodCarousel items={foodItems} />
       </div>
     </div>
   );
