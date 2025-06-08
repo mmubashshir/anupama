@@ -1,5 +1,4 @@
-'use client';
-
+import { gql } from '@apollo/client';
 import { blogPosts } from '~/constants/blog-posts';
 import {
   Calendar,
@@ -12,7 +11,23 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Blog() {
+import { query } from '~/utils/graphql-client';
+
+export default async function Blog() {
+  const data = await query({
+    query: gql`
+      query {
+        countries {
+          name
+          emoji
+          capital
+        }
+      }
+    `,
+  });
+
+  console.log('data');
+
   return (
     <div className="container mx-auto px-4 py-12 md:px-20 md:py-16">
       <div className="flex flex-col gap-8 lg:flex-row">

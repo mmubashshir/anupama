@@ -4,6 +4,7 @@ declare global {
       NEXT_PUBLIC_GOOGLE_ANALYTICS: string | undefined;
       NEXT_PUBLIC_CLARITY_PROJECT_ID: string | undefined;
       NEXT_PUBLIC_MODE: 'staging' | 'production' | undefined;
+      CMS_BASE_URL: string | undefined;
     }
   }
 }

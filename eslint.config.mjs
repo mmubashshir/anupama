@@ -1,4 +1,5 @@
 import gvseslint from '@glasshouse/style-guide/eslint';
+import graphqlPlugin from '@graphql-eslint/eslint-plugin';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 /** @type {import('eslint').Linter.Config[]} */
@@ -6,7 +7,9 @@ export default [
   {
     files: ['src/**/*.{js,mjs,cjs,ts,mts,cts}'],
     ignores: ['eslint.config.mjs'],
+    processor: graphqlPlugin.processor,
   },
+
   ...gvseslint.configs.flat.browser,
   ...gvseslint.configs.flat.react,
   ...gvseslint.configs.flat.typescript,
@@ -19,6 +22,7 @@ export default [
     },
   },
   ...gvseslint.configs.flat.next,
+
   eslintConfigPrettier,
   {
     rules: {
@@ -32,5 +36,16 @@ export default [
       'react/jsx-sort-props': 'off',
       camelcase: 'off',
     },
+  },
+
+  {
+    files: ['src/**/*.graphql'],
+    languageOptions: {
+      parser: graphqlPlugin.parser,
+    },
+    plugins: {
+      '@graphql-eslint': graphqlPlugin,
+    },
+    rules: graphqlPlugin.configs['flat/schema-recommended'].rules,
   },
 ];
