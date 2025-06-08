@@ -61,7 +61,7 @@ export const navLinks: NavLink[] = [
     sublinks: [
       {
         title: 'ಕಥಾಲೋಕ',
-        href: '/story-world',
+        href: '/stories',
       },
       {
         title: 'ಮಕ್ಕಳ ರಂಗ',
