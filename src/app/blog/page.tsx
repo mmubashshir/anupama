@@ -88,19 +88,22 @@ export default function Blog() {
               />
 
               <label className="flex items-center space-x-2 text-sm text-gray-600">
-                <input type="checkbox" className="accent-red-500" />
+                <input
+                  type="checkbox"
+                  className="cursor-pointer accent-red-500"
+                />
                 <span>
                   Save my name, email, and website in this browser for the next
                   time I comment.
                 </span>
               </label>
 
-              <button
-                type="submit"
-                className="bg-red-600 px-6 py-2 text-white transition hover:bg-red-700"
+              <Link
+                href="#"
+                className="bg-red-600 px-4 py-1 text-white transition hover:bg-red-700"
               >
                 Post Comment
-              </button>
+              </Link>
             </form>
           </div>
 
