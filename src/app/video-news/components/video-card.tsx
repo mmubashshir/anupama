@@ -8,7 +8,7 @@ interface VideoCardProps {
 
 export default function VideoCard({ title, imageUrl }: VideoCardProps) {
   return (
-    <div className="border-b border-gray-200 p-4 last:border-b-0">
+    <div className="border-b border-gray-200 py-4 last:border-b-0">
       <div className="group flex cursor-pointer flex-row-reverse items-start gap-3">
         {/* Image with overlay */}
         <div className="relative flex-shrink-0">
@@ -32,7 +32,7 @@ export default function VideoCard({ title, imageUrl }: VideoCardProps) {
         {/* Text */}
         <div className="text-left">
           <span className="text-sm font-medium">ವಿಡಿಯೋ</span>
-          <h3 className="mt-1 text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline">
+          <h3 className="mt-1 text-lg leading-tight font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-xl">
             {title}
           </h3>
         </div>

@@ -5,13 +5,12 @@ import NewsCard from './components/news-card';
 export default function DailyNews() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-6">
-      {/* Red accent bar */}
-      <div className="mb-6 h-5 w-16 bg-red-500" />
-
       {/* Main heading */}
-      <h1 className="mb-8 text-4xl font-extrabold md:text-5xl">ಸುದ್ದಿಗಳು</h1>
+      <h1 className="mt-4 mb-8 text-4xl font-extrabold md:text-5xl">
+        ಸುದ್ದಿಗಳು
+      </h1>
 
-      <div className="grid grid-cols-1 gap-8 pl-4 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Main Featured Article */}
         <div className="group flex flex-col gap-4 border-b border-gray-200 bg-white pb-4 hover:cursor-pointer md:gap-0 md:border-0 lg:col-span-2">
           {/* Image */}

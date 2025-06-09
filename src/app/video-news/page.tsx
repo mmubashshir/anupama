@@ -43,7 +43,7 @@ export default function VideoNews() {
               {/* Text section below */}
               <div className="group cursor-pointer p-4 text-center md:p-6">
                 <span className="text-sm text-black">ವೀಡಿಯೊ</span>
-                <h2 className="text-xl font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-2xl">
+                <h2 className="text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-2xl">
                   ವಿಶ್ವಸಂಸ್ಥೆಯಲ್ಲಿ ಸೇವೆ ಈ ಹುಡುಗಿಯ ಕನಸು
                 </h2>
                 <p className="mt-3 text-gray-700">
