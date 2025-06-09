@@ -5,6 +5,9 @@ import DailyNews from '../daily-news/page';
 import Health from '../health/page';
 import Social from '../social/page';
 import Stories from '../stories/page';
+import Health from '../health/page';
+import Social from '../social/page';
+import Stories from '../stories/page';
 import VideoNews from '../video-news/page';
 import TopStories from './top-stories';
 
@@ -14,12 +17,13 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   return (
-    // <div className="mx-auto max-w-6xl xl:px-0">
     <>
       <Header />
-
       <DailyNews />
       <VideoNews />
+      <Social />
+      <Health />
+      <Stories />
       <Social />
       <Health />
       {/* <Stories /> */}
@@ -27,6 +31,5 @@ export default function HomeLayout({
 
       <main>{children}</main>
     </>
-    // </div>
   );
 }
