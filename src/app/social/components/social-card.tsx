@@ -89,7 +89,9 @@ export function SocialCards({ mainCards, sideCard }: SocialCardsProps) {
     <div className="space-y-4">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-3xl font-black">ಸಾಮಾಜಿಕ</h2>
+        <h1 className="mt-4 mb-8 text-4xl font-extrabold md:text-5xl">
+          ಸಾಮಾಜಿಕ
+        </h1>
         <Link
           href=""
           className="group ml-auto flex items-center text-sm font-semibold"
