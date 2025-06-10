@@ -5,7 +5,7 @@ import VideoCard from './components/video-card';
 export default function VideoNews() {
   return (
     <main className="w-full bg-gray-100/90">
-      <div className="mx-auto max-w-5xl px-4 py-6">
+      <div className="mx-auto max-w-6xl px-4 py-6">
         <h1 className="my-4 text-2xl font-extrabold md:text-3xl">
           ವಿಡಿಯೋ ಸುದ್ದಿ
         </h1>

@@ -7,8 +7,20 @@ import { SocialCards } from './components/social-card';
 
 export default function Page() {
   return (
+<<<<<<< HEAD
     <div className="mx-auto min-h-screen max-w-5xl bg-white px-4 py-6">
       <div className="mx-auto max-w-6xl space-y-12">
+=======
+    <div className="mx-auto max-w-6xl bg-white px-4 py-6">
+      <div className="mx-auto max-w-6xl space-y-12 p-4">
+        <div className="mb-6 h-5 w-16 bg-red-500" />
+        {/* Header */}
+
+        <div className="pb-8">
+          <h1 className="text-4xl font-black md:text-5xl">ಜೀವನಶೈಲಿ</h1>
+        </div>
+
+>>>>>>> acd6e09 (fix: home side padding)
         <SocialCards mainCards={socialCardsData} sideCard={sideCardData} />
 
         <FoodCarousel items={foodItems} />

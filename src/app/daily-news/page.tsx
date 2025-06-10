@@ -4,7 +4,10 @@ import NewsCard from './components/news-card';
 
 export default function DailyNews() {
   return (
-    <main className="mx-auto max-w-5xl px-4 py-6">
+    <main className="mx-auto max-w-6xl px-4 py-6">
+      {/* Red accent bar */}
+      <div className="mb-6 h-5 w-16 bg-red-500" />
+
       {/* Main heading */}
       <h1 className="mt-4 mb-8 text-4xl font-extrabold md:text-5xl">
         ಸುದ್ದಿಗಳು

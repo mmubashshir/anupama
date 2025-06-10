@@ -12,7 +12,7 @@ export default function Header() {
   const [isNavBarOpen, setIsNavBarOpen] = useState(false);
 
   return (
-    <header className="mx-auto max-w-5xl px-4">
+    <header className="mx-auto max-w-6xl px-4">
       {/* Mobile Top Bar */}
       <div className="container mx-auto flex items-center justify-between border-b-2 border-gray-500 px-2 py-6 md:hidden md:px-0 md:py-0">
         {/* Logo on left */}
