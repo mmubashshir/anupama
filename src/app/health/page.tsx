@@ -6,7 +6,7 @@ import HealthCard from './components/health-card';
 
 export default function Page() {
   return (
-    <div className="mx-auto min-h-screen max-w-5xl px-4 py-6">
+    <div className="mx-auto max-w-6xl px-4 py-6">
       {/* Header */}
       <header className="bg-white">
         <div className="px-4">
