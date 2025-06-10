@@ -12,7 +12,7 @@ export default function NewsCard({ category, title, imageUrl }: NewsCardProps) {
       <div className="group flex cursor-pointer gap-3">
         <div className="flex-1">
           <span className="text-sm text-black">{category}</span>
-          <h3 className="mt-1 text-lg leading-tight font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-2xl">
+          <h3 className="mt-1 text-lg leading-tight font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-xl">
             {title}
           </h3>
         </div>
