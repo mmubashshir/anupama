@@ -20,7 +20,7 @@ export default function Page() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl bg-white p-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
       <header className="bg-white pb-4">
         <div>
           <div className="flex items-center justify-between">

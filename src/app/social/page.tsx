@@ -7,7 +7,7 @@ import { SocialCards } from './components/social-card';
 
 export default function Page() {
   return (
-    <div className="mx-auto min-h-screen max-w-5xl bg-white px-4 py-6">
+    <div className="mx-auto max-w-6xl bg-white px-4 py-6">
       <div className="mx-auto max-w-6xl space-y-12 p-4">
         <div className="mb-6 h-5 w-16 bg-red-500" />
         {/* Header */}
