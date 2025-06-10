@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/video-news/layout.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1749403339467,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1749403339466,
+            "name": "Commit-0",
+            "content": "import BlogNav from '~/components/blog-nav';\n\nexport default function BlogLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return (\n    <>\n      <BlogNav />\n      <main className=\"mx-auto max-w-6xl\">{children}</main>\n    </>\n  );\n}\n"
+        }
+    ]
+}

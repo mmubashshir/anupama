@@ -14,19 +14,16 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   return (
-    // <div className="mx-auto max-w-6xl xl:px-0">
     <>
       <Header />
-
       <DailyNews />
       <VideoNews />
       <Social />
       <Health />
-      {/* <Stories /> */}
+      <Stories />
       <TopStories />
 
       <main>{children}</main>
     </>
-    // </div>
   );
 }
