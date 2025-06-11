@@ -75,7 +75,7 @@ export const navLinks: NavLink[] = [
     sublinks: [
       {
         title: 'ಅಂಕಣಗಳು',
-        href: '/columns',
+        href: '/articles',
       },
       {
         title: 'ಪ್ರತಿಭೆ',

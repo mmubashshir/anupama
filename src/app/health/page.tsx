@@ -14,9 +14,12 @@ export default function Page() {
             <h1 className="text-2xl font-black md:text-4xl">
               ಆರೋಗ್ಯ ಮತ್ತು ವೈದ್ಯಕೀಯ
             </h1>
-            <Link href="" className="flex items-center text-sm font-semibold">
+            <Link
+              href=""
+              className="group ml-auto flex items-center text-sm font-semibold"
+            >
               ಇನ್ನಷ್ಟು
-              <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4" />
+              <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4 transition-transform duration-200 group-hover:scale-125" />
             </Link>
           </div>
         </div>

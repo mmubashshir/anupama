@@ -1,3 +1,5 @@
+import type { ArticleCardProps } from '~/app/articles/components/article-card';
+
 interface Article {
   id: string;
   category: 'SPORT' | 'ENTERTAINMENT' | 'TRAVEL';
@@ -92,5 +94,32 @@ export const articles: Article[] = [
     date: '',
     image: '/anupama-3.jpg',
     comments: 0,
+  },
+];
+
+export const smallArticles: ArticleCardProps[] = [
+  {
+    image: '/anupama-2.jpg',
+    category: 'ಪ್ರತಿಬಿಂಬ',
+    headline: 'ನಟ ಕಮಲ್ ಹಾಸನ್ ಅವರು ಕನ್ನಡ ಭಾಷೆ ತಮಿಳಿನಿಂದ',
+    subhead:
+      'ಈ ಫ್ಯಾಕ್ಟರಿ ಕೋಲಾರ ಜಿಲ್ಲೆಯ ವೆಮಗಲ್ ಇಂಡಸ್ಟ್ರಿಯಲ್ ಪ್ರದೇಶದಲ್ಲಿ ನಿರ್ಮಿಸಲಾಗುತ್ತಿದ್ದು, ಭಾಷಾ ವಿಚಾರಗಳನ್ನು',
+    writerName: 'ಮ್ಯಾಥ್ಯೂ ಜೇಮ್ಸ್',
+  },
+  {
+    image: '/anupama-2.jpg',
+    category: 'ಪ್ರತಿಭೆ',
+    headline: 'ನಟ ಕಮಲ್ ಹಾಸನ್ ಅವರು ಕನ್ನಡ ಭಾಷೆ ',
+    subhead:
+      'ಈ ಫ್ಯಾಕ್ಟರಿ ಕೋಲಾರ ಜಿಲ್ಲೆಯ ವೆಮಗಲ್ ಇಂಡಸ್ಟ್ರಿಯಲ್ ಪ್ರದೇಶದಲ್ಲಿ ನಿರ್ಮಿಸಲಾಗುತ್ತಿದ್ದು, ಭಾಷಾ ವಿಚಾರಗಳನ್ನು',
+    writerName: 'ಮ್ಯಾಥ್ಯೂ ಜೇಮ್ಸ್',
+  },
+  {
+    image: '/anupama-2.jpg',
+    category: 'ಪ್ರತಿಭೆ',
+    headline: 'ನಟ ಕಮಲ್ ಹಾಸನ್ ಅವರು ಕನ್ನಡ ',
+    subhead:
+      'ಈ ಫ್ಯಾಕ್ಟರಿ ಕೋಲಾರ ಜಿಲ್ಲೆಯ ವೆಮಗಲ್ ಇಂಡಸ್ಟ್ರಿಯಲ್ ಪ್ರದೇಶದಲ್ಲಿ ನಿರ್ಮಿಸಲಾಗುತ್ತಿದ್ದು, ಭಾಷಾ ವಿಚಾರಗಳನ್ನು',
+    writerName: 'ಮ್ಯಾಥ್ಯೂ ಜೇಮ್ಸ್',
   },
 ];
