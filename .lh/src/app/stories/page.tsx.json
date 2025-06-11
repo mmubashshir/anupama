@@ -1,0 +1,34 @@
+{
+    "sourceFile": "src/app/stories/page.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1749545861722,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749545885167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { ArrowUpRight } from 'lucide-react';\n import Image from 'next/image';\n import Link from 'next/link';\n \n-import BlogCard from '~/components/blog-card';\n+import BlogCard, { BlogCardProps } from '~/components/blog-card';\n \n import FeaturedArticle from './components/featured-article';\n import HealthTipsList from './components/tips-list';\n \n@@ -69,9 +69,9 @@\n     </div>\n   );\n }\n \n-const fetauredStories: Array<Blog> = [\n+const fetauredStories: Array<BlogCardProps> = [\n   {\n     image: '/anupama-4.jpg',\n     category: 'ಸುದ್ದಿ',\n     headline:\n"
+                },
+                {
+                    "date": 1749546916468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     imageUrl: '/anupama-4.jpg',\n   };\n \n   return (\n-    <div className=\"mx-auto max-w-7xl bg-white p-4 sm:px-6 lg:px-8\">\n+    <div className=\"mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8\">\n       <header className=\"bg-white pb-4\">\n         <div>\n           <div className=\"flex items-center justify-between\">\n             <h1 className=\"text-2xl font-black md:text-4xl\">ಕಥೆಗಳು</h1>\n"
+                },
+                {
+                    "date": 1749546949180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     imageUrl: '/anupama-4.jpg',\n   };\n \n   return (\n-    <div className=\"mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8\">\n+    <div className=\"max-w-6xl bg-white p-4 sm:px-6 lg:px-8\">\n       <header className=\"bg-white pb-4\">\n         <div>\n           <div className=\"flex items-center justify-between\">\n             <h1 className=\"text-2xl font-black md:text-4xl\">ಕಥೆಗಳು</h1>\n"
+                },
+                {
+                    "date": 1749600744825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { ArrowUpRight } from 'lucide-react';\n import Image from 'next/image';\n import Link from 'next/link';\n \n-import BlogCard, { BlogCardProps } from '~/components/blog-card';\n+import BlogCard, { BlogCardProps } from '../../components/blog-card';\n \n import FeaturedArticle from './components/featured-article';\n import HealthTipsList from './components/tips-list';\n \n"
+                }
+            ],
+            "date": 1749545861722,
+            "name": "Commit-0",
+            "content": "import { moreStories } from '~/constants/more-stories';\nimport { ArrowUpRight } from 'lucide-react';\nimport Image from 'next/image';\nimport Link from 'next/link';\n\nimport BlogCard from '~/components/blog-card';\n\nimport FeaturedArticle from './components/featured-article';\nimport HealthTipsList from './components/tips-list';\n\nexport default function Page() {\n  // Featured article data\n  const featuredArticle = {\n    title: 'ಚಿಟ್ಕಿ ಗಿಡ ಮತ್ತು ಮೀನಿನ ಗೆಳೆತನ',\n    subtitle: 'ಬಹಿರ್ಮುಖ',\n    description:\n      'ಈ ಪ್ರಾಥಮಿಕ ಆರೋಗ್ಯದ ಪರಿಚಯ ಮನೆಗಳ ಇಂದಿನೋಲ್ ಪ್ರದೇಶದಲ್ಲಿ ನಿಮ್ಮ ಸಂಪೂರ್ಣ ಭಾವನಾ ವಿಮರ್ಶೆಗಳನ್ನು',\n    author: '-ಮ್ಯಾಥ್ಯೂ ಜೇಮ್ಸ್',\n    imageUrl: '/anupama-4.jpg',\n  };\n\n  return (\n    <div className=\"mx-auto max-w-7xl bg-white p-4 sm:px-6 lg:px-8\">\n      <header className=\"bg-white pb-4\">\n        <div>\n          <div className=\"flex items-center justify-between\">\n            <h1 className=\"text-2xl font-black md:text-4xl\">ಕಥೆಗಳು</h1>\n            <Link\n              href=\"null\"\n              className=\"flex items-center text-sm font-semibold\"\n            >\n              ಇನ್ನಷ್ಟು\n              <ArrowUpRight className=\"mb-0.5 ml-1 inline h-4 w-4\" />\n            </Link>\n          </div>\n        </div>\n      </header>\n\n      <main className=\"grid grid-cols-1 gap-4 md:grid-cols-2\">\n        {fetauredStories.map((story, index) => (\n          <BlogCard\n            key={index}\n            image={story.image}\n            category={story.category}\n            headline={story.headline}\n            subhead={story.subhead}\n            writerName={story.writerName}\n          />\n        ))}\n      </main>\n\n      <main className=\"pt-6\">\n        <h1 className=\"mb-8 text-2xl font-bold text-gray-900 sm:text-3xl\">\n          ಇನ್ನಷ್ಟು ಕಥೆಗಳು\n        </h1>\n\n        <div className=\"grid grid-cols-1 gap-6 lg:grid-cols-12\">\n          {/* Health Tips List - Takes 7 columns on large screens */}\n          <div className=\"lg:col-span-7\">\n            <HealthTipsList tips={moreStories} />\n          </div>\n\n          {/* Featured Article - Takes 5 columns on large screens */}\n          <div className=\"lg:col-span-5\">\n            <FeaturedArticle article={featuredArticle} />\n          </div>\n        </div>\n      </main>\n    </div>\n  );\n}\n\nconst fetauredStories: Array<Blog> = [\n  {\n    image: '/anupama-4.jpg',\n    category: 'ಸುದ್ದಿ',\n    headline:\n      'ಕನ್ನಡ ಭಾಷೆ ತಮಿಳಿನಿಂದ ಹುಟ್ಟಿದೆ - ಎಂಬ ಹೇಳಿಕೆಯಿಂದ ಕರ್ನಾಟಕದಲ್ಲಿ ಭಾರೀ ವಿರೋಧಕ್ಕೆ ಗುರಿಯಾಗಿದ್ದಾರೆ.',\n    subhead: 'ಬಹಿರ್ಮುಖ',\n    writerName: '-ಮ್ಯಾಥ್ಯೂ ಜೇಮ್ಸ್',\n  },\n  {\n    image: '/anupama-4.jpg',\n    category: 'ಸುದ್ದಿ',\n    headline: 'ಚಿಟ್ಕಿ ಗಿಡ ಮತ್ತು ಮೀನಿನ ಗೆಳೆತನ',\n    subhead: 'ಬಹಿರ್ಮುಖ',\n    writerName: '-ಮ್ಯಾಥ್ಯೂ ಜೇಮ್ಸ್',\n  },\n];\n"
+        }
+    ]
+}

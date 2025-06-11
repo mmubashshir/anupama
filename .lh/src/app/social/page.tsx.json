@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/app/social/page.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1749549448526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749549454780,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n import { SocialCards } from './components/social-card';\n \n export default function Page() {\n   return (\n-    <div className=\"mx-auto max-w-5xl bg-white px-4 py-6\">\n+    <div className=\"mx-auto max-w-6xl bg-white px-4 py-6\">\n       <div className=\"mx-auto max-w-6xl space-y-12 p-4\">\n         <div className=\"mb-6 h-5 w-16 bg-red-500\" />\n         {/* Header */}\n \n"
+                }
+            ],
+            "date": 1749549448526,
+            "name": "Commit-0",
+            "content": "import { foodItems } from '~/constants/food-items';\nimport { sideCardData } from '~/constants/side-card';\nimport { socialCardsData } from '~/constants/social-news';\n\nimport { FoodCarousel } from './components/food-carousel';\nimport { SocialCards } from './components/social-card';\n\nexport default function Page() {\n  return (\n    <div className=\"mx-auto max-w-5xl bg-white px-4 py-6\">\n      <div className=\"mx-auto max-w-6xl space-y-12 p-4\">\n        <div className=\"mb-6 h-5 w-16 bg-red-500\" />\n        {/* Header */}\n\n        <div className=\"pb-8\">\n          <h1 className=\"text-4xl font-black md:text-5xl\">ಜೀವನಶೈಲಿ</h1>\n        </div>\n\n        <SocialCards mainCards={socialCardsData} sideCard={sideCardData} />\n\n        <FoodCarousel items={foodItems} />\n      </div>\n    </div>\n  );\n}\n"
+        }
+    ]
+}
