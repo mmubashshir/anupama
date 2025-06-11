@@ -3,8 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import BlogCard, { BlogCardProps } from '~/components/blog-card';
-
+import BlogCard, { BlogCardProps } from '../../components/blog-card';
 import FeaturedArticle from './components/featured-article';
 import HealthTipsList from './components/tips-list';
 
