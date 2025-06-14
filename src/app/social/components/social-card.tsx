@@ -10,7 +10,7 @@ interface SocialCardProps {
 
 export function SocialCard({ image, title, description }: SocialCardProps) {
   return (
-    <div className="p-0">
+    <div className="group cursor-pointer p-0">
       <div className="relative aspect-[4/3]">
         <Image
           src={image || '/placeholder.svg'}
@@ -18,9 +18,12 @@ export function SocialCard({ image, title, description }: SocialCardProps) {
           fill
           className="object-cover"
         />
+        <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
       </div>
       <div className="bg-white">
-        <h3 className="mb-2 pt-4 text-2xl leading-tight font-black">{title}</h3>
+        <h3 className="mb-2 pt-4 text-2xl leading-tight font-black decoration-1 underline-offset-4 group-hover:underline">
+          {title}
+        </h3>
         <p className="text-sm leading-relaxed font-semibold">{description}</p>
       </div>
     </div>

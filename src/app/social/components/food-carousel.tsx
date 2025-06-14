@@ -91,7 +91,7 @@ export function FoodCarousel({ items }: FoodCarouselProps) {
       <div className="hidden grid-cols-4 gap-6 md:grid">
         {items.map((item) => (
           <div key={item.title} className="overflow-hidden">
-            <div className="p-0">
+            <div className="group cursor-pointer p-0">
               <div className="relative aspect-[3/2] w-full">
                 <Image
                   src={item.image || '/placeholder.svg'}
@@ -99,9 +99,12 @@ export function FoodCarousel({ items }: FoodCarouselProps) {
                   fill
                   className="object-cover"
                 />
+                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
               </div>
               <div className="pt-2">
-                <h3 className="text-xl font-black">{item.title}</h3>
+                <h3 className="text-xl font-black decoration-1 underline-offset-4 group-hover:underline">
+                  {item.title}
+                </h3>
               </div>
             </div>
           </div>
