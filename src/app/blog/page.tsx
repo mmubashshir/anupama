@@ -1,5 +1,3 @@
-'use client';
-
 import { blogPosts } from '~/constants/blog-posts';
 import {
   Calendar,
@@ -12,7 +10,26 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Blog() {
+import { graphql, query } from '~/utils/graphql-client';
+
+const postsQuery = graphql(`
+  query AllAuthors {
+    posts {
+      nodes {
+        author {
+          node {
+            firstName
+            email
+          }
+        }
+      }
+    }
+  }
+`);
+
+export default async function Blog() {
+  const _res = await query({ query: postsQuery });
+
   return (
     <div className="container mx-auto px-4 py-12 md:px-20 md:py-16">
       <div className="flex flex-col gap-8 lg:flex-row">

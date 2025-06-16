@@ -8,5 +8,7 @@
   "editor.renderFinalNewline": "dimmed",
   "[html][typescript][typescriptreact][javascript][javascriptreact][css][json]": {
     "files.eol": "\n"
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
