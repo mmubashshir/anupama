@@ -12,9 +12,9 @@ import Link from 'next/link';
 
 import { graphql, query } from '~/utils/graphql-client';
 
-const postsQuery = graphql(`
-  query AllAuthors {
-    posts {
+const LIMITED_POSTS_QUERY = graphql(`
+  query FetchLimitedPosts($limit: Int!) {
+    posts(first: $limit) {
       nodes {
         author {
           node {
@@ -27,8 +27,32 @@ const postsQuery = graphql(`
   }
 `);
 
+const ALL_POSTS_QUERY = graphql(`
+  query AllPosts {
+    posts {
+      nodes {
+        author {
+          node {
+            firstName
+          }
+        }
+      }
+    }
+  }
+`);
+
 export default async function Blog() {
-  const _res = await query({ query: postsQuery });
+  const _limitedRes = await query({
+    query: LIMITED_POSTS_QUERY,
+    variables: { limit: 5 },
+  });
+  const _allPostsRes = await query({ query: ALL_POSTS_QUERY });
+
+  console.log('limited posts', _limitedRes.data.posts?.nodes[0].author);
+  console.log(
+    'all posts',
+    _allPostsRes.data.posts?.nodes[0].author?.node.firstName,
+  );
 
   return (
     <div className="container mx-auto px-4 py-12 md:px-20 md:py-16">
