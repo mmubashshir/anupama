@@ -18,7 +18,7 @@ export default function MoreStories({ tips }: MoreStoriesProps) {
           className="flex items-center gap-4 border-b border-gray-200 py-3 last:border-b-0"
         >
           <CircleNumber number={tip.id} />
-          <p className="text-base font-medium text-gray-800 sm:text-lg">
+          <p className="cursor-pointer text-base font-medium text-gray-800 decoration-1 underline-offset-4 hover:underline sm:text-lg">
             {tip.text}
           </p>
         </div>

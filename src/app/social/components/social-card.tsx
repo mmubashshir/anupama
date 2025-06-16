@@ -49,33 +49,40 @@ export function SideCard({
 }: SideCardProps) {
   return (
     <div className="bg-[#FFF4F2] p-5">
-      <div className="relative mb-6 aspect-[3/2]">
-        <Image
-          src={image || '/placeholder.svg'}
-          alt={title}
-          fill
-          className="object-cover"
-        />
-      </div>
+      <div className="group cursor-pointer">
+        <div className="relative mb-6 aspect-[3/2]">
+          <Image
+            src={image || '/placeholder.svg'}
+            alt={title}
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
+        </div>
 
-      <p className="mb-1 text-lg font-semibold">{category}</p>
-      <h3 className="mb-2 text-xl font-black">{title}</h3>
-      <p className="mb-2 text-base leading-relaxed font-semibold">
-        {description}
-      </p>
-      <p className="text-sm text-gray-600">{author}</p>
+        <p className="mb-1 text-lg font-semibold">{category}</p>
+        <h3 className="mb-2 text-xl font-black decoration-1 underline-offset-4 group-hover:underline">
+          {title}
+        </h3>
+        <p className="mb-2 text-base leading-relaxed font-semibold">
+          {description}
+        </p>
+        <p className="text-sm text-gray-600">{author}</p>
+      </div>
 
       <div className="mt-3 border-t border-gray-300 pt-3">
         <h4 className="mb-2 text-xl font-black">ಇನ್ನಷ್ಟು ಓದಿ</h4>
         <div className="space-y-1 pl-3">
-          {bulletPoints.map((point) => (
-            <p
-              key={point}
-              className="text-base leading-relaxed font-medium text-black"
-            >
-              • {point}
-            </p>
-          ))}
+          <ul className="list-disc space-y-1 pl-3">
+            {bulletPoints.map((point) => (
+              <li
+                key={point}
+                className="cursor-pointer text-base leading-relaxed font-medium text-black decoration-1 underline-offset-4 hover:underline"
+              >
+                {point}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
@@ -97,10 +104,10 @@ export function SocialCards({ mainCards, sideCard }: SocialCardsProps) {
         </h1>
         <Link
           href=""
-          className="group ml-auto flex items-center text-sm font-semibold"
+          className="group ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
         >
           ಇನ್ನಷ್ಟು
-          <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4 transition-transform duration-200 group-hover:scale-125" />
+          <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4" />
         </Link>
       </div>
 

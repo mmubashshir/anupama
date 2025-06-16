@@ -16,10 +16,10 @@ export default function Page() {
             </h1>
             <Link
               href=""
-              className="group ml-auto flex items-center text-sm font-semibold"
+              className="ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
             >
               ಇನ್ನಷ್ಟು
-              <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4 transition-transform duration-200 group-hover:scale-125" />
+              <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -27,7 +27,7 @@ export default function Page() {
 
       {/* Main Content */}
       <main className="mx-auto max-w-7xl px-4 py-8">
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2">
           {healthData.map((professional) => (
             <HealthCard
               key={professional.id}
