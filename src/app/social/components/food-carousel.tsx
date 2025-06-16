@@ -31,10 +31,10 @@ export function FoodCarousel({ items }: FoodCarouselProps) {
         <h2 className="text-4xl font-black">ಅಡುಗೆ</h2>
         <Link
           href=""
-          className="group ml-auto flex items-center text-sm font-semibold"
+          className="ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
         >
           ಇನ್ನಷ್ಟು
-          <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4 transition-transform duration-200 group-hover:scale-125" />
+          <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4" />
         </Link>
       </div>
 
