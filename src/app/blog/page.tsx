@@ -10,49 +10,22 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { graphql, query } from '~/utils/graphql-client';
+import WPContentRenderer from '~/components/wp-content-renderer';
 
-const LIMITED_POSTS_QUERY = graphql(`
-  query FetchLimitedPosts($limit: Int!) {
-    posts(first: $limit) {
-      nodes {
-        author {
-          node {
-            firstName
-            email
-          }
-        }
-      }
-    }
-  }
-`);
+import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
-const ALL_POSTS_QUERY = graphql(`
-  query AllPosts {
-    posts {
-      nodes {
-        author {
-          node {
-            firstName
-          }
-        }
-      }
-    }
-  }
-`);
+import { fetchLimitedPosts } from '~/services/posts';
 
 export default async function Blog() {
-  const _limitedRes = await query({
-    query: LIMITED_POSTS_QUERY,
-    variables: { limit: 5 },
-  });
-  const _allPostsRes = await query({ query: ALL_POSTS_QUERY });
+  const { posts } = await fetchLimitedPosts({ limit: 1 });
 
-  console.log('limited posts', _limitedRes.data.posts?.nodes[0].author);
-  console.log(
-    'all posts',
-    _allPostsRes.data.posts?.nodes[0].author?.node.firstName,
-  );
+  if (!posts?.nodes) {
+    return (
+      <div className="text-center text-6xl text-red-500">
+        Some error occured
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-12 md:px-20 md:py-16">
@@ -60,12 +33,15 @@ export default async function Blog() {
         {/* Main Content */}
         <div className="w-full lg:w-2/3">
           <div className="space-y-12">
-            {blogPosts.map((post) => (
-              <article key={post.id} className="pb-8">
+            {posts.nodes.map((post) => (
+              <article key={post.title} className="pb-8">
                 <div className="mb-4 overflow-hidden">
                   <Image
-                    src={post.featuredImage}
-                    alt={post.title}
+                    src={
+                      post.featuredImage?.node.sourceUrl ??
+                      getPlaceholderImage()
+                    }
+                    alt={post.title ?? ''}
                     width={800}
                     height={400}
                     className="h-auto w-full object-cover"
@@ -77,7 +53,7 @@ export default async function Blog() {
                 <div className="mb-4 flex flex-wrap gap-4 text-gray-500">
                   <div className="flex items-center gap-1">
                     <User className="h-5 w-5 text-red-500" />
-                    <span>{post.author}</span>
+                    <span>{post.author?.node.name}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Calendar className="h-5 w-5 text-red-500" />
@@ -85,17 +61,20 @@ export default async function Blog() {
                   </div>
                   <div className="flex items-center gap-1">
                     <Tag className="h-5 w-5 text-red-500" />
-                    <span>{post.categories.join(', ')}</span>
+                    <span>
+                      {post.categories?.nodes.map((itm) => itm.name).join(', ')}
+                    </span>
                   </div>
                   <div className="flex items-center gap-1">
                     <MessageCircle className="h-5 w-5 text-red-500" />
-                    <span>{post.comments} Comments</span>
+                    <span>{post.commentCount} Comments</span>
                   </div>
                 </div>
 
-                <p className="mb-4 whitespace-pre-line text-gray-700">
-                  {post.excerpt}
-                </p>
+                <WPContentRenderer
+                  content={post.content}
+                  className="mb-4 whitespace-pre-line"
+                />
               </article>
             ))}
           </div>
