@@ -25,3 +25,22 @@ body {
   color: var(--foreground);
   font-family: var(--font-primary), sans-serif;
 }
+
+.article h1 {
+  @apply font-primary text-6xl;
+}
+
+.article h2 {
+  @apply text-5xl;
+}
+
+.article h3 {
+  @apply text-4xl;
+}
+.article h4 {
+  @apply text-3xl;
+}
+
+.article p {
+  @apply font-primary text-red-500;
+}

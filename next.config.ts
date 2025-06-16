@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
   },
+
+  images: {
+    dangerouslyAllowSVG: true,
+    remotePatterns: [{ hostname: 'placehold.co' }, { hostname: 'localhost' }],
+  },
 };
 
 export default nextConfig;
