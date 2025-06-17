@@ -1,3 +1,4 @@
+import React from 'react';
 import { healthData } from '~/constants/health-data';
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
@@ -10,8 +11,8 @@ export default function Page() {
       {/* Header */}
       <header className="bg-white">
         <div className="px-4">
-          <div className="flex items-center justify-between py-4">
-            <h1 className="text-2xl font-black md:text-4xl">
+          <div className="flex items-center justify-between">
+            <h1 className="text-4xl font-black md:text-5xl">
               ಆರೋಗ್ಯ ಮತ್ತು ವೈದ್ಯಕೀಯ
             </h1>
             <Link
@@ -24,17 +25,40 @@ export default function Page() {
           </div>
         </div>
       </header>
-
-      {/* Main Content */}
       <main className="mx-auto max-w-7xl px-4 py-8">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2">
-          {healthData.map((professional) => (
-            <HealthCard
-              key={professional.id}
-              name={professional.name}
-              description={professional.description}
-              imageUrl="/anupama-4.jpg"
-            />
+          {healthData.map((professional, index) => (
+            <React.Fragment key={professional.id}>
+              {/* Left card */}
+              {index % 2 === 0 && (
+                <>
+                  <div className="relative">
+                    <HealthCard
+                      name={professional.name}
+                      description={professional.description}
+                      imageUrl="/anupama-4.jpg"
+                    />
+                    {/* Vertical line */}
+                    <div className="absolute top-0 right-0 hidden h-full border-r border-gray-300 sm:block" />
+                  </div>
+                </>
+              )}
+
+              {/* Right card */}
+              {index % 2 === 1 && (
+                <HealthCard
+                  name={professional.name}
+                  description={professional.description}
+                  imageUrl="/anupama-4.jpg"
+                />
+              )}
+
+              {(index + 1) % 2 === 0 && index !== healthData.length - 1 && (
+                <div className="col-span-full">
+                  <hr className="my-2 border-gray-300" />
+                </div>
+              )}
+            </React.Fragment>
           ))}
         </div>
       </main>
