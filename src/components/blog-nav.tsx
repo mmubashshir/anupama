@@ -49,7 +49,7 @@ export default function DesktopBlogNav() {
 
       {/* Desktop Top Bar */}
       <div className="my-auto hidden h-full items-center border-gray-300 shadow-xs md:flex">
-        <div className="container mx-auto flex h-full items-center justify-between px-4 lg:px-6 xl:px-8 2xl:px-10">
+        <div className="container mx-auto flex h-full items-center justify-between px-4 lg:px-6 xl:px-8 2xl:px-18">
           {/* Logo */}
           <Link href="/">
             <Image
