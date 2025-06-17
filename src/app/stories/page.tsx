@@ -12,7 +12,7 @@ export default function Page() {
     <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
       <div className="bg-white pb-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-black md:text-4xl">ಕಥೆಗಳು</h1>
+          <h1 className="text-4xl font-extrabold md:text-5xl">ಕಥೆಗಳು</h1>
           <Link
             href=""
             className="group ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
