@@ -5,7 +5,9 @@ import eslintConfigPrettier from 'eslint-config-prettier/flat';
 export default [
   {
     files: ['src/**/*.{js,mjs,cjs,ts,mts,cts}'],
-    ignores: ['eslint.config.mjs', 'graphql-env.d.ts'],
+  },
+  {
+    ignores: ['eslint.config.mjs', './src/graphql-env.d.ts'],
   },
   ...gvseslint.configs.flat.browser,
   ...gvseslint.configs.flat.react,

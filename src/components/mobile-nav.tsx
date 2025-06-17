@@ -5,29 +5,29 @@ import Link from 'next/link';
 
 import type { ComponentRef } from 'react';
 
-// Mobile Navigation
-export default function MobileNavbar({
-  onNavBarClose,
-}: {
+interface MobileNavbarProps {
   onNavBarClose: () => void;
-}) {
+}
+
+export default function MobileNavbar({ onNavBarClose }: MobileNavbarProps) {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const mobileNavRef = useRef<ComponentRef<'div'>>(null);
 
   useEffect(() => {
-    function callBack(event: HTMLElementEventMap['animationend']) {
-      if (event.animationName !== 'exit') {
-        return;
-      }
+    const node = mobileNavRef.current;
+
+    function callBack(event: AnimationEvent) {
+      if (event.animationName !== 'exit') return;
 
       onNavBarClose();
     }
 
-    mobileNavRef.current?.addEventListener('animationend', callBack);
+    node?.addEventListener('animationend', callBack);
 
-    return () =>
-      mobileNavRef.current?.removeEventListener('animationend', callBack);
-  }, []);
+    return () => {
+      node?.removeEventListener('animationend', callBack);
+    };
+  }, [onNavBarClose]);
 
   const toggleSection = (title: string) => {
     setOpenSection((prev) => (prev === title ? null : title));

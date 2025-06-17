@@ -13,18 +13,19 @@ export default function Header() {
 
   return (
     <header className="mx-auto max-w-6xl px-4">
-      {/* Mobile Top Bar */}
-      <div className="container mx-auto flex items-center justify-between border-b-2 border-gray-500 px-2 py-6 md:hidden md:px-0 md:py-0">
-        {/* Logo on left */}
-        <Image
-          className="select-none"
-          draggable="false"
-          src="/anupama-logo.png"
-          alt="Anupama Logo"
-          width={140}
-          height={40}
-          priority
-        />
+      {/* Mobile Top Bar - Made Sticky */}
+      <div className="fixed top-0 right-0 left-0 z-40 container mx-auto flex h-16 items-center justify-between bg-white p-4 px-4 shadow-xs md:hidden">
+        {/* Logo */}
+        <Link href="/">
+          <Image
+            draggable="false"
+            src="/anupama-logo.png"
+            alt="Anupama Logo"
+            width={120}
+            height={40}
+            priority
+          />
+        </Link>
 
         {/* Hamburger Menu */}
         <button
@@ -33,9 +34,12 @@ export default function Header() {
             setIsNavBarOpen(true);
           }}
         >
-          <Menu className="h-7 w-7" />
+          <Menu className="size-7" />
         </button>
       </div>
+
+      {/* Spacer for fixed header on mobile */}
+      <div className="h-16 md:hidden" />
 
       {/* Show mobile nav only if open */}
       {isNavBarOpen ? (
