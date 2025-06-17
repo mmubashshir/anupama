@@ -29,18 +29,79 @@ body {
 .article h1 {
   @apply font-primary text-6xl;
 }
-
 .article h2 {
-  @apply text-5xl;
+  @apply font-primary text-5xl;
 }
-
 .article h3 {
-  @apply text-4xl;
+  @apply font-primary text-4xl;
 }
 .article h4 {
-  @apply text-3xl;
+  @apply font-primary text-3xl;
+}
+.article h5 {
+  @apply font-primary text-2xl;
+}
+.article h6 {
+  @apply font-primary text-xl;
 }
 
 .article p {
-  @apply font-primary text-red-500;
+  @apply font-primary mb-4 text-base leading-relaxed text-gray-800;
+}
+
+.article a {
+  @apply text-blue-600 underline hover:text-blue-800;
+}
+
+.article ul {
+  @apply mb-4 list-disc pl-6;
+}
+.article ol {
+  @apply mb-4 list-decimal pl-6;
+}
+.article li {
+  @apply mb-2;
+}
+
+.article blockquote {
+  @apply my-6 border-l-4 border-gray-300 pl-4 text-gray-600 italic;
+}
+
+.article img {
+  @apply my-6 h-auto max-w-full rounded-lg;
+}
+
+.article figure {
+  @apply my-6;
+}
+.article figcaption {
+  @apply mt-2 text-center text-sm text-gray-500;
+}
+
+.article pre {
+  @apply overflow-x-auto rounded bg-gray-100 p-4 text-sm;
+}
+.article code {
+  @apply rounded bg-gray-200 px-1 py-0.5 font-mono text-sm;
+}
+
+.article table {
+  @apply my-6 w-full table-auto border-collapse;
+}
+.article th {
+  @apply border bg-gray-100 p-2 text-left font-semibold;
+}
+.article td {
+  @apply border p-2;
+}
+
+.article hr {
+  @apply my-8 border-gray-300;
+}
+
+.article strong {
+  @apply font-semibold;
+}
+.article em {
+  @apply italic;
 }

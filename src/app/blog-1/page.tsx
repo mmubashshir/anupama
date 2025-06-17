@@ -21,7 +21,7 @@ export default function Blog() {
                     alt={post.title}
                     width={400}
                     height={250}
-                    className="w-full object-cover transition-transform duration-300 hover:scale-110"
+                    className="h-full w-full object-cover transition duration-400 hover:scale-110 hover:brightness-75"
                   />
                 </div>
                 <Link href="#" className="duration-300 hover:text-red-500">
@@ -52,14 +52,16 @@ export default function Blog() {
                 <p className="text-md mt-6 line-clamp-5 text-gray-600">
                   {post.excerpt}
                 </p>
-                <Link
-                  href={`/blog/${blogPosts[0].slug}`}
-                  className="mt-4 inline-flex items-center gap-2 border border-gray-300 px-8 py-3 text-gray-500 transition-colors hover:bg-red-500 hover:text-white"
-                >
-                  Continue Reading <ChevronRight size={16} />
-                </Link>
+                <div className="mt-4">
+                  <Link
+                    href={`/blog/${blogPosts[0].slug}`}
+                    className="inline-flex w-fit items-center gap-2 border border-gray-300 px-8 py-3 text-gray-500 transition-colors duration-300 hover:bg-red-500 hover:text-white"
+                  >
+                    Continue Reading <ChevronRight size={16} />
+                  </Link>
+                </div>
                 {/* Divider */}
-                <div className="mb-12 border-b border-gray-200" />
+                <div className="mt-12 border-b border-gray-200" />
               </div>
             ))}
           </div>
