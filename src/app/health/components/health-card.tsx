@@ -1,28 +1,32 @@
 import Image from 'next/image';
 
-interface HealthCardProps {
+import WPContentRenderer from '~/components/wp-content-renderer';
+
+interface HealthcareProps {
   name: string;
+  category: string;
   description: string;
   imageUrl: string;
 }
 
-export default function HealthCard({
+export default function HealthcareCard({
   name,
+  category,
   description,
   imageUrl,
-}: HealthCardProps) {
+}: HealthcareProps) {
   return (
-    <div className="bg-white py-6">
-      <div className="group flex cursor-pointer items-start space-x-4">
+    <div className="bg-white py-4">
+      <div className="group flex cursor-pointer items-start space-x-3 sm:space-x-4">
         {/* Profile Image */}
         <div className="flex-shrink-0">
-          <div className="relative h-25 w-25 overflow-hidden sm:h-22 sm:w-22">
+          <div className="relative h-22 w-22 overflow-hidden sm:h-24 sm:w-24 md:h-25 md:w-25">
             <Image
               src={imageUrl || '/placeholder.svg'}
               alt={name}
-              width={80}
-              height={80}
-              className="h-full w-full object-cover"
+              fill
+              sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, 112px"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
           </div>
@@ -30,12 +34,13 @@ export default function HealthCard({
 
         {/* Content */}
         <div className="min-w-0 flex-1">
-          <h3 className="mb-2 text-lg font-black decoration-1 underline-offset-4 group-hover:underline sm:text-xl">
+          <span className="text-xs text-black sm:text-sm">{category}</span>
+          <h3 className="text-base font-black decoration-1 underline-offset-4 group-hover:underline sm:text-lg md:text-xl">
             {name}
           </h3>
-          <p className="text-sm leading-relaxed text-black sm:text-base">
-            {description}
-          </p>
+          <div className="mt-1 text-sm sm:text-base">
+            <WPContentRenderer content={description} />
+          </div>
         </div>
       </div>
     </div>
