@@ -3,9 +3,13 @@ import { graphql, query } from '~/utils/graphql-client';
 import type { VariablesOf } from 'gql.tada';
 
 const LIMITED_POSTS_QUERY = graphql(`
-  query FetchLimitedPosts($limit: Int!) {
-    posts(first: $limit) {
+  query FetchLimitedPosts(
+    $limit: Int!
+    $filter: RootQueryToPostConnectionWhereArgs
+  ) {
+    posts(first: $limit, where: $filter) {
       nodes {
+        id
         title
         author {
           node {
@@ -15,7 +19,9 @@ const LIMITED_POSTS_QUERY = graphql(`
         date
         content
         excerpt
-
+        youTubeEmbed {
+          videoLink
+        }
         featuredImage {
           node {
             sourceUrl
@@ -39,6 +45,7 @@ const ALL_POSTS_QUERY = graphql(`
   query FetchLimitedPosts {
     posts {
       nodes {
+        id
         title
         date
         content
