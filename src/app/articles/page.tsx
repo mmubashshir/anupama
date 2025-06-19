@@ -4,9 +4,9 @@ import { fetauredStories } from '~/constants/stories';
 import StoryCard from '../stories/components/story-card';
 import ArticleCard from './components/article-card';
 
-export default function Page() {
+export default function Articles() {
   return (
-    <div className="p-4">
+    <div className="mx-auto max-w-6xl px-4 py-6">
       <h1 className="pb-6 text-2xl font-black md:text-4xl">ಲೇಖನಗಳು</h1>
 
       {/* Main Layout Container */}
