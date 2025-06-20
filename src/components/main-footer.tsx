@@ -66,25 +66,27 @@ export default function Footer() {
 
             <div className="space-y-2 text-sm text-slate-600">
               <p>
-                <span className="font-medium">Operated by:</span> ThemesCamp
-                Company, Inc.
+                <span className="font-medium">Operated by:</span> Sanmarga
+                Publication Trust
               </p>
-              <p>
+              {/* <p>
                 <span className="font-medium">Tax Code:</span> 0514234567
+              </p> */}
+              <p>
+                <span className="font-medium">Address:</span> 1st floor,
+                Hidayath Centre Bibi Alabi Road, Bunder, Mangalore 575 001
               </p>
               <p>
-                <span className="font-medium">Address:</span> 223 Thatcher Road
-                St, Mahattan NY 10632, United States
+                <span className="font-medium">Email:</span>{' '}
+                anupamamasika@gmail.com
               </p>
               <p>
-                <span className="font-medium">Email:</span> support@Newzin.com
-              </p>
-              <p>
-                <span className="font-medium">Phone:</span> (+051) 3235 68 69
+                <span className="font-medium">Phone:</span> +91 9535445101 +
+                8197355848
               </p>
               <p className="pt-2">
-                <span className="font-medium">License No.</span> 12/AB-BCDFF,
-                Signed on January 29, 2022
+                <span className="font-medium">License No.:</span> RNI No. KARKAN
+                2010/31373
               </p>
             </div>
           </div>
