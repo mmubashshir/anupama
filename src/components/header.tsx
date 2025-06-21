@@ -96,11 +96,6 @@ export function DesktopNavbar() {
     <div className="hidden border-t border-b-2 border-gray-500 border-t-gray-300 md:block">
       <div className="container mx-auto">
         <nav className="flex h-16 items-center gap-4 text-sm font-semibold">
-          {/* Hamburger Menu (for future use) */}
-          <button type="button" className="hover:cursor-pointer">
-            <Menu className="h-5 w-5" />
-          </button>
-
           {/* Navigation Links */}
           <DesktopNavLinks />
         </nav>
@@ -123,15 +118,19 @@ export function DesktopNavLinks() {
             key={link.title}
             className="group relative h-full hover:cursor-pointer first:hover:text-red-500"
           >
-            <Link
-              href={link.sublinks?.[0]?.href ?? '#'}
-              className="mx-3 flex h-full items-center transition duration-300 hover:text-red-500"
-            >
-              {link.title}
-              {link.sublinks ? (
+            {link.sublinks ? (
+              <span className="mx-3 flex h-full items-center transition duration-300 hover:text-red-500">
+                {link.title}
                 <ChevronDown className="h-3 w-3 text-gray-400" />
-              ) : null}
-            </Link>
+              </span>
+            ) : (
+              <Link
+                href={link.href ?? '/'}
+                className="mx-3 flex h-full items-center transition duration-300 hover:text-red-500"
+              >
+                {link.title}
+              </Link>
+            )}
 
             {link.sublinks ? (
               <ul className="absolute left-0 z-50 hidden w-40 border-t-2 border-red-500 bg-white py-2 text-sm shadow-lg transition-all delay-300 duration-200 ease-in-out group-hover:block">

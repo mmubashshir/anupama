@@ -16,6 +16,8 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Blog() {
   const { posts } = await fetchLimitedPosts({ limit: 1 });
 
