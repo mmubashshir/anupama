@@ -1,11 +1,28 @@
-import React from 'react';
-import { healthData } from '~/constants/health-data';
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
+import { fetchLimitedPosts } from '~/services/posts';
+
 import HealthCard from './components/health-card';
 
-export default function Page() {
+export default async function Page() {
+  const { posts: healthPostsRaw } = await fetchLimitedPosts({
+    limit: 2,
+    filter: {
+      categoryName: 'health',
+    },
+  });
+
+  const { posts: medicinePostsRaw } = await fetchLimitedPosts({
+    limit: 2,
+    filter: {
+      categoryName: 'medicine',
+    },
+  });
+
+  const healthPosts = healthPostsRaw?.nodes ?? [];
+  const medicinePosts = medicinePostsRaw?.nodes ?? [];
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
       {/* Header */}
@@ -16,7 +33,7 @@ export default function Page() {
               ಆರೋಗ್ಯ ಮತ್ತು ವೈದ್ಯಕೀಯ
             </h1>
             <Link
-              href=""
+              href="/category/health"
               className="ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
             >
               ಇನ್ನಷ್ಟು
@@ -25,40 +42,32 @@ export default function Page() {
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-7xl px-4 py-8">
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2">
-          {healthData.map((professional, index) => (
-            <React.Fragment key={professional.id}>
-              {/* Left card */}
-              {index % 2 === 0 && (
-                <>
-                  <div className="relative">
-                    <HealthCard
-                      name={professional.name}
-                      description={professional.description}
-                      imageUrl="/anupama-4.jpg"
-                    />
-                    {/* Vertical line */}
-                    <div className="absolute top-0 right-0 hidden h-full border-r border-gray-300 sm:block" />
-                  </div>
-                </>
-              )}
 
-              {/* Right card */}
-              {index % 2 === 1 && (
-                <HealthCard
-                  name={professional.name}
-                  description={professional.description}
-                  imageUrl="/anupama-4.jpg"
-                />
-              )}
+      {/* Main Content */}
+      <main className="px-4">
+        {/* Health Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2">
+          {healthPosts.map((post) => (
+            <HealthCard
+              key={post.id}
+              name={post.title ?? 'Untitled'}
+              category={post.categories?.nodes[0]?.name ?? ''}
+              description={post.excerpt ?? ''}
+              imageUrl={post.featuredImage?.node.sourceUrl ?? '/fallback.jpg'}
+            />
+          ))}
+        </div>
 
-              {(index + 1) % 2 === 0 && index !== healthData.length - 1 && (
-                <div className="col-span-full">
-                  <hr className="my-2 border-gray-300" />
-                </div>
-              )}
-            </React.Fragment>
+        {/* Medicine Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2">
+          {medicinePosts.map((post) => (
+            <HealthCard
+              key={post.id}
+              name={post.title ?? 'Untitled'}
+              category={post.categories?.nodes[0]?.name ?? ''}
+              description={post.excerpt ?? ''}
+              imageUrl={post.featuredImage?.node.sourceUrl ?? '/fallback.jpg'}
+            />
           ))}
         </div>
       </main>
