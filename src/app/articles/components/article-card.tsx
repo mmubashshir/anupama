@@ -2,20 +2,24 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export interface ArticleCardProps {
+  key: string;
   image: string;
   category: string;
   headline: string;
   subhead?: string;
   writerName?: string;
+  date: Date;
   small?: boolean;
 }
 
 export default function ArticleCard({
+  key,
   image,
   category,
   headline,
   subhead,
   writerName,
+  date,
   small = false,
 }: ArticleCardProps) {
   if (small) {

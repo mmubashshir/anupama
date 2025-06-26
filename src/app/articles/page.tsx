@@ -1,10 +1,50 @@
-import { smallArticles } from '~/constants/articles';
-import { fetauredStories } from '~/constants/stories';
+import { fetchLimitedPosts } from '~/services/posts';
 
 import StoryCard from '../stories/components/story-card';
-import ArticleCard from './components/article-card';
+import ArticleCard, { ArticleCardProps } from './components/article-card';
 
-export default function Articles() {
+export default async function Articles() {
+  const { posts: columnsRaw } = await fetchArticles(ArticleTypes.Columns);
+  const { posts: talentsRaw } = await fetchArticles(ArticleTypes.Talent);
+  const { posts: achievementsRaw } = await fetchArticles(
+    ArticleTypes.Achievements,
+  );
+  const { posts: reflectionsRaw } = await fetchArticles(
+    ArticleTypes.Reflection,
+  );
+  const { posts: societyRaw } = await fetchArticles(ArticleTypes.Society);
+
+  const columns = columnsRaw?.nodes ?? [];
+  const talents = talentsRaw?.nodes ?? [];
+  const achievements = achievementsRaw?.nodes ?? [];
+  const reflections = reflectionsRaw?.nodes ?? [];
+  const society = societyRaw?.nodes ?? [];
+
+  const articles: Array<ArticleCardProps> = [
+    ...columns,
+    ...talents,
+    ...achievements,
+    ...society,
+    ...reflections,
+  ]
+    .map((article) => {
+      return {
+        key: article.id,
+        image: article.featuredImage?.node.sourceUrl ?? '/fallback.jpg',
+        category: article.categories?.nodes[0].name ?? 'Uncategorised',
+        headline: article.title ?? '',
+        subhead: '',
+        writerName: article.author?.node.name ?? '',
+        date: new Date(article.date ?? ''),
+      };
+    })
+    .sort((a, b) => {
+      if (!a.date && !b.date) return 0;
+      if (!a.date) return 1; // a is null, put it after b
+      if (!b.date) return -1; // b is null, put a before b
+      return a.date.getTime() - b.date.getTime();
+    });
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
       <h1 className="px-4 pb-6 text-2xl font-black md:text-4xl">ಲೇಖನಗಳು</h1>
@@ -13,30 +53,14 @@ export default function Articles() {
       <div className="mb-8 grid grid-cols-1 gap-8 px-4 lg:grid-cols-2">
         {/* Main Featured Article (Left - Takes 3 columns out of 5) */}
         <div className="lg:col-span-1">
-          {fetauredStories.slice(0, 1).map((story) => (
-            <StoryCard
-              key={story.headline}
-              image={story.image}
-              category={story.category}
-              headline={story.headline}
-              subhead={story.subhead}
-              writerName={story.writerName}
-            />
-          ))}
+          <StoryCard {...articles[0]} />
         </div>
 
         {/* Secondary Articles (Right - Takes 1 column) */}
         <div className="lg:col-span-1">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {smallArticles.slice(0, 2).map((article) => (
-              <ArticleCard
-                key={article.headline}
-                image={article.image}
-                category={article.category}
-                headline={article.headline}
-                subhead={article.subhead}
-                writerName={article.writerName}
-              />
+            {articles.slice(1, 3).map((article) => (
+              <ArticleCard {...article} />
             ))}
           </div>
         </div>
@@ -47,16 +71,27 @@ export default function Articles() {
 
       {/* Bottom Row - 3 Column Grid */}
       <div className="grid grid-cols-1 gap-6 px-4 md:grid-cols-3">
-        {smallArticles.map((article) => (
-          <ArticleCard
-            key={article.headline}
-            image={article.image}
-            category={article.category}
-            headline={article.headline}
-            small
-          />
+        {articles.slice(3).map((article) => (
+          <ArticleCard {...article} />
         ))}
       </div>
     </div>
   );
+}
+
+export enum ArticleTypes {
+  Columns = 'columns',
+  Talent = 'talent',
+  Achievements = 'achievements',
+  Society = 'society',
+  Reflection = 'reflection',
+}
+
+async function fetchArticles(type: ArticleTypes) {
+  return await fetchLimitedPosts({
+    limit: 2,
+    filter: {
+      categoryName: type,
+    },
+  });
 }

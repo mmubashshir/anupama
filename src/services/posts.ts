@@ -19,9 +19,6 @@ const LIMITED_POSTS_QUERY = graphql(`
         date
         content
         excerpt
-        youTubeEmbed {
-          videoLink
-        }
         featuredImage {
           node {
             sourceUrl

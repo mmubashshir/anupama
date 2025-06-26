@@ -1,13 +1,14 @@
 'use client';
 
+import { ArticleCardProps } from '~/app/articles/components/article-card';
 import Image from 'next/image';
 
 export interface StoryCardProps {
-  image: string;
-  category: string;
-  headline: string;
-  subhead: string;
-  writerName: string;
+  image: String;
+  category: String;
+  headline: String;
+  subhead: String;
+  writerName: String;
 }
 
 function StoryCard({
@@ -16,7 +17,7 @@ function StoryCard({
   headline,
   subhead,
   writerName,
-}: StoryCardProps) {
+}: ArticleCardProps) {
   return (
     <div className="group flex flex-col gap-8 border-b border-gray-200 bg-white pb-4 hover:cursor-pointer md:gap-0 md:border-0">
       {/* Image */}
