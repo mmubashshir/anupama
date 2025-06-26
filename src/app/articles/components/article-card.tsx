@@ -13,11 +13,13 @@ export interface ArticleCardProps {
 }
 
 export default function ArticleCard({
+  key,
   image,
   category,
   headline,
   subhead,
   writerName,
+  date,
   small = false,
 }: ArticleCardProps) {
   if (small) {

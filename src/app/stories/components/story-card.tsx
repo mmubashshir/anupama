@@ -1,5 +1,6 @@
 'use client';
 
+import { ArticleCardProps } from '~/app/articles/components/article-card';
 import Image from 'next/image';
 
 import WPContentRenderer from '~/components/wp-content-renderer';
