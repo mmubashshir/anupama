@@ -8,7 +8,11 @@ const nextConfig: NextConfig = {
 
   images: {
     dangerouslyAllowSVG: true,
-    remotePatterns: [{ hostname: 'placehold.co' }, { hostname: 'localhost' }],
+    remotePatterns: [
+      { hostname: 'placehold.co' },
+      { hostname: 'localhost' },
+      { hostname: '*.anupama.co.in' },
+    ],
   },
 };
 

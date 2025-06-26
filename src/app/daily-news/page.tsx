@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import WPContentRenderer from '~/components/wp-content-renderer';
+
 import { fetchLimitedPosts } from '~/services/posts';
 
 import NewsCard from './components/news-card';
@@ -66,9 +68,10 @@ export default async function DailyNews() {
               className="line-clamp-3 text-sm md:text-base"
               dangerouslySetInnerHTML={{ __html: mainPost.excerpt ?? '' }}
             />
-            <p className="mt-2 text-sm text-gray-500">
-              - {mainPost.author?.node.name ?? 'ಅಜ್ಞಾತ ಲೇಖಕ'}
-            </p>
+            <WPContentRenderer
+              content={mainPost.author?.node.name ?? 'donald'}
+              className="mt-2 text-sm text-gray-500"
+            />
           </div>
         </div>
 
