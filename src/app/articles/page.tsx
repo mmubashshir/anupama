@@ -54,7 +54,7 @@ export default async function Articles() {
             image={articles[0].image}
             category={articles[0].category}
             headline={articles[0].headline}
-            writerName={articles[0].writerName ?? ''}
+            date={articles[0].date}
           />
         </div>
 

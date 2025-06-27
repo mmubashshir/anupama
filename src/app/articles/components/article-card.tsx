@@ -13,7 +13,6 @@ export interface ArticleCardProps {
 }
 
 export default function ArticleCard({
-  key,
   image,
   category,
   headline,
