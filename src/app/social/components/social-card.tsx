@@ -1,3 +1,4 @@
+import { ArticleCardProps } from '~/app/articles/components/article-card';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,23 +9,26 @@ interface SocialCardProps {
   description: string;
 }
 
-export function SocialCard({ image, title, description }: SocialCardProps) {
+export function SocialCard({
+  image,
+  category,
+  headline,
+  subhead,
+  writerName,
+  date,
+  small,
+}: ArticleCardProps) {
   return (
     <div className="group cursor-pointer p-0">
       <div className="relative aspect-[4/3]">
-        <Image
-          src={image || '/placeholder.svg'}
-          alt={title}
-          fill
-          className="object-cover"
-        />
+        <Image src={image} alt={headline} fill className="object-cover" />
         <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
       </div>
       <div className="bg-white">
         <h3 className="mb-2 pt-4 text-2xl leading-tight font-black decoration-1 underline-offset-4 group-hover:underline">
-          {title}
+          {headline}
         </h3>
-        <p className="text-sm leading-relaxed font-semibold">{description}</p>
+        <p className="text-sm leading-relaxed font-semibold">{subhead}</p>
       </div>
     </div>
   );
@@ -40,46 +44,45 @@ interface SideCardProps {
 }
 
 export function SideCard({
-  image,
-  category,
-  title,
-  description,
-  author,
-  bulletPoints,
-}: SideCardProps) {
+  editorial,
+}: {
+  editorial: Array<ArticleCardProps>;
+}) {
+  let latestEditorial = editorial[0];
+  console.log('editorial', editorial);
   return (
     <div className="bg-[#FFF4F2] p-5">
       <div className="group cursor-pointer">
         <div className="relative mb-6 aspect-[3/2]">
           <Image
-            src={image || '/placeholder.svg'}
-            alt={title}
+            src={latestEditorial.image}
+            alt={latestEditorial.headline}
             fill
             className="object-cover"
           />
           <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
         </div>
 
-        <p className="mb-1 text-lg font-semibold">{category}</p>
+        <p className="mb-1 text-lg font-semibold">{latestEditorial.category}</p>
         <h3 className="mb-2 text-xl font-black decoration-1 underline-offset-4 group-hover:underline">
-          {title}
+          {latestEditorial.headline}
         </h3>
         <p className="mb-2 text-base leading-relaxed font-semibold">
-          {description}
+          {latestEditorial.subhead}
         </p>
-        <p className="text-sm text-gray-600">{author}</p>
+        <p className="text-sm text-gray-600">{latestEditorial.writerName}</p>
       </div>
 
       <div className="mt-3 border-t border-gray-300 pt-3">
         <h4 className="mb-2 text-xl font-black">ಇನ್ನಷ್ಟು ಓದಿ</h4>
         <div className="space-y-1 pl-3">
           <ul className="list-disc space-y-1 pl-3">
-            {bulletPoints.map((point) => (
+            {editorial.slice(1).map((article) => (
               <li
-                key={point}
+                key={article.key}
                 className="cursor-pointer text-base leading-relaxed font-medium text-black decoration-1 underline-offset-4 hover:underline"
               >
-                {point}
+                {article.headline}
               </li>
             ))}
           </ul>
@@ -89,12 +92,14 @@ export function SideCard({
   );
 }
 
-interface SocialCardsProps {
-  mainCards: SocialCardProps[];
-  sideCard: SideCardProps;
-}
-
-export function SocialCards({ mainCards, sideCard }: SocialCardsProps) {
+// TODO: Rename to Social, extract to different file
+export function SocialCards({
+  mainCards,
+  sideCard,
+}: {
+  mainCards: Array<ArticleCardProps>;
+  sideCard: Array<ArticleCardProps>;
+}) {
   return (
     <div className="space-y-4">
       {/* Header */}
@@ -116,14 +121,22 @@ export function SocialCards({ mainCards, sideCard }: SocialCardsProps) {
         {/* Main Cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2">
           {mainCards.map((card) => (
-            <SocialCard key={card.title} {...card} />
+            <SocialCard
+              key={card.key}
+              image={card.image}
+              category={card.category}
+              headline={card.headline}
+              date={card.date}
+            />
           ))}
         </div>
 
         {/* Side Card */}
-        <div className="lg:col-span-1">
-          <SideCard {...sideCard} />
-        </div>
+        {sideCard.length != 0 && (
+          <div className="lg:col-span-1">
+            <SideCard editorial={sideCard} />
+          </div>
+        )}
       </div>
     </div>
   );

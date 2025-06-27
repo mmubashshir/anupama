@@ -20,7 +20,7 @@ export default async function Articles() {
   const reflections = reflectionsRaw?.nodes ?? [];
   const society = societyRaw?.nodes ?? [];
 
-  const articles: Array<ArticleCardProps> = [
+  const articles: Array<ArticleCardProps & { key: string }> = [
     ...columns,
     ...talents,
     ...achievements,
@@ -53,7 +53,13 @@ export default async function Articles() {
       <div className="mb-8 grid grid-cols-1 gap-8 px-4 lg:grid-cols-2">
         {/* Main Featured Article (Left - Takes 3 columns out of 5) */}
         <div className="lg:col-span-1">
-          <StoryCard {...articles[0]} />
+          <StoryCard
+            key={articles[0].key}
+            image={articles[0].image}
+            category={articles[0].category}
+            headline={articles[0].headline}
+            date={articles[0].date}
+          />
         </div>
 
         {/* Secondary Articles (Right - Takes 1 column) */}
