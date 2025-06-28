@@ -1,7 +1,8 @@
 import { fetchLimitedPosts } from '~/services/posts';
 
 import StoryCard from '../stories/components/story-card';
-import ArticleCard, { ArticleCardProps } from './components/article-card';
+import ArticleCard from './components/article-card';
+import type { ArticleCardProps } from './components/article-card';
 
 export default async function Articles() {
   const { posts: columnsRaw } = await fetchArticles(ArticleTypes.Columns);
@@ -39,9 +40,6 @@ export default async function Articles() {
       };
     })
     .sort((a, b) => {
-      if (!a.date && !b.date) return 0;
-      if (!a.date) return 1; // a is null, put it after b
-      if (!b.date) return -1; // b is null, put a before b
       return a.date.getTime() - b.date.getTime();
     });
 

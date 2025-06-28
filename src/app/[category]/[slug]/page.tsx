@@ -1,4 +1,7 @@
+import { BASE_URL } from '~/constants';
 import { blogPosts } from '~/constants/blog-posts';
+import { dummyComments } from '~/constants/dummy-comments';
+import { type CATEGORY } from '~/enum/categories';
 import {
   Calendar,
   ChevronLeft,
@@ -7,6 +10,7 @@ import {
   Tag,
   User,
 } from 'lucide-react';
+import { type Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -17,8 +21,87 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 import { fetchPostBySlug } from '~/services/posts';
 
 interface PageParams {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; category: CATEGORY }>;
 }
+
+export async function generateMetadata({
+  params,
+}: PageParams): Promise<Metadata> {
+  const { slug, category } = await params;
+  const post = await fetchPostBySlug(slug);
+
+  if (!post) {
+    return {
+      title: 'Post Not Found - Anupama Monthly',
+      description: 'The requested blog post could not be found.',
+    };
+  }
+
+  const getPostExcerpt = (content: string, maxLength = 160): string => {
+    const plainText = content.replace(/<[^>]*>/g, '').trim();
+
+    return plainText.length > maxLength
+      ? `${plainText.substring(0, maxLength)}...`
+      : plainText;
+  };
+
+  const postExcerpt = getPostExcerpt(post.content ?? '');
+  const postImage =
+    post.featuredImage?.node.sourceUrl ?? `${BASE_URL}/tac-hero-og.jpg`;
+  const postUrl = `${BASE_URL}/${category}/${slug}`;
+
+  return {
+    title: post.title,
+    description: postExcerpt,
+    authors: post.author?.node.name
+      ? [{ name: post.author.node.name }]
+      : undefined,
+    openGraph: {
+      title: post.title ?? 'Anupama Monthly',
+      description: postExcerpt,
+      url: postUrl,
+      siteName: 'Anupama Monthly',
+      locale: 'kn_IN',
+      type: 'article',
+      publishedTime: post.date ?? undefined,
+      authors: post.author?.node.name ? [post.author.node.name] : undefined,
+      images: [
+        {
+          url: postImage,
+          width: 1200,
+          height: 630,
+          alt: post.title ?? 'Anupama Monthly Blog Post',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${post.title} - Anupama Monthly`,
+      description: postExcerpt,
+      images: [
+        {
+          url: postImage,
+          alt: post.title ?? 'Anupama Monthly Blog Post',
+        },
+      ],
+    },
+    alternates: {
+      canonical: postUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+  };
+}
+
 export default async function Blog({ params }: PageParams) {
   const { slug } = await params;
   const post = await fetchPostBySlug(slug);
@@ -85,6 +168,31 @@ export default async function Blog({ params }: PageParams) {
             </article>
           </div>
 
+          {/* Comments Section */}
+          <div className="border-t border-gray-200 pt-8">
+            <h3 className="mb-6 text-xl font-bold">
+              {dummyComments.length} Comment
+              {dummyComments.length !== 1 && 's'}
+            </h3>
+            <div className="space-y-6">
+              {dummyComments.map((comment) => (
+                <div key={comment.id} className="border-b border-gray-100 pb-4">
+                  <div className="mb-1">
+                    <h4 className="font-bold text-gray-800">{comment.name}</h4>
+                    <p className="text-xs text-gray-500">
+                      {new Date(comment.date).toLocaleDateString('kn-IN', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </p>
+                  </div>
+                  <p className="text-gray-700">{comment.comment}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Leave a Comment */}
           <div className="border-t-1 border-gray-200 pt-8">
             <h3 className="mb-6 text-xl font-bold">Leave A Comment</h3>
@@ -113,17 +221,6 @@ export default async function Blog({ params }: PageParams) {
                 placeholder="Your Website..."
               />
 
-              <label className="flex items-center space-x-2 text-sm text-gray-600">
-                <input
-                  type="checkbox"
-                  className="cursor-pointer accent-red-500"
-                />
-                <span>
-                  Save my name, email, and website in this browser for the next
-                  time I comment.
-                </span>
-              </label>
-
               <Link
                 href="#"
                 className="bg-red-600 px-4 py-1 text-white transition hover:bg-red-700"
@@ -134,7 +231,7 @@ export default async function Blog({ params }: PageParams) {
           </div>
 
           {/* Post Navigation */}
-          <div className="mt-20 flex flex-col justify-between gap-8 pt-4 md:flex-row">
+          <div className="mt-15 flex flex-col justify-between gap-8 pt-4 md:flex-row">
             {/* Previous Post */}
             <a
               href="/previous-post-slug"
