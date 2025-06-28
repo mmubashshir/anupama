@@ -20,7 +20,7 @@ export default async function Articles() {
   const reflections = reflectionsRaw?.nodes ?? [];
   const society = societyRaw?.nodes ?? [];
 
-  const articles: Array<ArticleCardProps & { key: string }> = [
+  const articles: Array<ArticleCardProps> = [
     ...columns,
     ...talents,
     ...achievements,

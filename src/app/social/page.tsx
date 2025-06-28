@@ -31,17 +31,23 @@ export default async function Page() {
     LifestyleArticleTypes.LifeTreasure,
   );
 
+  const cookingRaw = await fetchLifestyleArticles(
+    4,
+    LifestyleArticleTypes.Cooking,
+  );
+
   const social: Array<ArticleCardProps> =
     socialRaw.posts?.nodes.flatMap(mapToArticleCardProps) ?? [];
   const lifeTreasure =
     lifeTreasureRaw.posts?.nodes.flatMap(mapToArticleCardProps) ?? [];
-
+  const cooking: Array<ArticleCardProps> =
+    cookingRaw.posts?.nodes.flatMap(mapToArticleCardProps) ?? [];
   return (
     <div className="mx-auto max-w-6xl bg-white px-4 py-6">
       <div className="mx-auto max-w-6xl space-y-12 p-4">
         <SocialCards mainCards={social} sideCard={lifeTreasure} />
 
-        <FoodCarousel items={foodItems} />
+        <FoodCarousel items={cooking} />
       </div>
     </div>
   );
