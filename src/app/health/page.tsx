@@ -1,3 +1,4 @@
+import { CATEGORY } from '~/enum/categories';
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -11,14 +12,14 @@ export default async function Page() {
   const { posts: healthPostsRaw } = await fetchLimitedPosts({
     limit: 2,
     filter: {
-      categoryName: 'health',
+      categoryName: CATEGORY.Health,
     },
   });
 
   const { posts: medicinePostsRaw } = await fetchLimitedPosts({
     limit: 2,
     filter: {
-      categoryName: 'medicine',
+      categoryName: CATEGORY.Medicine,
     },
   });
 
@@ -50,30 +51,33 @@ export default async function Page() {
         {/* Health Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2">
           {healthPosts.map((post) => (
-            <HealthCard
-              key={post.id}
-              name={post.title ?? 'Untitled'}
-              category={post.categories?.nodes[0]?.name ?? ''}
-              description={post.excerpt ?? ''}
-              imageUrl={
-                post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
-              }
-            />
+            <Link key={post.id} href={`/${CATEGORY.Health}/${post.slug}`}>
+              <HealthCard
+                name={post.title ?? 'Untitled'}
+                category={post.categories?.nodes[0]?.name ?? ''}
+                description={post.excerpt ?? ''}
+                imageUrl={
+                  post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
+                }
+              />
+            </Link>
           ))}
         </div>
 
         {/* Medicine Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2">
           {medicinePosts.map((post) => (
-            <HealthCard
-              key={post.id}
-              name={post.title ?? 'Untitled'}
-              category={post.categories?.nodes[0]?.name ?? ''}
-              description={post.excerpt ?? ''}
-              imageUrl={
-                post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
-              }
-            />
+            <Link key={post.id} href={`/${CATEGORY.Medicine}/${post.slug}`}>
+              <HealthCard
+                key={post.id}
+                name={post.title ?? 'Untitled'}
+                category={post.categories?.nodes[0]?.name ?? ''}
+                description={post.excerpt ?? ''}
+                imageUrl={
+                  post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
+                }
+              />
+            </Link>
           ))}
         </div>
       </main>
