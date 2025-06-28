@@ -6,11 +6,11 @@ export default function DailyNews() {
   return (
     <main className="mx-auto max-w-6xl px-4 py-6">
       {/* Main heading */}
-      <h1 className="mt-4 mb-8 text-4xl font-extrabold md:text-5xl">
+      <h1 className="mt-4 mb-8 px-4 text-4xl font-extrabold md:text-5xl">
         ಸುದ್ದಿಗಳು
       </h1>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-8 px-4 lg:grid-cols-3">
         {/* Main Featured Article */}
         <div className="group flex flex-col gap-4 border-b border-gray-200 bg-white pb-4 hover:cursor-pointer md:gap-0 md:border-0 lg:col-span-2">
           {/* Image */}
