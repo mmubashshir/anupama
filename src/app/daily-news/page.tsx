@@ -64,9 +64,9 @@ export default async function DailyNews() {
             <h2 className="mt-1 text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-2xl">
               {mainPost.title}
             </h2>
-            <p
+            <WPContentRenderer
+              content={mainPost.excerpt}
               className="line-clamp-3 text-sm md:text-base"
-              dangerouslySetInnerHTML={{ __html: mainPost.excerpt ?? '' }}
             />
             <WPContentRenderer
               content={mainPost.author?.node.name ?? 'donald'}

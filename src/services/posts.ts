@@ -1,6 +1,6 @@
 import { graphql, query } from '~/utils/graphql-client';
 
-import type { VariablesOf } from 'gql.tada';
+import type { ResultOf, VariablesOf } from 'gql.tada';
 
 const LIMITED_POSTS_QUERY = graphql(`
   query FetchLimitedPosts(
@@ -56,7 +56,7 @@ const ALL_POSTS_QUERY = graphql(`
 
 export async function fetchLimitedPosts(
   args: VariablesOf<typeof LIMITED_POSTS_QUERY>,
-) {
+): Promise<ResultOf<typeof LIMITED_POSTS_QUERY>> {
   const { data } = await query({
     query: LIMITED_POSTS_QUERY,
     variables: args,

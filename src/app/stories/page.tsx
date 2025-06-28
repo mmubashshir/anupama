@@ -1,20 +1,32 @@
-import { moreStories } from '~/constants/more-stories';
-import { featuredArticle, fetauredStories } from '~/constants/stories';
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
-import FeaturedArticle from './components/featured-article';
-import StoryCard from './components/story-card';
-import HealthTipsList from './components/tips-list';
+import { fetchLimitedPosts } from '~/services/posts';
 
-export default function Page() {
+import StoryCard from './components/story-card';
+
+export default async function Page() {
+  const { posts: storyWorldPosts } = await fetchLimitedPosts({
+    limit: 1,
+    filter: { categoryName: 'story-world' },
+  });
+
+  const { posts: childrenStoryPosts } = await fetchLimitedPosts({
+    limit: 1,
+    filter: { categoryName: 'childrens-arena' },
+  });
+
+  const storyWorldPost = storyWorldPosts?.nodes ?? [];
+
+  const childrenStoryPost = childrenStoryPosts?.nodes ?? [];
+
   return (
     <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
       <div className="bg-white pb-4">
         <div className="flex items-center justify-between">
           <h1 className="text-4xl font-extrabold md:text-5xl">ಕಥೆಗಳು</h1>
           <Link
-            href=""
+            href="/stories"
             className="group ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
           >
             ಇನ್ನಷ್ಟು
@@ -24,34 +36,25 @@ export default function Page() {
       </div>
 
       <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {fetauredStories.slice(0, 2).map((story) => (
+        {storyWorldPost.map((post) => (
           <StoryCard
-            key={story.headline}
-            image={story.image}
-            category={story.category}
-            headline={story.headline}
-            subhead={story.subhead}
-            writerName={story.writerName}
+            key={post.id}
+            image={post.featuredImage?.node.sourceUrl ?? ''}
+            category={post.categories?.nodes[0]?.name ?? ''}
+            headline={post.title ?? ''}
+            writerName={post.author?.node.name ?? ''}
           />
         ))}
-      </section>
 
-      <section className="pt-6">
-        <h1 className="mb-8 text-2xl font-bold text-gray-900 sm:text-3xl">
-          ಇನ್ನಷ್ಟು ಕಥೆಗಳು
-        </h1>
-
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-          {/* Health Tips List - Takes 7 columns on large screens */}
-          <div className="lg:col-span-7">
-            <HealthTipsList tips={moreStories} />
-          </div>
-
-          {/* Featured Article - Takes 5 columns on large screens */}
-          <div className="lg:col-span-5">
-            <FeaturedArticle article={featuredArticle} />
-          </div>
-        </div>
+        {childrenStoryPost.map((post) => (
+          <StoryCard
+            key={post.id}
+            image={post.featuredImage?.node.sourceUrl ?? ''}
+            category={post.categories?.nodes[0]?.name ?? ''}
+            headline={post.title ?? ''}
+            writerName={post.author?.node.name ?? ''}
+          />
+        ))}
       </section>
     </div>
   );

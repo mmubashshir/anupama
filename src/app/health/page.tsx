@@ -44,7 +44,7 @@ export default async function Page() {
       </header>
 
       {/* Main Content */}
-      <main className="px-4">
+      <main className="p-4">
         {/* Health Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2">
           {healthPosts.map((post) => (
