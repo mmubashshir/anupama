@@ -21,6 +21,7 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 import { fetchPostBySlug } from '~/services/posts';
 
 interface PageParams {
+<<<<<<< HEAD
   params: Promise<{ slug: string; category: CATEGORY }>;
 }
 
@@ -106,6 +107,14 @@ export default async function Blog({ params }: PageParams) {
   const { slug } = await params;
   const post = await fetchPostBySlug(slug);
 
+=======
+  params: Promise<{ slug: string }>;
+}
+export default async function Blog({ params }: PageParams) {
+  const { slug } = await params;
+  const post = await fetchPostBySlug(slug);
+
+>>>>>>> f5f5f17 (feat: add categories for blog posts)
   if (!post) {
     return (
       <div className="text-center text-6xl text-red-500">
@@ -166,6 +175,7 @@ export default async function Blog({ params }: PageParams) {
 
               <WPContentRenderer content={post.content} />
             </article>
+<<<<<<< HEAD
           </div>
 
           {/* Comments Section */}
@@ -191,6 +201,8 @@ export default async function Blog({ params }: PageParams) {
                 </div>
               ))}
             </div>
+=======
+>>>>>>> f5f5f17 (feat: add categories for blog posts)
           </div>
 
           {/* Leave a Comment */}
