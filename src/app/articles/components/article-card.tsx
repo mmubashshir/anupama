@@ -18,7 +18,6 @@ export default function ArticleCard({
   headline,
   subhead,
   writerName,
-  date,
   small = false,
 }: ArticleCardProps) {
   if (small) {
