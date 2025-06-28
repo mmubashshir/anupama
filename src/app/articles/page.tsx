@@ -62,7 +62,15 @@ export default async function Articles() {
         <div className="lg:col-span-1">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {articles.slice(1, 3).map((article) => (
-              <ArticleCard {...article} />
+              <ArticleCard
+                key={article.key}
+                image={article.image}
+                category={article.category}
+                headline={article.headline}
+                subhead={article.subhead}
+                writerName={article.writerName}
+                date={article.date}
+              />
             ))}
           </div>
         </div>
@@ -74,7 +82,15 @@ export default async function Articles() {
       {/* Bottom Row - 3 Column Grid */}
       <div className="grid grid-cols-1 gap-6 px-4 md:grid-cols-3">
         {articles.slice(3).map((article) => (
-          <ArticleCard {...article} />
+          <ArticleCard
+            key={article.key}
+            image={article.image}
+            category={article.category}
+            headline={article.headline}
+            subhead={article.subhead}
+            writerName={article.writerName}
+            date={article.date}
+          />
         ))}
       </div>
     </div>
