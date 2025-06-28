@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { ArticleCardProps } from '~/app/articles/components/article-card';
 import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,7 +15,7 @@ interface FoodCarouselProps {
   items: FoodItem[];
 }
 
-export function FoodCarousel({ items }: FoodCarouselProps) {
+export function FoodCarousel({ items }: { items: Array<ArticleCardProps> }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () => {
@@ -46,23 +47,19 @@ export function FoodCarousel({ items }: FoodCarouselProps) {
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
-            {' '}
             {items.map((item) => (
-              <div
-                key={item.title}
-                className="w-full shrink-0 grow-0 basis-full"
-              >
+              <div key={item.key} className="w-full shrink-0 grow-0 basis-full">
                 <div className="relative aspect-[4/3] w-full overflow-hidden">
                   <Image
-                    src={item.image || '/placeholder.svg'}
-                    alt={item.title}
+                    src={item.image}
+                    alt={item.headline}
                     fill
                     className="object-cover"
                   />
                 </div>
                 <div className="pt-3">
                   <h3 className="text-center text-lg font-bold">
-                    {item.title}
+                    {item.headline}
                   </h3>
                 </div>
               </div>
@@ -90,12 +87,12 @@ export function FoodCarousel({ items }: FoodCarouselProps) {
       {/* Desktop Grid */}
       <div className="hidden grid-cols-4 gap-6 md:grid">
         {items.map((item) => (
-          <div key={item.title} className="overflow-hidden">
+          <div key={item.key} className="overflow-hidden">
             <div className="group cursor-pointer p-0">
               <div className="relative aspect-[3/2] w-full">
                 <Image
-                  src={item.image || '/placeholder.svg'}
-                  alt={item.title}
+                  src={item.image}
+                  alt={item.headline}
                   fill
                   className="object-cover"
                 />
@@ -103,7 +100,7 @@ export function FoodCarousel({ items }: FoodCarouselProps) {
               </div>
               <div className="pt-2">
                 <h3 className="text-xl font-black decoration-1 underline-offset-4 group-hover:underline">
-                  {item.title}
+                  {item.headline}
                 </h3>
               </div>
             </div>

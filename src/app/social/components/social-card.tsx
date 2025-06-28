@@ -49,7 +49,6 @@ export function SideCard({
   editorial: Array<ArticleCardProps>;
 }) {
   let latestEditorial = editorial[0];
-  console.log('editorial', editorial);
   return (
     <div className="bg-[#FFF4F2] p-5">
       <div className="group cursor-pointer">
