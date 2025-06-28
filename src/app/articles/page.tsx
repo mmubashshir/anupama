@@ -1,18 +1,17 @@
+import { CATEGORY } from '~/enum/categories';
+
 import { fetchLimitedPosts } from '~/services/posts';
 
 import StoryCard from '../stories/components/story-card';
-import ArticleCard, { ArticleCardProps } from './components/article-card';
+import ArticleCard from './components/article-card';
+import type { ArticleCardProps } from './components/article-card';
 
 export default async function Articles() {
-  const { posts: columnsRaw } = await fetchArticles(ArticleTypes.Columns);
-  const { posts: talentsRaw } = await fetchArticles(ArticleTypes.Talent);
-  const { posts: achievementsRaw } = await fetchArticles(
-    ArticleTypes.Achievements,
-  );
-  const { posts: reflectionsRaw } = await fetchArticles(
-    ArticleTypes.Reflection,
-  );
-  const { posts: societyRaw } = await fetchArticles(ArticleTypes.Society);
+  const { posts: columnsRaw } = await fetchArticles(CATEGORY.Columns);
+  const { posts: talentsRaw } = await fetchArticles(CATEGORY.Talent);
+  const { posts: achievementsRaw } = await fetchArticles(CATEGORY.Achievements);
+  const { posts: reflectionsRaw } = await fetchArticles(CATEGORY.Reflection);
+  const { posts: societyRaw } = await fetchArticles(CATEGORY.Society);
 
   const columns = columnsRaw?.nodes ?? [];
   const talents = talentsRaw?.nodes ?? [];
@@ -20,7 +19,7 @@ export default async function Articles() {
   const reflections = reflectionsRaw?.nodes ?? [];
   const society = societyRaw?.nodes ?? [];
 
-  const articles: Array<ArticleCardProps> = [
+  const articles: ArticleCardProps[] = [
     ...columns,
     ...talents,
     ...achievements,
@@ -39,9 +38,6 @@ export default async function Articles() {
       };
     })
     .sort((a, b) => {
-      if (!a.date && !b.date) return 0;
-      if (!a.date) return 1; // a is null, put it after b
-      if (!b.date) return -1; // b is null, put a before b
       return a.date.getTime() - b.date.getTime();
     });
 
@@ -58,7 +54,7 @@ export default async function Articles() {
             image={articles[0].image}
             category={articles[0].category}
             headline={articles[0].headline}
-            date={articles[0].date}
+            writerName={articles[0].writerName ?? ''}
           />
         </div>
 
@@ -66,7 +62,7 @@ export default async function Articles() {
         <div className="lg:col-span-1">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {articles.slice(1, 3).map((article) => (
-              <ArticleCard {...article} />
+              <ArticleCard key={article.key} {...article} />
             ))}
           </div>
         </div>
@@ -85,15 +81,7 @@ export default async function Articles() {
   );
 }
 
-export enum ArticleTypes {
-  Columns = 'columns',
-  Talent = 'talent',
-  Achievements = 'achievements',
-  Society = 'society',
-  Reflection = 'reflection',
-}
-
-async function fetchArticles(type: ArticleTypes) {
+async function fetchArticles(type: CATEGORY) {
   return await fetchLimitedPosts({
     limit: 2,
     filter: {

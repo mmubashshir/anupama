@@ -3,4 +3,11 @@ export enum CATEGORY {
   VideoNews = 'video-news',
   StoryWorld = 'story-world',
   ChildrensArena = 'childrens-arena',
+  Health = 'health',
+  Medicine = 'medicine',
+  Columns = 'columns',
+  Talent = 'talent',
+  Achievements = 'achievements',
+  Society = 'society',
+  Reflection = 'reflection',
 }
