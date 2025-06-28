@@ -62,7 +62,7 @@ export default async function Articles() {
         <div className="lg:col-span-1">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {articles.slice(1, 3).map((article) => (
-              <ArticleCard key={article.key} {...article} />
+              <ArticleCard {...article} />
             ))}
           </div>
         </div>
