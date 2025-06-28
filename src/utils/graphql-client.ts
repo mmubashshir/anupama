@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { HttpLink } from '@apollo/client';
 import {
   ApolloClient,
