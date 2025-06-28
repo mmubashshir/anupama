@@ -26,7 +26,7 @@ export default function HealthcareCard({
               alt={name}
               fill
               sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, 112px"
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              className="object-cover transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
           </div>

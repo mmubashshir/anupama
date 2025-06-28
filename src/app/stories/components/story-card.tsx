@@ -1,23 +1,17 @@
 'use client';
 
-import { ArticleCardProps } from '~/app/articles/components/article-card';
 import Image from 'next/image';
 
+import WPContentRenderer from '~/components/wp-content-renderer';
+
 export interface StoryCardProps {
-  image: String;
-  category: String;
-  headline: String;
-  subhead: String;
-  writerName: String;
+  image: string;
+  category: string;
+  headline: string;
+  writerName: string;
 }
 
-function StoryCard({
-  image,
-  category,
-  headline,
-  subhead,
-  writerName,
-}: ArticleCardProps) {
+function StoryCard({ image, category, headline, writerName }: StoryCardProps) {
   return (
     <div className="group flex flex-col gap-8 border-b border-gray-200 bg-white pb-4 hover:cursor-pointer md:gap-0 md:border-0">
       {/* Image */}
@@ -37,8 +31,10 @@ function StoryCard({
         <h2 className="mt-1 text-lg font-extrabold underline-offset-4 group-hover:underline md:text-2xl">
           {headline}
         </h2>
-        <p>{subhead}</p>
-        <p className="mt-2 text-sm text-gray-500">-{writerName}</p>
+        <WPContentRenderer
+          className="mt-2 text-sm text-gray-500"
+          content={writerName}
+        />
       </div>
     </div>
   );
