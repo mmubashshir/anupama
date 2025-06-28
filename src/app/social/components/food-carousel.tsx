@@ -1,21 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { ArticleCardProps } from '~/app/articles/components/article-card';
+import { type ArticleCardProps } from '~/app/articles/components/article-card';
 import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface FoodItem {
-  image: string;
-  title: string;
-}
-
-interface FoodCarouselProps {
-  items: FoodItem[];
-}
-
-export function FoodCarousel({ items }: { items: Array<ArticleCardProps> }) {
+export function FoodCarousel({ items }: { items: ArticleCardProps[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () => {

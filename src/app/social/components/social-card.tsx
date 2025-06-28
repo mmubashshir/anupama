@@ -1,23 +1,9 @@
-import { ArticleCardProps } from '~/app/articles/components/article-card';
+import { type ArticleCardProps } from '~/app/articles/components/article-card';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface SocialCardProps {
-  image: string;
-  title: string;
-  description: string;
-}
-
-export function SocialCard({
-  image,
-  category,
-  headline,
-  subhead,
-  writerName,
-  date,
-  small,
-}: ArticleCardProps) {
+export function SocialCard({ image, headline, subhead }: ArticleCardProps) {
   return (
     <div className="group cursor-pointer p-0">
       <div className="relative aspect-[4/3]">
@@ -34,21 +20,9 @@ export function SocialCard({
   );
 }
 
-interface SideCardProps {
-  image: string;
-  category: string;
-  title: string;
-  description: string;
-  author: string;
-  bulletPoints: string[];
-}
+export function SideCard({ editorial }: { editorial: ArticleCardProps[] }) {
+  const latestEditorial = editorial[0];
 
-export function SideCard({
-  editorial,
-}: {
-  editorial: Array<ArticleCardProps>;
-}) {
-  let latestEditorial = editorial[0];
   return (
     <div className="bg-[#FFF4F2] p-5">
       <div className="group cursor-pointer">
@@ -96,8 +70,8 @@ export function SocialCards({
   mainCards,
   sideCard,
 }: {
-  mainCards: Array<ArticleCardProps>;
-  sideCard: Array<ArticleCardProps>;
+  mainCards: ArticleCardProps[];
+  sideCard: ArticleCardProps[];
 }) {
   return (
     <div className="space-y-4">
@@ -131,7 +105,7 @@ export function SocialCards({
         </div>
 
         {/* Side Card */}
-        {sideCard.length != 0 && (
+        {sideCard.length !== 0 && (
           <div className="lg:col-span-1">
             <SideCard editorial={sideCard} />
           </div>
