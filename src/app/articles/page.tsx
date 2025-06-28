@@ -43,10 +43,10 @@ export default async function Articles() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
-      <h1 className="pb-6 text-2xl font-black md:text-4xl">ಲೇಖನಗಳು</h1>
+      <h1 className="px-4 pb-6 text-2xl font-black md:text-4xl">ಲೇಖನಗಳು</h1>
 
       {/* Main Layout Container */}
-      <div className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="mb-8 grid grid-cols-1 gap-8 px-4 lg:grid-cols-2">
         {/* Main Featured Article (Left - Takes 3 columns out of 5) */}
         <div className="lg:col-span-1">
           <StoryCard
@@ -69,10 +69,10 @@ export default async function Articles() {
       </div>
 
       {/* Divider */}
-      <div className="my-8 border-t border-dashed border-black" />
+      <div className="mx-4 my-8 border-t border-dashed border-black" />
 
       {/* Bottom Row - 3 Column Grid */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 px-4 md:grid-cols-3">
         {articles.slice(3).map((article) => (
           <ArticleCard {...article} />
         ))}
