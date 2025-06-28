@@ -38,7 +38,7 @@ export default function HealthcareCard({
           <h3 className="text-base font-black decoration-1 underline-offset-4 group-hover:underline sm:text-lg md:text-xl">
             {name}
           </h3>
-          <div className="mt-1 text-sm sm:text-base">
+          <div className="mt-1 line-clamp-2 text-sm sm:text-base">
             <WPContentRenderer content={description} />
           </div>
         </div>

@@ -1,6 +1,8 @@
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
+import { getPlaceholderImage } from '~/utils/get-placeholder-image';
+
 import { fetchLimitedPosts } from '~/services/posts';
 
 import HealthCard from './components/health-card';
@@ -53,7 +55,9 @@ export default async function Page() {
               name={post.title ?? 'Untitled'}
               category={post.categories?.nodes[0]?.name ?? ''}
               description={post.excerpt ?? ''}
-              imageUrl={post.featuredImage?.node.sourceUrl ?? '/fallback.jpg'}
+              imageUrl={
+                post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
+              }
             />
           ))}
         </div>
@@ -66,7 +70,9 @@ export default async function Page() {
               name={post.title ?? 'Untitled'}
               category={post.categories?.nodes[0]?.name ?? ''}
               description={post.excerpt ?? ''}
-              imageUrl={post.featuredImage?.node.sourceUrl ?? '/fallback.jpg'}
+              imageUrl={
+                post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
+              }
             />
           ))}
         </div>

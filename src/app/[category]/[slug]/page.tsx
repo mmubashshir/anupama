@@ -14,14 +14,16 @@ import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
-import { fetchLimitedPosts } from '~/services/posts';
+import { fetchPostBySlug } from '~/services/posts';
 
-export const dynamic = 'force-dynamic';
+interface PageParams {
+  params: Promise<{ slug: string }>;
+}
+export default async function Blog({ params }: PageParams) {
+  const { slug } = await params;
+  const post = await fetchPostBySlug(slug);
 
-export default async function Blog() {
-  const { posts } = await fetchLimitedPosts({ limit: 1 });
-
-  if (!posts?.nodes) {
+  if (!post) {
     return (
       <div className="text-center text-6xl text-red-500">
         Some error occured
@@ -35,54 +37,56 @@ export default async function Blog() {
         {/* Main Content */}
         <div className="w-full lg:w-2/3">
           <div className="space-y-12">
-            {posts.nodes.map((post) => (
-              <article key={post.title} className="pb-8">
-                <div className="mb-4 overflow-hidden">
-                  <Image
-                    src={
-                      post.featuredImage?.node.sourceUrl ??
-                      getPlaceholderImage()
-                    }
-                    alt={post.title ?? ''}
-                    width={800}
-                    height={400}
-                    className="h-auto w-full object-cover"
-                  />
-                </div>
-
-                <h2 className="mb-2 text-3xl font-bold">{post.title} </h2>
-
-                <div className="mb-4 flex flex-wrap gap-4 text-gray-500">
-                  <div className="flex items-center gap-1">
-                    <User className="h-5 w-5 text-red-500" />
-                    <span>{post.author?.node.name}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-5 w-5 text-red-500" />
-                    <span>{post.date}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Tag className="h-5 w-5 text-red-500" />
-                    <span>
-                      {post.categories?.nodes.map((itm) => itm.name).join(', ')}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MessageCircle className="h-5 w-5 text-red-500" />
-                    <span>{post.commentCount} Comments</span>
-                  </div>
-                </div>
-
-                <WPContentRenderer
-                  content={post.content}
-                  className="mb-4 whitespace-pre-line"
+            <article key={post.title} className="pb-8">
+              <div className="mb-4 overflow-hidden">
+                <Image
+                  src={
+                    post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
+                  }
+                  alt={post.title ?? ''}
+                  width={800}
+                  height={400}
+                  className="h-auto w-full object-cover"
                 />
-              </article>
-            ))}
+              </div>
+
+              <h2 className="mb-2 text-3xl font-bold">{post.title} </h2>
+
+              <div className="mb-4 flex flex-wrap gap-4 text-gray-500">
+                <div className="flex items-center gap-1">
+                  <User className="h-5 w-5 text-red-500" />
+                  <span>{post.author?.node.name}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Calendar className="h-5 w-5 text-red-500" />
+                  <span>
+                    {post.date
+                      ? new Date(post.date).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })
+                      : 'Unknown date'}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Tag className="h-5 w-5 text-red-500" />
+                  <span>
+                    {post.categories?.nodes.map((itm) => itm.name).join(', ')}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <MessageCircle className="h-5 w-5 text-red-500" />
+                  <span>{post.commentCount} Comments</span>
+                </div>
+              </div>
+
+              <WPContentRenderer content={post.content} />
+            </article>
           </div>
 
           {/* Leave a Comment */}
-          <div className="mt-16 border-t-1 border-gray-200 pt-8">
+          <div className="border-t-1 border-gray-200 pt-8">
             <h3 className="mb-6 text-xl font-bold">Leave A Comment</h3>
             <form className="space-y-4">
               <textarea

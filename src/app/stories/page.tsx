@@ -1,5 +1,8 @@
+import { CATEGORY } from '~/enum/categories';
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
+
+import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
@@ -8,12 +11,12 @@ import StoryCard from './components/story-card';
 export default async function Page() {
   const { posts: storyWorldPosts } = await fetchLimitedPosts({
     limit: 1,
-    filter: { categoryName: 'story-world' },
+    filter: { categoryName: CATEGORY.StoryWorld },
   });
 
   const { posts: childrenStoryPosts } = await fetchLimitedPosts({
     limit: 1,
-    filter: { categoryName: 'childrens-arena' },
+    filter: { categoryName: CATEGORY.ChildrensArena },
   });
 
   const storyWorldPost = storyWorldPosts?.nodes ?? [];
@@ -37,23 +40,34 @@ export default async function Page() {
 
       <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {storyWorldPost.map((post) => (
-          <StoryCard
-            key={post.id}
-            image={post.featuredImage?.node.sourceUrl ?? ''}
-            category={post.categories?.nodes[0]?.name ?? ''}
-            headline={post.title ?? ''}
-            writerName={post.author?.node.name ?? ''}
-          />
+          <Link key={post.slug} href={`/${CATEGORY.StoryWorld}/${post.slug}`}>
+            <StoryCard
+              key={post.id}
+              image={
+                post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
+              }
+              category={post.categories?.nodes[0]?.name ?? ''}
+              headline={post.title ?? ''}
+              writerName={post.author?.node.name ?? ''}
+            />
+          </Link>
         ))}
 
         {childrenStoryPost.map((post) => (
-          <StoryCard
-            key={post.id}
-            image={post.featuredImage?.node.sourceUrl ?? ''}
-            category={post.categories?.nodes[0]?.name ?? ''}
-            headline={post.title ?? ''}
-            writerName={post.author?.node.name ?? ''}
-          />
+          <Link
+            key={post.slug}
+            href={`/${CATEGORY.ChildrensArena}/${post.slug}`}
+          >
+            <StoryCard
+              key={post.id}
+              image={
+                post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
+              }
+              category={post.categories?.nodes[0]?.name ?? ''}
+              headline={post.title ?? ''}
+              writerName={post.author?.node.name ?? ''}
+            />
+          </Link>
         ))}
       </section>
     </div>
