@@ -7,7 +7,11 @@ export default [
     files: ['src/**/*.{js,mjs,cjs,ts,mts,cts}'],
   },
   {
-    ignores: ['eslint.config.mjs', './src/graphql-env.d.ts'],
+    ignores: [
+      'eslint.config.mjs',
+      './src/graphql-env.d.ts',
+      'introspection.mjs',
+    ],
   },
   ...gvseslint.configs.flat.browser,
   ...gvseslint.configs.flat.react,

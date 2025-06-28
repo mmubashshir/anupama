@@ -26,6 +26,9 @@ const LIMITED_POSTS_QUERY = graphql(`
             name
           }
         }
+        customFields {
+          youtubeVideoUrl
+        }
         commentCount
       }
     }
@@ -44,6 +47,9 @@ const ALL_POSTS_QUERY = graphql(`
           node {
             uri
           }
+        }
+        customFields {
+          youtubeVideoUrl
         }
       }
     }
