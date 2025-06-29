@@ -1,4 +1,3 @@
-import { type ArticleCardProps } from '~/app/articles/components/article-card';
 import { CATEGORY } from '~/enum/categories';
 import { type ResultOf } from 'gql.tada';
 
@@ -6,6 +5,7 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
+import { type ArticleCardProps } from './articles/article-card';
 import { FoodCarousel } from './social/food-carousel';
 import { SocialCards } from './social/social-card';
 import type { LIMITED_POSTS_QUERY } from '~/services/posts';
@@ -54,9 +54,9 @@ export default async function Social() {
   );
 }
 
-async function fetchLifestyleArticles(limit: number, type: CATEGORY) {
+async function fetchLifestyleArticles(first: number, type: CATEGORY) {
   return await fetchLimitedPosts({
-    limit,
+    first,
     filter: {
       categoryName: type,
     },

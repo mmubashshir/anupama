@@ -6,16 +6,16 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
-import StoryCard from './components/story-card';
+import StoryCard from './stories/story-card';
 
-export default async function Page() {
+export default async function Stories() {
   const { posts: storyWorldPosts } = await fetchLimitedPosts({
-    limit: 1,
+    first: 1,
     filter: { categoryName: CATEGORY.StoryWorld },
   });
 
   const { posts: childrenStoryPosts } = await fetchLimitedPosts({
-    limit: 1,
+    first: 1,
     filter: { categoryName: CATEGORY.ChildrensArena },
   });
 

@@ -11,7 +11,7 @@ function WPVideoRenderer(props: {
   if (!content) {
     return (
       <div>
-        // TODO: Put a Video placeholder
+        {/* TODO: Put a Video placeholder */}
         <p>Video Content found</p>
       </div>
     );

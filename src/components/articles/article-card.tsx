@@ -31,6 +31,7 @@ export default function ArticleCard({
           height={96}
           className="h-24 w-24 object-cover"
         />
+
         <div className="ml-4 pt-2">
           <p className="text-md mb-1">{category}</p>
           <h3 className="text-xl font-extrabold underline-offset-4 group-hover:underline">

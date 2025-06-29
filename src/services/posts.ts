@@ -1,26 +1,31 @@
 import { graphql, query } from '~/utils/graphql-client';
 
-import type { ResultOf, VariablesOf } from 'gql.tada';
+import type { ResultOf, VariablesOf } from '~/utils/graphql-client';
+
+interface FetchAllPostsOptions {
+  filter?: {
+    categoryName?: string;
+  };
+}
 
 export const LIMITED_POSTS_QUERY = graphql(`
   query FetchLimitedPosts(
-    $limit: Int!
-    $after: String
+    $first: Int!
     $filter: RootQueryToPostConnectionWhereArgs
   ) {
-    posts(first: $limit, after: $after, where: $filter) {
+    posts(first: $first, where: $filter) {
       nodes {
         id
         slug
         title
+        date
+        excerpt
+        commentCount
         author {
           node {
             name
           }
         }
-        date
-        content
-        excerpt
         featuredImage {
           node {
             sourceUrl
@@ -35,14 +40,10 @@ export const LIMITED_POSTS_QUERY = graphql(`
         customFields {
           youtubeVideoUrl
         }
-        commentCount
-        slug
       }
       pageInfo {
         hasNextPage
         hasPreviousPage
-        startCursor
-        endCursor
       }
     }
   }
@@ -70,6 +71,7 @@ const FETCH_POST_BY_SLUG_QUERY = graphql(`
       categories {
         nodes {
           name
+          slug
         }
       }
     }
@@ -77,8 +79,8 @@ const FETCH_POST_BY_SLUG_QUERY = graphql(`
 `);
 
 const FETCH_ALL_POSTS_QUERY = graphql(`
-  query FetchAllPosts {
-    posts {
+  query FetchAllPosts($filter: RootQueryToPostConnectionWhereArgs) {
+    posts(where: $filter) {
       nodes {
         id
         title
@@ -86,6 +88,12 @@ const FETCH_ALL_POSTS_QUERY = graphql(`
         date
         content
         excerpt
+        commentCount
+        author {
+          node {
+            name
+          }
+        }
         featuredImage {
           node {
             sourceUrl
@@ -104,7 +112,6 @@ const FETCH_ALL_POSTS_QUERY = graphql(`
   }
 `);
 
-// Type-safe function for limited posts
 export async function fetchLimitedPosts(
   args: VariablesOf<typeof LIMITED_POSTS_QUERY>,
 ): Promise<ResultOf<typeof LIMITED_POSTS_QUERY>> {
@@ -118,21 +125,29 @@ export async function fetchLimitedPosts(
 
 export async function fetchPostBySlug(
   slug: string,
-): Promise<ResultOf<typeof FETCH_POST_BY_SLUG_QUERY>['postBy']> {
+): Promise<NonNullable<ResultOf<typeof FETCH_POST_BY_SLUG_QUERY>['postBy']>> {
   const result = await query({
     query: FETCH_POST_BY_SLUG_QUERY,
     variables: { slug },
   });
 
+  if (!result.data.postBy) {
+    throw new Error('Post not found');
+  }
+
   return result.data.postBy;
 }
 
-// Type-safe function for all posts
-export async function fetchAllPosts(): Promise<
+export async function fetchAllPosts(
+  options?: FetchAllPostsOptions,
+): Promise<
   NonNullable<ResultOf<typeof FETCH_ALL_POSTS_QUERY>['posts']>['nodes']
 > {
   const result = await query({
     query: FETCH_ALL_POSTS_QUERY,
+    variables: {
+      filter: options?.filter ?? {},
+    },
   });
 
   return result.data.posts?.nodes ?? [];

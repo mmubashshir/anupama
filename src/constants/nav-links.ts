@@ -27,7 +27,7 @@ export const navLinks: NavLink[] = [
       },
       {
         title: 'ವೈದ್ಯಕೀಯ',
-        href: '/medical',
+        href: '/medicine',
       },
     ],
   },
@@ -57,7 +57,7 @@ export const navLinks: NavLink[] = [
     sublinks: [
       {
         title: 'ಕಥಾಲೋಕ',
-        href: '/stories',
+        href: '/story-world',
       },
       {
         title: 'ಮಕ್ಕಳ ರಂಗ',
@@ -70,7 +70,7 @@ export const navLinks: NavLink[] = [
     sublinks: [
       {
         title: 'ಅಂಕಣಗಳು',
-        href: '/articles',
+        href: '/columns',
       },
       {
         title: 'ಪ್ರತಿಭೆ',

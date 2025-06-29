@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
   },
-
+  devIndicators: false,
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [

@@ -11,7 +11,7 @@ import { fetchLimitedPosts } from '~/services/posts';
 
 export default async function DailyNews() {
   const { posts } = await fetchLimitedPosts({
-    limit: 5,
+    first: 5,
     filter: {
       categoryName: CATEGORY.DailyNews,
     },

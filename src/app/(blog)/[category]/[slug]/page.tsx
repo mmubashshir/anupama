@@ -1,4 +1,3 @@
-import { blogPosts } from '~/constants/blog-posts';
 import { dummyComments } from '~/constants/dummy-comments';
 import {
   Calendar,
@@ -15,23 +14,41 @@ import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
-import { fetchPostBySlug } from '~/services/posts';
+import {
+  fetchAllPosts,
+  fetchLimitedPosts,
+  fetchPostBySlug,
+} from '~/services/posts';
 
 interface PageParams {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; category: string }>;
 }
 
 export default async function Blog({ params }: PageParams) {
-  const { slug } = await params;
+  const { slug, category } = await params;
   const post = await fetchPostBySlug(slug);
 
-  if (!post) {
-    return (
-      <div className="text-center text-6xl text-red-500">
-        Some error occured
-      </div>
-    );
-  }
+  const { posts } = await fetchLimitedPosts({
+    first: 3,
+    filter: {
+      categoryName: category,
+    },
+  });
+  const recentPosts = posts?.nodes ?? [];
+
+  const allPostsInCategory = await fetchAllPosts({
+    filter: {
+      categoryName: category,
+    },
+  });
+
+  const currentIndex = allPostsInCategory.findIndex((p) => p.slug === slug);
+  const previousPost =
+    currentIndex > 0 ? allPostsInCategory[currentIndex - 1] : null;
+  const nextPost =
+    currentIndex < allPostsInCategory.length - 1
+      ? allPostsInCategory[currentIndex + 1]
+      : null;
 
   return (
     <div className="container mx-auto px-4 py-12 md:px-20 md:py-16">
@@ -57,7 +74,9 @@ export default async function Blog({ params }: PageParams) {
               <div className="mb-4 flex flex-wrap gap-4 text-gray-500">
                 <div className="flex items-center gap-1">
                   <User className="h-5 w-5 text-red-500" />
-                  <span>{post.author?.node.name}</span>
+                  <Link href="#" className="duration-300 hover:text-red-500">
+                    <span>{post.author?.node.name}</span>
+                  </Link>
                 </div>
                 <div className="flex items-center gap-1">
                   <Calendar className="h-5 w-5 text-red-500" />
@@ -152,40 +171,46 @@ export default async function Blog({ params }: PageParams) {
           {/* Post Navigation */}
           <div className="mt-15 flex flex-col justify-between gap-8 pt-4 md:flex-row">
             {/* Previous Post */}
-            <Link
-              href="/previous-post-slug"
-              className="group flex items-center space-x-4"
-            >
-              <div className="grid h-12 w-12 place-items-center border border-gray-200">
-                <span className="text-xl text-gray-500 transition-transform group-hover:-translate-x-1">
-                  <ChevronLeft />
-                </span>
-              </div>
-              <div>
-                <p className="text-sm text-red-600 uppercase">Previous Post</p>
-                <h4 className="leading-snug font-semibold text-black">
-                  Amazing View! Catch the sunrise
-                </h4>
-              </div>
-            </Link>
+            {previousPost ? (
+              <Link
+                href={`/${category}/${previousPost.slug}`}
+                className="group flex items-center space-x-4"
+              >
+                <div className="grid h-12 w-12 place-items-center border border-gray-200">
+                  <span className="text-xl text-gray-500 transition-transform group-hover:-translate-x-1">
+                    <ChevronLeft />
+                  </span>
+                </div>
+                <div>
+                  <p className="text-sm text-red-600 uppercase">
+                    Previous Post
+                  </p>
+                  <h4 className="leading-snug font-semibold text-black">
+                    {previousPost.title}
+                  </h4>
+                </div>
+              </Link>
+            ) : null}
 
             {/* Next Post */}
-            <Link
-              href="/next-post-slug"
-              className="group flex items-center justify-end space-x-4 text-right"
-            >
-              <div>
-                <p className="text-sm text-red-600 uppercase">Next Post</p>
-                <h4 className="leading-snug font-semibold text-black">
-                  Bhutan! The happiest country on the world
-                </h4>
-              </div>
-              <div className="grid h-12 w-12 place-items-center border border-gray-200">
-                <span className="text-xl text-gray-500 transition-transform group-hover:translate-x-1">
-                  <ChevronRight />
-                </span>
-              </div>
-            </Link>
+            {nextPost ? (
+              <Link
+                href={`/${category}/${nextPost.slug}`}
+                className="group flex items-center justify-end space-x-4 text-right"
+              >
+                <div>
+                  <p className="text-sm text-red-600 uppercase">Next Post</p>
+                  <h4 className="leading-snug font-semibold text-black">
+                    {nextPost.title}
+                  </h4>
+                </div>
+                <div className="grid h-12 w-12 place-items-center border border-gray-200">
+                  <span className="text-xl text-gray-500 transition-transform group-hover:translate-x-1">
+                    <ChevronRight />
+                  </span>
+                </div>
+              </Link>
+            ) : null}
           </div>
         </div>
 
@@ -199,26 +224,38 @@ export default async function Blog({ params }: PageParams) {
                   Recent posts
                 </h3>
                 <div className="space-y-4">
-                  {blogPosts.map((post, index) => (
+                  {recentPosts.map((post, index) => (
                     <div
                       key={post.id}
-                      className={`flex gap-4 ${index !== blogPosts.length - 1 ? 'border-b border-gray-200 pb-4' : ''}`}
+                      className={`flex gap-4 ${index !== recentPosts.length - 1 ? 'border-b border-gray-200 pb-4' : ''}`}
                     >
                       <Image
-                        src={post.featuredImage}
-                        alt={post.title}
+                        src={
+                          post.featuredImage?.node.sourceUrl ??
+                          getPlaceholderImage()
+                        }
+                        alt={post.title ?? ''}
                         width={70}
                         height={70}
                         className="rounded-md object-cover"
                       />
                       <div>
                         <Link
-                          href={`/blog/${post.slug}`}
+                          href={`/${category}/${post.slug}`}
                           className="text-sm font-medium"
                         >
                           {post.title}
                           <p className="mt-1 text-xs text-gray-500 hover:text-red-500">
-                            {post.date}
+                            {post.date
+                              ? new Date(post.date).toLocaleDateString(
+                                  'en-US',
+                                  {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                  },
+                                )
+                              : 'Unknown date'}{' '}
                           </p>
                         </Link>
                       </div>

@@ -1,4 +1,3 @@
-import { CATEGORY } from '~/enum/categories';
 import { Calendar, ChevronRight, MessageCircle, Tag, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,7 +6,7 @@ import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
-import { fetchLimitedPosts } from '~/services/posts';
+import { fetchAllPosts } from '~/services/posts';
 
 interface PageParams {
   params: Promise<{ category: string }>;
@@ -16,14 +15,11 @@ interface PageParams {
 export default async function CategoryListing({ params }: PageParams) {
   const { category } = await params;
 
-  const { posts } = await fetchLimitedPosts({
-    limit: 10,
+  const categoryPosts = await fetchAllPosts({
     filter: {
       categoryName: category,
     },
   });
-
-  const categoryPosts = posts?.nodes ?? [];
 
   if (!categoryPosts.length)
     return (
@@ -46,24 +42,27 @@ export default async function CategoryListing({ params }: PageParams) {
                       post.featuredImage?.node.sourceUrl ??
                       getPlaceholderImage()
                     }
-                    alt={post.title}
+                    alt={post.title ?? ''}
                     width={400}
                     height={250}
                     className="h-full w-full object-cover transition duration-400 hover:scale-110 hover:brightness-75"
                   />
                 </div>
-                <Link href="#" className="duration-300 hover:text-red-500">
+                <Link
+                  href={`/${category}/${post.slug}`}
+                  className="duration-300 hover:text-red-500"
+                >
                   <h2 className="mt-6 text-3xl font-bold">{post.title}</h2>
                 </Link>
                 <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-500">
                   <div className="flex items-center gap-1">
-                    <User size={16} />
+                    <User className="h-5 w-5" />
                     <Link href="#" className="duration-300 hover:text-red-500">
                       <span>{post.author?.node.name}</span>
                     </Link>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Calendar size={16} />
+                    <Calendar className="h-5 w-5" />
                     {post.date
                       ? new Date(post.date).toLocaleDateString('en-US', {
                           year: 'numeric',
@@ -73,18 +72,14 @@ export default async function CategoryListing({ params }: PageParams) {
                       : 'Unknown date'}{' '}
                   </div>
                   <div className="flex items-center gap-1">
-                    <Tag size={16} />
-                    <Link href="#" className="duration-300 hover:text-red-500">
-                      <span>
-                        {post.categories?.nodes
-                          .map((itm) => itm.name)
-                          .join(', ')}
-                      </span>{' '}
-                    </Link>
+                    <Tag className="h-5 w-5" />
+                    <span>
+                      {post.categories?.nodes.map((itm) => itm.name).join(', ')}
+                    </span>{' '}
                   </div>
                   <div className="flex items-center gap-1">
-                    <MessageCircle size={16} />
-                    <span>{post.comments} Comments</span>
+                    <MessageCircle className="h-5 w-5" />
+                    <span>{post.commentCount} Comments</span>
                   </div>
                 </div>
                 <WPContentRenderer
@@ -93,10 +88,11 @@ export default async function CategoryListing({ params }: PageParams) {
                 />
                 <div className="mt-4">
                   <Link
-                    href={`/${CATEGORY.DailyNews}/${post.slug}`}
+                    href={`/${category}/${post.slug}`}
                     className="inline-flex w-fit items-center gap-2 border border-gray-300 px-8 py-3 text-gray-500 transition-colors duration-300 hover:bg-red-500 hover:text-white"
                   >
-                    Continue Reading <ChevronRight size={16} />
+                    ಓದುವುದನ್ನು ಮುಂದುವರಿಸಿ
+                    <ChevronRight size={16} />
                   </Link>
                 </div>
                 {/* Divider */}
@@ -119,25 +115,25 @@ export default async function CategoryListing({ params }: PageParams) {
                   {categoryPosts.slice(0, 3).map((post, index) => (
                     <div
                       key={post.id}
-                      className={`flex gap-4 ${index !== posts.length - 1 ? 'border-b border-gray-200 pb-4' : ''}`}
+                      className={`flex gap-4 ${index !== categoryPosts.length - 1 ? 'border-b border-gray-200 pb-4' : ''}`}
                     >
                       <Image
                         src={
                           post.featuredImage?.node.sourceUrl ??
                           getPlaceholderImage()
                         }
-                        alt={post.title}
+                        alt={post.title ?? ''}
                         width={70}
                         height={70}
                         className="rounded-md object-cover"
                       />
                       <div>
                         <Link
-                          href={`/blog/${post.slug}`}
+                          href={`/${category}/${post.slug}`}
                           className="text-sm font-medium"
                         >
                           {post.title}
-                          <p className="mt-1 text-xs text-gray-500 hover:text-red-500">
+                          <p className="mt-1 text-xs text-gray-500">
                             {post.date
                               ? new Date(post.date).toLocaleDateString(
                                   'en-US',

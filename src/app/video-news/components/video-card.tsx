@@ -1,6 +1,3 @@
-import { Play } from 'lucide-react';
-import Image from 'next/image';
-
 import WPVideoRenderer from '~/components/wp-video-renderer';
 
 interface VideoCardProps {

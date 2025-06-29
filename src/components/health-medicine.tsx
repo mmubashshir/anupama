@@ -10,14 +10,14 @@ import HealthCard from './health-medicine/health-card';
 
 export default async function HealthAndMedicine() {
   const { posts: healthPostsRaw } = await fetchLimitedPosts({
-    limit: 2,
+    first: 2,
     filter: {
       categoryName: CATEGORY.Health,
     },
   });
 
   const { posts: medicinePostsRaw } = await fetchLimitedPosts({
-    limit: 2,
+    first: 2,
     filter: {
       categoryName: CATEGORY.Medicine,
     },

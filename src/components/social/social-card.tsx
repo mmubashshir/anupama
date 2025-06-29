@@ -1,7 +1,9 @@
-import { type ArticleCardProps } from '~/app/articles/components/article-card';
+import { CATEGORY } from '~/enum/categories';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { type ArticleCardProps } from '../articles/article-card';
 
 export function SocialCard({ image, headline, subhead }: ArticleCardProps) {
   return (
@@ -94,13 +96,16 @@ export function SocialCards({
         {/* Main Cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2">
           {mainCards.map((card) => (
-            <SocialCard
-              key={card.key}
-              image={card.image}
-              category={card.category}
-              headline={card.headline}
-              date={card.date}
-            />
+            <Link key={card.key} href={`/${CATEGORY.Social}/${card.slug}`}>
+              <SocialCard
+                key={card.key}
+                image={card.image}
+                category={card.category}
+                headline={card.headline}
+                date={card.date}
+                slug={card.slug}
+              />
+            </Link>
           ))}
         </div>
 

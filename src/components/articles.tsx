@@ -1,10 +1,11 @@
 import { CATEGORY } from '~/enum/categories';
 
+import StoryCard from '~/components/stories/story-card';
+
 import { fetchLimitedPosts } from '~/services/posts';
 
-import StoryCard from '../stories/components/story-card';
-import ArticleCard from './components/article-card';
-import type { ArticleCardProps } from './components/article-card';
+import ArticleCard from './articles/article-card';
+import type { ArticleCardProps } from './articles/article-card';
 
 export default async function Articles() {
   const { posts: columnsRaw } = await fetchArticles(CATEGORY.Columns);
@@ -101,7 +102,7 @@ export default async function Articles() {
 
 async function fetchArticles(type: CATEGORY) {
   return await fetchLimitedPosts({
-    limit: 2,
+    first: 2,
     filter: {
       categoryName: type,
     },
