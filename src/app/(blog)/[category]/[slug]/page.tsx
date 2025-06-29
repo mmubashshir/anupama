@@ -1,4 +1,4 @@
-import { dummyComments } from '~/constants/dummy-comments';
+import { createComment } from '~/app/actions/post-comment';
 import { type CATEGORY } from '~/enum/categories';
 import {
   Calendar,
@@ -21,6 +21,8 @@ import {
   fetchLimitedPosts,
   fetchPostBySlug,
 } from '~/services/posts';
+
+import SubmitCommentButton from '../components/submit-comment';
 
 interface PageParams {
   params: Promise<{ slug: string; category: string }>;
@@ -111,23 +113,33 @@ export default async function Blog({ params }: PageParams) {
           {/* Comments Section */}
           <div className="border-t border-gray-200 pt-8">
             <h3 className="mb-6 text-xl font-bold">
-              {dummyComments.length} Comment
-              {dummyComments.length !== 1 && 's'}
+              {post.commentCount} Comment
+              {post.commentCount !== 1 && 's'}
             </h3>
+
             <div className="space-y-6">
-              {dummyComments.map((comment) => (
+              {post.comments?.nodes.map((comment) => (
                 <div key={comment.id} className="border-b border-gray-100 pb-4">
                   <div className="mb-1">
-                    <h4 className="font-bold text-gray-800">{comment.name}</h4>
-                    <p className="text-xs text-gray-500">
-                      {new Date(comment.date).toLocaleDateString('kn-IN', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
-                    </p>
+                    <h4 className="font-bold text-gray-800">
+                      {comment.author?.name ?? 'Anonymous'}
+                    </h4>
+
+                    {comment.date ? (
+                      <p className="text-xs text-gray-500">
+                        {new Date(comment.date).toLocaleDateString('kn-IN', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}{' '}
+                      </p>
+                    ) : null}
                   </div>
-                  <p className="text-gray-700">{comment.comment}</p>
+
+                  <WPContentRenderer
+                    className="text-gray-700"
+                    content={comment.content}
+                  />
                 </div>
               ))}
             </div>
@@ -136,37 +148,35 @@ export default async function Blog({ params }: PageParams) {
           {/* Leave a Comment */}
           <div className="border-t-1 border-gray-200 pt-8">
             <h3 className="mb-6 text-xl font-bold">Leave A Comment</h3>
-            <form className="space-y-4">
+            <form action={createComment} className="space-y-4">
               <textarea
+                name="content"
                 className="w-full resize-none border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
                 rows={5}
+                required
+                minLength={5}
                 placeholder="Type your comment here..."
               />
 
               <input
+                name="name"
                 type="text"
                 className="w-full border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
+                required
+                min={3}
                 placeholder="Your Name..."
               />
 
               <input
+                name="email"
                 type="email"
                 className="w-full border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
+                required
                 placeholder="Your Email..."
               />
+              <input name="postId" type="hidden" value={post.databaseId} />
 
-              <input
-                type="url"
-                className="w-full border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
-                placeholder="Your Website..."
-              />
-
-              <Link
-                href="#"
-                className="bg-red-600 px-4 py-1 text-white transition hover:bg-red-700"
-              >
-                Post Comment
-              </Link>
+              <SubmitCommentButton />
             </form>
           </div>
 

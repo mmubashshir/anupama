@@ -19,7 +19,7 @@ import type {
   VariablesOf,
 } from 'gql.tada';
 
-const { query: apolloQuery } = registerApolloClient(() => {
+const { query: apolloQuery, getClient } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({
@@ -33,7 +33,7 @@ const graphql = initGraphQLTada<{
   introspection: introspection;
 }>();
 
-export { graphql, readFragment };
+export { graphql, getClient, readFragment };
 
 type ApolloCompatibleDocument<TData, TVariables> = TadaDocumentNode<
   TData,
