@@ -50,11 +50,10 @@ export default async function Articles() {
         {/* Main Featured Article (Left - Takes 3 columns out of 5) */}
         <div className="lg:col-span-1">
           <StoryCard
-            key={articles[0].key}
             image={articles[0].image}
             category={articles[0].category}
             headline={articles[0].headline}
-            date={articles[0].date}
+            writerName={articles[0].writerName ?? ''}
           />
         </div>
 

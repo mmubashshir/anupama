@@ -1,7 +1,5 @@
-import { BASE_URL } from '~/constants';
 import { blogPosts } from '~/constants/blog-posts';
 import { dummyComments } from '~/constants/dummy-comments';
-import { type CATEGORY } from '~/enum/categories';
 import {
   Calendar,
   ChevronLeft,
@@ -10,7 +8,6 @@ import {
   Tag,
   User,
 } from 'lucide-react';
-import { type Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -21,100 +18,12 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 import { fetchPostBySlug } from '~/services/posts';
 
 interface PageParams {
-<<<<<<< HEAD
-  params: Promise<{ slug: string; category: CATEGORY }>;
-}
-
-export async function generateMetadata({
-  params,
-}: PageParams): Promise<Metadata> {
-  const { slug, category } = await params;
-  const post = await fetchPostBySlug(slug);
-
-  if (!post) {
-    return {
-      title: 'Post Not Found - Anupama Monthly',
-      description: 'The requested blog post could not be found.',
-    };
-  }
-
-  const getPostExcerpt = (content: string, maxLength = 160): string => {
-    const plainText = content.replace(/<[^>]*>/g, '').trim();
-
-    return plainText.length > maxLength
-      ? `${plainText.substring(0, maxLength)}...`
-      : plainText;
-  };
-
-  const postExcerpt = getPostExcerpt(post.content ?? '');
-  const postImage =
-    post.featuredImage?.node.sourceUrl ?? `${BASE_URL}/tac-hero-og.jpg`;
-  const postUrl = `${BASE_URL}/${category}/${slug}`;
-
-  return {
-    title: post.title,
-    description: postExcerpt,
-    authors: post.author?.node.name
-      ? [{ name: post.author.node.name }]
-      : undefined,
-    openGraph: {
-      title: post.title ?? 'Anupama Monthly',
-      description: postExcerpt,
-      url: postUrl,
-      siteName: 'Anupama Monthly',
-      locale: 'kn_IN',
-      type: 'article',
-      publishedTime: post.date ?? undefined,
-      authors: post.author?.node.name ? [post.author.node.name] : undefined,
-      images: [
-        {
-          url: postImage,
-          width: 1200,
-          height: 630,
-          alt: post.title ?? 'Anupama Monthly Blog Post',
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${post.title} - Anupama Monthly`,
-      description: postExcerpt,
-      images: [
-        {
-          url: postImage,
-          alt: post.title ?? 'Anupama Monthly Blog Post',
-        },
-      ],
-    },
-    alternates: {
-      canonical: postUrl,
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
-    },
-  };
-}
-
-export default async function Blog({ params }: PageParams) {
-  const { slug } = await params;
-  const post = await fetchPostBySlug(slug);
-
-=======
   params: Promise<{ slug: string }>;
 }
 export default async function Blog({ params }: PageParams) {
   const { slug } = await params;
   const post = await fetchPostBySlug(slug);
 
->>>>>>> f5f5f17 (feat: add categories for blog posts)
   if (!post) {
     return (
       <div className="text-center text-6xl text-red-500">
@@ -175,7 +84,6 @@ export default async function Blog({ params }: PageParams) {
 
               <WPContentRenderer content={post.content} />
             </article>
-<<<<<<< HEAD
           </div>
 
           {/* Comments Section */}
@@ -201,8 +109,6 @@ export default async function Blog({ params }: PageParams) {
                 </div>
               ))}
             </div>
-=======
->>>>>>> f5f5f17 (feat: add categories for blog posts)
           </div>
 
           {/* Leave a Comment */}
@@ -245,7 +151,7 @@ export default async function Blog({ params }: PageParams) {
           {/* Post Navigation */}
           <div className="mt-15 flex flex-col justify-between gap-8 pt-4 md:flex-row">
             {/* Previous Post */}
-            <a
+            <Link
               href="/previous-post-slug"
               className="group flex items-center space-x-4"
             >
@@ -260,10 +166,10 @@ export default async function Blog({ params }: PageParams) {
                   Amazing View! Catch the sunrise
                 </h4>
               </div>
-            </a>
+            </Link>
 
             {/* Next Post */}
-            <a
+            <Link
               href="/next-post-slug"
               className="group flex items-center justify-end space-x-4 text-right"
             >
@@ -278,7 +184,7 @@ export default async function Blog({ params }: PageParams) {
                   <ChevronRight />
                 </span>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
 
