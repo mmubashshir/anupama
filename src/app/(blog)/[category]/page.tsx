@@ -1,25 +1,59 @@
+import { type CATEGORY } from '~/enum/categories';
 import { Calendar, ChevronRight, MessageCircle, Tag, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import Sidebar from '~/components/category/sidebar';
+import Pagination from '~/components/pagination';
 import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
-import { fetchAllPosts } from '~/services/posts';
+import { fetchLimitedPosts } from '~/services/posts';
 
-interface PageParams {
+export default async function CategoryListing({
+  params,
+  searchParams,
+}: {
   params: Promise<{ category: string }>;
-}
-
-export default async function CategoryListing({ params }: PageParams) {
+  searchParams?: Promise<{ page?: string }>;
+}) {
+  const resolvedSearchParams = await searchParams;
+  const page = parseInt(resolvedSearchParams?.page ?? '1');
+  const perPage = 3;
+  const offset = (page - 1) * perPage;
   const { category } = await params;
 
-  const categoryPosts = await fetchAllPosts({
+  const result = await fetchLimitedPosts({
+    first: perPage,
+    filter: {
+      categoryName: category,
+      offsetPagination: {
+        offset,
+        size: perPage,
+      },
+    },
+  });
+
+  const posts = await fetchLimitedPosts({
+    first: 3,
     filter: {
       categoryName: category,
     },
   });
+
+  const categoryPosts = result.posts?.nodes ?? [];
+  const recentPosts = posts.posts?.nodes ?? [];
+  const totalPosts = result.posts?.pageInfo.offsetPagination?.total ?? 0;
+  const totalPages = Math.ceil(totalPosts / perPage);
+
+  if (categoryPosts.length === 0 || recentPosts.length === 0) {
+    return (
+      <div className="text-center text-6xl text-red-500">
+        Some error occurred
+      </div>
+    );
+  }
 
   if (!categoryPosts.length)
     return (
@@ -34,7 +68,7 @@ export default async function CategoryListing({ params }: PageParams) {
         <div className="w-full lg:w-2/3">
           {/* Blog Posts */}
           <div className="flex flex-col gap-12">
-            {categoryPosts.map((post) => (
+            {categoryPosts.map((post, index) => (
               <div key={post.id} className="flex flex-col">
                 <div className="overflow-hidden rounded-lg">
                   <Image
@@ -96,91 +130,40 @@ export default async function CategoryListing({ params }: PageParams) {
                   </Link>
                 </div>
                 {/* Divider */}
-                <div className="mt-12 border-b border-gray-200" />
+                {index !== categoryPosts.length - 1 && (
+                  <div className="mt-12 border-b border-gray-200" />
+                )}{' '}
               </div>
             ))}
           </div>
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              basePath={`/${category}`}
+            />
+          )}
         </div>
 
         {/* Sidebar */}
-        <div className="w-full lg:w-1/3">
-          <div className="sticky top-8">
-            <div className="space-y-8">
-              {/* Recent Posts */}
-              <div className="rounded-md border-1 border-gray-200 p-8">
-                <h3 className="mb-4 inline-block border-b-2 border-red-500 pb-2 text-xl font-bold">
-                  Recent posts
-                </h3>
-                <div className="space-y-4">
-                  {categoryPosts.slice(0, 3).map((post, index) => (
-                    <div
-                      key={post.id}
-                      className={`flex gap-4 ${index !== categoryPosts.length - 1 ? 'border-b border-gray-200 pb-4' : ''}`}
-                    >
-                      <Image
-                        src={
-                          post.featuredImage?.node.sourceUrl ??
-                          getPlaceholderImage()
-                        }
-                        alt={post.title ?? ''}
-                        width={70}
-                        height={70}
-                        className="rounded-md object-cover"
-                      />
-                      <div>
-                        <Link
-                          href={`/${category}/${post.slug}`}
-                          className="text-sm font-medium"
-                        >
-                          {post.title}
-                          <p className="mt-1 text-xs text-gray-500">
-                            {post.date
-                              ? new Date(post.date).toLocaleDateString(
-                                  'en-US',
-                                  {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                  },
-                                )
-                              : 'Unknown date'}{' '}
-                          </p>
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Popular Tags */}
-              <div className="rounded-md border-1 border-gray-200 p-8">
-                <h3 className="mb-4 inline-block border-b-2 border-red-500 pb-2 text-xl font-bold">
-                  Popular tags
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    '2 columns posts',
-                    'art work',
-                    'booking sponsor',
-                    'breaking news',
-                    'environment',
-                    'food',
-                    'lifestyle',
-                    'travel',
-                  ].map((tag) => (
-                    <Link
-                      key={tag}
-                      href="#"
-                      className="rounded-md border-1 border-gray-200 p-1 px-3 text-sm text-gray-500 hover:text-red-500"
-                    >
-                      {tag}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Sidebar
+          recentPosts={recentPosts.map((post) => ({
+            id: post.id,
+            slug: post.slug,
+            title: post.title,
+            date: post.date,
+            featuredImage: post.featuredImage
+              ? {
+                  node: {
+                    sourceUrl:
+                      post.featuredImage.node.sourceUrl ??
+                      getPlaceholderImage(),
+                  },
+                }
+              : null,
+          }))}
+          category={category as CATEGORY}
+        />
       </div>
     </div>
   );

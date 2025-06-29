@@ -10,7 +10,7 @@ interface FetchAllPostsOptions {
 
 export const LIMITED_POSTS_QUERY = graphql(`
   query FetchLimitedPosts(
-    $first: Int!
+    $first: Int
     $filter: RootQueryToPostConnectionWhereArgs
   ) {
     posts(first: $first, where: $filter) {
@@ -42,8 +42,11 @@ export const LIMITED_POSTS_QUERY = graphql(`
         }
       }
       pageInfo {
-        hasNextPage
-        hasPreviousPage
+        offsetPagination {
+          total
+          hasMore
+          hasPrevious
+        }
       }
     }
   }

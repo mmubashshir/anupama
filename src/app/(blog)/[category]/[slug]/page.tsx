@@ -1,4 +1,5 @@
 import { dummyComments } from '~/constants/dummy-comments';
+import { type CATEGORY } from '~/enum/categories';
 import {
   Calendar,
   ChevronLeft,
@@ -10,6 +11,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
+import Sidebar from '~/components/category/sidebar';
 import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
@@ -215,84 +217,24 @@ export default async function Blog({ params }: PageParams) {
         </div>
 
         {/* Sidebar */}
-        <div className="w-full lg:w-1/3">
-          <div className="sticky top-8">
-            <div className="space-y-8">
-              {/* Recent Posts */}
-              <div className="rounded-md border-1 border-gray-200 p-8">
-                <h3 className="mb-4 inline-block border-b-2 border-red-500 pb-2 text-xl font-bold">
-                  Recent posts
-                </h3>
-                <div className="space-y-4">
-                  {recentPosts.map((post, index) => (
-                    <div
-                      key={post.id}
-                      className={`flex gap-4 ${index !== recentPosts.length - 1 ? 'border-b border-gray-200 pb-4' : ''}`}
-                    >
-                      <Image
-                        src={
-                          post.featuredImage?.node.sourceUrl ??
-                          getPlaceholderImage()
-                        }
-                        alt={post.title ?? ''}
-                        width={70}
-                        height={70}
-                        className="rounded-md object-cover"
-                      />
-                      <div>
-                        <Link
-                          href={`/${category}/${post.slug}`}
-                          className="text-sm font-medium"
-                        >
-                          {post.title}
-                          <p className="mt-1 text-xs text-gray-500 hover:text-red-500">
-                            {post.date
-                              ? new Date(post.date).toLocaleDateString(
-                                  'en-US',
-                                  {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                  },
-                                )
-                              : 'Unknown date'}{' '}
-                          </p>
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Popular Tags */}
-              <div className="rounded-md border-1 border-gray-200 p-8">
-                <h3 className="mb-4 inline-block border-b-2 border-red-500 pb-2 text-xl font-bold">
-                  Popular tags
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    '2 columns posts',
-                    'art work',
-                    'booking sponsor',
-                    'breaking news',
-                    'environment',
-                    'food',
-                    'lifestyle',
-                    'travel',
-                  ].map((tag) => (
-                    <Link
-                      key={tag}
-                      href="#"
-                      className="rounded-md border-1 border-gray-200 p-1 px-3 text-sm text-gray-500 hover:text-red-500"
-                    >
-                      {tag}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Sidebar
+          recentPosts={recentPosts.map((post) => ({
+            id: post.id,
+            slug: post.slug,
+            title: post.title,
+            date: post.date,
+            featuredImage: post.featuredImage
+              ? {
+                  node: {
+                    sourceUrl:
+                      post.featuredImage.node.sourceUrl ??
+                      getPlaceholderImage(),
+                  },
+                }
+              : null,
+          }))}
+          category={category as CATEGORY}
+        />
       </div>
     </div>
   );

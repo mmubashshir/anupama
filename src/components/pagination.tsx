@@ -28,7 +28,7 @@ export default function Pagination({
     );
 
     if (currentPage > maxDisplayed) {
-      pages.push(<span key="ellipsis-1">...</span>);
+      pages.push(<Ellipsis key="ellipsis-1" />);
     }
 
     for (
@@ -47,7 +47,7 @@ export default function Pagination({
     }
 
     if (currentPage + 2 < totalPages) {
-      pages.push(<span key="ellipsis-2">...</span>);
+      pages.push(<Ellipsis key="ellipsis-2" />);
     }
 
     if (totalPages > 1) {
@@ -65,17 +65,17 @@ export default function Pagination({
   };
 
   return (
-    <div className="mt-8 flex items-center justify-center gap-2 text-sm">
+    <div className="mt-8 flex items-center justify-center gap-2 text-base">
       <Link
         href={`${basePath}?page=${currentPage - 1}`}
-        className={`rounded p-2 ${currentPage === 1 ? 'pointer-events-none text-gray-300' : 'hover:bg-gray-100'}`}
+        className={`inline-flex h-10 w-10 items-center justify-center rounded ${currentPage === 1 ? 'pointer-events-none text-gray-300' : 'hover:bg-gray-100'}`}
       >
         <ChevronLeft />
       </Link>
       {createPageLinks()}
       <Link
         href={`${basePath}?page=${currentPage + 1}`}
-        className={`rounded p-2 ${currentPage === totalPages ? 'pointer-events-none text-gray-300' : 'hover:bg-gray-100'}`}
+        className={`inline-flex h-10 w-10 items-center justify-center rounded ${currentPage === totalPages ? 'pointer-events-none text-gray-300' : 'hover:bg-gray-100'}`}
       >
         <ChevronRight />
       </Link>
@@ -95,9 +95,24 @@ function PageLink({
   return (
     <Link
       href={`${basePath}?page=${page}`}
-      className={`rounded px-3 py-1 font-medium ${isActive ? 'bg-yellow-400 text-white shadow-md' : 'text-gray-700 hover:text-red-500'}`}
+      className={`inline-flex h-10 w-10 items-center justify-center rounded font-medium transition ${
+        isActive
+          ? 'bg-red-500 text-white shadow-md'
+          : 'text-gray-700 hover:bg-gray-100'
+      }`}
     >
       {page}
     </Link>
+  );
+}
+
+function Ellipsis({ key }: { key?: string }) {
+  return (
+    <span
+      className="inline-flex h-10 w-10 items-center justify-center text-gray-500"
+      key={key}
+    >
+      ...
+    </span>
   );
 }
