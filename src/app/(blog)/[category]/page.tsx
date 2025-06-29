@@ -1,12 +1,37 @@
-'use client';
-
-import { blogPosts } from '~/constants/blog-posts';
-import { categoryPosts } from '~/constants/category-posts';
+import { CATEGORY } from '~/enum/categories';
 import { Calendar, ChevronRight, MessageCircle, Tag, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Blog() {
+import WPContentRenderer from '~/components/wp-content-renderer';
+
+import { getPlaceholderImage } from '~/utils/get-placeholder-image';
+
+import { fetchLimitedPosts } from '~/services/posts';
+
+interface PageParams {
+  params: Promise<{ category: string }>;
+}
+
+export default async function CategoryListing({ params }: PageParams) {
+  const { category } = await params;
+
+  const { posts } = await fetchLimitedPosts({
+    limit: 10,
+    filter: {
+      categoryName: category,
+    },
+  });
+
+  const categoryPosts = posts?.nodes ?? [];
+
+  if (!categoryPosts.length)
+    return (
+      <div className="text-center text-6xl text-red-500">
+        Some error occured
+      </div>
+    );
+
   return (
     <div className="container mx-auto px-4 py-12 md:px-20 md:py-16">
       <div className="flex flex-col gap-8 lg:flex-row">
@@ -17,7 +42,10 @@ export default function Blog() {
               <div key={post.id} className="flex flex-col">
                 <div className="overflow-hidden rounded-lg">
                   <Image
-                    src={post.featuredImage}
+                    src={
+                      post.featuredImage?.node.sourceUrl ??
+                      getPlaceholderImage()
+                    }
                     alt={post.title}
                     width={400}
                     height={250}
@@ -31,30 +59,41 @@ export default function Blog() {
                   <div className="flex items-center gap-1">
                     <User size={16} />
                     <Link href="#" className="duration-300 hover:text-red-500">
-                      <span>{post.author}</span>
+                      <span>{post.author?.node.name}</span>
                     </Link>
                   </div>
                   <div className="flex items-center gap-1">
                     <Calendar size={16} />
-                    <span>{post.date}</span>
+                    {post.date
+                      ? new Date(post.date).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })
+                      : 'Unknown date'}{' '}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Tag size={16} />
+                    <Link href="#" className="duration-300 hover:text-red-500">
+                      <span>
+                        {post.categories?.nodes
+                          .map((itm) => itm.name)
+                          .join(', ')}
+                      </span>{' '}
+                    </Link>
                   </div>
                   <div className="flex items-center gap-1">
                     <MessageCircle size={16} />
                     <span>{post.comments} Comments</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Tag size={16} />
-                    <Link href="#" className="duration-300 hover:text-red-500">
-                      <span>{post.categories.join(', ')}</span>
-                    </Link>
-                  </div>
                 </div>
-                <p className="text-md mt-6 line-clamp-5 text-gray-600">
-                  {post.excerpt}
-                </p>
+                <WPContentRenderer
+                  content={post.excerpt}
+                  className="text-md mt-6 line-clamp-5 text-gray-600"
+                />
                 <div className="mt-4">
                   <Link
-                    href={`/blog/${blogPosts[0].slug}`}
+                    href={`/${CATEGORY.DailyNews}/${post.slug}`}
                     className="inline-flex w-fit items-center gap-2 border border-gray-300 px-8 py-3 text-gray-500 transition-colors duration-300 hover:bg-red-500 hover:text-white"
                   >
                     Continue Reading <ChevronRight size={16} />
@@ -77,13 +116,16 @@ export default function Blog() {
                   Recent posts
                 </h3>
                 <div className="space-y-4">
-                  {blogPosts.map((post, index) => (
+                  {categoryPosts.slice(0, 3).map((post, index) => (
                     <div
                       key={post.id}
-                      className={`flex gap-4 ${index !== blogPosts.length - 1 ? 'border-b border-gray-200 pb-4' : ''}`}
+                      className={`flex gap-4 ${index !== posts.length - 1 ? 'border-b border-gray-200 pb-4' : ''}`}
                     >
                       <Image
-                        src={post.featuredImage}
+                        src={
+                          post.featuredImage?.node.sourceUrl ??
+                          getPlaceholderImage()
+                        }
                         alt={post.title}
                         width={70}
                         height={70}
@@ -96,7 +138,16 @@ export default function Blog() {
                         >
                           {post.title}
                           <p className="mt-1 text-xs text-gray-500 hover:text-red-500">
-                            {post.date}
+                            {post.date
+                              ? new Date(post.date).toLocaleDateString(
+                                  'en-US',
+                                  {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                  },
+                                )
+                              : 'Unknown date'}{' '}
                           </p>
                         </Link>
                       </div>

@@ -1,3 +1,4 @@
+import { type ArticleCardProps } from '~/app/articles/components/article-card';
 import { CATEGORY } from '~/enum/categories';
 import { type ResultOf } from 'gql.tada';
 
@@ -5,9 +6,8 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
-import { type ArticleCardProps } from '../articles/components/article-card';
-import { FoodCarousel } from './components/food-carousel';
-import { SocialCards } from './components/social-card';
+import { FoodCarousel } from './social/food-carousel';
+import { SocialCards } from './social/social-card';
 import type { LIMITED_POSTS_QUERY } from '~/services/posts';
 
 type QueryResult = ResultOf<typeof LIMITED_POSTS_QUERY>;
@@ -26,7 +26,7 @@ const mapToArticleCardProps = (article: Article): ArticleCardProps => {
   };
 };
 
-export default async function Page() {
+export default async function Social() {
   const socialRaw = await fetchLifestyleArticles(4, CATEGORY.Social);
 
   const lifeTreasureRaw = await fetchLifestyleArticles(

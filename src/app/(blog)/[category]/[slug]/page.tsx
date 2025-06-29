@@ -20,6 +20,7 @@ import { fetchPostBySlug } from '~/services/posts';
 interface PageParams {
   params: Promise<{ slug: string }>;
 }
+
 export default async function Blog({ params }: PageParams) {
   const { slug } = await params;
   const post = await fetchPostBySlug(slug);

@@ -6,9 +6,9 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
-import HealthCard from './components/health-card';
+import HealthCard from './health-medicine/health-card';
 
-export default async function Page() {
+export default async function HealthAndMedicine() {
   const { posts: healthPostsRaw } = await fetchLimitedPosts({
     limit: 2,
     filter: {

@@ -5,9 +5,10 @@ import type { ResultOf, VariablesOf } from 'gql.tada';
 export const LIMITED_POSTS_QUERY = graphql(`
   query FetchLimitedPosts(
     $limit: Int!
+    $after: String
     $filter: RootQueryToPostConnectionWhereArgs
   ) {
-    posts(first: $limit, where: $filter) {
+    posts(first: $limit, after: $after, where: $filter) {
       nodes {
         id
         slug
@@ -36,6 +37,12 @@ export const LIMITED_POSTS_QUERY = graphql(`
         }
         commentCount
         slug
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }

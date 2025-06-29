@@ -2,27 +2,24 @@ import { CATEGORY } from '~/enum/categories';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import NewsCard from '~/components/daily-news/news-card';
 import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
-import NewsCard from './components/news-card';
-
-export const dynamic = 'force-dynamic';
-
 export default async function DailyNews() {
   const { posts } = await fetchLimitedPosts({
     limit: 5,
     filter: {
-      categoryName: 'daily-news',
+      categoryName: CATEGORY.DailyNews,
     },
   });
 
-  const allPosts = posts?.nodes ?? [];
+  const dailyNewsPosts = posts?.nodes ?? [];
 
-  if (allPosts.length === 0) {
+  if (!dailyNewsPosts.length) {
     return (
       <div className="text-center text-6xl text-red-500">
         Some error occurred
@@ -30,7 +27,7 @@ export default async function DailyNews() {
     );
   }
 
-  const [mainPost, ...otherPosts] = allPosts;
+  const [mainPost, ...otherPosts] = dailyNewsPosts;
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-6">
@@ -54,10 +51,7 @@ export default async function DailyNews() {
           />
 
           {/* Overlay below image */}
-          <Link
-            key={mainPost.slug}
-            href={`/${CATEGORY.DailyNews}/${mainPost.slug}`}
-          >
+          <Link href={`/${CATEGORY.DailyNews}/${mainPost.slug}`}>
             <div className="z-10 ml-auto flex flex-col gap-2 bg-white md:-mt-16 md:w-[90%] md:p-4 md:text-left">
               <span className="text-sm text-black">
                 {mainPost.categories?.nodes[0]?.name ?? 'ದಿನನಿತ್ಯದ ಸುದ್ದಿ'}

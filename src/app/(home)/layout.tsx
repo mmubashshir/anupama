@@ -1,10 +1,9 @@
-// app/(home)/layout.tsx
+import DailyNews from '~/components/daily-news';
 import Header from '~/components/header';
+import HealthAndMedicine from '~/components/health-medicine';
+import Social from '~/components/social';
 
 import Articles from '../articles/page';
-import DailyNews from '../daily-news/page';
-import Health from '../health/page';
-import Social from '../social/page';
 import Stories from '../stories/page';
 import VideoNews from '../video-news/page';
 
@@ -20,7 +19,7 @@ export default function HomeLayout({
       <VideoNews />
       <Articles />
       <Social />
-      <Health />
+      <HealthAndMedicine />
       <Stories />
       {/* <TopStories /> */}
       <main>{children}</main>
