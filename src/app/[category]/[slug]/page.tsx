@@ -20,7 +20,7 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchPostBySlug } from '~/services/posts';
 
-interface PageParams {
+export interface PageParams {
   params: Promise<{ slug: string; category: CATEGORY }>;
 }
 
