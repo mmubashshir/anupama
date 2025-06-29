@@ -1,17 +1,23 @@
-import { foodItems } from '~/constants/food-items';
-import { sideCardData } from '~/constants/side-card';
-import { socialCardsData } from '~/constants/social-news';
+import { CATEGORY } from '~/enum/categories';
+import { type ResultOf } from 'gql.tada';
+
+import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
-import { ArticleCardProps } from '../articles/components/article-card';
+import { type ArticleCardProps } from '../articles/components/article-card';
 import { FoodCarousel } from './components/food-carousel';
 import { SocialCards } from './components/social-card';
+import type { LIMITED_POSTS_QUERY } from '~/services/posts';
 
-const mapToArticleCardProps = (article: any): ArticleCardProps => {
+type QueryResult = ResultOf<typeof LIMITED_POSTS_QUERY>;
+type Article = NonNullable<QueryResult['posts']>['nodes'][number];
+
+const mapToArticleCardProps = (article: Article): ArticleCardProps => {
   return {
     key: article.id,
-    image: article.featuredImage?.node.sourceUrl ?? '/fallback.jpg',
+    slug: article.slug ?? '',
+    image: article.featuredImage?.node.sourceUrl ?? getPlaceholderImage(),
     category: article.categories?.nodes[0].name ?? 'Uncategorised',
     headline: article.title ?? '',
     subhead: '',
@@ -21,27 +27,22 @@ const mapToArticleCardProps = (article: any): ArticleCardProps => {
 };
 
 export default async function Page() {
-  const socialRaw = await fetchLifestyleArticles(
-    4,
-    LifestyleArticleTypes.Social,
-  );
+  const socialRaw = await fetchLifestyleArticles(4, CATEGORY.Social);
 
   const lifeTreasureRaw = await fetchLifestyleArticles(
     4,
-    LifestyleArticleTypes.LifeTreasure,
+    CATEGORY.LifeTreasure,
   );
 
-  const cookingRaw = await fetchLifestyleArticles(
-    4,
-    LifestyleArticleTypes.Cooking,
-  );
+  const cookingRaw = await fetchLifestyleArticles(4, CATEGORY.Cooking);
 
-  const social: Array<ArticleCardProps> =
+  const social: ArticleCardProps[] =
     socialRaw.posts?.nodes.flatMap(mapToArticleCardProps) ?? [];
   const lifeTreasure =
     lifeTreasureRaw.posts?.nodes.flatMap(mapToArticleCardProps) ?? [];
-  const cooking: Array<ArticleCardProps> =
+  const cooking: ArticleCardProps[] =
     cookingRaw.posts?.nodes.flatMap(mapToArticleCardProps) ?? [];
+
   return (
     <div className="mx-auto max-w-6xl bg-white px-4 py-6">
       <div className="mx-auto max-w-6xl space-y-12 p-4">
@@ -53,19 +54,9 @@ export default async function Page() {
   );
 }
 
-enum LifestyleArticleTypes {
-  Social = 'social',
-  Cooking = 'cooking',
-  LifeTreasure = 'life-treasure',
-  Editorial = 'editorial',
-}
-
-async function fetchLifestyleArticles(
-  limit: number,
-  type: LifestyleArticleTypes,
-) {
+async function fetchLifestyleArticles(limit: number, type: CATEGORY) {
   return await fetchLimitedPosts({
-    limit: limit,
+    limit,
     filter: {
       categoryName: type,
     },

@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 export interface ArticleCardProps {
   key: string;
+  slug: string;
   image: string;
   category: string;
   headline: string;

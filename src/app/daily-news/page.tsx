@@ -80,7 +80,10 @@ export default async function DailyNews() {
         {/* Sidebar News Items */}
         <div className="space-y-6">
           {otherPosts.map((post) => (
-            <Link key={post.slug} href={`/blog/${post.slug}`}>
+            <Link
+              key={post.slug}
+              href={`/${CATEGORY.DailyNews}/${mainPost.slug}`}
+            >
               <NewsCard
                 category={post.categories?.nodes[0]?.name ?? 'ದಿನನಿತ್ಯದ ಸುದ್ದಿ'}
                 title={post.title ?? ''}

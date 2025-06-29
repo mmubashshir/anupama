@@ -10,4 +10,9 @@ export enum CATEGORY {
   Achievements = 'achievements',
   Society = 'society',
   Reflection = 'reflection',
+  Articles = 'articles',
+  Cooking = 'cooking',
+  Social = 'social',
+  LifeTreasure = 'life-treasure',
+  Editorial = 'editorial',
 }

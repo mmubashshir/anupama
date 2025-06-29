@@ -29,6 +29,7 @@ export default async function Articles() {
     .map((article) => {
       return {
         key: article.id,
+        slug: article.slug ?? '',
         image: article.featuredImage?.node.sourceUrl ?? '/fallback.jpg',
         category: article.categories?.nodes[0].name ?? 'Uncategorised',
         headline: article.title ?? '',
@@ -69,6 +70,7 @@ export default async function Articles() {
                 subhead={article.subhead}
                 writerName={article.writerName}
                 date={article.date}
+                slug={article.slug}
               />
             ))}
           </div>
@@ -89,6 +91,7 @@ export default async function Articles() {
             subhead={article.subhead}
             writerName={article.writerName}
             date={article.date}
+            slug={article.slug}
           />
         ))}
       </div>

@@ -2,7 +2,7 @@ import { graphql, query } from '~/utils/graphql-client';
 
 import type { ResultOf, VariablesOf } from 'gql.tada';
 
-const LIMITED_POSTS_QUERY = graphql(`
+export const LIMITED_POSTS_QUERY = graphql(`
   query FetchLimitedPosts(
     $limit: Int!
     $filter: RootQueryToPostConnectionWhereArgs
@@ -10,6 +10,7 @@ const LIMITED_POSTS_QUERY = graphql(`
     posts(first: $limit, where: $filter) {
       nodes {
         id
+        slug
         title
         author {
           node {
@@ -27,6 +28,7 @@ const LIMITED_POSTS_QUERY = graphql(`
         categories {
           nodes {
             name
+            slug
           }
         }
         customFields {
