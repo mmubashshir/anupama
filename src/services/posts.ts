@@ -59,11 +59,23 @@ const FETCH_POST_BY_SLUG_QUERY = graphql(`
   query GetPostBySlug($slug: String!) {
     postBy(slug: $slug) {
       id
+      databaseId
       title
       slug
       date
       content
       commentCount
+      comments {
+        nodes {
+          id
+          content
+          author {
+            name
+            email
+          }
+          date
+        }
+      }
       author {
         node {
           name
