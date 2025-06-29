@@ -19,6 +19,7 @@ export const LIMITED_POSTS_QUERY = graphql(`
         slug
         title
         date
+        content
         excerpt
         commentCount
         author {

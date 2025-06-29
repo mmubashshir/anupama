@@ -35,7 +35,7 @@ export default async function VideoNews() {
                 <div className="group relative cursor-pointer px-8 pt-8">
                   <WPVideoRenderer
                     className="video-container"
-                    content={latestVideo.customFields?.youtubeVideoUrl ?? ''}
+                    content={latestVideo.content}
                   />
                 </div>
 
@@ -55,7 +55,7 @@ export default async function VideoNews() {
               <VideoCard
                 key={videoPost.id}
                 title={videoPost.title ?? ''}
-                videoContent={videoPost.customFields?.youtubeVideoUrl ?? ''}
+                videoContent={videoPost.content ?? ''}
               />
             ))}
           </div>
