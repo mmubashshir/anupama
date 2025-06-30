@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { HttpLink } from '@apollo/client';
 import {
   ApolloClient,
@@ -9,8 +11,15 @@ import { initGraphQLTada, readFragment } from 'gql.tada';
 import { env } from '~/env';
 
 import type { introspection } from '../graphql-env.d.ts';
+import type { TypedDocumentNode } from '@apollo/client';
+import type {
+  FragmentOf,
+  ResultOf,
+  TadaDocumentNode,
+  VariablesOf,
+} from 'gql.tada';
 
-const { query } = registerApolloClient(() => {
+const { query: apolloQuery, getClient } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({
@@ -20,15 +29,36 @@ const { query } = registerApolloClient(() => {
   });
 });
 
-/* Inorder to this to work proper gql.tada config should be done
-   graphql intropesction can be done via
-   pnpm gql-tada generate schema 'http://api.test/graphql' --output './schema.graphql' command
-*/
-
 const graphql = initGraphQLTada<{
   introspection: introspection;
 }>();
 
-export type { FragmentOf, ResultOf, VariablesOf } from 'gql.tada';
+export { graphql, getClient, readFragment };
 
-export { graphql, query, readFragment };
+type ApolloCompatibleDocument<TData, TVariables> = TadaDocumentNode<
+  TData,
+  TVariables
+> &
+  TypedDocumentNode<TData, TVariables>;
+
+export async function query<TData, TVariables>(
+  options: Parameters<typeof apolloQuery>[0] & {
+    query: ApolloCompatibleDocument<TData, TVariables>;
+    variables?: TVariables;
+  },
+): Promise<{ data: TData; errors?: unknown[] }> {
+  const result = await apolloQuery(options);
+
+  if (result.errors) {
+    return {
+      data: result.data,
+      errors: [...result.errors],
+    };
+  }
+
+  return {
+    data: result.data,
+  };
+}
+
+export type { FragmentOf, ResultOf, VariablesOf };

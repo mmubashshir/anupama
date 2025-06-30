@@ -1,4 +1,4 @@
-export const blogPosts = [
+export const logPosts = [
   {
     id: 1,
     slug: 'bhutan-happiest-country',
