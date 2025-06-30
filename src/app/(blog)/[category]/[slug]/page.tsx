@@ -1,3 +1,4 @@
+import { createComment } from '~/app/actions/post-comment';
 import { BASE_URL } from '~/constants';
 import { type CATEGORY } from '~/enum/categories';
 import {
@@ -14,6 +15,7 @@ import Link from 'next/link';
 
 import Sidebar from '~/components/category/sidebar';
 import Comment from '~/components/comment';
+import CreateComment from '~/components/create-comment';
 import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
@@ -162,7 +164,13 @@ export default async function Blog({ params }: PageParams) {
           </div>
 
           {/* Leave a Comment */}
-          <Comment post={post} />
+          <div>
+            <Comment post={post} />
+            <CreateComment
+              databaseId={post.databaseId}
+              submitComment={createComment}
+            />
+          </div>
 
           {/* Post Navigation */}
           <div className="mt-15 flex flex-col justify-between gap-8 pt-4 md:flex-row">

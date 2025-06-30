@@ -7,24 +7,22 @@ import 'server-only';
 import { z } from 'zod';
 
 import { getClient, graphql } from '~/utils/graphql-client';
+import { tryCatch } from '~/utils/try-catch';
 
 const ADD_COMMENT_QUERY = graphql(`
-  mutation createNewComment(
-    $postId: Int
-    $name: String
-    $email: String
-    $content: String
-  ) {
+  mutation createNewComment($postId: Int, $name: String, $content: String) {
     createComment(
       input: {
         commentOn: $postId
-        authorEmail: $email
         author: $name
         content: $content
         status: APPROVE
       }
     ) {
       success
+      comment {
+        id
+      }
     }
   }
 `);
@@ -32,30 +30,56 @@ const ADD_COMMENT_QUERY = graphql(`
 const schema = z.object({
   postId: z.string().transform((id) => Number(id)),
   name: z.string(),
-  email: z.string().email(),
   content: z.string(),
 });
 
-export async function createComment(formData: FormData) {
+export interface FunctionInitialReturn {
+  status: 'idle';
+}
+export interface FunctionSuccessReturn {
+  status: 'success';
+  commentId?: string;
+}
+
+export interface FunctionFailureReturn {
+  status: 'fail';
+}
+
+export type FunctionReturnType =
+  | FunctionInitialReturn
+  | FunctionSuccessReturn
+  | FunctionFailureReturn;
+
+export async function createComment(
+  prevState: FunctionReturnType,
+  formData: FormData,
+): Promise<FunctionReturnType> {
   const validatedData = schema.safeParse(
     Object.fromEntries(formData.entries()),
   );
 
   if (validatedData.error) {
-    return;
+    return { status: 'fail' };
   }
 
   const client = getClient();
 
-  const res = await client.mutate({
-    mutation: ADD_COMMENT_QUERY,
-    variables: {
-      postId: validatedData.data.postId,
-      name: validatedData.data.name,
-      email: validatedData.data.email,
-      content: validatedData.data.content,
-    },
-  });
+  const { data: res, error } = await tryCatch(
+    client.mutate({
+      mutation: ADD_COMMENT_QUERY,
+      variables: {
+        postId: validatedData.data.postId,
+        name: validatedData.data.name,
+        content: validatedData.data.content,
+      },
+    }),
+  );
+
+  if (error) {
+    console.error('An errror occured', JSON.stringify(error));
+
+    return { status: 'fail' };
+  }
 
   if (res.errors) {
     console.error(
@@ -63,14 +87,19 @@ export async function createComment(formData: FormData) {
       JSON.stringify(res.errors),
     );
 
-    return;
+    return { status: 'fail' };
   }
 
   if (res.data?.createComment?.success === false) {
     console.error('creating comment failed ');
 
-    return;
+    return { status: 'fail' };
   }
 
   revalidatePath('/(blog)');
+
+  return {
+    status: 'success',
+    commentId: res.data?.createComment?.comment?.id,
+  };
 }

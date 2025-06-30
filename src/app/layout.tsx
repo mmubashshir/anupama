@@ -1,4 +1,5 @@
 import { Baloo_Tamma_2 } from 'next/font/google';
+import { Toaster } from 'react-hot-toast';
 
 import type { Metadata } from 'next';
 
@@ -80,6 +81,7 @@ export default function RootLayout({
       <body className={`${balooTamma.variable} antialiased`}>
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   );
