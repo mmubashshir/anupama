@@ -42,7 +42,13 @@ export async function generateMetadata({
     typeof post.content === 'string'
       ? post.content.replace(/<[^>]+>/g, '').slice(0, 150)
       : 'Anupama Monthly Magazine - Empowering Women Through Words.';
-  const ogImage = post.featuredImage?.node.sourceUrl ?? getPlaceholderImage();
+
+  const ogImage = post.featuredImage?.node.mediaDetails?.sizes?.find(
+    (size) => size?.name === 'medium_large',
+  );
+  const firstImage =
+    post.featuredImage?.node.mediaDetails?.sizes?.[0]?.sourceUrl ??
+    getPlaceholderImage({ text: title });
 
   return {
     title,
@@ -56,7 +62,7 @@ export async function generateMetadata({
       type: 'article',
       images: [
         {
-          url: ogImage,
+          url: ogImage?.sourceUrl ?? firstImage,
           width: 1200,
           height: 630,
           alt: title,
@@ -67,7 +73,7 @@ export async function generateMetadata({
       title,
       card: 'summary_large_image',
       description,
-      images: [ogImage],
+      images: [ogImage?.sourceUrl ?? firstImage],
     },
   };
 }

@@ -84,6 +84,13 @@ const FETCH_POST_BY_SLUG_QUERY = graphql(`
       featuredImage {
         node {
           sourceUrl
+          mediaDetails {
+            sizes {
+              sourceUrl
+              fileSize
+              name
+            }
+          }
         }
       }
       categories {
