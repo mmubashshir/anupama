@@ -128,9 +128,7 @@ export default async function Blog({ params }: PageParams) {
               <div className="mb-4 flex flex-wrap gap-4 text-gray-500">
                 <div className="flex items-center gap-1">
                   <User className="h-5 w-5 text-red-500" />
-                  <Link href="#" className="duration-300 hover:text-red-500">
-                    <span>{post.author?.node.name}</span>
-                  </Link>
+                  <span>{post.author?.node.name}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Calendar className="h-5 w-5 text-red-500" />
@@ -152,7 +150,10 @@ export default async function Blog({ params }: PageParams) {
                 </div>
                 <div className="flex items-center gap-1">
                   <MessageCircle className="h-5 w-5 text-red-500" />
-                  <span>{post.commentCount} Comments</span>
+                  <span>
+                    {post.commentCount} Comment
+                    {post.commentCount !== 1 ? 's' : ''}
+                  </span>
                 </div>
               </div>
 
