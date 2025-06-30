@@ -5,10 +5,14 @@ const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
   },
-
+  devIndicators: false,
   images: {
     dangerouslyAllowSVG: true,
-    remotePatterns: [{ hostname: 'placehold.co' }, { hostname: 'localhost' }],
+    remotePatterns: [
+      { hostname: 'placehold.co' },
+      { hostname: 'localhost' },
+      { hostname: '*.anupama.co.in' },
+    ],
   },
 };
 

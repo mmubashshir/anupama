@@ -6,7 +6,7 @@ import './globals.css';
 
 import { BASE_URL } from '~/constants';
 
-import Footer from '~/components/main-footer';
+import Footer from '~/components/footer';
 
 const balooTamma = Baloo_Tamma_2({
   variable: '--font-primary',
