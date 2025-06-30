@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://www.anupamamonthly.co.in';
+export const BASE_URL = 'https://www.anupama.co.in';

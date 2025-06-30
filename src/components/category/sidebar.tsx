@@ -46,10 +46,10 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
                     alt={post.title ?? 'Post image'}
                     width={70}
                     height={70}
-                    className="flex-shrink-0 rounded-md object-cover transition duration-300"
+                    className="aspect-square flex-shrink-0 rounded-md object-cover"
                   />
                   <div>
-                    <p className="text-sm font-medium group-hover:text-red-500">
+                    <p className="line-clamp-3 text-sm font-medium group-hover:text-red-500">
                       {post.title}
                     </p>
                     <p className="mt-1 text-xs text-gray-500">

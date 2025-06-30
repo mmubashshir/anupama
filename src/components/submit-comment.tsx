@@ -12,7 +12,7 @@ function SubmitCommentButton() {
       type="submit"
       disabled={pending}
       className={cn(
-        'bg-red-600 px-4 py-1 text-white transition hover:bg-red-700 disabled:bg-red-500',
+        'cursor-pointer bg-red-600 px-4 py-1 text-white transition hover:bg-red-700 disabled:cursor-none disabled:bg-red-500',
         { 'animate-pulse': pending },
       )}
     >

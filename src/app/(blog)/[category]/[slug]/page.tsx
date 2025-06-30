@@ -1,4 +1,4 @@
-import { createComment } from '~/app/actions/post-comment';
+import { BASE_URL } from '~/constants';
 import { type CATEGORY } from '~/enum/categories';
 import {
   Calendar,
@@ -8,10 +8,12 @@ import {
   Tag,
   User,
 } from 'lucide-react';
+import { type Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import Sidebar from '~/components/category/sidebar';
+import Comment from '~/components/comment';
 import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
@@ -22,10 +24,52 @@ import {
   fetchPostBySlug,
 } from '~/services/posts';
 
-import SubmitCommentButton from '../components/submit-comment';
-
 interface PageParams {
   params: Promise<{ slug: string; category: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; category: string }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+
+  const post = await fetchPostBySlug(resolvedParams.slug);
+
+  const title = post.title ?? 'Anupama Monthly';
+  const description =
+    typeof post.content === 'string'
+      ? post.content.replace(/<[^>]+>/g, '').slice(0, 150)
+      : 'Anupama Monthly Magazine - Empowering Women Through Words.';
+  const ogImage = post.featuredImage?.node.sourceUrl ?? getPlaceholderImage();
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `${BASE_URL}/${resolvedParams.category}/${resolvedParams.slug}`,
+      siteName: 'Anupama Monthly',
+      locale: 'kn_IN',
+      type: 'article',
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      title,
+      card: 'summary_large_image',
+      description,
+      images: [ogImage],
+    },
+  };
 }
 
 export default async function Blog({ params }: PageParams) {
@@ -110,75 +154,8 @@ export default async function Blog({ params }: PageParams) {
             </article>
           </div>
 
-          {/* Comments Section */}
-          <div className="border-t border-gray-200 pt-8">
-            <h3 className="mb-6 text-xl font-bold">
-              {post.commentCount} Comment
-              {post.commentCount !== 1 && 's'}
-            </h3>
-
-            <div className="space-y-6">
-              {post.comments?.nodes.map((comment) => (
-                <div key={comment.id} className="border-b border-gray-100 pb-4">
-                  <div className="mb-1">
-                    <h4 className="font-bold text-gray-800">
-                      {comment.author?.name ?? 'Anonymous'}
-                    </h4>
-
-                    {comment.date ? (
-                      <p className="text-xs text-gray-500">
-                        {new Date(comment.date).toLocaleDateString('kn-IN', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })}{' '}
-                      </p>
-                    ) : null}
-                  </div>
-
-                  <WPContentRenderer
-                    className="text-gray-700"
-                    content={comment.content}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* Leave a Comment */}
-          <div className="border-t-1 border-gray-200 pt-8">
-            <h3 className="mb-6 text-xl font-bold">Leave A Comment</h3>
-            <form action={createComment} className="space-y-4">
-              <textarea
-                name="content"
-                className="w-full resize-none border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
-                rows={5}
-                required
-                minLength={5}
-                placeholder="Type your comment here..."
-              />
-
-              <input
-                name="name"
-                type="text"
-                className="w-full border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
-                required
-                min={3}
-                placeholder="Your Name..."
-              />
-
-              <input
-                name="email"
-                type="email"
-                className="w-full border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
-                required
-                placeholder="Your Email..."
-              />
-              <input name="postId" type="hidden" value={post.databaseId} />
-
-              <SubmitCommentButton />
-            </form>
-          </div>
+          <Comment post={post} />
 
           {/* Post Navigation */}
           <div className="mt-15 flex flex-col justify-between gap-8 pt-4 md:flex-row">

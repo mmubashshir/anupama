@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { hostname: 'placehold.co' },
       { hostname: 'localhost' },
-      { hostname: '*.anupama.co.in' },
+      { hostname: 'wordpress.anupama.co.in' },
     ],
   },
 };
