@@ -1452,6 +1452,11 @@ interface EnqueuedScriptConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -1469,8 +1474,27 @@ interface WPPageInfo implements PageInfo {
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
+}
+
+"""Get information about the offset pagination state"""
+type OffsetPaginationPageInfo {
+  """
+  True if there is one or more nodes available in this connection. Eg. you can increase the offset at least by one.
+  """
+  hasMore: Boolean
+
+  """True when offset can be decresed eg. offset is 0&lt;"""
+  hasPrevious: Boolean
+
+  """Total amount of nodes in this connection"""
+  total: Int
 }
 
 """An edge in a connection"""
@@ -1494,6 +1518,11 @@ type TermNodeToEnqueuedScriptConnectionPageInfo implements EnqueuedScriptConnect
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -1613,6 +1642,11 @@ interface EnqueuedStylesheetConnectionPageInfo implements WPPageInfo & PageInfo 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -1638,6 +1672,11 @@ type TermNodeToEnqueuedStylesheetConnectionPageInfo implements EnqueuedStyleshee
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -1829,6 +1868,11 @@ type CategoryToAncestorsCategoryConnectionPageInfo implements CategoryConnection
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -1845,6 +1889,11 @@ interface CategoryConnectionPageInfo implements WPPageInfo & PageInfo {
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -1971,6 +2020,11 @@ type CategoryToCategoryConnectionPageInfo implements CategoryConnectionPageInfo 
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -3078,6 +3132,11 @@ interface ContentTypeConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -3103,6 +3162,11 @@ type TaxonomyToContentTypeConnectionPageInfo implements ContentTypeConnectionPag
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -3162,6 +3226,11 @@ interface TermNodeConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -3188,6 +3257,11 @@ type TaxonomyToTermNodeConnectionPageInfo implements TermNodeConnectionPageInfo 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -3204,6 +3278,11 @@ interface TaxonomyConnectionPageInfo implements WPPageInfo & PageInfo {
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -3230,6 +3309,11 @@ type ContentTypeToTaxonomyConnectionPageInfo implements TaxonomyConnectionPageIn
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -3346,6 +3430,11 @@ type ContentTypeToContentNodeConnectionPageInfo implements ContentNodeConnection
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -3362,6 +3451,11 @@ interface ContentNodeConnectionPageInfo implements WPPageInfo & PageInfo {
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -4512,6 +4606,11 @@ type CommentToCommentConnectionPageInfo implements CommentConnectionPageInfo & W
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -4528,6 +4627,11 @@ interface CommentConnectionPageInfo implements WPPageInfo & PageInfo {
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -4554,6 +4658,11 @@ type UserToCommentConnectionPageInfo implements CommentConnectionPageInfo & WPPa
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -4593,6 +4702,11 @@ type UserToEnqueuedScriptConnectionPageInfo implements EnqueuedScriptConnectionP
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -4630,6 +4744,11 @@ type UserToEnqueuedStylesheetConnectionPageInfo implements EnqueuedStylesheetCon
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -5439,6 +5558,11 @@ type HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo implements 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -5544,6 +5668,11 @@ type HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo implements C
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -5581,6 +5710,11 @@ type ContentNodeToEnqueuedScriptConnectionPageInfo implements EnqueuedScriptConn
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -5621,6 +5755,11 @@ type ContentNodeToEnqueuedStylesheetConnectionPageInfo implements EnqueuedStyles
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -5785,6 +5924,11 @@ type MediaItemToCommentConnectionPageInfo implements CommentConnectionPageInfo &
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -5924,6 +6068,11 @@ interface MediaItemConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -5949,6 +6098,11 @@ type UserToMediaItemConnectionPageInfo implements MediaItemConnectionPageInfo & 
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -6615,6 +6769,11 @@ type PageToCommentConnectionPageInfo implements CommentConnectionPageInfo & WPPa
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -6738,6 +6897,11 @@ type PageToRevisionConnectionPageInfo implements PageConnectionPageInfo & WPPage
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -6754,6 +6918,11 @@ interface PageConnectionPageInfo implements WPPageInfo & PageInfo {
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -6780,6 +6949,11 @@ type UserToPageConnectionPageInfo implements PageConnectionPageInfo & WPPageInfo
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -7399,6 +7573,11 @@ type PostToPostConnectionPageInfo implements PostConnectionPageInfo & WPPageInfo
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -7415,6 +7594,11 @@ interface PostConnectionPageInfo implements WPPageInfo & PageInfo {
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -7541,6 +7725,11 @@ type PostToCategoryConnectionPageInfo implements CategoryConnectionPageInfo & WP
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -7680,6 +7869,11 @@ type PostToCommentConnectionPageInfo implements CommentConnectionPageInfo & WPPa
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -8072,6 +8266,11 @@ type PostFormatToContentNodeConnectionPageInfo implements ContentNodeConnectionP
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -8218,6 +8417,11 @@ type PostFormatToPostConnectionPageInfo implements PostConnectionPageInfo & WPPa
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -8246,6 +8450,11 @@ interface PostFormatConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -8271,6 +8480,11 @@ type PostToPostFormatConnectionPageInfo implements PostFormatConnectionPageInfo 
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -8428,6 +8642,11 @@ type PostToRevisionConnectionPageInfo implements PostConnectionPageInfo & WPPage
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -8807,6 +9026,11 @@ type TagToContentNodeConnectionPageInfo implements ContentNodeConnectionPageInfo
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -8953,6 +9177,11 @@ type TagToPostConnectionPageInfo implements PostConnectionPageInfo & WPPageInfo 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -8981,6 +9210,11 @@ interface TagConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -9006,6 +9240,11 @@ type PostToTagConnectionPageInfo implements TagConnectionPageInfo & WPPageInfo &
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -9150,6 +9389,11 @@ type PostToTermNodeConnectionPageInfo implements TermNodeConnectionPageInfo & WP
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -9175,6 +9419,11 @@ type UserToPostConnectionPageInfo implements PostConnectionPageInfo & WPPageInfo
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -9275,6 +9524,11 @@ type UserToRevisionsConnectionPageInfo implements ContentNodeConnectionPageInfo 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -9351,6 +9605,11 @@ interface UserRoleConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -9377,6 +9636,11 @@ type UserToUserRoleConnectionPageInfo implements UserRoleConnectionPageInfo & WP
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -9402,6 +9666,11 @@ type CategoryToContentNodeConnectionPageInfo implements ContentNodeConnectionPag
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -9560,6 +9829,11 @@ type CategoryToPostConnectionPageInfo implements PostConnectionPageInfo & WPPage
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -9596,6 +9870,11 @@ type RootQueryToCategoryConnectionPageInfo implements CategoryConnectionPageInfo
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -9767,6 +10046,11 @@ type RootQueryToCommentConnectionPageInfo implements CommentConnectionPageInfo &
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -9820,6 +10104,9 @@ input RootQueryToContentNodeConnectionWhereArgs {
   """
   notIn: [ID]
 
+  """Paginate content nodes with offsets"""
+  offsetPagination: OffsetPagination
+
   """What parameter to use to order the objects by."""
   orderby: [PostObjectsConnectionOrderbyInput]
 
@@ -9846,6 +10133,15 @@ input RootQueryToContentNodeConnectionWhereArgs {
 
   """Title of the object"""
   title: String
+}
+
+"""Offset pagination input type"""
+input OffsetPagination {
+  """Number of post to show per page. Passed to posts_per_page of WP_Query."""
+  offset: Int
+
+  """Number of post to show per page. Passed to posts_per_page of WP_Query."""
+  size: Int
 }
 
 """Connection between the RootQuery type and the ContentNode type"""
@@ -9881,6 +10177,11 @@ type RootQueryToContentNodeConnectionPageInfo implements ContentNodeConnectionPa
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -9930,6 +10231,11 @@ type RootQueryToContentTypeConnectionPageInfo implements ContentTypeConnectionPa
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -10044,6 +10350,9 @@ input RootQueryToMediaItemConnectionWhereArgs {
   """
   notIn: [ID]
 
+  """Paginate MediaItems with offsets"""
+  offsetPagination: OffsetPagination
+
   """What parameter to use to order the objects by."""
   orderby: [PostObjectsConnectionOrderbyInput]
 
@@ -10105,6 +10414,11 @@ type RootQueryToMediaItemConnectionPageInfo implements MediaItemConnectionPageIn
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -10385,6 +10699,11 @@ type MenuItemToMenuItemConnectionPageInfo implements MenuItemConnectionPageInfo 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -10401,6 +10720,11 @@ interface MenuItemConnectionPageInfo implements WPPageInfo & PageInfo {
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -10479,6 +10803,11 @@ type MenuToMenuItemConnectionPageInfo implements MenuItemConnectionPageInfo & WP
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -10543,6 +10872,11 @@ type RootQueryToMenuItemConnectionPageInfo implements MenuItemConnectionPageInfo
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -10600,6 +10934,11 @@ interface MenuConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -10625,6 +10964,11 @@ type RootQueryToMenuConnectionPageInfo implements MenuConnectionPageInfo & WPPag
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -10690,6 +11034,9 @@ input RootQueryToPageConnectionWhereArgs {
   """
   notIn: [ID]
 
+  """Paginate Pages with offsets"""
+  offsetPagination: OffsetPagination
+
   """What parameter to use to order the objects by."""
   orderby: [PostObjectsConnectionOrderbyInput]
 
@@ -10751,6 +11098,11 @@ type RootQueryToPageConnectionPageInfo implements PageConnectionPageInfo & WPPag
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -10880,6 +11232,11 @@ interface PluginConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -10905,6 +11262,11 @@ type RootQueryToPluginConnectionPageInfo implements PluginConnectionPageInfo & W
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -11071,6 +11433,11 @@ type RootQueryToPostFormatConnectionPageInfo implements PostFormatConnectionPage
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -11136,6 +11503,9 @@ input RootQueryToPostConnectionWhereArgs {
   Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored
   """
   notIn: [ID]
+
+  """Paginate Posts with offsets"""
+  offsetPagination: OffsetPagination
 
   """What parameter to use to order the objects by."""
   orderby: [PostObjectsConnectionOrderbyInput]
@@ -11217,6 +11587,11 @@ type RootQueryToPostConnectionPageInfo implements PostConnectionPageInfo & WPPag
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -11270,6 +11645,11 @@ type RootQueryToEnqueuedScriptConnectionPageInfo implements EnqueuedScriptConnec
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -11307,6 +11687,11 @@ type RootQueryToEnqueuedStylesheetConnectionPageInfo implements EnqueuedStyleshe
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -11406,6 +11791,11 @@ type RootQueryToRevisionsConnectionPageInfo implements ContentNodeConnectionPage
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -11553,6 +11943,11 @@ type RootQueryToTagConnectionPageInfo implements TagConnectionPageInfo & WPPageI
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -11590,6 +11985,11 @@ type RootQueryToTaxonomyConnectionPageInfo implements TaxonomyConnectionPageInfo
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -11751,6 +12151,11 @@ type RootQueryToTermNodeConnectionPageInfo implements TermNodeConnectionPageInfo
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -11863,6 +12268,11 @@ interface ThemeConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -11888,6 +12298,11 @@ type RootQueryToThemeConnectionPageInfo implements ThemeConnectionPageInfo & WPP
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
@@ -11950,6 +12365,11 @@ type RootQueryToUserRoleConnectionPageInfo implements UserRoleConnectionPageInfo
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -11992,6 +12412,9 @@ input RootQueryToUserConnectionWhereArgs {
   An array of nicenames to exclude. Users matching one of these nicenames will not be included in results.
   """
   nicenameNotIn: [String]
+
+  """Paginate users with offsets"""
+  offsetPagination: OffsetPagination
 
   """What parameter to use to order the objects by."""
   orderby: [UsersConnectionOrderbyInput]
@@ -12141,6 +12564,11 @@ interface UserConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
   """When paginating backwards, the cursor to continue."""
   startCursor: String
 }
@@ -12166,6 +12594,11 @@ type RootQueryToUserConnectionPageInfo implements UserConnectionPageInfo & WPPag
 
   """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String

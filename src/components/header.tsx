@@ -56,8 +56,18 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <Calendar className="h-7 w-7" />
           <div className="flex flex-col">
-            <span className="font-bold">Saturday</span>
-            <span className="text-sm font-extralight">May 10, 2025</span>
+            <span className="font-bold">
+              {' '}
+              {new Date().toLocaleDateString('en-US', { weekday: 'long' })}
+            </span>
+            <span className="text-sm font-extralight">
+              {' '}
+              {new Date().toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })}
+            </span>
           </div>
         </div>
 

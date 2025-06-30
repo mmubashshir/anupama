@@ -6,7 +6,6 @@ export interface NavLink {
 
 export const navLinks: NavLink[] = [
   {
-    // type: 'navWithSubLink',
     title: 'ಸುದ್ದಿಗಳು',
     sublinks: [
       {
@@ -20,7 +19,6 @@ export const navLinks: NavLink[] = [
     ],
   },
   {
-    // type: 'navWithSubLink',
     title: 'ಆರೋಗ್ಯ ಮತ್ತು ವೈದ್ಯಕೀಯ',
     sublinks: [
       {
@@ -29,12 +27,11 @@ export const navLinks: NavLink[] = [
       },
       {
         title: 'ವೈದ್ಯಕೀಯ',
-        href: '/medical',
+        href: '/medicine',
       },
     ],
   },
   {
-    // type: 'navWithSubLink',
     title: 'ಜೀವನಶೈಲಿ',
     sublinks: [
       {
@@ -56,12 +53,11 @@ export const navLinks: NavLink[] = [
     ],
   },
   {
-    // type: 'navWithSubLink',
     title: 'ಕಥೆಗಳು',
     sublinks: [
       {
         title: 'ಕಥಾಲೋಕ',
-        href: '/stories',
+        href: '/story-world',
       },
       {
         title: 'ಮಕ್ಕಳ ರಂಗ',
@@ -70,12 +66,11 @@ export const navLinks: NavLink[] = [
     ],
   },
   {
-    // type: 'navWithoutSubLink',
-    title: 'ಲೆಖನಗಳು',
+    title: 'ಲೇಖನಗಳು',
     sublinks: [
       {
         title: 'ಅಂಕಣಗಳು',
-        href: '/articles',
+        href: '/columns',
       },
       {
         title: 'ಪ್ರತಿಭೆ',
@@ -96,7 +91,6 @@ export const navLinks: NavLink[] = [
     ],
   },
   {
-    // type: 'navWithoutSubLink',
     title: 'ಗಣ್ಯರ ಅಭಿಪ್ರಾಯ',
     sublinks: [
       {
@@ -106,12 +100,10 @@ export const navLinks: NavLink[] = [
     ],
   },
   {
-    // type: 'navWithoutSubLink',
     title: 'ಸಂಪರ್ಕ',
     href: '/contact',
   },
   {
-    // type: 'navWithoutSubLink',
     title: 'ಬರಹಗಾರರು',
     href: '/writers',
   },

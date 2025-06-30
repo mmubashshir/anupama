@@ -1,4 +1,4 @@
-import type { StoryCardProps } from '~/app/stories/components/story-card';
+import type { StoryCardProps } from '~/components/stories/story-card';
 
 export const fetauredStories: StoryCardProps[] = [
   {
