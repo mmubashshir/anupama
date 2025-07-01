@@ -22,7 +22,6 @@ export default function FeaturedArticle({ article }: FeaturedArticleProps) {
             height={300}
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
         </div>
         <div className="mb-4">
           <h2 className="mb-3 text-xl font-semibold text-black">

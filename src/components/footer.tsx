@@ -46,7 +46,7 @@ export default function Footer() {
         <div className="mb-12 flex flex-col gap-12 pt-2 lg:flex-row lg:items-start">
           {/* Left: Company Info */}
           <div className="lg:w-1/3">
-            <Link href="/" className="mb-6 inline-block">
+            <Link href="/#" className="mb-6 inline-block" scroll>
               <div className="flex items-center">
                 <Image
                   className="mix-blend-multiply select-none"
@@ -150,12 +150,9 @@ export default function Footer() {
               href="/"
               className="text-gray-500 underline hover:text-red-500"
             >
-              Anupama
+              Anupama.
             </Link>
-            . All Rights Reserved. Developed by{' '}
-            <Link href="null" className="text-slate-700">
-              Mubashir and Co.
-            </Link>
+            All Rights Reserved. Developed by Mubashir and Co.
           </p>
         </div>
       </div>

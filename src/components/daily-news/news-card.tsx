@@ -24,7 +24,6 @@ export default function NewsCard({ category, title, imageUrl }: NewsCardProps) {
             height={120}
             className="h-25 w-25 object-cover"
           />
-          {/* <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" /> */}
         </div>
       </div>
     </div>

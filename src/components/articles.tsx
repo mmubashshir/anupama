@@ -51,7 +51,7 @@ export default async function Articles() {
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-extrabold md:text-5xl">ಲೇಖನಗಳು</h1>
           <Link
-            href={`/${CATEGORY.DailyNews}`}
+            href={`/${CATEGORY.Articles}`}
             className="group ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
           >
             ಇನ್ನಷ್ಟು

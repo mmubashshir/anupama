@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { navLinks } from '~/constants/nav-links';
-import { Calendar, ChevronDown, Home, Mail, Menu } from 'lucide-react';
+import { Calendar, ChevronDown, Home, Menu } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -85,14 +85,14 @@ export default function Header() {
         </div>
 
         {/* Right section - Subscribe */}
-        <div className="flex items-center gap-4">
+        {/* <div className="flex items-center gap-4">
           <Link href="/subscribe">
             <div className="flex items-center gap-2 border-b border-current pb-0.5">
               <Mail className="h-5 w-5" />
               <span className="font-medium uppercase">Subscribe</span>
             </div>
           </Link>
-        </div>
+        </div> */}
       </div>
 
       <DesktopNavbar />

@@ -26,6 +26,15 @@ export default async function HealthAndMedicine() {
   const healthPosts = healthPostsRaw?.nodes ?? [];
   const medicinePosts = medicinePostsRaw?.nodes ?? [];
 
+  // Combine all posts
+  const allPosts = [
+    ...healthPosts.map((post) => ({ ...post, categoryType: CATEGORY.Health })),
+    ...medicinePosts.map((post) => ({
+      ...post,
+      categoryType: CATEGORY.Medicine,
+    })),
+  ];
+
   return (
     <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
       {/* Header */}
@@ -44,28 +53,11 @@ export default async function HealthAndMedicine() {
         </div>
       </div>
 
-      {/* Health Posts */}
-      <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
-        {healthPosts.map((post) => (
-          <Link key={post.id} href={`/${CATEGORY.Health}/${post.slug}`}>
+      {/* All Posts in Single Grid */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
+        {allPosts.map((post) => (
+          <Link key={post.id} href={`/${post.categoryType}/${post.slug}`}>
             <HealthCard
-              name={post.title ?? 'Untitled'}
-              category={post.categories?.nodes[0]?.name ?? ''}
-              description={post.excerpt ?? ''}
-              imageUrl={
-                post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
-              }
-            />
-          </Link>
-        ))}
-      </div>
-
-      {/* Medicine Posts */}
-      <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
-        {medicinePosts.map((post) => (
-          <Link key={post.id} href={`/${CATEGORY.Medicine}/${post.slug}`}>
-            <HealthCard
-              key={post.id}
               name={post.title ?? 'Untitled'}
               category={post.categories?.nodes[0]?.name ?? ''}
               description={post.excerpt ?? ''}

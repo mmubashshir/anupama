@@ -10,6 +10,8 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
+export const revalidate = 120;
+
 export default async function DailyNews() {
   const { posts } = await fetchLimitedPosts({
     first: 5,
@@ -61,7 +63,6 @@ export default async function DailyNews() {
             />
           </Link>
 
-          {/* Overlay below image */}
           <Link href={`/${CATEGORY.DailyNews}/${mainPost.slug}`}>
             <div className="z-10 ml-auto flex flex-col gap-1.5 bg-white md:-mt-16 md:w-[90%] md:p-4 md:text-left">
               <span className="text-sm text-black">

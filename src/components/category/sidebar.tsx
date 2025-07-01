@@ -23,7 +23,7 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
       <div className="sticky top-8">
         <div className="space-y-8">
           {/* Recent Posts */}
-          <div className="border border-gray-200 p-8">
+          <div className="border border-gray-200 p-4">
             <h3 className="mb-4 inline-block border-b-2 border-red-500 pb-2 text-xl font-bold">
               Recent posts
             </h3>
@@ -50,7 +50,7 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
                   />
 
                   <div>
-                    <p className="line-clamp-3 text-sm font-medium group-hover:text-red-500">
+                    <p className="line-clamp-3 text-sm font-medium">
                       {post.title}
                     </p>
                     <p className="mt-1 text-xs text-gray-500">
@@ -69,7 +69,7 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
           </div>
 
           {/* Popular Tags */}
-          <div className="border border-gray-200 p-8">
+          {/* <div className="border border-gray-200 p-8">
             <h3 className="mb-4 inline-block border-b-2 border-red-500 pb-2 text-xl font-bold">
               Popular tags
             </h3>
@@ -93,7 +93,7 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
                 </Link>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

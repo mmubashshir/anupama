@@ -9,7 +9,6 @@ export default function VideoCard({ title, videoContent }: VideoCardProps) {
   return (
     <div className="border-b border-gray-200 py-4 last:border-b-0">
       <div className="group flex cursor-pointer flex-row-reverse items-start gap-3">
-        {/* Image with overlay */}
         <div className="w-42">
           <WPVideoRenderer className="video-container" content={videoContent} />
         </div>

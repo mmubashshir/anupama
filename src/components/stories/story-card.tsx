@@ -23,7 +23,6 @@ function StoryCard({ image, category, headline, writerName }: StoryCardProps) {
           height={300}
           className="aspect-[3/2] w-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
       </div>
 
       <div className="z-10 ml-auto flex w-full flex-col gap-2 bg-white md:-mt-16 md:w-[90%] md:p-4 md:text-left">

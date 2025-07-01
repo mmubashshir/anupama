@@ -1,6 +1,6 @@
 'use client';
 
-import { format, formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 import WPContentRenderer from '~/components/wp-content-renderer';
 
@@ -31,8 +31,7 @@ export default function Comment({ post }: CommentProps) {
       {post.comments?.nodes && post.comments.nodes.length > 0 ? (
         <div className="border-t border-gray-200 pt-8">
           <h3 className="mb-6 flex items-center text-xl font-bold">Comments</h3>
-
-          <div className="space-y-6">
+          <div className="space-y-3">
             {post.comments.nodes.map((comment, index) => (
               <div
                 key={comment.id}
@@ -47,12 +46,12 @@ export default function Comment({ post }: CommentProps) {
 
                     {comment.date ? (
                       <span className="text-sm text-gray-500">
-                        {formatDistanceToNow(
-                          format(
-                            comment.dateGmt ?? '',
-                            `yyyy-MM-dd'T'HH:mm:ss'Z`,
-                          ),
-                        )}
+                        {comment.dateGmt
+                          ? formatDistanceToNowStrict(
+                              new Date(`${comment.dateGmt}Z`),
+                              { addSuffix: true },
+                            )
+                          : null}
                       </span>
                     ) : null}
                   </div>

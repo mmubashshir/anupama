@@ -10,7 +10,6 @@ export function SocialCard({ image, headline, subhead }: ArticleCardProps) {
     <div className="group cursor-pointer p-0">
       <div className="relative aspect-[4/3]">
         <Image src={image} alt={headline} fill className="object-cover" />
-        <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
       </div>
       <div className="bg-white">
         <h3 className="mb-2 pt-4 text-2xl leading-tight font-black decoration-1 underline-offset-4 group-hover:underline">
@@ -26,7 +25,7 @@ export function SideCard({ editorial }: { editorial: ArticleCardProps[] }) {
   const latestEditorial = editorial[0];
 
   return (
-    <div className="bg-[#FFF4F2] p-5">
+    <div className="bg-gray-100 p-5">
       <div className="group cursor-pointer">
         <div className="relative mb-6 aspect-[3/2]">
           <Image
@@ -35,7 +34,6 @@ export function SideCard({ editorial }: { editorial: ArticleCardProps[] }) {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
         </div>
 
         <p className="mb-1 text-lg font-semibold">{latestEditorial.category}</p>

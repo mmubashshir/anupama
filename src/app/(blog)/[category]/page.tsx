@@ -1,5 +1,5 @@
 import { type CATEGORY } from '~/enum/categories';
-import { Calendar, ChevronRight, MessageCircle, Tag, User } from 'lucide-react';
+import { Calendar, ChevronRight, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -88,13 +88,13 @@ export default async function CategoryListing({
                 >
                   <h2 className="mt-6 text-3xl font-bold">{post.title}</h2>
                 </Link>
-                <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                  <div className="flex items-center gap-1">
-                    <User className="h-5 w-5" />
+                <div className="mt-4 flex flex-wrap items-center gap-6 text-sm text-gray-500">
+                  <div className="flex items-end gap-1">
+                    <User className="h-4 w-4 stroke-1" />
                     <span>{post.author?.node.name}</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-5 w-5" />
+                  <div className="flex items-end gap-1">
+                    <Calendar className="h-4 w-4 stroke-1" />
                     {post.date
                       ? new Date(post.date).toLocaleDateString('en-US', {
                           year: 'numeric',
@@ -102,16 +102,6 @@ export default async function CategoryListing({
                           day: 'numeric',
                         })
                       : 'Unknown date'}{' '}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Tag className="h-5 w-5" />
-                    <span>
-                      {post.categories?.nodes.map((itm) => itm.name).join(', ')}
-                    </span>{' '}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MessageCircle className="h-5 w-5" />
-                    <span>{post.commentCount} Comments</span>
                   </div>
                 </div>
                 <WPContentRenderer

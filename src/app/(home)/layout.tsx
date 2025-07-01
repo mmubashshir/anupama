@@ -1,12 +1,3 @@
-import Articles from '~/components/articles';
-import DailyNews from '~/components/daily-news';
-import Header from '~/components/header';
-import HealthAndMedicine from '~/components/health-medicine';
-import Social from '~/components/social';
-import Stories from '~/components/stories';
-
-import VideoNews from '../video-news/page';
-
 export default function HomeLayout({
   children,
 }: {
@@ -14,14 +5,6 @@ export default function HomeLayout({
 }) {
   return (
     <>
-      <Header />
-      <DailyNews />
-      <VideoNews />
-      <Articles />
-      <Social />
-      <HealthAndMedicine />
-      <Stories />
-      {/* <TopStories /> */}
       <main>{children}</main>
     </>
   );
