@@ -6,7 +6,7 @@ import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { ArticleCardProps } from '../articles/article-card';
+import { type ArticleCardProps } from '../articles/article-card';
 
 export function FoodCarousel({ items }: { items: ArticleCardProps[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
