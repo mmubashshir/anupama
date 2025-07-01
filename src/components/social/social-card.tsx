@@ -78,17 +78,17 @@ export function SocialCards({
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="mt-4 mb-8 text-4xl font-extrabold md:text-5xl">
-          ಸಾಮಾಜಿಕ
-        </h1>
-        <Link
-          href=""
-          className="group ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
-        >
-          ಇನ್ನಷ್ಟು
-          <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4" />
-        </Link>
+      <div className="pb-4 lg:pt-4">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-extrabold md:text-5xl">ಸಾಮಾಜಿಕ</h1>
+          <Link
+            href={`/${CATEGORY.Social}`}
+            className="group ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
+          >
+            ಇನ್ನಷ್ಟು
+            <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4" />
+          </Link>
+        </div>
       </div>
 
       {/* Grid layout */}

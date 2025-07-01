@@ -44,8 +44,8 @@ export default async function Social() {
     cookingRaw.posts?.nodes.flatMap(mapToArticleCardProps) ?? [];
 
   return (
-    <div className="mx-auto max-w-6xl bg-white px-4 py-6">
-      <div className="mx-auto max-w-6xl space-y-12 p-4">
+    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl space-y-12">
         <SocialCards mainCards={social} sideCard={lifeTreasure} />
 
         <FoodCarousel items={cooking} />

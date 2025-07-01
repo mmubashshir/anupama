@@ -70,7 +70,7 @@ export default async function CategoryListing({
           <div className="flex flex-col gap-12">
             {categoryPosts.map((post, index) => (
               <div key={post.id} className="flex flex-col">
-                <div className="overflow-hidden rounded-lg">
+                <div className="overflow-hidden">
                   <Image
                     src={
                       post.featuredImage?.node.sourceUrl ??
@@ -91,9 +91,7 @@ export default async function CategoryListing({
                 <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-500">
                   <div className="flex items-center gap-1">
                     <User className="h-5 w-5" />
-                    <Link href="#" className="duration-300 hover:text-red-500">
-                      <span>{post.author?.node.name}</span>
-                    </Link>
+                    <span>{post.author?.node.name}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Calendar className="h-5 w-5" />

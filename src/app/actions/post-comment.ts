@@ -10,13 +10,19 @@ import { getClient, graphql } from '~/utils/graphql-client';
 import { tryCatch } from '~/utils/try-catch';
 
 const ADD_COMMENT_QUERY = graphql(`
-  mutation createNewComment($postId: Int, $name: String, $content: String) {
+  mutation createNewComment(
+    $postId: Int
+    $name: String
+    $content: String
+    $date: String
+  ) {
     createComment(
       input: {
         commentOn: $postId
         author: $name
         content: $content
         status: APPROVE
+        date: $date
       }
     ) {
       success
@@ -71,6 +77,7 @@ export async function createComment(
         postId: validatedData.data.postId,
         name: validatedData.data.name,
         content: validatedData.data.content,
+        date: new Date().toISOString(),
       },
     }),
   );

@@ -68,7 +68,7 @@ body {
 }
 
 .article img {
-  @apply my-6 h-auto max-w-full rounded-lg;
+  @apply my-6 h-auto max-w-full;
 }
 
 .article figure {

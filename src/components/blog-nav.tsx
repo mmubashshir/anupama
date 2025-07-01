@@ -16,7 +16,13 @@ export default function DesktopBlogNav() {
       {/* Mobile Top Bar */}
       <div className="container mx-auto flex h-full items-center justify-between px-4 shadow-xs md:hidden">
         {/* Logo */}
-        <Link href="/">
+        <Link
+          href="/"
+          onClick={() => {
+            window.scrollTo(0, 0);
+          }}
+          scroll={false}
+        >
           <Image
             draggable="false"
             src="/anupama-logo.png"

@@ -1,4 +1,6 @@
 import { CATEGORY } from '~/enum/categories';
+import { ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
 
 import WPVideoRenderer from '~/components/wp-video-renderer';
 
@@ -21,13 +23,20 @@ export default async function VideoNews() {
   const otherVideos = posts.slice(1, 5);
 
   return (
-    <main className="w-full bg-gray-100/90">
-      <div className="mx-auto max-w-6xl px-4 py-6">
-        <h1 className="my-4 px-4 text-2xl font-extrabold md:text-3xl">
-          ವಿಡಿಯೋ ಸುದ್ದಿ
-        </h1>
+    <div className="bg-gray-100/90 pt-2">
+      <div className="mx-auto max-w-6xl p-4 py-10 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-extrabold md:text-5xl">ವೀಡಿಯೊ ಸುದ್ದಿ</h1>
+          <Link
+            href={`/${CATEGORY.VideoNews}`}
+            className="group ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
+          >
+            ಇನ್ನಷ್ಟು
+            <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4" />
+          </Link>
+        </div>
 
-        <div className="grid grid-cols-1 gap-6 px-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 pt-6 lg:grid-cols-3">
           {/* Main Featured Article */}
           <div className="overflow-hidden lg:col-span-2">
             {latestVideo ? (
@@ -61,6 +70,6 @@ export default async function VideoNews() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

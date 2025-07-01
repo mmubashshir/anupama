@@ -12,11 +12,11 @@ export default function HealthCard({
   imageUrl,
 }: HealthCardProps) {
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow duration-200 hover:shadow-md">
+    <div className="border border-gray-200 bg-white p-6 shadow-sm transition-shadow duration-200 hover:shadow-md">
       <div className="flex items-start space-x-4">
         {/* Profile Image */}
         <div className="flex-shrink-0">
-          <div className="h-16 w-16 overflow-hidden rounded-lg bg-gray-100 sm:h-20 sm:w-20">
+          <div className="h-16 w-16 overflow-hidden bg-gray-100 sm:h-20 sm:w-20">
             <Image
               src={imageUrl || '/placeholder.svg'}
               alt={name}

@@ -74,6 +74,7 @@ const FETCH_POST_BY_SLUG_QUERY = graphql(`
             email
           }
           date
+          dateGmt
         }
       }
       author {

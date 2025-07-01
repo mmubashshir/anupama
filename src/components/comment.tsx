@@ -1,8 +1,8 @@
 'use client';
 
-import WPContentRenderer from '~/components/wp-content-renderer';
+import { format, formatDistanceToNow } from 'date-fns';
 
-import { getRelativeTime } from '~/utils/get-relative-time';
+import WPContentRenderer from '~/components/wp-content-renderer';
 
 interface CommentProps {
   post: {
@@ -14,6 +14,7 @@ interface CommentProps {
         id: string;
         content: string | null;
         date: string | null;
+        dateGmt: string | null;
         author: {
           name: string | null;
           email: string | null;
@@ -46,7 +47,12 @@ export default function Comment({ post }: CommentProps) {
 
                     {comment.date ? (
                       <span className="text-sm text-gray-500">
-                        {getRelativeTime(comment.date)}
+                        {formatDistanceToNow(
+                          format(
+                            comment.dateGmt ?? '',
+                            `yyyy-MM-dd'T'HH:mm:ss'Z`,
+                          ),
+                        )}
                       </span>
                     ) : null}
                   </div>

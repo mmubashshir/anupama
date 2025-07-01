@@ -23,7 +23,7 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
       <div className="sticky top-8">
         <div className="space-y-8">
           {/* Recent Posts */}
-          <div className="rounded-md border border-gray-200 p-8">
+          <div className="border border-gray-200 p-8">
             <h3 className="mb-4 inline-block border-b-2 border-red-500 pb-2 text-xl font-bold">
               Recent posts
             </h3>
@@ -44,10 +44,11 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
                       getPlaceholderImage()
                     }
                     alt={post.title ?? 'Post image'}
-                    width={70}
-                    height={70}
-                    className="aspect-square flex-shrink-0 rounded-md object-cover"
+                    width={80}
+                    height={80}
+                    className="h-20 w-20 flex-shrink-0 object-cover"
                   />
+
                   <div>
                     <p className="line-clamp-3 text-sm font-medium group-hover:text-red-500">
                       {post.title}
@@ -68,7 +69,7 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
           </div>
 
           {/* Popular Tags */}
-          <div className="rounded-md border border-gray-200 p-8">
+          <div className="border border-gray-200 p-8">
             <h3 className="mb-4 inline-block border-b-2 border-red-500 pb-2 text-xl font-bold">
               Popular tags
             </h3>
@@ -85,8 +86,8 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
               ].map((tag) => (
                 <Link
                   key={tag}
-                  href="#"
-                  className="rounded-md border border-gray-200 p-1 px-3 text-sm text-gray-500 hover:text-red-500"
+                  href="null"
+                  className="border border-gray-200 p-1 px-3 text-sm text-gray-500 hover:text-red-500"
                 >
                   {tag}
                 </Link>

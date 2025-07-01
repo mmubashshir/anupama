@@ -1,13 +1,12 @@
 import { navLinks } from '~/constants/nav-links';
-import { Mail } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-gray-200 px-4 pt-18 pb-8 md:px-6 lg:px-18">
+    <footer className="w-full bg-gray-100 px-4 pt-18 pb-8 md:px-6 lg:px-18">
       {/* Newsletter Section */}
-      <div className="mx-auto mb-16 max-w-6xl">
+      {/* <div className="mx-auto mb-16 max-w-6xl">
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div className="max-w-md">
             <h2 className="text-3xl font-bold text-slate-900">
@@ -15,19 +14,19 @@ export default function Footer() {
             </h2>
           </div>
           <div className="w-full max-w-md">
-            <div className="rounded-sm bg-white">
+            <div className="bg-white">
               <form className="flex gap-2 sm:flex-row">
                 <div className="relative flex-grow">
                   <Mail className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-500" />
                   <input
                     type="email"
                     placeholder="Enter your email"
-                    className="w-full rounded-md py-2 pt-3 pr-3 pl-10 text-sm"
+                    className="w-full py-2 pt-3 pr-3 pl-10 text-sm"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="text-md rounded-md px-4 py-2 font-bold text-red-500"
+                  className="text-md px-4 py-2 font-bold text-red-500"
                 >
                   SUBSCRIBE
                 </button>
@@ -41,16 +40,16 @@ export default function Footer() {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="mx-auto max-w-6xl">
-        <div className="mb-12 flex flex-col gap-12 border-t border-slate-300 pt-12 lg:flex-row lg:items-start">
+        <div className="mb-12 flex flex-col gap-12 pt-2 lg:flex-row lg:items-start">
           {/* Left: Company Info */}
           <div className="lg:w-1/3">
             <Link href="/" className="mb-6 inline-block">
               <div className="flex items-center">
                 <Image
-                  className="select-none"
+                  className="mix-blend-multiply select-none"
                   draggable="false"
                   src="/anupama-logo.png"
                   alt="Anupama Logo"
@@ -60,13 +59,13 @@ export default function Footer() {
                 />
               </div>
               <span className="text-xs tracking-wider text-slate-500 uppercase">
-                DAILY NEWS
+                {`WOMENS' MONTHLY MAGAZINE`}
               </span>
             </Link>
 
             <div className="space-y-2 text-sm text-slate-600">
               <p>
-                <span className="font-medium">Operated by:</span> Sanmarga
+                <span className="font-medium">Operated by: </span>Sanmarga
                 Publication Trust
               </p>
               {/* <p>
@@ -78,11 +77,28 @@ export default function Footer() {
               </p>
               <p>
                 <span className="font-medium">Email:</span>{' '}
-                anupamamasika@gmail.com
+                <a
+                  href="mailto:anupamamasika@gmail.com"
+                  className="text-blue-600 underline hover:text-blue-800"
+                >
+                  anupamamasika@gmail.com
+                </a>
               </p>
               <p>
-                <span className="font-medium">Phone:</span> +91 9535445101 +
-                8197355848
+                <span className="font-medium">Phone:</span>{' '}
+                <a
+                  href="tel:+919535445101"
+                  className="text-blue-600 underline hover:text-blue-800"
+                >
+                  +91 9535445101
+                </a>{' '}
+                |{' '}
+                <a
+                  href="tel:+918197355848"
+                  className="text-blue-600 underline hover:text-blue-800"
+                >
+                  8197355848
+                </a>
               </p>
               <p className="pt-2">
                 <span className="font-medium">License No.:</span> RNI No. KARKAN
@@ -137,7 +153,7 @@ export default function Footer() {
               Anupama
             </Link>
             . All Rights Reserved. Developed by{' '}
-            <Link href="#" className="text-slate-700">
+            <Link href="null" className="text-slate-700">
               Mubashir and Co.
             </Link>
           </p>

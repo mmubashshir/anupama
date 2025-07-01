@@ -1,4 +1,6 @@
 import { CATEGORY } from '~/enum/categories';
+import { ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
 
 import StoryCard from '~/components/stories/story-card';
 
@@ -44,11 +46,22 @@ export default async function Articles() {
     });
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6">
-      <h1 className="px-4 pb-6 text-2xl font-black md:text-4xl">ಲೇಖನಗಳು</h1>
+    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+      <div className="pb-4 lg:pt-4">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-extrabold md:text-5xl">ಲೇಖನಗಳು</h1>
+          <Link
+            href={`/${CATEGORY.DailyNews}`}
+            className="group ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
+          >
+            ಇನ್ನಷ್ಟು
+            <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4" />
+          </Link>
+        </div>
+      </div>
 
       {/* Main Layout Container */}
-      <div className="mb-8 grid grid-cols-1 gap-8 px-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Main Featured Article (Left - Takes 3 columns out of 5) */}
         <div className="lg:col-span-1">
           <StoryCard
@@ -82,7 +95,7 @@ export default async function Articles() {
       <div className="mx-4 my-8 border-t border-dashed border-black" />
 
       {/* Bottom Row - 3 Column Grid */}
-      <div className="grid grid-cols-1 gap-6 px-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {articles.slice(3).map((article) => (
           <ArticleCard
             key={article.key}
