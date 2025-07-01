@@ -1,3 +1,4 @@
+import { unstable_ViewTransition as ViewTransition } from 'react';
 import { Baloo_Tamma_2 } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 
@@ -79,9 +80,11 @@ export default function RootLayout({
         <link href="/site.webmanifest" rel="manifest" />
       </head>
       <body className={`${balooTamma.variable} antialiased`}>
-        {children}
-        <Footer />
-        <Toaster />
+        <ViewTransition>
+          {children}
+          <Footer />
+          <Toaster />
+        </ViewTransition>
       </body>
     </html>
   );

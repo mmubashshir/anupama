@@ -10,8 +10,6 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
-export const revalidate = 120;
-
 export default async function DailyNews() {
   const { posts } = await fetchLimitedPosts({
     first: 5,

@@ -24,7 +24,11 @@ const { query: apolloQuery, getClient } = registerApolloClient(() => {
     cache: new InMemoryCache(),
     link: new HttpLink({
       uri: env.NEXT_PUBLIC_WORDPRESS_BASE_URL,
-      fetchOptions: {},
+      fetch: (url, options) =>
+        fetch(url, {
+          ...options,
+          next: { revalidate: 60 },
+        }),
     }),
   });
 });

@@ -173,48 +173,56 @@ export default async function Blog({ params }: PageParams) {
           </div>
 
           {/* Post Navigation */}
-          <div className="mt-15 flex flex-col justify-between gap-8 pt-4 md:flex-row">
+          <div className="mt-16 flex flex-col justify-between gap-8 pt-8 md:flex-row">
             {/* Previous Post */}
             {previousPost ? (
               <Link
                 href={`/${category}/${previousPost.slug}`}
-                className="group flex items-center space-x-4"
+                className="group flex w-full items-center md:w-1/2"
               >
-                <div className="grid h-12 w-12 place-items-center border border-gray-200">
-                  <span className="text-xl text-gray-500 transition-transform group-hover:-translate-x-1">
-                    <ChevronLeft />
-                  </span>
+                <div className="grid h-22 w-22 shrink-0 place-items-center border border-gray-200 bg-white">
+                  <ChevronLeft
+                    className="text-xl text-gray-500 transition-all duration-200 ease-in-out group-hover:scale-110 group-hover:text-red-500"
+                    stroke="currentColor"
+                  />{' '}
                 </div>
-                <div>
-                  <p className="text-sm text-red-600 uppercase">
+                <div className="ml-4">
+                  <p className="text-sm font-medium tracking-wide text-red-500 uppercase">
                     Previous Post
                   </p>
-                  <h4 className="leading-snug font-semibold text-black">
+                  <h4 className="mt-1 text-lg leading-snug font-semibold text-gray-900">
                     {previousPost.title}
                   </h4>
                 </div>
               </Link>
-            ) : null}
+            ) : (
+              <div className="flex-1" />
+            )}
 
             {/* Next Post */}
             {nextPost ? (
               <Link
                 href={`/${category}/${nextPost.slug}`}
-                className="group flex items-center justify-end space-x-4 text-right"
+                className="group flex w-full items-center justify-end text-right md:w-1/2"
               >
-                <div>
-                  <p className="text-sm text-red-600 uppercase">Next Post</p>
-                  <h4 className="leading-snug font-semibold text-black">
+                <div className="mr-4">
+                  <p className="text-sm font-medium tracking-wide text-red-500 uppercase">
+                    Next Post
+                  </p>
+                  <h4 className="mt-1 text-lg leading-snug font-semibold text-gray-900">
                     {nextPost.title}
                   </h4>
                 </div>
-                <div className="grid h-12 w-12 place-items-center border border-gray-200">
-                  <span className="text-xl text-gray-500 transition-transform group-hover:translate-x-1">
-                    <ChevronRight />
-                  </span>
+                <div className="grid h-22 w-22 shrink-0 place-items-center border border-gray-200 bg-white">
+                  <ChevronRight
+                    className="text-xl text-gray-500 transition-all duration-200 ease-in-out group-hover:scale-110 group-hover:text-red-500"
+                    stroke="currentColor"
+                  />{' '}
                 </div>
               </Link>
-            ) : null}
+            ) : (
+              <div className="flex-1" />
+            )}
           </div>
         </div>
 
