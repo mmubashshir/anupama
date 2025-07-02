@@ -107,7 +107,7 @@ export default async function Blog({ params }: PageParams) {
       : null;
 
   return (
-    <div className="container mx-auto px-4 py-12 md:px-20 md:py-16">
+    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* Main Content */}
         <div className="w-full lg:w-2/3">
