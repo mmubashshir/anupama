@@ -129,34 +129,21 @@ export default async function Blog({ params }: PageParams) {
 
               <h2 className="mb-2 text-3xl font-bold">{post.title} </h2>
 
-              <div className="mb-4 flex flex-wrap gap-4 text-gray-500">
-                <div className="flex items-center gap-1">
-                  <User className="h-5 w-5 text-red-500" />
+              <div className="mb-4 flex flex-wrap gap-4 text-sm text-gray-500">
+                <div className="flex gap-1">
+                  <User className="h-4 w-4 stroke-1" />
                   <span>{post.author?.node.name}</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Calendar className="h-5 w-5 text-red-500" />
-                  <span>
+                <div className="flex gap-1 border-red-800">
+                  <Calendar className="h-4 w-4 stroke-1" />
+                  <span className="border-green-700">
                     {post.date
                       ? new Date(post.date).toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
                         })
-                      : 'Unknown date'}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Tag className="h-5 w-5 text-red-500" />
-                  <span>
-                    {post.categories?.nodes.map((itm) => itm.name).join(', ')}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <MessageCircle className="h-5 w-5 text-red-500" />
-                  <span>
-                    {post.commentCount} Comment
-                    {post.commentCount !== 1 ? 's' : ''}
+                      : 'Unknown date'}{' '}
                   </span>
                 </div>
               </div>
