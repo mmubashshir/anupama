@@ -1,4 +1,3 @@
-import { unstable_ViewTransition as ViewTransition } from 'react';
 import { Baloo_Tamma_2 } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 
@@ -9,6 +8,8 @@ import './globals.css';
 import { BASE_URL } from '~/constants';
 
 import Footer from '~/components/footer';
+import GoogleAnalyticsScript from '~/components/google-analytics-script';
+import MicrosoftClarity from '~/components/microsoft-clarity';
 
 const balooTamma = Baloo_Tamma_2({
   variable: '--font-primary',
@@ -80,12 +81,12 @@ export default function RootLayout({
         <link href="/site.webmanifest" rel="manifest" />
       </head>
       <body className={`${balooTamma.variable} antialiased`}>
-        <ViewTransition>
-          {children}
-          <Footer />
-          <Toaster />
-        </ViewTransition>
+        {children}
+        <Footer />
+        <Toaster />
       </body>
+      <GoogleAnalyticsScript />
+      <MicrosoftClarity />
     </html>
   );
 }
