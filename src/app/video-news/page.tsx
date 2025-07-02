@@ -8,6 +8,8 @@ import { fetchLimitedPosts } from '~/services/posts';
 
 import VideoCard from './components/video-card';
 
+export const revalidate = 120;
+
 export default async function VideoNews() {
   const videoPosts = await fetchLimitedPosts({
     first: 4,

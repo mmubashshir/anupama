@@ -7,6 +7,8 @@ import Stories from '~/components/stories';
 
 import VideoNews from '../video-news/page';
 
+export const revalidate = 120;
+
 export default function Home() {
   return (
     <>
