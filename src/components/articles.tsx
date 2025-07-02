@@ -92,7 +92,7 @@ export default async function Articles() {
       </div>
 
       {/* Divider */}
-      <div className="mx-4 my-8 border-t border-dashed border-black" />
+      <div className="my-8 border-t border-dashed border-black" />
 
       {/* Bottom Row - 3 Column Grid */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
