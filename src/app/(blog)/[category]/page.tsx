@@ -105,7 +105,7 @@ export default async function CategoryListing({
     );
 
   return (
-    <div className="container mx-auto px-4 py-12 md:px-20 md:py-16">
+    <div className="container mx-auto max-w-6xl p-4 sm:px-6 lg:px-8">
       <div className="flex flex-col gap-8 lg:flex-row">
         <div className="w-full lg:w-2/3">
           {/* Blog Posts */}
