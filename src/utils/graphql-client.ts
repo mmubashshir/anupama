@@ -24,11 +24,7 @@ const { query: apolloQuery, getClient } = registerApolloClient(() => {
     cache: new InMemoryCache(),
     link: new HttpLink({
       uri: env.NEXT_PUBLIC_WORDPRESS_BASE_URL,
-      fetch: (url, options) =>
-        fetch(url, {
-          ...options,
-          next: { revalidate: 60 },
-        }),
+      fetchOptions: {},
     }),
   });
 });
@@ -37,7 +33,7 @@ const graphql = initGraphQLTada<{
   introspection: introspection;
 }>();
 
-export { graphql, getClient, readFragment };
+export { getClient, graphql, readFragment };
 
 type ApolloCompatibleDocument<TData, TVariables> = TadaDocumentNode<
   TData,
