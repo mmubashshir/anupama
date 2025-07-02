@@ -16,6 +16,8 @@ import Link from 'next/link';
 import Sidebar from '~/components/category/sidebar';
 import Comment from '~/components/comment';
 import CreateComment from '~/components/create-comment';
+import NativeShareIcon from '~/components/native-share';
+import { ShareType, SocialIcons } from '~/components/social-icons';
 import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
@@ -83,7 +85,7 @@ export async function generateMetadata({
 export default async function Blog({ params }: PageParams) {
   const { slug, category } = await params;
   const post = await fetchPostBySlug(slug);
-
+  const pagePath = `https://anupama.co.in/${category}/${slug}`;
   const { posts } = await fetchLimitedPosts({
     first: 3,
     filter: {
@@ -161,6 +163,18 @@ export default async function Blog({ params }: PageParams) {
 
               <WPContentRenderer content={post.content} />
             </article>
+          </div>
+
+          <div className="mb-8 flex justify-end gap-2">
+            <SocialIcons
+              url={`https://wa.me/whatsappphonenumber/?text=${pagePath}`}
+              image={ShareType.WHATSAPP}
+            />
+            <SocialIcons
+              url={`https://www.facebook.com/sharer/sharer.php?u=#{pagePath}`}
+              image={ShareType.FACEBOOK}
+            />
+            <NativeShareIcon url={pagePath} image={ShareType.NATIVE} />
           </div>
 
           {/* Leave a Comment */}
