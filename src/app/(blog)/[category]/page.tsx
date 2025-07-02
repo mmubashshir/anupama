@@ -91,19 +91,21 @@ export default async function CategoryListing({
                   <h2 className="mt-6 text-3xl font-bold">{post.title}</h2>
                 </Link>
                 <div className="mt-4 flex flex-wrap items-center gap-6 text-sm text-gray-500">
-                  <div className="flex items-end gap-1">
+                  <div className="flex gap-1">
                     <User className="h-4 w-4 stroke-1" />
                     <span>{post.author?.node.name}</span>
                   </div>
-                  <div className="flex items-end gap-1">
+                  <div className="flex gap-1 border-red-800">
                     <Calendar className="h-4 w-4 stroke-1" />
-                    {post.date
-                      ? new Date(post.date).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })
-                      : 'Unknown date'}{' '}
+                    <span className="border-green-700">
+                      {post.date
+                        ? new Date(post.date).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })
+                        : 'Unknown date'}{' '}
+                    </span>
                   </div>
                 </div>
                 <WPContentRenderer
