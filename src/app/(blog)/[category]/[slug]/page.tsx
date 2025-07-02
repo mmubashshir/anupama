@@ -171,7 +171,7 @@ export default async function Blog({ params }: PageParams) {
               image={ShareType.WHATSAPP}
             />
             <SocialIcons
-              url={`https://www.facebook.com/sharer/sharer.php?u=#{pagePath}`}
+              url={`https://www.facebook.com/share.php?u=${pagePath}`}
               image={ShareType.FACEBOOK}
             />
             <NativeShareIcon url={pagePath} image={ShareType.NATIVE} />
