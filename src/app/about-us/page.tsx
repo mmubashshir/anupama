@@ -1,0 +1,86 @@
+import aboutUs from '~/constants/about-us';
+import Image from 'next/image';
+
+const AboutUs = () => {
+  return (
+    <div className="mx-4 my-10 flex flex-col justify-center gap-4">
+      <div className="text-3xl font-extrabold md:text-4xl">ನಮ್ಮ ಬಗ್ಗೆ</div>
+      <div className="flex flex-col items-start gap-10 py-8 md:flex-row">
+        <Image
+          className="mx-auto h-auto w-[300px] object-contain"
+          width={300}
+          height={434}
+          src="/anupama-magazine.jpg"
+          alt="anupama-magazine"
+        />
+        <p className="text-justify leading-relaxed">{aboutUs}</p>
+      </div>
+
+      <div className="pt-12 text-3xl font-extrabold md:text-4xl">ಲೇಖಕರು</div>
+      <div className="md: flex flex-wrap items-start justify-between gap-y-10 py-6 md:py-8">
+        {writers.map((writer) => (
+          <WriterCard key={writer.name} {...writer} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const WriterCard = ({ name, image, position }: WriterCardProps) => {
+  return (
+    <div className="flex w-86 gap-4">
+      <Image
+        className="rounded-full"
+        src={image}
+        alt={name}
+        width={100}
+        height={100}
+      />
+      <div className="flex flex-col justify-center gap-2">
+        <h3 className="text-lg">{name}</h3>
+        <span className="text-gray-600">{position}</span>
+      </div>
+    </div>
+  );
+};
+
+interface WriterCardProps {
+  name: string;
+  image: string;
+  position: string;
+}
+
+const writers: Array<WriterCardProps> = [
+  {
+    name: 'ಶಹನಾಝ್ ಎಂ.',
+    image: '/writer-pic.png',
+    position: 'ಪ್ರಮುಖ ಸಂಪಾದಕಿ',
+  },
+  {
+    name: 'ಸಬೀಹಾ ಫಾತಿಮಾ',
+    image: '/writer-pic.png',
+    position: 'ಉಪ ಸಂಪಾದಕಿ',
+  },
+  {
+    name: 'ಸಮೀನಾ ಯು.',
+    image: '/writer-pic.png',
+    position: 'ಉಪ ಸಂಪಾದಕಿ',
+  },
+  {
+    name: 'ಸಾಜಿದಾ ಮೂಮಿನ್',
+    image: '/writer-pic.png',
+    position: 'ಸಂಪಾದಕ ಮಂಡಳಿಯ ಸದಸ್ಯೆ',
+  },
+  {
+    name: 'ಕುಲ್ಸೂಮ್ ಅಬೂಬಕರ್',
+    image: '/writer-pic.png',
+    position: 'ಸಂಪಾದಕ ಮಂಡಳಿಯ ಸದಸ್ಯೆ',
+  },
+  {
+    name: 'ಶಹೀದಾ ಉಮರ್',
+    image: '/writer-pic.png',
+    position: 'ಸಹ ಸಂಪಾದಕಿ',
+  },
+];
+
+export default AboutUs;
