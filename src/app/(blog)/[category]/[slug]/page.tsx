@@ -1,21 +1,16 @@
 import { createComment } from '~/app/actions/post-comment';
 import { BASE_URL } from '~/constants';
 import { type CATEGORY } from '~/enum/categories';
-import {
-  Calendar,
-  ChevronLeft,
-  ChevronRight,
-  MessageCircle,
-  Tag,
-  User,
-} from 'lucide-react';
+import { Calendar, User } from 'lucide-react';
 import { type Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 
 import Sidebar from '~/components/category/sidebar';
 import Comment from '~/components/comment';
 import CreateComment from '~/components/create-comment';
+import NativeShareIcon from '~/components/native-share';
+import PostNavigation from '~/components/post-navigation';
+import { ShareType, SocialIcons } from '~/components/social-icons';
 import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
@@ -83,7 +78,7 @@ export async function generateMetadata({
 export default async function Blog({ params }: PageParams) {
   const { slug, category } = await params;
   const post = await fetchPostBySlug(slug);
-
+  const pagePath = `https://anupama.co.in/${category}/${slug}`;
   const { posts } = await fetchLimitedPosts({
     first: 3,
     filter: {
@@ -99,12 +94,31 @@ export default async function Blog({ params }: PageParams) {
   });
 
   const currentIndex = allPostsInCategory.findIndex((p) => p.slug === slug);
+  const previousPostRaw = allPostsInCategory[currentIndex - 1];
   const previousPost =
-    currentIndex > 0 ? allPostsInCategory[currentIndex - 1] : null;
+    currentIndex > 0 && previousPostRaw.slug
+      ? {
+          ...previousPostRaw,
+          slug: previousPostRaw.slug,
+          title: previousPostRaw.title ?? '',
+          date: previousPostRaw.date ?? '',
+          content: previousPostRaw.content ?? '',
+          excerpt: previousPostRaw.excerpt ?? '',
+        }
+      : undefined;
+
+  const nextPostRaw = allPostsInCategory[currentIndex + 1];
   const nextPost =
-    currentIndex < allPostsInCategory.length - 1
-      ? allPostsInCategory[currentIndex + 1]
-      : null;
+    currentIndex < allPostsInCategory.length - 1 && nextPostRaw.slug
+      ? {
+          ...nextPostRaw,
+          slug: nextPostRaw.slug,
+          title: nextPostRaw.title ?? '',
+          date: nextPostRaw.date ?? '',
+          content: nextPostRaw.content ?? '',
+          excerpt: nextPostRaw.excerpt ?? '',
+        }
+      : undefined;
 
   return (
     <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
@@ -150,6 +164,18 @@ export default async function Blog({ params }: PageParams) {
             </article>
           </div>
 
+          <div className="mb-8 flex justify-end">
+            <SocialIcons
+              url={`https://wa.me/whatsappphonenumber/?text=${pagePath}`}
+              image={ShareType.WHATSAPP}
+            />
+            <SocialIcons
+              url={`https://www.facebook.com/share.php?u=${pagePath}`}
+              image={ShareType.FACEBOOK}
+            />
+            <NativeShareIcon url={pagePath} image={ShareType.NATIVE} />
+          </div>
+
           {/* Leave a Comment */}
           <div>
             <Comment post={post} />
@@ -160,57 +186,11 @@ export default async function Blog({ params }: PageParams) {
           </div>
 
           {/* Post Navigation */}
-          <div className="mt-16 flex flex-col justify-between gap-8 pt-8 md:flex-row">
-            {/* Previous Post */}
-            {previousPost ? (
-              <Link
-                href={`/${category}/${previousPost.slug}`}
-                className="group flex w-full items-center md:w-1/2"
-              >
-                <div className="grid h-22 w-22 shrink-0 place-items-center border border-gray-200 bg-white">
-                  <ChevronLeft
-                    className="text-xl text-gray-500 transition-all duration-200 ease-in-out group-hover:scale-110 group-hover:text-red-500"
-                    stroke="currentColor"
-                  />{' '}
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium tracking-wide text-red-500 uppercase">
-                    Previous Post
-                  </p>
-                  <h4 className="mt-1 text-lg leading-snug font-semibold text-gray-900">
-                    {previousPost.title}
-                  </h4>
-                </div>
-              </Link>
-            ) : (
-              <div className="flex-1" />
-            )}
-
-            {/* Next Post */}
-            {nextPost ? (
-              <Link
-                href={`/${category}/${nextPost.slug}`}
-                className="group flex w-full items-center justify-end text-right md:w-1/2"
-              >
-                <div className="mr-4">
-                  <p className="text-sm font-medium tracking-wide text-red-500 uppercase">
-                    Next Post
-                  </p>
-                  <h4 className="mt-1 text-lg leading-snug font-semibold text-gray-900">
-                    {nextPost.title}
-                  </h4>
-                </div>
-                <div className="grid h-22 w-22 shrink-0 place-items-center border border-gray-200 bg-white">
-                  <ChevronRight
-                    className="text-xl text-gray-500 transition-all duration-200 ease-in-out group-hover:scale-110 group-hover:text-red-500"
-                    stroke="currentColor"
-                  />{' '}
-                </div>
-              </Link>
-            ) : (
-              <div className="flex-1" />
-            )}
-          </div>
+          <PostNavigation
+            previousPost={previousPost}
+            nextPost={nextPost}
+            category={category}
+          />
         </div>
 
         {/* Sidebar */}
