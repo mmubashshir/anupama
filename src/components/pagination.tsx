@@ -95,7 +95,7 @@ function PageLink({
   return (
     <Link
       href={`${basePath}?page=${page}`}
-      className={`inline-flex h-10 w-10 items-center justify-center rounded font-medium transition ${
+      className={`flex h-10 w-10 items-center justify-center font-sans font-medium transition ${
         isActive ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'
       }`}
     >
