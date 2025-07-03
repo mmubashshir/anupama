@@ -8,20 +8,36 @@ import { fetchLimitedPosts } from '~/services/posts';
 
 import StoryCard from './stories/story-card';
 
+export const revalidate = 240; // Revalidate every 4 minutes
+
 export default async function Stories() {
-  const { posts: storyWorldPosts } = await fetchLimitedPosts({
-    first: 1,
-    filter: { categoryName: CATEGORY.StoryWorld },
-  });
+  const [storyWorldResponse, childrenStoryResponse] = await Promise.allSettled([
+    fetchLimitedPosts({
+      first: 1,
+      filter: { categoryName: CATEGORY.StoryWorld },
+    }),
+    fetchLimitedPosts({
+      first: 1,
+      filter: { categoryName: CATEGORY.ChildrensArena },
+    }),
+  ]);
 
-  const { posts: childrenStoryPosts } = await fetchLimitedPosts({
-    first: 1,
-    filter: { categoryName: CATEGORY.ChildrensArena },
-  });
+  if (
+    storyWorldResponse.status === 'rejected' ||
+    childrenStoryResponse.status === 'rejected'
+  ) {
+    return (
+      <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+        <h1 className="text-center text-2xl font-bold text-red-500">
+          Error occurred while fetching stories
+        </h1>
+      </div>
+    );
+  }
 
-  const storyWorldPost = storyWorldPosts?.nodes ?? [];
+  const storyWorldPost = storyWorldResponse.value?.posts?.nodes ?? [];
 
-  const childrenStoryPost = childrenStoryPosts?.nodes ?? [];
+  const childrenStoryPost = childrenStoryResponse.value?.posts?.nodes ?? [];
 
   return (
     <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">

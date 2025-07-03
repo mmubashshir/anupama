@@ -21,6 +21,8 @@ import {
   fetchPostBySlug,
 } from '~/services/posts';
 
+export const revalidate = 240; // Revalidate every 4 minutes
+
 interface PageParams {
   params: Promise<{ slug: string; category: string }>;
 }
@@ -77,21 +79,42 @@ export async function generateMetadata({
 
 export default async function Blog({ params }: PageParams) {
   const { slug, category } = await params;
-  const post = await fetchPostBySlug(slug);
   const pagePath = `https://anupama.co.in/${category}/${slug}`;
-  const { posts } = await fetchLimitedPosts({
-    first: 3,
-    filter: {
-      categoryName: category,
-    },
-  });
-  const recentPosts = posts?.nodes ?? [];
+  const [postResponse, postsResponse, allPostsInCategoryResponse] =
+    await Promise.allSettled([
+      fetchPostBySlug(slug),
+      fetchLimitedPosts({
+        first: 3,
+        filter: {
+          categoryName: category,
+        },
+      }),
+      fetchAllPosts({
+        filter: {
+          categoryName: category,
+        },
+      }),
+    ]);
 
-  const allPostsInCategory = await fetchAllPosts({
-    filter: {
-      categoryName: category,
-    },
-  });
+  if (
+    postResponse.status === 'rejected' ||
+    postsResponse.status === 'rejected' ||
+    allPostsInCategoryResponse.status === 'rejected'
+  ) {
+    return (
+      <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+        <h1 className="text-center text-2xl font-bold text-red-500">
+          Post not found
+        </h1>
+      </div>
+    );
+  }
+
+  const post = postResponse.value;
+  const { posts } = postsResponse.value;
+  const allPostsInCategory = allPostsInCategoryResponse.value;
+
+  const recentPosts = posts?.nodes ?? [];
 
   const currentIndex = allPostsInCategory.findIndex((p) => p.slug === slug);
   const previousPostRaw = allPostsInCategory[currentIndex - 1];
