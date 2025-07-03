@@ -8,23 +8,39 @@ import { fetchLimitedPosts } from '~/services/posts';
 
 import HealthCard from './health-medicine/health-card';
 
+export const revalidate = 240; // Revalidate every 4 minutes
+
 export default async function HealthAndMedicine() {
-  const { posts: healthPostsRaw } = await fetchLimitedPosts({
-    first: 2,
-    filter: {
-      categoryName: CATEGORY.Health,
-    },
-  });
+  const [healthResponse, medicineResponse] = await Promise.allSettled([
+    fetchLimitedPosts({
+      first: 2,
+      filter: {
+        categoryName: CATEGORY.Health,
+      },
+    }),
+    fetchLimitedPosts({
+      first: 2,
+      filter: {
+        categoryName: CATEGORY.Medicine,
+      },
+    }),
+  ]);
 
-  const { posts: medicinePostsRaw } = await fetchLimitedPosts({
-    first: 2,
-    filter: {
-      categoryName: CATEGORY.Medicine,
-    },
-  });
+  if (
+    healthResponse.status === 'rejected' ||
+    medicineResponse.status === 'rejected'
+  ) {
+    return (
+      <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+        <h1 className="text-center text-2xl font-bold text-red-500">
+          Error occurred while fetching health and medicine articles
+        </h1>
+      </div>
+    );
+  }
 
-  const healthPosts = healthPostsRaw?.nodes ?? [];
-  const medicinePosts = medicinePostsRaw?.nodes ?? [];
+  const healthPosts = healthResponse.value?.posts?.nodes ?? [];
+  const medicinePosts = medicineResponse.value?.posts?.nodes ?? [];
 
   // Combine all posts
   const allPosts = [

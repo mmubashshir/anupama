@@ -7,7 +7,7 @@ import Stories from '~/components/stories';
 
 import VideoNews from '../video-news/page';
 
-export const revalidate = 120;
+export const revalidate = 240; // Revalidate every 4 minutes
 
 export default function Home() {
   return (

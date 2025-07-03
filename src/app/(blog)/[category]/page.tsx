@@ -11,7 +11,7 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
-export const revalidate = 120;
+export const revalidate = 240; // Revalidate every 4 minutes
 
 export default async function CategoryListing({
   params,
@@ -26,27 +26,43 @@ export default async function CategoryListing({
   const offset = (page - 1) * perPage;
   const { category } = await params;
 
-  const result = await fetchLimitedPosts({
-    first: perPage,
-    filter: {
-      categoryName: category,
-      offsetPagination: {
-        offset,
-        size: perPage,
-      },
-    },
-  });
+  const [categoryPostsResponse, recentPostsResponse] = await Promise.allSettled(
+    [
+      fetchLimitedPosts({
+        first: perPage,
+        filter: {
+          categoryName: category,
+          offsetPagination: {
+            offset,
+            size: perPage,
+          },
+        },
+      }),
+      fetchLimitedPosts({
+        first: 3,
+        filter: {
+          categoryName: category,
+        },
+      }),
+    ],
+  );
+  if (
+    categoryPostsResponse.status === 'rejected' ||
+    recentPostsResponse.status === 'rejected'
+  ) {
+    return (
+      <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+        <h1 className="text-center text-2xl font-bold text-red-500">
+          Error occurred while fetching social articles
+        </h1>
+      </div>
+    );
+  }
 
-  const posts = await fetchLimitedPosts({
-    first: 3,
-    filter: {
-      categoryName: category,
-    },
-  });
-
-  const categoryPosts = result.posts?.nodes ?? [];
-  const recentPosts = posts.posts?.nodes ?? [];
-  const totalPosts = result.posts?.pageInfo.offsetPagination?.total ?? 0;
+  const categoryPosts = categoryPostsResponse.value?.posts?.nodes ?? [];
+  const recentPosts = recentPostsResponse.value?.posts?.nodes ?? [];
+  const totalPosts =
+    categoryPostsResponse.value?.posts?.pageInfo.offsetPagination?.total ?? 0;
   const totalPages = Math.ceil(totalPosts / perPage);
 
   if (categoryPosts.length === 0 || recentPosts.length === 0) {

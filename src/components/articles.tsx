@@ -9,18 +9,43 @@ import { fetchLimitedPosts } from '~/services/posts';
 import ArticleCard from './articles/article-card';
 import type { ArticleCardProps } from './articles/article-card';
 
-export default async function Articles() {
-  const { posts: columnsRaw } = await fetchArticles(CATEGORY.Columns);
-  const { posts: talentsRaw } = await fetchArticles(CATEGORY.Talent);
-  const { posts: achievementsRaw } = await fetchArticles(CATEGORY.Achievements);
-  const { posts: reflectionsRaw } = await fetchArticles(CATEGORY.Reflection);
-  const { posts: societyRaw } = await fetchArticles(CATEGORY.Society);
+export const revalidate = 240; // Revalidate every 4 minutes
 
-  const columns = columnsRaw?.nodes ?? [];
-  const talents = talentsRaw?.nodes ?? [];
-  const achievements = achievementsRaw?.nodes ?? [];
-  const reflections = reflectionsRaw?.nodes ?? [];
-  const society = societyRaw?.nodes ?? [];
+export default async function Articles() {
+  const [
+    columnsResponse,
+    talentsResponse,
+    achievementsResponse,
+    reflectionsResponse,
+    societyResponse,
+  ] = await Promise.allSettled([
+    fetchArticles(CATEGORY.Columns),
+    fetchArticles(CATEGORY.Talent),
+    fetchArticles(CATEGORY.Achievements),
+    fetchArticles(CATEGORY.Reflection),
+    fetchArticles(CATEGORY.Society),
+  ]);
+  if (
+    columnsResponse.status === 'rejected' ||
+    talentsResponse.status === 'rejected' ||
+    achievementsResponse.status === 'rejected' ||
+    reflectionsResponse.status === 'rejected' ||
+    societyResponse.status === 'rejected'
+  ) {
+    return (
+      <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+        <h1 className="text-center text-2xl font-bold text-red-500">
+          Error occurred while fetching articles
+        </h1>
+      </div>
+    );
+  }
+
+  const columns = columnsResponse?.value?.posts?.nodes ?? [];
+  const talents = talentsResponse?.value?.posts?.nodes ?? [];
+  const achievements = achievementsResponse?.value?.posts?.nodes ?? [];
+  const reflections = reflectionsResponse?.value?.posts?.nodes ?? [];
+  const society = societyResponse?.value?.posts?.nodes ?? [];
 
   const articles: ArticleCardProps[] = [
     ...columns,

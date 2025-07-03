@@ -13,28 +13,33 @@ import type { LIMITED_POSTS_QUERY } from '~/services/posts';
 type QueryResult = ResultOf<typeof LIMITED_POSTS_QUERY>;
 type Article = NonNullable<QueryResult['posts']>['nodes'][number];
 
-const mapToArticleCardProps = (article: Article): ArticleCardProps => {
-  return {
-    key: article.id,
-    slug: article.slug ?? '',
-    image: article.featuredImage?.node.sourceUrl ?? getPlaceholderImage(),
-    category: article.categories?.nodes[0].name ?? 'Uncategorised',
-    headline: article.title ?? '',
-    subhead: '',
-    writerName: article.author?.node.name ?? '',
-    date: new Date(article.date ?? ''),
-  };
-};
+export const revalidate = 240; // Revalidate every 4 minutes
 
 export default async function Social() {
-  const socialRaw = await fetchLifestyleArticles(4, CATEGORY.Social);
+  const [socialResult, lifeTreasureResult, cookingResult] =
+    await Promise.allSettled([
+      fetchLifestyleArticles(4, CATEGORY.Social),
+      fetchLifestyleArticles(4, CATEGORY.LifeTreasure),
+      fetchLifestyleArticles(4, CATEGORY.Cooking),
+    ]);
 
-  const lifeTreasureRaw = await fetchLifestyleArticles(
-    4,
-    CATEGORY.LifeTreasure,
-  );
+  if (
+    socialResult.status === 'rejected' ||
+    lifeTreasureResult.status === 'rejected' ||
+    cookingResult.status === 'rejected'
+  ) {
+    return (
+      <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+        <h1 className="text-center text-2xl font-bold text-red-500">
+          Error occurred while fetching social articles
+        </h1>
+      </div>
+    );
+  }
 
-  const cookingRaw = await fetchLifestyleArticles(4, CATEGORY.Cooking);
+  const socialRaw = socialResult.value;
+  const lifeTreasureRaw = lifeTreasureResult.value;
+  const cookingRaw = cookingResult.value;
 
   const social: ArticleCardProps[] =
     socialRaw.posts?.nodes.flatMap(mapToArticleCardProps) ?? [];
@@ -62,3 +67,16 @@ async function fetchLifestyleArticles(first: number, type: CATEGORY) {
     },
   });
 }
+
+const mapToArticleCardProps = (article: Article): ArticleCardProps => {
+  return {
+    key: article.id,
+    slug: article.slug ?? '',
+    image: article.featuredImage?.node.sourceUrl ?? getPlaceholderImage(),
+    category: article.categories?.nodes[0].name ?? 'Uncategorised',
+    headline: article.title ?? '',
+    subhead: '',
+    writerName: article.author?.node.name ?? '',
+    date: new Date(article.date ?? ''),
+  };
+};
