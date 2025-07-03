@@ -50,7 +50,7 @@ export function SideCard({ editorial }: { editorial: ArticleCardProps[] }) {
         <h4 className="mb-2 text-xl font-black">ಇನ್ನಷ್ಟು ಓದಿ</h4>
         <div className="space-y-1 pl-3">
           <ul className="list-disc space-y-1 pl-3">
-            {editorial.slice(1, 5).map((article) => (
+            {editorial.slice(1).map((article) => (
               <li
                 key={article.key}
                 className="cursor-pointer text-base leading-relaxed font-medium text-black decoration-1 underline-offset-4 hover:underline"
@@ -74,43 +74,39 @@ export function SocialCards({
   sideCard: ArticleCardProps[];
 }) {
   return (
-    <div className="flex gap-6 space-y-4">
-      <div className="flex-2">
-        {/* Header */}
-        <div className="pb-4 lg:pt-4">
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-extrabold md:text-5xl">ಸಾಮಾಜಿಕ</h1>
-            <Link
-              href={`/${CATEGORY.Social}`}
-              className="group ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
-            >
-              ಇನ್ನಷ್ಟು
-              <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Grid layout */}
-        <div className="grid grid-cols-1 gap-6">
-          {/* Main Cards */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2">
-            {mainCards.map((card) => (
-              <Link key={card.key} href={`/${CATEGORY.Social}/${card.slug}`}>
-                <SocialCard
-                  key={card.key}
-                  image={card.image}
-                  category={card.category}
-                  headline={card.headline}
-                  date={card.date}
-                  slug={card.slug}
-                />
-              </Link>
-            ))}
-          </div>
+    <div className="space-y-4">
+      {/* Header */}
+      <div className="pb-4 lg:pt-4">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-extrabold md:text-5xl">ಸಾಮಾಜಿಕ</h1>
+          <Link
+            href={`/${CATEGORY.Social}`}
+            className="group ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
+          >
+            ಇನ್ನಷ್ಟು
+            <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4" />
+          </Link>
         </div>
       </div>
 
-      <div className="flex-1 pt-4">
+      {/* Grid layout */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        {/* Main Cards */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2">
+          {mainCards.map((card) => (
+            <Link key={card.key} href={`/${CATEGORY.Social}/${card.slug}`}>
+              <SocialCard
+                key={card.key}
+                image={card.image}
+                category={card.category}
+                headline={card.headline}
+                date={card.date}
+                slug={card.slug}
+              />
+            </Link>
+          ))}
+        </div>
+
         {/* Side Card */}
         {sideCard.length !== 0 && (
           <div className="lg:col-span-1">
