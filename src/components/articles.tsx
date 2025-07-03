@@ -25,6 +25,7 @@ export default async function Articles() {
     fetchArticles(CATEGORY.Reflection),
     fetchArticles(CATEGORY.Society),
   ]);
+
   if (
     columnsResponse.status === 'rejected' ||
     talentsResponse.status === 'rejected' ||
@@ -41,11 +42,11 @@ export default async function Articles() {
     );
   }
 
-  const columns = columnsResponse?.value?.posts?.nodes ?? [];
-  const talents = talentsResponse?.value?.posts?.nodes ?? [];
-  const achievements = achievementsResponse?.value?.posts?.nodes ?? [];
-  const reflections = reflectionsResponse?.value?.posts?.nodes ?? [];
-  const society = societyResponse?.value?.posts?.nodes ?? [];
+  const columns = columnsResponse.value.posts?.nodes ?? [];
+  const talents = talentsResponse.value.posts?.nodes ?? [];
+  const achievements = achievementsResponse.value.posts?.nodes ?? [];
+  const reflections = reflectionsResponse.value.posts?.nodes ?? [];
+  const society = societyResponse.value.posts?.nodes ?? [];
 
   const articles: ArticleCardProps[] = [
     ...columns,
@@ -117,7 +118,7 @@ export default async function Articles() {
       </div>
 
       {/* Divider */}
-      <div className="mx-4 my-8 border-t border-dashed border-black" />
+      <div className="my-8 border-t border-dashed border-black" />
 
       {/* Bottom Row - 3 Column Grid */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">

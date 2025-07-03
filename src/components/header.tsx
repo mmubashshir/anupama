@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { navLinks } from '~/constants/nav-links';
-import { Calendar, ChevronDown, Home, Menu } from 'lucide-react';
+import { Calendar, ChevronDown, Menu } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -37,10 +37,8 @@ export default function Header() {
           <Menu className="size-7" />
         </button>
       </div>
-
       {/* Spacer for fixed header on mobile */}
       <div className="h-16 md:hidden" />
-
       {/* Show mobile nav only if open */}
       {isNavBarOpen ? (
         <MobileNavbar
@@ -72,7 +70,7 @@ export default function Header() {
         </div>
 
         {/* Center section - Logo */}
-        <div className="absolute left-1/2 -translate-x-1/2 transform">
+        <Link href="/" className="absolute left-1/2 -translate-x-1/2 transform">
           <Image
             className="select-none"
             draggable="false"
@@ -82,7 +80,7 @@ export default function Header() {
             height={48}
             priority
           />
-        </div>
+        </Link>
 
         {/* Right section - Subscribe */}
         {/* <div className="flex items-center gap-4">
@@ -94,7 +92,6 @@ export default function Header() {
           </Link>
         </div> */}
       </div>
-
       <DesktopNavbar />
     </header>
   );
@@ -117,16 +114,16 @@ export function DesktopNavbar() {
 export function DesktopNavLinks() {
   return (
     <>
-      <ul className="relative flex h-full items-center pl-6">
-        <li className="mr-3 *:h-full hover:cursor-pointer">
+      <ul className="relative flex h-full items-center">
+        {/* <li className="mr-3 *:h-full hover:cursor-pointer">
           <Link href="/" className="group flex items-center text-red-500">
             <Home className="h-5 w-5" />
           </Link>
-        </li>
+        </li> */}
         {navLinks.map((link) => (
           <li
             key={link.title}
-            className="group relative h-full hover:cursor-pointer first:hover:text-red-500"
+            className="group relative h-full hover:cursor-pointer"
           >
             {link.sublinks ? (
               <span className="mx-3 flex h-full items-center transition duration-300 hover:text-red-500">

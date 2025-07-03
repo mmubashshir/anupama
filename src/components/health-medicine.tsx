@@ -39,8 +39,8 @@ export default async function HealthAndMedicine() {
     );
   }
 
-  const healthPosts = healthResponse.value?.posts?.nodes ?? [];
-  const medicinePosts = medicineResponse.value?.posts?.nodes ?? [];
+  const healthPosts = healthResponse.value.posts?.nodes ?? [];
+  const medicinePosts = medicineResponse.value.posts?.nodes ?? [];
 
   // Combine all posts
   const allPosts = [
@@ -76,10 +76,10 @@ export default async function HealthAndMedicine() {
             <HealthCard
               name={post.title ?? 'Untitled'}
               category={post.categories?.nodes[0]?.name ?? ''}
-              description={post.excerpt ?? ''}
               imageUrl={
                 post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
               }
+              author={post.author?.node.name ?? ''}
             />
           </Link>
         ))}

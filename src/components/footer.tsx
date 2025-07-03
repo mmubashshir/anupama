@@ -151,7 +151,7 @@ export default function Footer() {
               className="text-gray-500 underline hover:text-red-500"
             >
               Anupama.
-            </Link>
+            </Link>{' '}
             All Rights Reserved. Developed by Mubashir and Co.
           </p>
         </div>

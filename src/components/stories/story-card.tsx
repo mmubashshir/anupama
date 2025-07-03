@@ -31,8 +31,8 @@ function StoryCard({ image, category, headline, writerName }: StoryCardProps) {
           {headline}
         </h2>
         <WPContentRenderer
-          className="mt-2 text-sm text-gray-500"
-          content={writerName}
+          className="text-sm text-gray-500"
+          content={`~${writerName}`}
         />
       </div>
     </div>

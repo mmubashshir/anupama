@@ -36,7 +36,7 @@ export function SideCard({ editorial }: { editorial: ArticleCardProps[] }) {
           />
         </div>
 
-        <p className="mb-1 text-lg font-semibold">{latestEditorial.category}</p>
+        <p className="text-sm text-black">{latestEditorial.category}</p>
         <h3 className="mb-2 text-xl font-black decoration-1 underline-offset-4 group-hover:underline">
           {latestEditorial.headline}
         </h3>

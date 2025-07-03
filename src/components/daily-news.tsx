@@ -22,8 +22,19 @@ export default async function DailyNews() {
 
   if (!dailyNewsPosts.length) {
     return (
-      <div className="text-center text-6xl text-red-500">
-        Some error occurred
+      <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
+        <h2 className="text-2xl font-semibold text-red-500">
+          Oops! Something went wrong.
+        </h2>
+        <p className="text-gray-600">
+          We were unable to load the content. Please try again.
+        </p>
+        <Link
+          href=""
+          className="rounded-md bg-red-500 px-4 py-2 text-center text-white transition hover:bg-red-600"
+        >
+          Refresh
+        </Link>
       </div>
     );
   }
@@ -62,7 +73,7 @@ export default async function DailyNews() {
           </Link>
 
           <Link href={`/${CATEGORY.DailyNews}/${mainPost.slug}`}>
-            <div className="z-10 ml-auto flex flex-col gap-1.5 bg-white md:-mt-16 md:w-[90%] md:p-4 md:text-left">
+            <div className="ml-auto flex flex-col gap-1.5 bg-white md:-mt-16 md:w-[90%] md:p-4 md:text-left">
               <span className="text-sm text-black">
                 {mainPost.categories?.nodes[0]?.name ?? 'ದಿನನಿತ್ಯದ ಸುದ್ದಿ'}
               </span>
@@ -71,10 +82,10 @@ export default async function DailyNews() {
               </h2>
               <WPContentRenderer
                 content={mainPost.excerpt}
-                className="line-clamp-3 text-base md:text-base"
+                className="line-clamp-2 text-base md:text-base"
               />
               <WPContentRenderer
-                content={mainPost.author?.node.name ?? ''}
+                content={`~${mainPost.author?.node.name ?? ''}`}
                 className="text-sm text-gray-500"
               />
             </div>
@@ -82,18 +93,16 @@ export default async function DailyNews() {
         </div>
 
         {/* Sidebar News Items */}
-        <div className="space-y-6">
+        <div className="flex flex-col space-y-6 lg:space-y-8">
           {otherPosts.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/${CATEGORY.DailyNews}/${mainPost.slug}`}
-            >
+            <Link key={post.slug} href={`/${CATEGORY.DailyNews}/${post.slug}`}>
               <NewsCard
                 category={post.categories?.nodes[0]?.name ?? 'ದಿನನಿತ್ಯದ ಸುದ್ದಿ'}
                 title={post.title ?? ''}
                 imageUrl={
                   post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
                 }
+                authorName={post.author?.node.name ?? ''}
               />
             </Link>
           ))}

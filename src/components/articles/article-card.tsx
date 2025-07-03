@@ -32,8 +32,8 @@ export default function ArticleCard({
           className="h-24 w-24 object-cover"
         />
 
-        <div className="ml-4 pt-2">
-          <p className="text-md mb-1">{category}</p>
+        <div className="ml-4">
+          <p className="text-sm text-black">{category}</p>
           <h3 className="text-xl font-extrabold underline-offset-4 group-hover:underline">
             {headline}
           </h3>
@@ -44,22 +44,20 @@ export default function ArticleCard({
 
   return (
     <Link key={headline} className="group flex flex-col" href="null">
-      <div className="mb-3">
-        <Image
-          src={image}
-          alt={headline}
-          width={300}
-          height={300}
-          className="aspect-square w-full max-w-full object-cover"
-        />
-      </div>
+      <Image
+        src={image}
+        alt={headline}
+        width={300}
+        height={300}
+        className="mb-2 aspect-square w-full max-w-full object-cover"
+      />
       <div className="flex-1">
-        <span className="mb-2 block text-base text-black">{category}</span>
-        <h3 className="mb-2 text-2xl font-black group-hover:underline">
+        <span className="text-sm text-black">{category}</span>
+        <h3 className="line-clamp-3 text-2xl font-black group-hover:underline">
           {headline}
         </h3>
         <p className="mb-2 text-base font-light text-black">{subhead}</p>
-        <p className="text-base text-gray-500">-{writerName}</p>
+        <p className="text-sm text-gray-500">-{writerName}</p>
       </div>
     </Link>
   );

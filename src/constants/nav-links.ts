@@ -47,7 +47,7 @@ export const navLinks: NavLink[] = [
         href: '/editorial',
       },
       {
-        title: 'ಬಾಲಬುತ್ತಿ',
+        title: 'ಬಾಳಬುತ್ತಿ',
         href: '/childrens-corner',
       },
     ],
@@ -100,11 +100,11 @@ export const navLinks: NavLink[] = [
     ],
   },
   {
-    title: 'ನಮ್ಮ ಬಗ್ಗೆ',
-    href: '/about-us',
+    title: 'ಮುಖಪುಟ',
+    href: '/cover-page',
   },
   {
-    title: 'ಬರಹಗಾರರು',
-    href: '/writers',
+    title: 'ನಮ್ಮ ಬಗ್ಗೆ',
+    href: '/about-us',
   },
 ] as const;

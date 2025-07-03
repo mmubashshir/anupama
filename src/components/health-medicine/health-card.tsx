@@ -1,19 +1,17 @@
 import Image from 'next/image';
 
-import WPContentRenderer from '~/components/wp-content-renderer';
-
 interface HealthcareProps {
   name: string;
   category: string;
-  description: string;
   imageUrl: string;
+  author: string;
 }
 
 export default function HealthcareCard({
   name,
   category,
-  description,
   imageUrl,
+  author,
 }: HealthcareProps) {
   return (
     <div className="bg-white py-4">
@@ -31,15 +29,13 @@ export default function HealthcareCard({
 
         {/* Text */}
         <div className="min-w-0 flex-1">
-          <span className="text-xs text-black sm:text-sm">{category}</span>
+          <span className="text-sm text-black">{category}</span>
 
           <h3 className="line-clamp-2 text-base font-black decoration-1 underline-offset-4 group-hover:underline sm:text-lg md:text-xl">
             {name}
           </h3>
 
-          <div className="mt-1 line-clamp-2 text-sm text-gray-700 sm:text-base">
-            <WPContentRenderer content={description} />
-          </div>
+          {author ? <div className="text-sm text-gray-500">~{author}</div> : ''}
         </div>
       </div>
     </div>
