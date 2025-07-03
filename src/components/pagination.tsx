@@ -96,9 +96,7 @@ function PageLink({
     <Link
       href={`${basePath}?page=${page}`}
       className={`inline-flex h-10 w-10 items-center justify-center rounded font-medium transition ${
-        isActive
-          ? 'bg-primary text-white shadow-md'
-          : 'text-gray-700 hover:bg-gray-100'
+        isActive ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'
       }`}
     >
       {page}

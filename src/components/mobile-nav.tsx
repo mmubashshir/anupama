@@ -57,22 +57,30 @@ export default function MobileNavbar({ onNavBarClose }: MobileNavbarProps) {
       <ul className="text-md space-y-2 pt-8 font-semibold text-gray-500">
         {navLinks.map((item) => (
           <li key={item.title}>
-            <button
-              type="button"
-              onClick={() => {
-                toggleSection(item.title);
-              }}
-              className="flex w-full cursor-pointer items-center justify-between border-b border-gray-200 py-2"
-            >
-              <span>{item.title}</span>
-              {item.sublinks ? (
+            {item.sublinks ? (
+              <button
+                type="button"
+                onClick={() => {
+                  toggleSection(item.title);
+                }}
+                className="flex w-full cursor-pointer items-center justify-between border-b border-gray-200 py-2"
+              >
+                <span>{item.title}</span>
                 <ChevronDown
                   className={`h-5 w-5 transform transition-transform duration-200 ${
                     openSection === item.title ? 'rotate-180' : ''
                   }`}
                 />
-              ) : null}
-            </button>
+              </button>
+            ) : (
+              <Link
+                href={item.href ?? '#'}
+                onClick={onNavBarClose}
+                className="block w-full border-b border-gray-200 py-2"
+              >
+                {item.title}
+              </Link>
+            )}
 
             {item.sublinks && openSection === item.title ? (
               <ul className="text-md space-y-2 border-b border-gray-200 pt-2 pl-4 text-gray-500">

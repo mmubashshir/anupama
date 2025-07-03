@@ -1,5 +1,6 @@
+import { POSTS_PER_PAGE } from '~/constants';
 import { type CATEGORY } from '~/enum/categories';
-import { Calendar, ChevronRight, User } from 'lucide-react';
+import { ChevronRight, Clock, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -22,19 +23,19 @@ export default async function CategoryListing({
 }) {
   const resolvedSearchParams = await searchParams;
   const page = parseInt(resolvedSearchParams?.page ?? '1');
-  const perPage = 3;
-  const offset = (page - 1) * perPage;
+
+  const offset = (page - 1) * POSTS_PER_PAGE;
   const { category } = await params;
 
   const [categoryPostsResponse, recentPostsResponse] = await Promise.allSettled(
     [
       fetchLimitedPosts({
-        first: perPage,
+        first: POSTS_PER_PAGE,
         filter: {
           categoryName: category,
           offsetPagination: {
             offset,
-            size: perPage,
+            size: POSTS_PER_PAGE,
           },
         },
       }),
@@ -54,7 +55,7 @@ export default async function CategoryListing({
     return (
       <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
         <h1 className="text-center text-2xl font-bold text-red-500">
-          Error occurred while fetching social articles
+          ದೋಷ ಸಂಭವಿಸಿದೆ, ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.
         </h1>
       </div>
     );
@@ -64,7 +65,7 @@ export default async function CategoryListing({
   const recentPosts = recentPostsResponse.value.posts?.nodes ?? [];
   const totalPosts =
     categoryPostsResponse.value.posts?.pageInfo.offsetPagination?.total ?? 0;
-  const totalPages = Math.ceil(totalPosts / perPage);
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
 
   if (categoryPosts.length === 0 || recentPosts.length === 0) {
     return (
@@ -134,17 +135,20 @@ export default async function CategoryListing({
                     <User className="h-4 w-4 stroke-1" />
                     <span>{post.author?.node.name}</span>
                   </div>
-                  <div className="flex gap-1 border-red-800">
-                    <Calendar className="h-4 w-4 stroke-1" />
-                    <span className="border-green-700">
-                      {post.date
-                        ? new Date(post.date).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          })
-                        : 'Unknown date'}{' '}
-                    </span>
+                  <div className="flex gap-1">
+                    <Clock className="h-4 w-4 stroke-1" />
+                    {post.date
+                      ? new Date(post.date).toLocaleString('en-IN', {
+                          timeZone: 'Asia/Kolkata',
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: '2-digit',
+                          hour12: true,
+                          timeZoneName: 'short',
+                        })
+                      : 'Unknown date'}
                   </div>
                 </div>
                 <WPContentRenderer

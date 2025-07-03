@@ -7,7 +7,6 @@ import './globals.css';
 
 import { BASE_URL } from '~/constants';
 
-import BlogNav from '~/components/blog-nav';
 import Footer from '~/components/footer';
 import GoogleAnalyticsScript from '~/components/google-analytics-script';
 import MicrosoftClarity from '~/components/microsoft-clarity';

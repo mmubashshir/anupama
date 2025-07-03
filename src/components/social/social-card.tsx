@@ -50,7 +50,7 @@ export function SideCard({ editorial }: { editorial: ArticleCardProps[] }) {
         <h4 className="mb-2 text-xl font-black">ಇನ್ನಷ್ಟು ಓದಿ</h4>
         <div className="space-y-1 pl-3">
           <ul className="list-disc space-y-1 pl-3">
-            {editorial.slice(1).map((article) => (
+            {editorial.slice(1, 5).map((article) => (
               <li
                 key={article.key}
                 className="cursor-pointer text-base leading-relaxed font-medium text-black decoration-1 underline-offset-4 hover:underline"

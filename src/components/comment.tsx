@@ -1,6 +1,7 @@
 'use client';
 
 import { formatDistanceToNowStrict } from 'date-fns';
+import { Clock } from 'lucide-react';
 
 import WPContentRenderer from '~/components/wp-content-renderer';
 
@@ -39,21 +40,25 @@ export default function Comment({ post }: CommentProps) {
                 className={`pb-4 ${index !== (post.comments?.nodes.length ?? 0) - 1 ? 'border-b border-gray-100' : ''}`}
               >
                 <div className="mb-1 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <h4 className="text-lg font-bold text-gray-800">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <h4 className="text-base font-bold text-gray-800 sm:text-lg">
                       {comment.author?.name ?? 'Anonymous'}
                     </h4>
 
-                    {comment.date ? (
-                      <span className="text-sm text-gray-500">
-                        {comment.dateGmt
-                          ? formatDistanceToNowStrict(
-                              new Date(`${comment.dateGmt}Z`),
-                              { addSuffix: true },
-                            )
-                          : null}
-                      </span>
-                    ) : null}
+                    {/* Time Icon + Text wrapper */}
+                    <div className="flex items-center gap-1 text-sm text-gray-500">
+                      <Clock className="mb-1 h-4 w-4 stroke-1" />
+                      {comment.dateGmt ? (
+                        <span>
+                          {formatDistanceToNowStrict(
+                            new Date(`${comment.dateGmt}Z`),
+                            {
+                              addSuffix: true,
+                            },
+                          )}
+                        </span>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
 

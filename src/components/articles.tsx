@@ -36,7 +36,7 @@ export default async function Articles() {
     return (
       <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
         <h1 className="text-center text-2xl font-bold text-red-500">
-          Error occurred while fetching articles
+          ದೋಷ ಸಂಭವಿಸಿದೆ, ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.
         </h1>
       </div>
     );

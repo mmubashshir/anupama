@@ -1,6 +1,7 @@
 'use client';
 
 import { type CATEGORY } from '~/enum/categories';
+import { Clock } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -53,15 +54,18 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
                     <p className="line-clamp-3 text-sm font-medium">
                       {post.title}
                     </p>
-                    <p className="mt-1 text-xs text-gray-500">
-                      {post.date
-                        ? new Date(post.date).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          })
-                        : 'Unknown date'}
-                    </p>
+                    <div className="flex items-center gap-1 text-xs text-gray-500">
+                      <Clock className="h-4 w-4 stroke-1" />
+                      <span className="mt-0.5">
+                        {post.date
+                          ? new Date(post.date).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                            })
+                          : 'Unknown date'}
+                      </span>
+                    </div>
                   </div>
                 </Link>
               ))}

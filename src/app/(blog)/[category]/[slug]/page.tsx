@@ -1,7 +1,7 @@
 import { createComment } from '~/app/actions/post-comment';
 import { BASE_URL } from '~/constants';
 import { type CATEGORY } from '~/enum/categories';
-import { Calendar, User } from 'lucide-react';
+import { Clock, User } from 'lucide-react';
 import { type Metadata } from 'next';
 import Image from 'next/image';
 
@@ -169,16 +169,21 @@ export default async function Blog({ params }: PageParams) {
                   <User className="h-4 w-4 stroke-1" />
                   <span>{post.author?.node.name}</span>
                 </div>
-                <div className="flex gap-1 border-red-800">
-                  <Calendar className="h-4 w-4 stroke-1" />
-                  <span className="border-green-700">
+                <div className="flex gap-1">
+                  <Clock className="h-4 w-4 stroke-1" />
+                  <span>
                     {post.date
-                      ? new Date(post.date).toLocaleDateString('en-US', {
+                      ? new Date(post.date).toLocaleString('en-IN', {
+                          timeZone: 'Asia/Kolkata',
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
+                          hour: 'numeric',
+                          minute: '2-digit',
+                          hour12: true,
+                          timeZoneName: 'short',
                         })
-                      : 'Unknown date'}{' '}
+                      : 'Unknown date'}
                   </span>
                 </div>
               </div>

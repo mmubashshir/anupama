@@ -21,7 +21,7 @@ export default async function HealthAndMedicine() {
     fetchLimitedPosts({
       first: 2,
       filter: {
-        categoryName: CATEGORY.Medicine,
+        categoryName: CATEGORY.Medical,
       },
     }),
   ]);
@@ -33,7 +33,7 @@ export default async function HealthAndMedicine() {
     return (
       <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
         <h1 className="text-center text-2xl font-bold text-red-500">
-          Error occurred while fetching health and medicine articles
+          ದೋಷ ಸಂಭವಿಸಿದೆ, ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.
         </h1>
       </div>
     );
@@ -47,7 +47,7 @@ export default async function HealthAndMedicine() {
     ...healthPosts.map((post) => ({ ...post, categoryType: CATEGORY.Health })),
     ...medicinePosts.map((post) => ({
       ...post,
-      categoryType: CATEGORY.Medicine,
+      categoryType: CATEGORY.Medical,
     })),
   ];
 
@@ -72,7 +72,7 @@ export default async function HealthAndMedicine() {
       {/* All Posts in Single Grid */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
         {allPosts.map((post) => (
-          <Link key={post.id} href={`/${post.categoryType}/${post.slug}`}>
+          <Link key={post.slug} href={`/${post.categoryType}/${post.slug}`}>
             <HealthCard
               name={post.title ?? 'Untitled'}
               category={post.categories?.nodes[0]?.name ?? ''}

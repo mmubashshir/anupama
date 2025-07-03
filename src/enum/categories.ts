@@ -4,7 +4,7 @@ export enum CATEGORY {
   StoryWorld = 'story-world',
   ChildrensArena = 'childrens-arena',
   Health = 'health',
-  Medicine = 'medicine',
+  Medical = 'medical',
   Columns = 'columns',
   Talent = 'talent',
   Achievements = 'achievements',

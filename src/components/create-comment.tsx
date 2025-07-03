@@ -31,7 +31,7 @@ function PostComment(props: {
     }
 
     if (formState.status === 'success') {
-      toast.success('Comment created successfully');
+      toast.success('Comment added successfully');
 
       if (formState.commentId) {
         const commentEle = document.querySelector(
