@@ -100,8 +100,8 @@ export const navLinks: NavLink[] = [
     ],
   },
   {
-    title: 'ಸಂಪರ್ಕ',
-    href: '/contact',
+    title: 'ನಮ್ಮ ಬಗ್ಗೆ',
+    href: '/about-us',
   },
   {
     title: 'ಬರಹಗಾರರು',
