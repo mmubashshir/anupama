@@ -29,7 +29,6 @@ export default function BlogPostSkeleton() {
             </div>
           </article>
 
-          {/* ── Comments header ── */}
           <div className="h-6 w-1/4 rounded-md bg-gray-200" />
 
           {/* Individual comments */}
@@ -45,7 +44,6 @@ export default function BlogPostSkeleton() {
             ))}
           </div>
 
-          {/* ── Comment form ── */}
           <div className="mt-10 space-y-4">
             <div className="h-6 w-1/3 rounded-md bg-gray-200" />
             <div className="h-10 w-full rounded-md bg-gray-200" />
@@ -53,7 +51,6 @@ export default function BlogPostSkeleton() {
             <div className="h-10 w-32 rounded-md bg-gray-200" />
           </div>
 
-          {/* ── Post navigation ── */}
           <div className="mt-16 flex flex-col justify-between gap-8 pt-8 md:flex-row">
             {/* Previous • left‑aligned */}
             <div className="flex w-full items-center md:w-1/2">
@@ -75,7 +72,6 @@ export default function BlogPostSkeleton() {
           </div>
         </div>
 
-        {/* ───────────────────────── Sidebar ───────────────────────── */}
         <div className="w-full space-y-8 lg:w-1/3">
           {/* Recent posts header */}
           <div className="h-6 w-1/3 rounded-md bg-gray-200" />

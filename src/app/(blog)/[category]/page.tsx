@@ -115,7 +115,7 @@ export default async function CategoryListing({
                 <div className="mt-4">
                   <Link
                     href={`/${category}/${post.slug}`}
-                    className="inline-flex w-fit items-center gap-2 border border-gray-300 px-8 py-3 text-gray-500 transition-colors duration-300 hover:bg-red-500 hover:text-white"
+                    className="hover:bg-primary inline-flex w-fit items-center gap-2 border border-gray-300 px-8 py-3 text-gray-500 transition-colors duration-300 hover:text-white"
                   >
                     ಓದುವುದನ್ನು ಮುಂದುವರಿಸಿ
                     <ChevronRight size={16} />

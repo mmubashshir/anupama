@@ -72,7 +72,7 @@ function PostComment(props: {
           type="submit"
           disabled={isPending}
           className={cn(
-            'cursor-pointer bg-red-600 px-4 py-1 text-white transition hover:bg-red-700 disabled:cursor-none disabled:bg-red-500',
+            'bg-primary disabled:bg-primary hover:bg-primary cursor-pointer px-4 py-1 text-white transition disabled:cursor-none',
             { 'animate-pulse': isPending },
           )}
         >
