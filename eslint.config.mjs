@@ -39,4 +39,10 @@ export default [
       camelcase: 'off',
     },
   },
+  {
+    files: ['src/**/loading.tsx', 'src/**/loading.ts'],
+    rules: {
+      'react/no-array-index-key': 'off',
+    },
+  },
 ];
