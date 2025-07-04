@@ -1,9 +1,11 @@
+import { env } from 'process';
 import { createComment } from '~/app/actions/post-comment';
 import { BASE_URL } from '~/constants';
 import { type CATEGORY } from '~/enum/categories';
 import { Clock, User } from 'lucide-react';
 import { type Metadata } from 'next';
 import Image from 'next/image';
+import { after } from 'next/server';
 
 import Sidebar from '~/components/category/sidebar';
 import Comment from '~/components/comment';
@@ -15,6 +17,7 @@ import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
+import { createNewViewEvent } from '~/services/popular-posts';
 import {
   fetchAllPosts,
   fetchLimitedPosts,
@@ -109,6 +112,19 @@ export default async function Blog({ params }: PageParams) {
       </div>
     );
   }
+
+  after(() => {
+    // create a new view event for the post
+    if (!(env.NEXT_PUBLIC_MODE === 'production')) return;
+
+    createNewViewEvent(postResponse.value.databaseId)
+      .then(() => {
+        /** */
+      })
+      .catch(() => {
+        /** */
+      });
+  });
 
   const post = postResponse.value;
   const { posts } = postsResponse.value;

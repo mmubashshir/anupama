@@ -2,10 +2,11 @@
 
 import Image from 'next/image';
 
-import { ShareTypeProp } from '~/components/social-icons';
+import { type ShareTypeProp } from '~/components/social-icons';
 
-const NativeShareIcon = (prop: ShareTypeProp) => {
+function NativeShareIcon(prop: ShareTypeProp) {
   function share(url: string): void {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- to  ensure compatibility with older browsers
     if (navigator.share) {
       navigator
         .share({
@@ -20,9 +21,12 @@ const NativeShareIcon = (prop: ShareTypeProp) => {
   }
 
   return (
-    <div
+    <button
+      type="button"
       className="transition-transform hover:scale-110 hover:cursor-pointer"
-      onClick={() => share(prop.url)}
+      onClick={() => {
+        share(prop.url);
+      }}
     >
       <Image
         className="opacity-75 hover:opacity-100"
@@ -31,8 +35,8 @@ const NativeShareIcon = (prop: ShareTypeProp) => {
         width={18}
         height={18}
       />
-    </div>
+    </button>
   );
-};
+}
 
 export default NativeShareIcon;
