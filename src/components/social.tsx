@@ -74,9 +74,10 @@ const mapToArticleCardProps = (article: Article): ArticleCardProps => {
     slug: article.slug ?? '',
     image: article.featuredImage?.node.sourceUrl ?? getPlaceholderImage(),
     category: article.categories?.nodes[0].name ?? 'Uncategorised',
+    categorySlug: article.categories?.nodes[0].slug ?? '',
     headline: article.title ?? '',
     subhead: '',
-    writerName: article.author?.node.name ?? '',
+    author: article.author?.node.name ?? '',
     date: new Date(article.date ?? ''),
   };
 };

@@ -48,7 +48,7 @@ export const navLinks: NavLink[] = [
       },
       {
         title: 'ಬಾಳಬುತ್ತಿ',
-        href: '/childrens-corner',
+        href: '/life-treasure',
       },
     ],
   },

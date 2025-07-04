@@ -65,16 +65,20 @@ export default function Footer() {
 
             <div className="space-y-2 text-sm text-slate-600">
               <p>
-                <span className="font-medium">Operated by: </span>Sanmarga
+                <span className="font-medium">Operated by:</span> Sanmarga
                 Publication Trust
               </p>
+
               {/* <p>
-                <span className="font-medium">Tax Code:</span> 0514234567
-              </p> */}
+    <span className="font-medium">Tax Code:</span>{' '}
+    0514234567
+  </p> */}
+
               <p>
                 <span className="font-medium">Address:</span> 1st floor,
                 Hidayath Centre Bibi Alabi Road, Bunder, Mangalore 575 001
               </p>
+
               <p>
                 <span className="font-medium">Email:</span>{' '}
                 <a
@@ -84,6 +88,7 @@ export default function Footer() {
                   anupamamasika@gmail.com
                 </a>
               </p>
+
               <p>
                 <span className="font-medium">Phone:</span>{' '}
                 <a
@@ -100,9 +105,12 @@ export default function Footer() {
                   8197355848
                 </a>
               </p>
+
               <p className="pt-2">
-                <span className="font-medium">License No.:</span> RNI No. KARKAN
-                2010/31373
+                <span className="font-medium">License No.:</span> RNI No. KARKAN{' '}
+                <span className="no-underline decoration-transparent">
+                  2010/31373
+                </span>
               </p>
             </div>
           </div>

@@ -44,13 +44,6 @@ export default async function HealthAndMedicine() {
   const medicinePosts = medicineResponse.value.posts?.nodes ?? [];
 
   // Combine all posts
-  const allPosts = [
-    ...healthPosts.map((post) => ({ ...post, categoryType: CATEGORY.Health })),
-    ...medicinePosts.map((post) => ({
-      ...post,
-      categoryType: CATEGORY.Medical,
-    })),
-  ];
 
   return (
     <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
