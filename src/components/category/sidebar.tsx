@@ -1,7 +1,6 @@
 'use client';
 
 import { type CATEGORY } from '~/enum/categories';
-import { Clock } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 

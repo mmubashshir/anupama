@@ -1,6 +1,6 @@
 'use client';
 
-import React, {
+import {
   createContext,
   useCallback,
   useContext,
@@ -81,6 +81,7 @@ export function OpacityCarousel(props: EmblaCarouselProps) {
                 if (sign === -1) {
                   diffToTarget = scrollSnap - (1 + scrollProgress);
                 }
+
                 if (sign === 1) {
                   diffToTarget = scrollSnap + (1 - scrollProgress);
                 }
@@ -91,6 +92,7 @@ export function OpacityCarousel(props: EmblaCarouselProps) {
           const tweenValue = 1 - Math.abs(diffToTarget * tweenFactor.current);
           const opacity = numberWithinRange(tweenValue, 0, 1).toString();
           const slideNode = carouselAPI.slideNodes()[slideIndex];
+
           slideNode.style.opacity = opacity;
           slideNode.style.pointerEvents =
             parseFloat(opacity) < 0.9 ? 'none' : 'auto';
@@ -127,6 +129,7 @@ interface OpacityCarouselContainerProps extends PropsWithChildren {
 export function OpacityCarouselContainer(props: OpacityCarouselContainerProps) {
   const { className, children } = props;
   const context = useContext(EmblaCarouselContext);
+
   return (
     <div className="overflow-hidden" ref={context?.carouselRef}>
       <div className={cn('flex touch-pan-y touch-pinch-zoom', className)}>
@@ -143,15 +146,15 @@ interface OpacityCarouselItemProps extends PropsWithChildren {
 
 export function OpacityCarouselSlide(props: OpacityCarouselItemProps) {
   const { className, uniqueClass, children } = props;
+
   return (
     <div
       className={
-        uniqueClass
-          ? uniqueClass
-          : cn(
-              'w-full min-w-0 flex-shrink-0 flex-grow-0 basis-[75%] pb-3 pl-3',
-              className,
-            )
+        uniqueClass ??
+        cn(
+          'w-full min-w-0 flex-shrink-0 flex-grow-0 basis-[75%] pb-3 pl-3',
+          className,
+        )
       }
     >
       {children}
@@ -167,6 +170,7 @@ export function OpacityCarouselPrevButton(
 
   return (
     <button
+      type="button"
       className={cn(
         'z-10 m-0 flex aspect-square cursor-pointer touch-manipulation items-center justify-center rounded-full border-0 border-none bg-transparent p-0 outline-none disabled:cursor-not-allowed disabled:opacity-50',
         className,
@@ -176,6 +180,7 @@ export function OpacityCarouselPrevButton(
         if (context?.emblaApi) {
           context.emblaApi.scrollPrev();
         }
+
         onClick?.(e);
       }}
       {...rest}
@@ -193,6 +198,7 @@ export function OpacityCarouselNextButton(
 
   return (
     <button
+      type="button"
       className={cn(
         'z-10 m-0 flex aspect-square cursor-pointer touch-manipulation items-center justify-center rounded-full border-0 border-none bg-transparent p-0 outline-none disabled:cursor-not-allowed disabled:opacity-50',
         className,
@@ -202,6 +208,7 @@ export function OpacityCarouselNextButton(
         if (context?.emblaApi) {
           context.emblaApi.scrollNext();
         }
+
         onClick?.(e);
       }}
       {...rest}
@@ -223,16 +230,19 @@ export function OpacityCarouselIndicator(props: {
 
     const onSelect = () => {
       if (!context.emblaApi) return;
+
       setActiveIndex(context.emblaApi.selectedScrollSnap());
     };
 
     context.emblaApi
       .on('init', () => {
         if (!context.emblaApi) return;
+
         setActiveIndex(context.emblaApi.selectedScrollSnap());
       })
       .on('reInit', () => {
         if (!context.emblaApi) return;
+
         setActiveIndex(context.emblaApi.selectedScrollSnap());
       })
       .on('select', onSelect);
