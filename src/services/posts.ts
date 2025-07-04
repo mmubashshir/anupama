@@ -156,7 +156,8 @@ export async function fetchPostBySlug(
     query: FETCH_POST_BY_SLUG_QUERY,
     variables: { slug },
   });
-
+  console.log('Fetching post by slug:', slug);
+  console.log('Post by slug result:', result);
   if (!result.data.postBy) {
     throw new Error('Post not found');
   }

@@ -10,6 +10,8 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
+import FeaturedCard from './featured-card';
+
 export default async function DailyNews() {
   const { posts } = await fetchLimitedPosts({
     first: 5,
@@ -58,39 +60,16 @@ export default async function DailyNews() {
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Main Featured Article */}
-        <div className="group flex flex-col gap-4 border-b border-gray-200 bg-white pb-4 hover:cursor-pointer md:gap-0 md:border-0 lg:col-span-2">
-          {/* Image */}
-          <Link href={`/${CATEGORY.DailyNews}/${mainPost.slug}`}>
-            <Image
-              src={
-                mainPost.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
-              }
-              alt={mainPost.title ?? 'News image'}
-              width={700}
-              height={300}
-              className="aspect-[3/2] w-full object-cover"
-            />
-          </Link>
-
-          <Link href={`/${CATEGORY.DailyNews}/${mainPost.slug}`}>
-            <div className="ml-auto flex flex-col gap-1.5 bg-white md:-mt-16 md:w-[90%] md:p-4 md:text-left">
-              <span className="text-sm text-black">
-                {mainPost.categories?.nodes[0]?.name ?? 'ದಿನನಿತ್ಯದ ಸುದ್ದಿ'}
-              </span>
-              <h2 className="text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-2xl">
-                {mainPost.title}
-              </h2>
-              <WPContentRenderer
-                content={mainPost.excerpt}
-                className="line-clamp-2 text-base md:text-base"
-              />
-              <WPContentRenderer
-                content={`~${mainPost.author?.node.name ?? ''}`}
-                className="text-sm text-gray-500"
-              />
-            </div>
-          </Link>
-        </div>
+        <FeaturedCard
+          category={mainPost.categories?.nodes[0]?.name ?? ''}
+          title={mainPost.title ?? ''}
+          href={`/${CATEGORY.DailyNews}/${mainPost.slug}`}
+          imageUrl={
+            mainPost.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
+          }
+          excerpt={mainPost.excerpt ?? ''}
+          authorName={mainPost.author?.node.name ?? ''}
+        />
 
         {/* Sidebar News Items */}
         <div className="flex flex-col space-y-6 lg:space-y-8">
