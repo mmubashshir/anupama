@@ -1,14 +1,14 @@
 import Image from 'next/image';
-import Link from 'next/link';
 
 export interface ArticleCardProps {
   key: string;
   slug: string;
   image: string;
   category: string;
+  categorySlug: string;
   headline: string;
   subhead?: string;
-  writerName?: string;
+  author: string;
   date: Date;
   small?: boolean;
 }
@@ -18,12 +18,12 @@ export default function ArticleCard({
   category,
   headline,
   subhead,
-  writerName,
+  author,
   small = false,
 }: ArticleCardProps) {
   if (small) {
     return (
-      <Link className="group flex" href="null">
+      <div className="group flex">
         <Image
           src={image}
           alt={headline}
@@ -34,16 +34,17 @@ export default function ArticleCard({
 
         <div className="ml-4">
           <p className="text-sm text-black">{category}</p>
-          <h3 className="text-xl font-extrabold underline-offset-4 group-hover:underline">
+          <h3 className="text-xl font-extrabold decoration-1 underline-offset-4 group-hover:underline">
             {headline}
           </h3>
+          <p className="text-sm text-gray-500">-{author}</p>
         </div>
-      </Link>
+      </div>
     );
   }
 
   return (
-    <Link key={headline} className="group flex flex-col" href="null">
+    <div key={headline} className="group flex flex-col">
       <Image
         src={image}
         alt={headline}
@@ -53,12 +54,12 @@ export default function ArticleCard({
       />
       <div className="flex-1">
         <span className="text-sm text-black">{category}</span>
-        <h3 className="line-clamp-3 text-2xl font-black group-hover:underline">
+        <h3 className="line-clamp-3 text-2xl font-black decoration-1 underline-offset-4 group-hover:underline">
           {headline}
         </h3>
         <p className="mb-2 text-base font-light text-black">{subhead}</p>
-        <p className="text-sm text-gray-500">-{writerName}</p>
+        <p className="text-sm text-gray-500">-{author}</p>
       </div>
-    </Link>
+    </div>
   );
 }

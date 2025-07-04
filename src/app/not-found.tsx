@@ -7,13 +7,9 @@ export default function NotFound() {
         <h1 className="text-foreground text-9xl font-bold tracking-tighter">
           404
         </h1>
-        <p className="text-muted-foreground mt-4 text-2xl font-semibold">
-          Oops, page not found!
-        </p>
-        <p className="text-muted-foreground mt-2">
-          The page you are looking for might have been moved, renamed, or is
-          temporarily unavailable.
-        </p>
+        <h2 className="text-2xl font-semibold text-red-500">
+          ದೋಷ ಸಂಭವಿಸಿದೆ, ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.
+        </h2>
         <Link
           href="/"
           className="mt-6 inline-block rounded-md bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-700 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200"

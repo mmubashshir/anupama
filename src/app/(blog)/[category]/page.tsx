@@ -71,11 +71,8 @@ export default async function CategoryListing({
     return (
       <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
         <h2 className="text-2xl font-semibold text-red-500">
-          Oops! Something went wrong.
+          ದೋಷ ಸಂಭವಿಸಿದೆ, ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.
         </h2>
-        <p className="text-base text-gray-600">
-          We were unable to load the content. Please try again.
-        </p>
         <Link
           href=""
           className="rounded-md bg-red-500 px-4 py-2 text-center text-white transition hover:bg-red-600"
@@ -90,11 +87,9 @@ export default async function CategoryListing({
     return (
       <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
         <h2 className="text-2xl font-semibold text-red-500">
-          Oops! Something went wrong.
+          ದೋಷ ಸಂಭವಿಸಿದೆ, ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.
         </h2>
-        <p className="text-base text-gray-600">
-          We were unable to load the content. Please try again.
-        </p>
+
         <Link
           href=""
           className="rounded-md bg-red-500 px-4 py-2 text-center text-white transition hover:bg-red-600"

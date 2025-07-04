@@ -5,9 +5,14 @@ import Link from 'next/link';
 
 import { type ArticleCardProps } from '../articles/article-card';
 
-export function SocialCard({ image, headline, subhead }: ArticleCardProps) {
+export function SocialCard({
+  image,
+  headline,
+  subhead,
+  author,
+}: ArticleCardProps) {
   return (
-    <div className="group cursor-pointer p-0">
+    <div className="group p-0">
       <div className="relative aspect-[4/3]">
         <Image src={image} alt={headline} fill className="object-cover" />
       </div>
@@ -16,6 +21,7 @@ export function SocialCard({ image, headline, subhead }: ArticleCardProps) {
           {headline}
         </h3>
         <p className="text-sm leading-relaxed font-semibold">{subhead}</p>
+        <p className="text-sm text-gray-500">-{author}</p>
       </div>
     </div>
   );
@@ -26,7 +32,7 @@ export function SideCard({ editorial }: { editorial: ArticleCardProps[] }) {
 
   return (
     <div className="bg-gray-100 p-5">
-      <div className="group cursor-pointer">
+      <div className="group">
         <div className="relative mb-6 aspect-[3/2]">
           <Image
             src={latestEditorial.image}
@@ -37,13 +43,13 @@ export function SideCard({ editorial }: { editorial: ArticleCardProps[] }) {
         </div>
 
         <p className="text-sm text-black">{latestEditorial.category}</p>
-        <h3 className="mb-2 text-xl font-black decoration-1 underline-offset-4 group-hover:underline">
+        <h3 className="text-xl font-black decoration-1 underline-offset-4 group-hover:underline">
           {latestEditorial.headline}
         </h3>
-        <p className="mb-2 text-base leading-relaxed font-semibold">
+        <p className="text-base leading-relaxed font-semibold">
           {latestEditorial.subhead}
         </p>
-        <p className="text-sm text-gray-600">{latestEditorial.writerName}</p>
+        <p className="text-sm text-gray-500">~{latestEditorial.author}</p>
       </div>
 
       <div className="mt-3 border-t border-gray-300 pt-3">
@@ -100,6 +106,8 @@ export function SocialCards({
                   key={card.key}
                   image={card.image}
                   category={card.category}
+                  categorySlug={card.categorySlug}
+                  author={card.author}
                   headline={card.headline}
                   date={card.date}
                   slug={card.slug}
@@ -113,9 +121,9 @@ export function SocialCards({
       <div className="flex-1 pt-4">
         {/* Side Card */}
         {sideCard.length !== 0 && (
-          <div className="lg:col-span-1">
+          <Link href={`/${CATEGORY.LifeTreasure}/${sideCard[0].slug}`}>
             <SideCard editorial={sideCard} />
-          </div>
+          </Link>
         )}
       </div>
     </div>

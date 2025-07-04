@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import StoryCard from '~/components/stories/story-card';
 
+import { getPlaceholderImage } from '~/utils/get-placeholder-image';
+
 import { fetchLimitedPosts } from '~/services/posts';
 
 import ArticleCard from './articles/article-card';
@@ -59,11 +61,12 @@ export default async function Articles() {
       return {
         key: article.id,
         slug: article.slug ?? '',
-        image: article.featuredImage?.node.sourceUrl ?? '/fallback.jpg',
+        image: article.featuredImage?.node.sourceUrl ?? getPlaceholderImage(),
         category: article.categories?.nodes[0].name ?? 'Uncategorised',
+        categorySlug: article.categories?.nodes[0].slug ?? '',
         headline: article.title ?? '',
         subhead: '',
-        writerName: article.author?.node.name ?? '',
+        author: article.author?.node.name ?? '',
         date: new Date(article.date ?? ''),
       };
     })
@@ -90,28 +93,39 @@ export default async function Articles() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Main Featured Article (Left - Takes 3 columns out of 5) */}
         <div className="lg:col-span-1">
-          <StoryCard
-            image={articles[0].image}
-            category={articles[0].category}
-            headline={articles[0].headline}
-            writerName={articles[0].writerName ?? ''}
-          />
+          <Link
+            key={articles[0].slug}
+            href={`/${articles[0].categorySlug}/${articles[0].slug}`}
+          >
+            <StoryCard
+              image={articles[0].image}
+              category={articles[0].category}
+              headline={articles[0].headline}
+              writerName={articles[0].author}
+            />
+          </Link>
         </div>
 
         {/* Secondary Articles (Right - Takes 1 column) */}
         <div className="lg:col-span-1">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {articles.slice(1, 3).map((article) => (
-              <ArticleCard
-                key={article.key}
-                image={article.image}
-                category={article.category}
-                headline={article.headline}
-                subhead={article.subhead}
-                writerName={article.writerName}
-                date={article.date}
-                slug={article.slug}
-              />
+              <Link
+                key={article.slug}
+                href={`/${article.categorySlug}/${article.slug}`}
+              >
+                <ArticleCard
+                  key={article.key}
+                  image={article.image}
+                  category={article.category}
+                  categorySlug={article.categorySlug}
+                  headline={article.headline}
+                  subhead={article.subhead}
+                  author={article.author}
+                  date={article.date}
+                  slug={article.slug}
+                />
+              </Link>
             ))}
           </div>
         </div>
@@ -123,16 +137,22 @@ export default async function Articles() {
       {/* Bottom Row - 3 Column Grid */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {articles.slice(3).map((article) => (
-          <ArticleCard
-            key={article.key}
-            image={article.image}
-            category={article.category}
-            headline={article.headline}
-            subhead={article.subhead}
-            writerName={article.writerName}
-            date={article.date}
-            slug={article.slug}
-          />
+          <Link
+            key={article.slug}
+            href={`/${article.categorySlug}/${article.slug}`}
+          >
+            <ArticleCard
+              key={article.key}
+              image={article.image}
+              category={article.category}
+              categorySlug={article.categorySlug}
+              headline={article.headline}
+              subhead={article.subhead}
+              author={article.author}
+              date={article.date}
+              slug={article.slug}
+            />
+          </Link>
         ))}
       </div>
     </div>
