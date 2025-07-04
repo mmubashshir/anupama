@@ -1,24 +1,20 @@
 'use client';
 
-import { useState } from 'react';
 import { CATEGORY } from '~/enum/categories';
 import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { type ArticleCardProps } from '../articles/article-card';
+import {
+  OpacityCarousel,
+  OpacityCarouselContainer,
+  OpacityCarouselNextButton,
+  OpacityCarouselPrevButton,
+  OpacityCarouselSlide,
+} from '../opacity-carousel';
 
 export function FoodCarousel({ items }: { items: ArticleCardProps[] }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev === items.length - 1 ? 0 : prev + 1));
-  };
-
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -32,49 +28,50 @@ export function FoodCarousel({ items }: { items: ArticleCardProps[] }) {
         </Link>
       </div>
 
-      {/* Mobile Carousel */}
-      <div className="relative block md:hidden">
-        <div className="relative mx-auto max-w-sm overflow-hidden px-2">
-          {/* Slider Container */}
-          <div
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-          >
+      <div className="relative -mx-4 block md:hidden">
+        <OpacityCarousel className="relative w-full" align="center" loop>
+          <OpacityCarouselContainer className="gap-0">
             {items.map((item) => (
-              <div key={item.key} className="w-full shrink-0 grow-0 basis-full">
-                <div className="relative aspect-[4/3] w-full overflow-hidden">
-                  <Image
-                    src={item.image}
-                    alt={item.headline}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="pt-3">
-                  <h3 className="text-center text-lg font-bold">
+              <OpacityCarouselSlide
+                key={item.key}
+                uniqueClass="w-full min-w-0 flex-shrink-0 flex-grow-0 basis-[75%] px-2 pb-3"
+              >
+                <Link
+                  href={`/${CATEGORY.Cooking}/${item.slug}`}
+                  className="block"
+                >
+                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
+                    <Image
+                      src={item.image}
+                      alt={item.headline}
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+
+                  <h3 className="pt-3 text-center text-lg font-bold">
                     {item.headline}
                   </h3>
-                </div>
-              </div>
+                </Link>
+              </OpacityCarouselSlide>
             ))}
+          </OpacityCarouselContainer>
+
+          <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-full">
+            <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-full">
+              <OpacityCarouselPrevButton className="pointer-events-auto absolute top-1/2 left-1 -translate-y-1/2 rounded-full bg-white p-1 shadow">
+                <ChevronLeft size={20} />
+              </OpacityCarouselPrevButton>
+
+              <OpacityCarouselNextButton className="pointer-events-auto absolute top-1/2 right-1 -translate-y-1/2 rounded-full bg-white p-1 shadow">
+                <ChevronRight size={20} />
+              </OpacityCarouselNextButton>
+            </div>
           </div>
 
-          {/* Navigation Buttons */}
-          <button
-            type="button"
-            onClick={handlePrev}
-            className="absolute top-1/2 left-1 -translate-y-1/2 rounded-full bg-white p-1 shadow"
-          >
-            <ChevronLeft size={20} />
-          </button>
-          <button
-            type="button"
-            onClick={handleNext}
-            className="absolute top-1/2 right-1 -translate-y-1/2 rounded-full bg-white p-1 shadow"
-          >
-            <ChevronRight size={20} />
-          </button>
-        </div>
+          {/* optional: dot indicator */}
+        </OpacityCarousel>
       </div>
 
       {/* Desktop Grid */}

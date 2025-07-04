@@ -32,37 +32,41 @@ export function SideCard({ editorial }: { editorial: ArticleCardProps[] }) {
 
   return (
     <div className="bg-gray-100 p-5">
-      <div className="group">
-        <div className="relative mb-6 aspect-[3/2]">
-          <Image
-            src={latestEditorial.image}
-            alt={latestEditorial.headline}
-            fill
-            className="object-cover"
-          />
-        </div>
+      <Link href={`/${CATEGORY.LifeTreasure}/${latestEditorial.slug}`}>
+        <div className="group">
+          <div className="relative mb-2 aspect-[3/2]">
+            <Image
+              src={latestEditorial.image}
+              alt={latestEditorial.headline}
+              fill
+              className="object-cover"
+            />
+          </div>
 
-        <p className="text-sm text-black">{latestEditorial.category}</p>
-        <h3 className="text-xl font-black decoration-1 underline-offset-4 group-hover:underline">
-          {latestEditorial.headline}
-        </h3>
-        <p className="text-base leading-relaxed font-semibold">
-          {latestEditorial.subhead}
-        </p>
-        <p className="text-sm text-gray-500">~{latestEditorial.author}</p>
-      </div>
+          <p className="text-sm text-black">{latestEditorial.category}</p>
+          <h3 className="text-xl font-black decoration-1 underline-offset-4 group-hover:underline">
+            {latestEditorial.headline}
+          </h3>
+          <p className="text-base leading-relaxed font-semibold">
+            {latestEditorial.subhead}
+          </p>
+          <p className="text-sm text-gray-500">~{latestEditorial.author}</p>
+        </div>
+      </Link>
 
       <div className="mt-3 border-t border-gray-300 pt-3">
         <h4 className="mb-2 text-xl font-black">ಇನ್ನಷ್ಟು ಓದಿ</h4>
         <div className="space-y-1 pl-3">
           <ul className="list-disc space-y-1 pl-3">
             {editorial.slice(1, 5).map((article) => (
-              <li
+              <Link
                 key={article.key}
-                className="cursor-pointer text-base leading-relaxed font-medium text-black decoration-1 underline-offset-4 hover:underline"
+                href={`/${CATEGORY.LifeTreasure}/${article.slug}`}
               >
-                {article.headline}
-              </li>
+                <li className="text-base leading-relaxed font-medium text-black decoration-1 underline-offset-4 hover:underline">
+                  {article.headline}
+                </li>
+              </Link>
             ))}
           </ul>
         </div>
@@ -120,11 +124,7 @@ export function SocialCards({
 
       <div className="flex-1 pt-4">
         {/* Side Card */}
-        {sideCard.length !== 0 && (
-          <Link href={`/${CATEGORY.LifeTreasure}/${sideCard[0].slug}`}>
-            <SideCard editorial={sideCard} />
-          </Link>
-        )}
+        {sideCard.length !== 0 && <SideCard editorial={sideCard} />}
       </div>
     </div>
   );
