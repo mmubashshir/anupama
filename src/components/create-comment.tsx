@@ -45,7 +45,7 @@ function PostComment(props: {
 
   return (
     <div className="border-t border-gray-200 pt-8">
-      <h3 className="mb-6 text-xl font-bold">Leave A Comment</h3>
+      <h3 className="mb-6 text-xl font-bold">ಕಮ್ಮೆಂಟ್ ಬಿಡಿ</h3>
 
       <form action={formAction} className="space-y-4">
         <input
@@ -54,7 +54,7 @@ function PostComment(props: {
           className="w-full border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
           required
           minLength={3}
-          placeholder="Your Name..."
+          placeholder="ನಿಮ್ಮ ಹೆಸರು..."
         />
 
         <textarea
@@ -63,7 +63,7 @@ function PostComment(props: {
           rows={5}
           required
           minLength={5}
-          placeholder="Type your comment here..."
+          placeholder="ನಿಮ್ಮ ಕಮ್ಮೆಂಟನ್ನು ಇಲ್ಲಿ ಟೈಪ್ ಮಾಡಿ..."
         />
 
         <input name="postId" type="hidden" value={databaseId} readOnly />
@@ -72,11 +72,11 @@ function PostComment(props: {
           type="submit"
           disabled={isPending}
           className={cn(
-            'bg-primary disabled:bg-primary hover:bg-primary cursor-pointer px-4 py-1 text-white transition disabled:cursor-none',
+            'bg-primary disabled:bg-primary hover:bg-primary cursor-pointer px-5 py-1.5 text-white transition hover:brightness-125 disabled:cursor-none',
             { 'animate-pulse': isPending },
           )}
         >
-          {isPending ? 'Submitting...' : ' Post Comment'}
+          {isPending ? 'ಸಲ್ಲಿಸಲಾಗುತ್ತಿದೆ...' : 'ಕಮ್ಮೆಂಟ್ ಸಲ್ಲಿಸಿ'}
         </button>
       </form>
     </div>

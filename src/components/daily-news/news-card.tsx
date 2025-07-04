@@ -33,7 +33,7 @@ export default function NewsCard({
             alt={title}
             width={120}
             height={120}
-            className="h-25 w-25 object-cover"
+            className="h-25 w-25 object-cover group-hover:brightness-[1.1]"
           />
         </div>
       </div>

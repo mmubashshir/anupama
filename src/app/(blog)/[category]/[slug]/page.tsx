@@ -144,7 +144,7 @@ export default async function Blog({ params }: PageParams) {
       : undefined;
 
   return (
-    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl p-4 sm:px-6 lg:px-8 lg:py-10">
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* Main Content */}
         <div className="w-full lg:w-2/3">
@@ -158,13 +158,13 @@ export default async function Blog({ params }: PageParams) {
                   alt={post.title ?? ''}
                   width={800}
                   height={400}
-                  className="h-auto w-full object-cover"
+                  className="h-auto w-full object-cover group-hover:brightness-[1.1]"
                 />
               </div>
 
               <h2 className="mb-2 text-3xl font-bold">{post.title} </h2>
 
-              <div className="mb-4 flex flex-wrap gap-4 text-sm text-gray-500">
+              <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-500">
                 <div className="flex gap-1">
                   <User className="h-4 w-4 stroke-1" />
                   <span>{post.author?.node.name}</span>
@@ -192,7 +192,7 @@ export default async function Blog({ params }: PageParams) {
             </article>
           </div>
 
-          <div className="mb-8 flex justify-end">
+          <div className="mb-8 flex items-center justify-end gap-4">
             <SocialIcons
               url={`https://wa.me/whatsappphonenumber/?text=${pagePath}`}
               image={ShareType.WHATSAPP}
@@ -212,7 +212,6 @@ export default async function Blog({ params }: PageParams) {
               submitComment={createComment}
             />
           </div>
-
           {/* Post Navigation */}
           <PostNavigation
             previousPost={previousPost}

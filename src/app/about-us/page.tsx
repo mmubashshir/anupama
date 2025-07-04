@@ -3,8 +3,9 @@ import Image from 'next/image';
 
 const AboutUs = () => {
   return (
-    <div className="mx-4 my-10 flex flex-col justify-center gap-4">
-      <div className="text-3xl font-extrabold md:text-4xl">ನಮ್ಮ ಬಗ್ಗೆ</div>
+    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+      <h2 className="text-3xl font-extrabold md:text-4xl">ನಮ್ಮ ಬಗ್ಗೆ</h2>
+
       <div className="flex flex-col items-start gap-10 py-8 md:flex-row">
         <Image
           className="mx-auto h-auto w-[300px] object-contain"
@@ -13,14 +14,17 @@ const AboutUs = () => {
           src="/anupama-magazine.jpg"
           alt="anupama-magazine"
         />
+
         <p className="text-justify leading-relaxed">{aboutUs}</p>
       </div>
 
-      <div className="pt-12 text-3xl font-extrabold md:text-4xl">ಲೇಖಕರು</div>
-      <div className="md: flex flex-wrap items-start justify-between gap-y-10 py-6 md:py-8">
-        {writers.map((writer) => (
-          <WriterCard key={writer.name} {...writer} />
-        ))}
+      <div className="py-10">
+        <h2 className="text-3xl font-extrabold md:text-4xl">ಲೇಖಕರು</h2>
+        <div className="md: flex flex-wrap items-start justify-between gap-y-10 py-6 md:py-8">
+          {writers.map((writer) => (
+            <WriterCard key={writer.name} {...writer} />
+          ))}
+        </div>
       </div>
     </div>
   );

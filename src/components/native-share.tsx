@@ -20,9 +20,12 @@ const NativeShareIcon = (prop: ShareTypeProp) => {
   }
 
   return (
-    <div className="p-4 hover:cursor-pointer" onClick={() => share(prop.url)}>
+    <div
+      className="transition-transform hover:scale-110 hover:cursor-pointer"
+      onClick={() => share(prop.url)}
+    >
       <Image
-        className="opacity-75"
+        className="opacity-75 hover:opacity-100"
         src={prop.image}
         alt={prop.image}
         width={18}

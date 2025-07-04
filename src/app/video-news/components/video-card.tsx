@@ -10,7 +10,10 @@ export default function VideoCard({ title, videoContent }: VideoCardProps) {
     <div className="border-b border-gray-200 py-4 last:border-b-0">
       <div className="group flex cursor-pointer flex-row-reverse items-start gap-3">
         <div className="w-42">
-          <WPVideoRenderer className="video-container" content={videoContent} />
+          <WPVideoRenderer
+            className="video-container group-hover:brightness-[1.1]"
+            content={videoContent}
+          />
         </div>
         {/* Text */}
         <div className="text-left">

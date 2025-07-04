@@ -23,7 +23,7 @@ export default function HealthcareCard({
             alt={name}
             fill
             sizes="(max-width: 640px) 112px, (max-width: 768px) 128px, 128px"
-            className="object-cover transition-transform duration-300"
+            className="object-cover group-hover:brightness-[1.1]"
           />
         </div>
 
@@ -31,7 +31,7 @@ export default function HealthcareCard({
         <div className="min-w-0 flex-1">
           <span className="text-sm text-black">{category}</span>
 
-          <h3 className="line-clamp-2 text-base font-black decoration-1 underline-offset-4 group-hover:underline sm:text-lg md:text-xl">
+          <h3 className="line-clamp-3 text-base font-black decoration-1 underline-offset-4 group-hover:underline sm:text-lg md:text-xl">
             {name}
           </h3>
 

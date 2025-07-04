@@ -14,7 +14,12 @@ export function SocialCard({
   return (
     <div className="group p-0">
       <div className="relative aspect-[4/3]">
-        <Image src={image} alt={headline} fill className="object-cover" />
+        <Image
+          src={image}
+          alt={headline}
+          fill
+          className="object-cover group-hover:brightness-[1.1]"
+        />
       </div>
       <div className="bg-white">
         <h3 className="mb-2 pt-4 text-2xl leading-tight font-black decoration-1 underline-offset-4 group-hover:underline">
@@ -39,7 +44,7 @@ export function SideCard({ editorial }: { editorial: ArticleCardProps[] }) {
               src={latestEditorial.image}
               alt={latestEditorial.headline}
               fill
-              className="object-cover"
+              className="object-cover group-hover:brightness-[1.1]"
             />
           </div>
 
@@ -87,17 +92,15 @@ export function SocialCards({
     <div className="gap-6 space-y-4 md:flex">
       <div className="flex-2">
         {/* Header */}
-        <div className="pb-4 lg:pt-4">
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-extrabold md:text-5xl">ಸಾಮಾಜಿಕ</h1>
-            <Link
-              href={`/${CATEGORY.Social}`}
-              className="group ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
-            >
-              ಇನ್ನಷ್ಟು
-              <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4" />
-            </Link>
-          </div>
+        <div className="flex items-center justify-between pb-4 lg:pt-4">
+          <h1 className="text-3xl font-extrabold md:text-5xl">ಸಾಮಾಜಿಕ</h1>
+          <Link
+            href={`/${CATEGORY.Social}`}
+            className="group ml-auto flex items-center text-sm font-semibold decoration-1 underline-offset-4 hover:underline"
+          >
+            ಇನ್ನಷ್ಟು
+            <ArrowUpRight className="mb-0.5 ml-1 inline h-4 w-4" />
+          </Link>
         </div>
 
         {/* Grid layout */}

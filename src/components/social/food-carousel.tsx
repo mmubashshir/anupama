@@ -34,13 +34,13 @@ export function FoodCarousel({ items }: { items: ArticleCardProps[] }) {
             {items.map((item) => (
               <OpacityCarouselSlide
                 key={item.key}
-                uniqueClass="w-full min-w-0 flex-shrink-0 flex-grow-0 basis-[75%] px-2 pb-3"
+                uniqueClass="w-full min-w-0 flex-shrink-0 flex-grow-0 basis-[75%] px-2"
               >
                 <Link
                   href={`/${CATEGORY.Cooking}/${item.slug}`}
                   className="block"
                 >
-                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
+                  <div className="relative aspect-[4/3] w-full overflow-hidden">
                     <Image
                       src={item.image}
                       alt={item.headline}
@@ -61,11 +61,11 @@ export function FoodCarousel({ items }: { items: ArticleCardProps[] }) {
           <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-full">
             <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-full">
               <OpacityCarouselPrevButton className="pointer-events-auto absolute top-1/2 left-1 -translate-y-1/2 rounded-full bg-white p-1 shadow">
-                <ChevronLeft size={20} />
+                <ChevronLeft size={24} />
               </OpacityCarouselPrevButton>
 
               <OpacityCarouselNextButton className="pointer-events-auto absolute top-1/2 right-1 -translate-y-1/2 rounded-full bg-white p-1 shadow">
-                <ChevronRight size={20} />
+                <ChevronRight size={24} />
               </OpacityCarouselNextButton>
             </div>
           </div>
@@ -85,7 +85,7 @@ export function FoodCarousel({ items }: { items: ArticleCardProps[] }) {
                     src={item.image}
                     alt={item.headline}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:brightness-[1.1]"
                   />
                 </div>
                 <div className="pt-2">

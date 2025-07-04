@@ -49,7 +49,7 @@ export default async function Social() {
     cookingRaw.posts?.nodes.flatMap(mapToArticleCardProps) ?? [];
 
   return (
-    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8 lg:pb-14">
       <div className="mx-auto max-w-6xl space-y-12">
         <SocialCards mainCards={social} sideCard={lifeTreasure} />
 

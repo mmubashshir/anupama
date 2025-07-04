@@ -35,7 +35,7 @@ export default function PostNavigation({
           </div>
           <div className="ml-4">
             <p className="text-sm font-medium tracking-wide text-red-500 uppercase">
-              Previous Post
+              ಹಿಂದಿನ ಸುದ್ದಿ
             </p>
             <h4 className="mt-1 text-lg leading-snug font-semibold text-gray-900">
               {previousPost.title}
@@ -54,7 +54,7 @@ export default function PostNavigation({
         >
           <div className="mr-4">
             <p className="text-sm font-medium tracking-wide text-red-500 uppercase">
-              Next Post
+              ಮುಂದಿನ ಸುದ್ದಿ
             </p>
             <h4 className="mt-1 text-lg leading-snug font-semibold text-gray-900">
               {nextPost.title}
