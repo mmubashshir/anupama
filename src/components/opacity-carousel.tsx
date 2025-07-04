@@ -90,6 +90,10 @@ export function OpacityCarousel(props: EmblaCarouselProps) {
 
           const tweenValue = 1 - Math.abs(diffToTarget * tweenFactor.current);
           const opacity = numberWithinRange(tweenValue, 0, 1).toString();
+          const slideNode = carouselAPI.slideNodes()[slideIndex];
+          slideNode.style.opacity = opacity;
+          slideNode.style.pointerEvents =
+            parseFloat(opacity) < 0.9 ? 'none' : 'auto';
           carouselAPI.slideNodes()[slideIndex].style.opacity = opacity;
         });
       });

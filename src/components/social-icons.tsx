@@ -1,11 +1,17 @@
+// SocialIcons.tsx
 import Image from 'next/image';
 import Link from 'next/link';
 
-function SocialIcons(prop: ShareTypeProp) {
+export function SocialIcons(prop: ShareTypeProp) {
   return (
-    <Link className="p-4" href={prop.url}>
+    <Link
+      className="transition-transform hover:scale-110"
+      href={prop.url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       <Image
-        className="opacity-75"
+        className="opacity-75 hover:opacity-100"
         src={prop.image}
         alt="prop.image"
         width={18}
@@ -25,5 +31,3 @@ export interface ShareTypeProp {
   image: ShareType;
   url: string;
 }
-
-export { SocialIcons };

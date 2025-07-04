@@ -26,7 +26,7 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
           {/* Recent Posts */}
           <div className="border border-gray-200 p-4">
             <h3 className="mb-4 inline-block border-b-2 border-red-500 pb-2 text-xl font-bold">
-              Recent posts
+              ಇತ್ತೀಚಿನ ಸುದ್ದಿಗಳು
             </h3>
             <div className="space-y-4">
               {recentPosts.map((post, index) => (
@@ -55,16 +55,13 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
                       {post.title}
                     </p>
                     <div className="flex items-center gap-1 text-xs text-gray-500">
-                      <Clock className="h-4 w-4 stroke-1" />
-                      <span className="mt-0.5">
-                        {post.date
-                          ? new Date(post.date).toLocaleDateString('en-US', {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric',
-                            })
-                          : 'Unknown date'}
-                      </span>
+                      {post.date
+                        ? new Date(post.date).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })
+                        : 'Unknown date'}
                     </div>
                   </div>
                 </Link>

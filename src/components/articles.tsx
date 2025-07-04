@@ -75,7 +75,7 @@ export default async function Articles() {
     });
 
   return (
-    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8 lg:py-14">
       <div className="pb-4 lg:pt-4">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-extrabold md:text-5xl">ಲೇಖನಗಳು</h1>

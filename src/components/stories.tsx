@@ -40,7 +40,7 @@ export default async function Stories() {
   const childrenStoryPost = childrenStoryResponse.value.posts?.nodes ?? [];
 
   return (
-    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8 lg:py-10">
       <div className="pb-4">
         <div className="flex items-center justify-between">
           <h1 className="text-4xl font-extrabold md:text-5xl">ಕಥೆಗಳು</h1>

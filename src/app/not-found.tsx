@@ -12,7 +12,7 @@ export default function NotFound() {
         </h2>
         <Link
           href="/"
-          className="mt-6 inline-block rounded-md bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-700 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200"
+          className="mt-6 inline-block bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-700 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200"
         >
           Go back to Homepage
         </Link>

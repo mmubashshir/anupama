@@ -29,7 +29,7 @@ export default function ArticleCard({
           alt={headline}
           width={96}
           height={96}
-          className="h-24 w-24 object-cover"
+          className="h-24 w-24 object-cover group-hover:brightness-[1.1]"
         />
 
         <div className="ml-4">
@@ -50,7 +50,7 @@ export default function ArticleCard({
         alt={headline}
         width={300}
         height={300}
-        className="mb-2 aspect-square w-full max-w-full object-cover"
+        className="mb-2 aspect-square w-full max-w-full object-cover group-hover:brightness-[1.1]"
       />
       <div className="flex-1">
         <span className="text-sm text-black">{category}</span>

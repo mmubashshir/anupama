@@ -100,7 +100,7 @@ export default async function CategoryListing({
     );
 
   return (
-    <div className="container mx-auto max-w-6xl p-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl p-4 sm:px-6 lg:mb-6 lg:px-8 lg:py-10">
       <div className="flex flex-col gap-8 lg:flex-row">
         <div className="w-full lg:w-2/3">
           {/* Blog Posts */}
@@ -116,7 +116,7 @@ export default async function CategoryListing({
                     alt={post.title ?? ''}
                     width={400}
                     height={250}
-                    className="h-full w-full object-cover transition duration-400 hover:scale-110 hover:brightness-75"
+                    className="h-full w-full object-cover transition duration-400 hover:scale-110 hover:brightness-50"
                   />
                 </div>
                 <Link

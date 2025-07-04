@@ -13,7 +13,7 @@ export interface StoryCardProps {
 
 function StoryCard({ image, category, headline, writerName }: StoryCardProps) {
   return (
-    <div className="group flex flex-col border-b border-gray-200 bg-white pb-4 hover:cursor-pointer md:gap-0 md:border-0">
+    <div className="group flex flex-col bg-white pb-4 hover:cursor-pointer">
       {/* Image */}
       <div className="relative">
         <Image
@@ -21,7 +21,7 @@ function StoryCard({ image, category, headline, writerName }: StoryCardProps) {
           alt="Main news image"
           width={700}
           height={300}
-          className="aspect-[3/2] w-full object-cover"
+          className="aspect-[3/2] w-full object-cover group-hover:brightness-[1.1]"
         />
       </div>
 
