@@ -1,7 +1,7 @@
 import aboutUs from '~/constants/about-us';
 import Image from 'next/image';
 
-const AboutUs = () => {
+function AboutUs() {
   return (
     <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
       <h2 className="text-3xl font-extrabold md:text-4xl">ನಮ್ಮ ಬಗ್ಗೆ</h2>
@@ -28,9 +28,9 @@ const AboutUs = () => {
       </div>
     </div>
   );
-};
+}
 
-const WriterCard = ({ name, image, position }: WriterCardProps) => {
+function WriterCard({ name, image, position }: WriterCardProps) {
   return (
     <div className="flex w-86 gap-4">
       <Image
@@ -46,7 +46,7 @@ const WriterCard = ({ name, image, position }: WriterCardProps) => {
       </div>
     </div>
   );
-};
+}
 
 interface WriterCardProps {
   name: string;
@@ -54,7 +54,7 @@ interface WriterCardProps {
   position: string;
 }
 
-const writers: Array<WriterCardProps> = [
+const writers: WriterCardProps[] = [
   {
     name: 'ಶಹನಾಝ್ ಎಂ.',
     image: '/writer-pic.png',
