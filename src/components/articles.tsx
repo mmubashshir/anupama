@@ -11,8 +11,6 @@ import { fetchLimitedPosts } from '~/services/posts';
 import ArticleCard from './articles/article-card';
 import type { ArticleCardProps } from './articles/article-card';
 
-export const revalidate = 240; // Revalidate every 4 minutes
-
 export default async function Articles() {
   const [
     columnsResponse,

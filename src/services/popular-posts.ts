@@ -83,6 +83,8 @@ export async function fetchPopularPosts(categories?: string[]) {
     env.NEXT_PUBLIC_WORDPRESS_BASE_URL,
   );
 
+  url.searchParams.set('range', 'last7days');
+
   if (categories) {
     const { data } = await query({ query: GET_CATEGORIES_QUERY });
 

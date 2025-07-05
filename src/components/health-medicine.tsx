@@ -9,8 +9,6 @@ import { fetchLimitedPosts } from '~/services/posts';
 
 import HealthCard from './health-medicine/health-card';
 
-export const revalidate = 240; // Revalidate every 4 minutes
-
 export default async function HealthAndMedicine() {
   const [healthResponse, medicineResponse] = await Promise.allSettled([
     fetchLimitedPosts({

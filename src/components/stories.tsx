@@ -8,8 +8,6 @@ import { fetchLimitedPosts } from '~/services/posts';
 
 import StoryCard from './stories/story-card';
 
-export const revalidate = 240; // Revalidate every 4 minutes
-
 export default async function Stories() {
   const [storyWorldResponse, childrenStoryResponse] = await Promise.allSettled([
     fetchLimitedPosts({

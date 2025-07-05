@@ -63,17 +63,22 @@ export default async function Hero() {
       <div className="hidden border-t border-dashed border-black lg:block" />
 
       {/* Trending */}
-      <div className="grid grid-cols-1 gap-7 py-12 lg:grid-cols-3">
-        {trendingPosts.map((post) => (
-          <TrendingPostsCard
-            key={post.slug}
-            url={`/${post.categories.nodes[0].slug}/${post.slug}`}
-            title={post.title ?? ''}
-            category={post.categories.nodes[0].name}
-            imageUrl={post.featuredImage?.node.sourceUrl ?? ''}
-            author={post.author?.node.name ?? ''}
-          />
-        ))}
+      <div className="py-8">
+        <h1 className="mb-7 text-3xl font-extrabold md:text-5xl">
+          ಟ್ರೆಂಡಿಂಗ್ ಸುದ್ದಿ
+        </h1>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {trendingPosts.map((post) => (
+            <TrendingPostsCard
+              key={post.slug}
+              url={`/${post.categories.nodes[0].slug}/${post.slug}`}
+              title={post.title ?? ''}
+              category={post.categories.nodes[0].name}
+              imageUrl={post.featuredImage?.node.sourceUrl ?? ''}
+              author={post.author?.node.name ?? ''}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

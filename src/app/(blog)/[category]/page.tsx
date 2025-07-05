@@ -12,7 +12,7 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
-export const revalidate = 240; // Revalidate every 4 minutes
+export const revalidate = 60; // Revalidate every 1 minute
 
 export default async function CategoryListing({
   params,

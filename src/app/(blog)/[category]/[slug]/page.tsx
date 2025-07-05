@@ -24,7 +24,7 @@ import {
   fetchPostBySlug,
 } from '~/services/posts';
 
-export const revalidate = 240; // Revalidate every 4 minutes
+export const revalidate = 60; // Revalidate every 1 minute
 
 interface PageParams {
   params: Promise<{ slug: string; category: string }>;

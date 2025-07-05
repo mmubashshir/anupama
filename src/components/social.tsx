@@ -13,8 +13,6 @@ import type { LIMITED_POSTS_QUERY } from '~/services/posts';
 type QueryResult = ResultOf<typeof LIMITED_POSTS_QUERY>;
 type Article = NonNullable<QueryResult['posts']>['nodes'][number];
 
-export const revalidate = 240; // Revalidate every 4 minutes
-
 export default async function Social() {
   const [socialResult, lifeTreasureResult, cookingResult] =
     await Promise.allSettled([

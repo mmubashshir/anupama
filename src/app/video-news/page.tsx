@@ -8,7 +8,7 @@ import { fetchLimitedPosts } from '~/services/posts';
 
 import VideoCard from './components/video-card';
 
-export const revalidate = 240; // Revalidate every 4 minutes
+export const revalidate = 60; // Revalidate every 1 minute
 
 export default async function VideoNews() {
   const videoPosts = await fetchLimitedPosts({
