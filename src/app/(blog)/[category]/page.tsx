@@ -28,13 +28,6 @@ export default async function CategoryListing({
   const offset = (page - 1) * POSTS_PER_PAGE;
   const { category } = await params;
 
-  const popularPostsByCategory = await fetchPopularPosts([
-    'ಆರೋಗ್ಯ',
-    'ದಿನನಿತ್ಯದ ಸುದ್ದಿ',
-  ]);
-
-  const allPopularPosts = await fetchPopularPosts();
-
   const [categoryPostsResponse, recentPostsResponse] = await Promise.allSettled(
     [
       fetchLimitedPosts({

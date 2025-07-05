@@ -55,7 +55,7 @@ export default function MobileNavbar({ onNavBarClose }: MobileNavbarProps) {
 
       {/* Navigation Items */}
       <ul className="text-md space-y-2 pt-8 font-semibold text-gray-500">
-        {navLinks.map((item) => (
+        {navLinks.map((item, index) => (
           <li key={item.title}>
             {item.sublinks ? (
               <button
@@ -63,7 +63,11 @@ export default function MobileNavbar({ onNavBarClose }: MobileNavbarProps) {
                 onClick={() => {
                   toggleSection(item.title);
                 }}
-                className="flex w-full cursor-pointer items-center justify-between border-b border-gray-200 py-2"
+                className={`flex w-full cursor-pointer items-center justify-between py-2 ${
+                  index !== navLinks.length - 1 || openSection === item.title
+                    ? 'border-b border-gray-200'
+                    : ''
+                }`}
               >
                 <span>{item.title}</span>
                 <ChevronDown
@@ -76,7 +80,11 @@ export default function MobileNavbar({ onNavBarClose }: MobileNavbarProps) {
               <Link
                 href={item.href ?? '#'}
                 onClick={onNavBarClose}
-                className="block w-full border-b border-gray-200 py-2"
+                className={`block w-full py-2 ${
+                  index !== navLinks.length - 1
+                    ? 'border-b border-gray-200'
+                    : ''
+                }`}
               >
                 {item.title}
               </Link>
@@ -84,18 +92,28 @@ export default function MobileNavbar({ onNavBarClose }: MobileNavbarProps) {
 
             {item.sublinks && openSection === item.title ? (
               <ul className="text-md space-y-2 border-b border-gray-200 pt-2 pl-4 text-gray-500">
-                {item.sublinks.map((sub) => (
+                {item.sublinks.map((sub, subIndex) => (
                   <li key={sub.title}>
                     {sub.href ? (
                       <Link
                         href={sub.href}
-                        className="block border-b border-gray-200 py-1"
+                        className={`block py-1 ${
+                          subIndex !== (item.sublinks?.length ?? 0) - 1
+                            ? 'border-b border-gray-200'
+                            : ''
+                        }`}
                         onClick={onNavBarClose}
                       >
                         {sub.title}
                       </Link>
                     ) : (
-                      <span className="block border-b border-gray-200 py-1">
+                      <span
+                        className={`block py-1 ${
+                          subIndex !== (item.sublinks?.length ?? 0) - 1
+                            ? 'border-b border-gray-200'
+                            : ''
+                        }`}
+                      >
                         {sub.title}
                       </span>
                     )}
