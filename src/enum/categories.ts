@@ -15,4 +15,5 @@ export enum CATEGORY {
   Social = 'social',
   LifeTreasure = 'life-treasure',
   Editorial = 'editorial',
+  MAGAZINE = 'magazine',
 }

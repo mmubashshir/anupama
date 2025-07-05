@@ -1,3 +1,6 @@
+import React from 'react';
+import { CATEGORY } from '~/enum/categories';
+import * as cheerio from 'cheerio';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,6 +9,7 @@ import { fetchPopularPosts } from '~/services/popular-posts';
 import { fetchLimitedPosts } from '~/services/posts';
 
 import FeaturedCard from './featured-card';
+import MagazineView from './magazine-viewer/magazine-view';
 
 export default async function Hero() {
   const [featuredRaw, trendingPostsRaw] = await Promise.all([
@@ -15,6 +19,18 @@ export default async function Hero() {
 
   const featured = featuredRaw.posts?.nodes[0];
 
+  const heroRaw = await fetchLimitedPosts({
+    first: 1,
+    filter: {
+      categoryName: CATEGORY.MAGAZINE,
+    },
+  });
+  const heroContent = heroRaw.posts?.nodes[0].content ?? '';
+  console.log('PDF content', heroContent);
+  const $ = cheerio.load(heroContent);
+  const pdfUrl = $('a[href$=".pdf"]').attr('href');
+
+  console.log('Magazine Post', pdfUrl);
   const featuredPost = {
     href:
       featured?.slug && featured.categories?.nodes[0]?.slug
@@ -51,11 +67,12 @@ export default async function Hero() {
         <div className="col-span-2">
           <FeaturedCard {...featuredPost} />
         </div>
-
         <div className="col-span-1 flex flex-col gap-10 lg:flex-row">
-          <div className="border-t border-l border-dashed border-black lg:mb-10 lg:ml-10 lg:border-solid lg:border-gray-200" />
-          <MagazineCard />
-          <MobileMagazineCard />
+          <div className="border-t border-l border-dashed border-black lg:mb-10 lg:ml-10 lg:border-solid lg:border-gray-200"></div>
+          <MagazineView pdfUrl={pdfUrl}>
+            <MagazineCard />
+            <MobileMagazineCard />
+          </MagazineView>
         </div>
       </div>
 
