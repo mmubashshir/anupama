@@ -5,18 +5,18 @@ import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
-type FeaturedCardProps = {
+interface FeaturedCardProps {
   href: string;
-  imageUrl?: string;
+  imageUrl: string;
   category: string;
   title: string;
   excerpt: string;
   authorName?: string;
-};
+}
 
 export default function FeaturedCard({
   href,
-  imageUrl,
+  imageUrl = getPlaceholderImage(),
   category,
   title,
   excerpt,

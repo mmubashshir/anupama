@@ -1,10 +1,8 @@
 import { CATEGORY } from '~/enum/categories';
 import { ArrowUpRight } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import NewsCard from '~/components/daily-news/news-card';
-import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
