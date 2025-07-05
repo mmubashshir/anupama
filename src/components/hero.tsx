@@ -1,4 +1,3 @@
-import React from 'react';
 import { CATEGORY } from '~/enum/categories';
 import * as cheerio from 'cheerio';
 import { ArrowUpRight } from 'lucide-react';
@@ -19,18 +18,20 @@ export default async function Hero() {
 
   const featured = featuredRaw.posts?.nodes[0];
 
+  // Fetch magazine post to extract PDF URL
   const heroRaw = await fetchLimitedPosts({
     first: 1,
     filter: {
       categoryName: CATEGORY.MAGAZINE,
     },
   });
-  const heroContent = heroRaw.posts?.nodes[0].content ?? '';
-  console.log('PDF content', heroContent);
-  const $ = cheerio.load(heroContent);
-  const pdfUrl = $('a[href$=".pdf"]').attr('href');
 
-  console.log('Magazine Post', pdfUrl);
+  const heroContent = heroRaw.posts?.nodes[0].content ?? '';
+  const $ = cheerio.load(heroContent);
+  const pdfUrl =
+    $('a[href$=".pdf"]').attr('href') ??
+    'https://wordpress.anupama.co.in/wp-content/uploads/2025/07/May-2025.pdf'; // Fallback URL
+
   const featuredPost = {
     href:
       featured?.slug && featured.categories?.nodes[0]?.slug
@@ -68,7 +69,7 @@ export default async function Hero() {
           <FeaturedCard {...featuredPost} />
         </div>
         <div className="col-span-1 flex flex-col gap-10 lg:flex-row">
-          <div className="border-t border-l border-dashed border-black lg:mb-10 lg:ml-10 lg:border-solid lg:border-gray-200"></div>
+          <div className="border-t border-l border-dashed border-black lg:mb-10 lg:ml-10 lg:border-solid lg:border-gray-200" />
           <MagazineView pdfUrl={pdfUrl}>
             <MagazineCard />
             <MobileMagazineCard />

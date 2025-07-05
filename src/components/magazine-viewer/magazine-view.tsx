@@ -29,8 +29,12 @@ export default function MagazineView({
   pdfUrl: string | undefined;
 }) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div>
@@ -41,7 +45,7 @@ export default function MagazineView({
       >
         {children}
       </button>
-      {pdfUrl != undefined && (
+      {pdfUrl !== undefined && (
         <Modal
           className="bg-white"
           aria-labelledby="transition-modal-title"
