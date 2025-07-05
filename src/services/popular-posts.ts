@@ -55,6 +55,7 @@ const GET_POPULAR_POSTS_QUERY = graphql(`
         categories {
           nodes {
             name
+            slug
           }
         }
         customFields {
@@ -133,5 +134,5 @@ export async function fetchPopularPosts(categories?: string[]) {
     return [];
   }
 
-  return fetchedPopularPosts.data.posts;
+  return fetchedPopularPosts.data.posts.nodes;
 }
