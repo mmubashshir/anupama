@@ -7,8 +7,6 @@ import { fetchLimitedPosts } from '~/services/posts';
 
 import FeaturedCard from './featured-card';
 
-export const revalidate = 60;
-
 export default async function Hero() {
   const [featuredRaw, trendingPostsRaw] = await Promise.all([
     fetchLimitedPosts({ first: 1, filter: { tag: 'featured-post' } }),
