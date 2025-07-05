@@ -136,5 +136,9 @@ export async function fetchPopularPosts(categories?: string[]) {
     return [];
   }
 
-  return fetchedPopularPosts.data.posts.nodes;
+  return fetchedPopularPosts.data.posts.nodes.sort(
+    (a, b) =>
+      popularPostsIds.indexOf(String(a.id)) -
+      popularPostsIds.indexOf(String(b.id)),
+  );
 }
