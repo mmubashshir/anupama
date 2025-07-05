@@ -10,6 +10,7 @@ import WPContentRenderer from '~/components/wp-content-renderer';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
+import { fetchPopularPosts } from '~/services/popular-posts';
 import { fetchLimitedPosts } from '~/services/posts';
 
 export const revalidate = 240; // Revalidate every 4 minutes
@@ -26,6 +27,13 @@ export default async function CategoryListing({
 
   const offset = (page - 1) * POSTS_PER_PAGE;
   const { category } = await params;
+
+  const popularPostsByCategory = await fetchPopularPosts([
+    'ಆರೋಗ್ಯ',
+    'ದಿನನಿತ್ಯದ ಸುದ್ದಿ',
+  ]);
+
+  const allPopularPosts = await fetchPopularPosts();
 
   const [categoryPostsResponse, recentPostsResponse] = await Promise.allSettled(
     [
