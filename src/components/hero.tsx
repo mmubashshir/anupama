@@ -15,23 +15,34 @@ export default async function Hero() {
     fetchPopularPosts(),
   ]);
 
-  const featured = featuredRaw.posts?.nodes?.[0];
+  const featured = featuredRaw.posts?.nodes[0];
 
   const featuredPost = {
     href:
-      featured?.slug && featured?.categories?.nodes?.[0]?.slug
+      featured?.slug && featured.categories?.nodes[0]?.slug
         ? `/${featured.categories.nodes[0].slug}/${featured.slug}`
         : '#',
     imageUrl: featured?.featuredImage?.node.sourceUrl ?? '',
-    category: featured?.categories?.nodes?.[0]?.name ?? '',
+    category: featured?.categories?.nodes[0]?.name ?? '',
     title: featured?.title ?? '',
     excerpt: featured?.excerpt ?? '',
-    authorName: featured?.author?.node?.name ?? '',
+    authorName: featured?.author?.node.name ?? '',
   };
 
   const trendingPosts = Array.isArray(trendingPostsRaw)
     ? trendingPostsRaw
-        .filter((post) => post.slug && post.categories?.nodes?.[0]?.slug)
+        .filter(
+          (
+            p,
+          ): p is typeof p & {
+            categories: { nodes: [{ slug: string; name: string }] };
+            slug: string;
+          } =>
+            Boolean(p.categories) &&
+            Array.isArray(p.categories?.nodes) &&
+            p.categories.nodes.length > 0 &&
+            Boolean(p.categories.nodes[0]?.slug),
+        )
         .slice(0, 3)
     : [];
 
@@ -58,11 +69,11 @@ export default async function Hero() {
         {trendingPosts.map((post) => (
           <TrendingPostsCard
             key={post.slug}
-            url={`/${post.categories?.nodes?.[0]?.slug ?? ''}/${post.slug}`}
+            url={`/${post.categories.nodes[0].slug}/${post.slug}`}
             title={post.title ?? ''}
-            category={post.categories!.nodes[0].name ?? ''}
+            category={post.categories.nodes[0].name}
             imageUrl={post.featuredImage?.node.sourceUrl ?? ''}
-            author={post.author?.node?.name ?? ''}
+            author={post.author?.node.name ?? ''}
           />
         ))}
       </div>

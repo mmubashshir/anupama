@@ -18,7 +18,7 @@ export default function FeaturedCard({
   href,
   imageUrl = getPlaceholderImage(),
   category,
-  title,
+  title = 'News image',
   excerpt,
   authorName,
 }: FeaturedCardProps) {
@@ -26,8 +26,8 @@ export default function FeaturedCard({
     <div className="group flex flex-col gap-4 border-b border-gray-200 bg-white pb-4 hover:cursor-pointer md:gap-0 md:border-0 lg:col-span-2">
       <Link href={href}>
         <Image
-          src={imageUrl ?? getPlaceholderImage()}
-          alt={title ?? 'News image'}
+          src={imageUrl}
+          alt={title}
           width={700}
           height={300}
           className="aspect-[3/2] w-full object-cover"
