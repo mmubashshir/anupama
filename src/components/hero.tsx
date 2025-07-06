@@ -11,7 +11,7 @@ import FeaturedCard from './featured-card';
 import MagazineView from './magazine-viewer/magazine-view';
 
 export default async function Hero() {
-  const [featuredRaw, trendingPostsRaw, pdfUrl] = await Promise.all([
+  const [featuredRaw, trendingPostsRaw, latestMagazine] = await Promise.all([
     fetchLimitedPosts({ first: 1, filter: { tag: 'featured-post' } }),
     fetchPopularPosts(),
     getLatestMagazinePdfUrl(),
@@ -57,10 +57,16 @@ export default async function Hero() {
         </div>
         <div className="col-span-1 flex flex-col gap-10 lg:flex-row">
           <div className="border-t border-l border-dashed border-black lg:mb-10 lg:ml-10 lg:border-solid lg:border-gray-200" />
-          <MagazineView pdfUrl={pdfUrl}>
-            <MagazineCard />
-            <MobileMagazineCard />
-          </MagazineView>
+          {latestMagazine.pdfUrl !== undefined && (
+            <MagazineView pdfUrl={latestMagazine.pdfUrl}>
+              <MagazineCard
+                coverImageUrl={
+                  latestMagazine.coverImageUrl ?? '/anupama-magazine.jpg'
+                }
+              />
+              <MobileMagazineCard />
+            </MagazineView>
+          )}
         </div>
       </div>
 
@@ -89,12 +95,16 @@ export default async function Hero() {
   );
 }
 
-function MagazineCard() {
+function MagazineCard({
+  coverImageUrl = '/anupama-magazine.jpg',
+}: {
+  coverImageUrl: string;
+}) {
   return (
     <Link className="group hidden lg:block" href="#">
       <div className="flex flex-col gap-y-4">
         <Image
-          src="/anupama-magazine.jpg"
+          src={coverImageUrl}
           alt="anupama-magazine"
           width={300}
           height={434}

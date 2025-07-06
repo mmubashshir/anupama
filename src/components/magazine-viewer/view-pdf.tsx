@@ -7,6 +7,7 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
 import { useWindowHeight } from '~/hooks/use-height';
+import { useWindowWidth } from '~/hooks/use-width';
 
 // Set up PDF.js worker for Next.js
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -48,6 +49,7 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
   }, []);
 
   const containerHeight = useWindowHeight();
+  const containerWidth = useWindowWidth();
   // Function to get the PDF URL (with proxy for external URLs)
   const getPdfUrl = (url: string) => {
     // If the URL is external, use proxy to avoid CORS issues
@@ -76,7 +78,12 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
         file={finalPdfUrl}
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={onDocumentLoadError}
-        loading={<PDFDocumentLoader />}
+        loading={
+          <PDFDocumentLoader
+            width={containerWidth > 600 ? 600 : containerWidth - 20}
+            height={containerHeight - 200}
+          />
+        }
         options={options}
       >
         <Page
@@ -84,7 +91,12 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
           height={containerHeight - 200}
           pageNumber={pageNumber}
           renderMode="canvas"
-          loading={<PDFPageLoader />}
+          loading={
+            <PDFPageLoader
+              width={containerWidth > 600 ? 600 : containerWidth - 20}
+              height={containerHeight - 200}
+            />
+          }
         />
       </Document>
       {numPages !== null && (
@@ -162,9 +174,18 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
 }
 
 // Loading Components
-function PDFDocumentLoader() {
+function PDFDocumentLoader({
+  width,
+  height,
+}: {
+  width: number;
+  height: number;
+}) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 p-12">
+    <div
+      className="flex flex-col items-center justify-center rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 p-12"
+      style={{ width, height }}
+    >
       <div className="relative">
         {/* Spinning circle */}
         <div className="h-16 w-16 animate-spin rounded-full border-4 border-gray-200 border-t-red-600" />
@@ -204,9 +225,12 @@ function PDFDocumentLoader() {
   );
 }
 
-function PDFPageLoader() {
+function PDFPageLoader({ width, height }: { width: number; height: number }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded border-2 border-dashed border-gray-300 bg-gray-50 p-8">
+    <div
+      className="flex flex-col items-center justify-center rounded border-2 border-dashed border-gray-300 bg-gray-50 p-8"
+      style={{ width, height }}
+    >
       <div className="relative">
         {/* Page skeleton */}
         <div className="relative h-40 w-32 overflow-hidden rounded border-2 border-gray-200 bg-white shadow-sm">
