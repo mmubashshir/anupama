@@ -1,5 +1,5 @@
 import { BASE_URL } from '~/constants';
-import { Metadata } from 'next';
+import { type Metadata } from 'next';
 
 import Articles from '~/components/articles';
 import DailyNews from '~/components/daily-news';
@@ -16,7 +16,7 @@ import VideoNews from '../video-news/page';
 export const revalidate = 60; // Revalidate every 1 minute
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { coverImageUrl } = await getLatestMagazinePdfUrl();
+  const { ogImageUrl } = await getLatestMagazinePdfUrl();
 
   return {
     title: 'Anupama Monthly',
@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: 'website',
       images: [
         {
-          url: coverImageUrl ?? `${BASE_URL}/anupama-hero.png`,
+          url: ogImageUrl ?? `${BASE_URL}/anupama-hero.png`,
           width: 1200,
           height: 630,
           alt: `Anupama Women's Monthly Cover`,
@@ -47,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
         'ಅನುಪಮ ಮಹಿಳಾ ಮಾಸಿಕ ಪತ್ರಿಕೆಯು, ಕರ್ನಾಟಕದ ಏಕೈಕ ಮಹಿಳಾ ಪತ್ರಿಕೆಯಾಗಿದ್ದು, ಇದು ಕೌಟುಂಬಿಕ ಮಾಸ ಪತ್ರಿಕೆ.',
       images: [
         {
-          url: coverImageUrl ?? `${BASE_URL}/anupama-hero.png`,
+          url: ogImageUrl ?? `${BASE_URL}/anupama-hero.png`,
           alt: `Anupama Women's Monthly Twitter Card`,
         },
       ],

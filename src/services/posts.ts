@@ -32,6 +32,13 @@ export const LIMITED_POSTS_QUERY = graphql(`
         featuredImage {
           node {
             sourceUrl
+            mediaDetails {
+              sizes {
+                sourceUrl
+                fileSize
+                name
+              }
+            }
           }
         }
         categories {

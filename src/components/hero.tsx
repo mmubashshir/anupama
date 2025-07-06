@@ -53,7 +53,9 @@ export default async function Hero() {
       {/* Featured */}
       <div className="grid grid-cols-1 lg:grid-cols-3">
         <div className="col-span-2">
-          <FeaturedCard {...featuredPost} />
+          <Link href={featuredPost.href}>
+            <FeaturedCard {...featuredPost} />
+          </Link>
         </div>
         <div className="col-span-1 flex flex-col gap-10 lg:flex-row">
           <div className="border-t border-l border-dashed border-black lg:mb-10 lg:ml-10 lg:border-solid lg:border-gray-200" />
@@ -64,7 +66,11 @@ export default async function Hero() {
                   latestMagazine.coverImageUrl ?? '/anupama-magazine.jpg'
                 }
               />
-              <MobileMagazineCard />
+              <MobileMagazineCard
+                coverImageUrl={
+                  latestMagazine.coverImageUrl ?? '/anupama-magazine.jpg'
+                }
+              />
             </MagazineView>
           )}
         </div>
@@ -108,7 +114,7 @@ function MagazineCard({
           alt="anupama-magazine"
           width={300}
           height={434}
-          className="mx-auto w-[300px] object-contain"
+          className="mx-auto w-[300px] object-contain group-hover:brightness-[1.1]"
           priority
         />
         <div className="flex justify-between">
@@ -122,20 +128,25 @@ function MagazineCard({
   );
 }
 
-function MobileMagazineCard() {
+function MobileMagazineCard({
+  coverImageUrl = '/anupama-magazine.jpg',
+}: {
+  coverImageUrl: string;
+}) {
   return (
     <Link className="group block lg:hidden" href="#">
       <div className="flex flex-row-reverse items-center gap-x-4">
         <Image
-          src="/anupama-magazine.jpg"
-          alt="anupama-magazine"
+          src={coverImageUrl}
+          alt="Anupama Magazine Cover"
           width={136}
           height={186}
-          className="mx-auto w-auto object-contain"
+          className="mx-auto h-auto w-auto object-contain"
           priority
         />
-        <div className="text-4xl font-extrabold decoration-1 underline-offset-4 group-hover:underline lg:text-xl">
-          ಇತ್ತೀಚಿನ <ArrowUpRight className="mb-2 ml-1 inline h-6 w-6" />{' '}
+        <div className="text-xl font-extrabold underline-offset-4 group-hover:underline">
+          ಇತ್ತೀಚಿನ{' '}
+          <ArrowUpRight className="mb-1 ml-1 inline h-6 w-6 align-text-bottom" />{' '}
           ಮಾಸಪತ್ರಿಕೆ
         </div>
       </div>
