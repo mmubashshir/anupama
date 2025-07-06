@@ -2,8 +2,10 @@ import { NextResponse } from 'next/server';
 
 import type { NextRequest } from 'next/server';
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
+export const runtime = 'nodejs';
+
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
   const pdfUrl = searchParams.get('url');
 
   if (!pdfUrl) {
@@ -11,35 +13,29 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await fetch(pdfUrl, {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-      },
+    const upstream = await fetch(pdfUrl, {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!upstream.ok) {
+      return NextResponse.json(
+        { error: `Upstream returned ${upstream.status}` },
+        { status: 502 },
+      );
     }
 
-    const contentType = response.headers.get('content-type');
+    const contentType =
+      upstream.headers.get('content-type') ?? 'application/pdf';
 
-    if (!contentType?.includes('application/pdf')) {
-      throw new Error('Invalid content type. Expected PDF.');
-    }
+    const headers = new Headers(upstream.headers);
 
-    const buffer = await response.arrayBuffer();
+    headers.set('Content-Type', contentType);
+    headers.set('Content-Disposition', 'inline; filename="document.pdf"');
+    headers.set('Cache-Control', 'public, max-age=3600');
 
-    return new NextResponse(buffer, {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/pdf',
-        'Content-Length': buffer.byteLength.toString(),
-        'Cache-Control': 'public, max-age=3600', // Cache for 1 hour
-      },
-    });
-  } catch (error) {
-    console.error('Error proxying PDF:', error);
+    return new NextResponse(upstream.body as ReadableStream, { headers });
+  } catch (err) {
+    console.error('Proxy PDF error:', err);
 
     return NextResponse.json({ error: 'Failed to fetch PDF' }, { status: 500 });
   }

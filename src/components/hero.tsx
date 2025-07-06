@@ -1,8 +1,8 @@
-import { CATEGORY } from '~/enum/categories';
-import * as cheerio from 'cheerio';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { getLatestMagazinePdfUrl } from '~/utils/get-latest-magazine';
 
 import { fetchPopularPosts } from '~/services/popular-posts';
 import { fetchLimitedPosts } from '~/services/posts';
@@ -11,26 +11,13 @@ import FeaturedCard from './featured-card';
 import MagazineView from './magazine-viewer/magazine-view';
 
 export default async function Hero() {
-  const [featuredRaw, trendingPostsRaw] = await Promise.all([
+  const [featuredRaw, trendingPostsRaw, pdfUrl] = await Promise.all([
     fetchLimitedPosts({ first: 1, filter: { tag: 'featured-post' } }),
     fetchPopularPosts(),
+    getLatestMagazinePdfUrl(),
   ]);
 
   const featured = featuredRaw.posts?.nodes[0];
-
-  // Fetch magazine post to extract PDF URL
-  const heroRaw = await fetchLimitedPosts({
-    first: 1,
-    filter: {
-      categoryName: CATEGORY.MAGAZINE,
-    },
-  });
-
-  const heroContent = heroRaw.posts?.nodes[0].content ?? '';
-  const $ = cheerio.load(heroContent);
-  const pdfUrl =
-    $('a[href$=".pdf"]').attr('href') ??
-    'https://wordpress.anupama.co.in/wp-content/uploads/2025/07/May-2025.pdf'; // Fallback URL
 
   const featuredPost = {
     href:

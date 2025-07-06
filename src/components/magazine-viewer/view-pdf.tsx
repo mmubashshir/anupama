@@ -191,13 +191,13 @@ function PDFDocumentLoader() {
         <p className="mt-1 text-sm text-gray-500">Loading PDF Document</p>
       </div>
       <div className="mt-3 flex space-x-1">
-        <div className="h-2 w-2 animate-bounce rounded-full bg-red-600" />
+        <div className="h-2 w-2 animate-bounce rounded-full" />
         <div
-          className="h-2 w-2 animate-bounce rounded-full bg-red-600"
+          className="h-2 w-2 animate-bounce rounded-full"
           style={{ animationDelay: '0.1s' }}
         />
         <div
-          className="h-2 w-2 animate-bounce rounded-full bg-red-600"
+          className="h-2 w-2 animate-bounce rounded-full"
           style={{ animationDelay: '0.2s' }}
         />
       </div>
