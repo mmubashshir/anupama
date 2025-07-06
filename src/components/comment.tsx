@@ -63,7 +63,7 @@ export default function Comment({ post }: CommentProps) {
                 </div>
 
                 <WPContentRenderer
-                  className="text-gray-700"
+                  className="break-words text-gray-700"
                   content={comment.content}
                 />
               </div>

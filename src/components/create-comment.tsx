@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { cn } from '~/utils/cn';
@@ -8,6 +8,7 @@ import { cn } from '~/utils/cn';
 import type { FunctionReturnType } from '~/app/actions/post-comment';
 
 const MAX_COMMENT_LEN = 500;
+const MAX_NAME_LEN = 50;
 
 function PostComment(props: {
   databaseId: number;
@@ -26,16 +27,20 @@ function PostComment(props: {
   });
 
   const [content, setContent] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (formState.status === 'fail') {
-      toast.error('Failed to create comment');
+      toast.error('ಕಮ್ಮೆಂಟ್ ಸೇರಿಸಲು ವಿಫಲವಾಗಿದೆ');
 
       return;
     }
 
     if (formState.status === 'success') {
       toast.success('ಕಮೆಂಟನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ!');
+
+      setContent('');
+      formRef.current?.reset();
 
       if (formState.commentId) {
         const commentEle = document.querySelector(
@@ -51,12 +56,13 @@ function PostComment(props: {
     <div className="border-t border-gray-200 pt-8">
       <h3 className="mb-6 text-xl font-bold">ಕಮ್ಮೆಂಟ್ ಬಿಡಿ</h3>
 
-      <form action={formAction} className="space-y-4">
+      <form ref={formRef} action={formAction} className="space-y-4">
         <input
           name="name"
           type="text"
           required
           minLength={3}
+          maxLength={MAX_NAME_LEN}
           placeholder="ನಿಮ್ಮ ಹೆಸರು..."
           className="w-full border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
         />
