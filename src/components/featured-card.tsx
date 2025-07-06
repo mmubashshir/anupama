@@ -23,7 +23,7 @@ export default function FeaturedCard({
   return (
     <Link
       href={href}
-      className="group flex flex-col gap-4 border-b border-gray-200 bg-white pb-4 hover:cursor-pointer md:gap-0 md:border-0 lg:col-span-2"
+      className="group relative flex flex-col gap-4 border-b border-gray-200 bg-white pb-4 hover:cursor-pointer md:gap-0 md:border-0 lg:col-span-2"
     >
       {/* image */}
       <Image
@@ -31,11 +31,11 @@ export default function FeaturedCard({
         alt={title}
         width={700}
         height={300}
-        className="aspect-[3/2] w-full object-cover"
+        className="z-0 aspect-[3/2] w-full object-cover group-hover:brightness-[1.1]"
       />
 
       {/* text block */}
-      <div className="ml-auto flex flex-col gap-1.5 bg-white md:-mt-16 md:w-[90%] md:p-4">
+      <div className="z-10 ml-auto flex flex-col gap-1.5 bg-white md:-mt-16 md:w-[90%] md:p-4">
         <span className="text-sm">{category}</span>
         <h2 className="text-lg font-extrabold group-hover:underline md:text-2xl">
           {title}
