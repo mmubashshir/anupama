@@ -33,10 +33,12 @@ const ADD_COMMENT_QUERY = graphql(`
   }
 `);
 
+const MAX_COMMENT_LEN = 500;
+
 const schema = z.object({
-  postId: z.string().transform((id) => Number(id)),
-  name: z.string(),
-  content: z.string(),
+  postId: z.preprocess((v) => Number(v), z.number().int().positive()),
+  name: z.string().trim().min(3).max(100),
+  content: z.string().trim().min(5).max(MAX_COMMENT_LEN),
 });
 
 export interface FunctionInitialReturn {

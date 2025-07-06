@@ -1,11 +1,13 @@
 'use client';
 
-import { useActionState, useEffect } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { cn } from '~/utils/cn';
 
 import type { FunctionReturnType } from '~/app/actions/post-comment';
+
+const MAX_COMMENT_LEN = 500;
 
 function PostComment(props: {
   databaseId: number;
@@ -23,6 +25,8 @@ function PostComment(props: {
     status: 'idle',
   });
 
+  const [content, setContent] = useState('');
+
   useEffect(() => {
     if (formState.status === 'fail') {
       toast.error('Failed to create comment');
@@ -31,7 +35,7 @@ function PostComment(props: {
     }
 
     if (formState.status === 'success') {
-      toast.success('Comment added successfully');
+      toast.success('ಕಮೆಂಟನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ!');
 
       if (formState.commentId) {
         const commentEle = document.querySelector(
@@ -51,20 +55,29 @@ function PostComment(props: {
         <input
           name="name"
           type="text"
-          className="w-full border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
           required
           minLength={3}
           placeholder="ನಿಮ್ಮ ಹೆಸರು..."
+          className="w-full border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
         />
 
         <textarea
           name="content"
-          className="w-full resize-none border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
+          value={content}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
           rows={5}
           required
           minLength={5}
+          maxLength={MAX_COMMENT_LEN}
           placeholder="ನಿಮ್ಮ ಕಮ್ಮೆಂಟನ್ನು ಇಲ್ಲಿ ಟೈಪ್ ಮಾಡಿ..."
+          className="w-full resize-none border border-gray-300 p-3 text-sm focus:ring-1 focus:ring-red-400 focus:outline-none"
         />
+
+        <p className="text-right text-xs text-gray-500">
+          {content.length}/{MAX_COMMENT_LEN}
+        </p>
 
         <input name="postId" type="hidden" value={databaseId} readOnly />
 

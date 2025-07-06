@@ -55,12 +55,10 @@ export default function Header() {
           <Calendar className="h-7 w-7" />
           <div className="flex flex-col">
             <span className="font-bold">
-              {' '}
-              {new Date().toLocaleDateString('en-US', { weekday: 'long' })}
+              {new Date().toLocaleDateString('kn-IN', { weekday: 'long' })}
             </span>
             <span className="text-sm font-extralight">
-              {' '}
-              {new Date().toLocaleDateString('en-US', {
+              {new Date().toLocaleDateString('kn-IN', {
                 month: 'long',
                 day: 'numeric',
                 year: 'numeric',
