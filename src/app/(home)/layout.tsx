@@ -8,6 +8,7 @@ export default async function HomeLayout({
   children: React.ReactNode;
 }) {
   const pdfUrl = await getLatestMagazinePdfUrl();
+
   return (
     <>
       <PreloadPdf href={pdfUrl} />
