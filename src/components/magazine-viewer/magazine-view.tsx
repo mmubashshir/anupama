@@ -42,7 +42,7 @@ export default function MagazineView({
       <button
         onClick={handleOpen}
         type="button"
-        className="bg-opacity-20 hover:bg-opacity-25 float-right inline-flex items-center px-4 py-3 text-sm leading-6 font-semibold shadow-md disabled:opacity-50"
+        className="bg-opacity-20 hover:bg-opacity-25 float-right inline-flex cursor-pointer items-center px-4 py-3 text-sm leading-6 font-semibold shadow-md disabled:opacity-50"
       >
         {children}
       </button>
@@ -69,7 +69,7 @@ export default function MagazineView({
               <div className="my-2 flex justify-end">
                 <button
                   onClick={handleClose}
-                  className="z-10 mr-0 ml-auto rounded-full bg-gray-200 p-2 text-gray-700 hover:bg-gray-300 focus:outline-none"
+                  className="z-10 mr-0 ml-auto cursor-pointer rounded-full bg-gray-200 p-2 text-gray-700 hover:bg-gray-300 focus:outline-none"
                   aria-label="Close"
                   type="button"
                 >

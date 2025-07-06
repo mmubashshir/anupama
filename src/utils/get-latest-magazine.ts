@@ -3,8 +3,11 @@ import { load as loadHtml } from 'cheerio';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
+import { getPlaceholderImage } from './get-placeholder-image';
+
 interface MagazineCardProps {
   coverImageUrl?: string | undefined;
+  ogImageUrl?: string | undefined;
   pdfUrl?: string | undefined;
 }
 
@@ -25,7 +28,10 @@ export async function getLatestMagazinePdfUrl(): Promise<MagazineCardProps> {
   return {
     coverImageUrl:
       latestMagazineRaw.posts?.nodes[0].featuredImage?.node.sourceUrl ??
-      undefined,
+      getPlaceholderImage(),
+    ogImageUrl:
+      latestMagazineRaw.posts?.nodes[0].featuredImage?.node.mediaDetails
+        ?.sizes?.[0]?.sourceUrl ?? getPlaceholderImage(),
     pdfUrl: pdfHref,
   };
 }

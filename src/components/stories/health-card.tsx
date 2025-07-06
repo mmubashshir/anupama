@@ -25,7 +25,7 @@ export default function HealthCard({
             sizes="(max-width: 640px) 128px,
                    (max-width: 768px) 160px,
                    192px"
-            className="object-cover transition-transform duration-300"
+            className="object-cover transition-transform duration-300 group-hover:brightness-[1.1]"
           />
         </div>
 

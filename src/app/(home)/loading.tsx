@@ -28,6 +28,24 @@ export default function Loading() {
             </div>
           </nav>
 
+          <section className="mb-10 grid grid-cols-1 gap-8 lg:grid-cols-3">
+            {/* Featured card – left, spans 2 columns on desktop */}
+            <div className="lg:col-span-2">
+              <div className="aspect-[16/9] w-full rounded-lg bg-gray-200 dark:bg-gray-800" />
+              <div className="mt-4 space-y-3">
+                <div className="h-3 w-1/4 rounded bg-gray-200 dark:bg-gray-800" />
+                <div className="h-6 w-full rounded bg-gray-200 dark:bg-gray-800" />
+                <div className="h-6 w-3/4 rounded bg-gray-200 dark:bg-gray-800" />
+              </div>
+            </div>
+
+            {/* Magazine cover card – right column */}
+            <div className="flex flex-col items-center">
+              <div className="h-96 w-full rounded-lg bg-gray-200 dark:bg-gray-800" />
+              <div className="mt-3 h-5 w-4/5 rounded bg-gray-200 dark:bg-gray-800" />
+            </div>
+          </section>
+
           {/* Page Title */}
           <div className="mb-6 h-10 w-48 rounded-lg bg-gray-200 dark:bg-gray-800" />
 
