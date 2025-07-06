@@ -5,6 +5,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import Modal from '@mui/material/Modal';
+import { X } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 const ViewPDF = dynamic(() => import('./view-pdf'), { ssr: false });
@@ -12,12 +13,12 @@ const ViewPDF = dynamic(() => import('./view-pdf'), { ssr: false });
 const style = {
   box: {
     position: 'absolute',
-    top: '50%',
+    top: '46%',
     left: '50%',
     height: '100%',
     transform: 'translate(-50%, -50%)',
     p: 4,
-    overflow: 'auto',
+    overflowY: 'hidden',
   },
 };
 
@@ -57,11 +58,24 @@ export default function MagazineView({
           slotProps={{
             backdrop: {
               timeout: 500,
+              sx: {
+                backgroundColor: '#fff',
+              },
             },
           }}
         >
           <Fade in={open}>
             <Box sx={style.box}>
+              <div className="my-2 flex justify-end">
+                <button
+                  onClick={handleClose}
+                  className="z-10 mr-0 ml-auto rounded-full bg-gray-200 p-2 text-gray-700 hover:bg-gray-300 focus:outline-none"
+                  aria-label="Close"
+                  type="button"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
               <ViewPDF pdfURL={pdfUrl} />
             </Box>
           </Fade>

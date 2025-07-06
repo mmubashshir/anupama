@@ -6,6 +6,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
+import { useWindowHeight } from '~/hooks/use-height';
 import { useWindowWidth } from '~/hooks/use-width';
 
 // Set up PDF.js worker for Next.js
@@ -48,7 +49,7 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
   }, []);
 
   const containerWidth = useWindowWidth();
-
+  const containerHeight = useWindowHeight();
   // Function to get the PDF URL (with proxy for external URLs)
   const getPdfUrl = (url: string) => {
     // If the URL is external, use proxy to avoid CORS issues
@@ -72,9 +73,8 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border-4 border-red-700 bg-white shadow-lg">
+    <div className="mt-0 inline overflow-hidden bg-white">
       <Document
-        className="shadow-2xl"
         file={finalPdfUrl}
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={onDocumentLoadError}
@@ -82,80 +82,81 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
         options={options}
       >
         <Page
-          width={containerWidth > 600 ? 500 : containerWidth - 20}
+          className="border border-gray-200"
+          height={containerHeight - 200}
           pageNumber={pageNumber}
           renderMode="canvas"
           loading={<PDFPageLoader />}
         />
       </Document>
       {numPages !== null && (
-        <div className="mt-2 flex items-center justify-between border-t border-gray-200 bg-gray-50 px-4 py-3">
-          <button
-            type="button"
-            className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-medium transition-all duration-200 ${
-              pageNumber === 1
-                ? 'cursor-not-allowed text-gray-400'
-                : 'border border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-900'
-            }`}
-            onClick={() => {
-              setPageNumber(pageNumber - 1);
-            }}
-            disabled={pageNumber === 1}
-          >
-            <svg
-              className="mr-1 h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+        <div className="pointer-events-none mt-10 flex w-full items-end justify-center">
+          <div className="pointer-events-auto flex w-full max-w-md items-center justify-between border-t border-gray-200 bg-gray-50 px-4 py-3 shadow-lg">
+            <button
+              type="button"
+              className={`inline-flex items-center justify-center bg-white px-3.5 py-3.5 text-sm font-medium transition-all duration-200 ${
+                pageNumber === 1
+                  ? 'cursor-not-allowed text-gray-400'
+                  : 'text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-900'
+              }`}
+              onClick={() => {
+                setPageNumber(pageNumber - 1);
+              }}
+              disabled={pageNumber === 1}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            ಹಿಂದೆ
-          </button>
+              <svg
+                className="mr-1 h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
 
-          <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-600">ಪುಟ</span>
-            <span className="rounded-full bg-red-50 px-3 py-1 text-sm font-semibold text-red-600">
-              {pageNumber}
-            </span>
-            <span className="text-sm text-gray-600">of</span>
-            <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-600">
-              {numPages}
-            </span>
+            <div className="flex items-center space-x-2">
+              <span className="text-sm text-gray-600">ಪುಟ</span>
+              <span className="rounded-full bg-red-50 px-3 py-1 text-sm font-semibold text-red-600">
+                {pageNumber}
+              </span>
+              <span className="text-md font-light text-gray-600">/</span>
+              <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-600">
+                {numPages}
+              </span>
+            </div>
+
+            <button
+              type="button"
+              className={`inline-flex items-center justify-center bg-white px-3.5 py-3.5 text-sm font-medium transition-all duration-200 ${
+                pageNumber === numPages
+                  ? 'cursor-not-allowed text-gray-400'
+                  : 'text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-900'
+              }`}
+              onClick={() => {
+                setPageNumber(pageNumber + 1);
+              }}
+              disabled={pageNumber === numPages}
+            >
+              <svg
+                className="ml-1 h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
           </div>
-
-          <button
-            type="button"
-            className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-medium transition-all duration-200 ${
-              pageNumber === numPages
-                ? 'cursor-not-allowed text-gray-400'
-                : 'border border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-900'
-            }`}
-            onClick={() => {
-              setPageNumber(pageNumber + 1);
-            }}
-            disabled={pageNumber === numPages}
-          >
-            ಮುಂದೆ
-            <svg
-              className="ml-1 h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
         </div>
       )}
     </div>
