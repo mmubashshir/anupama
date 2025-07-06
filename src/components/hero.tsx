@@ -109,6 +109,7 @@ function MagazineCard({
           width={300}
           height={434}
           className="mx-auto w-[300px] object-contain"
+          priority
         />
         <div className="flex justify-between">
           <span className="text-xl font-extrabold decoration-1 underline-offset-4 group-hover:underline">
@@ -131,6 +132,7 @@ function MobileMagazineCard() {
           width={136}
           height={186}
           className="mx-auto w-auto object-contain"
+          priority
         />
         <div className="text-4xl font-extrabold decoration-1 underline-offset-4 group-hover:underline lg:text-xl">
           ಇತ್ತೀಚಿನ <ArrowUpRight className="mb-2 ml-1 inline h-6 w-6" />{' '}
@@ -162,11 +164,12 @@ function TrendingPostsCard({
           alt={title}
           width={147}
           height={147}
-          className="aspect-square object-cover"
+          className="h-[100px] w-[100px] object-cover group-hover:brightness-110 md:aspect-square md:h-auto md:w-[147px]"
         />
-        <div className="flex flex-col gap-3">
+
+        <div className="flex flex-col gap-1 md:gap-3">
           <h3 className="text-sm font-semibold text-gray-500">{category}</h3>
-          <p className="line-clamp-3 text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline">
+          <p className="line-clamp-2 text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline md:line-clamp-3">
             {title}
           </p>
           <p className="text-sm text-gray-500">~{author}</p>

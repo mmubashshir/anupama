@@ -104,7 +104,7 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
           <div className="pointer-events-auto flex w-full max-w-md items-center justify-between border-t border-gray-200 bg-gray-50 px-4 py-3 shadow-lg">
             <button
               type="button"
-              className={`inline-flex items-center justify-center bg-white px-3.5 py-3.5 text-sm font-medium transition-all duration-200 ${
+              className={`inline-flex cursor-pointer items-center justify-center bg-white px-3.5 py-3.5 text-sm font-medium transition-all duration-200 ${
                 pageNumber === 1
                   ? 'cursor-not-allowed text-gray-400'
                   : 'text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-900'
@@ -131,18 +131,18 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
 
             <div className="flex items-center space-x-2">
               <span className="text-sm text-gray-600">ಪುಟ</span>
-              <span className="rounded-full bg-red-50 px-3 py-1 text-sm font-semibold text-red-600">
+              <span className="cursor-pointer rounded-full bg-red-50 px-3 py-1 text-sm font-semibold text-red-600">
                 {pageNumber}
               </span>
               <span className="text-md font-light text-gray-600">/</span>
-              <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-600">
+              <span className="cursor-pointer rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-600">
                 {numPages}
               </span>
             </div>
 
             <button
               type="button"
-              className={`inline-flex items-center justify-center bg-white px-3.5 py-3.5 text-sm font-medium transition-all duration-200 ${
+              className={`inline-flex cursor-pointer items-center justify-center bg-white px-3.5 py-3.5 text-sm font-medium transition-all duration-200 ${
                 pageNumber === numPages
                   ? 'cursor-not-allowed text-gray-400'
                   : 'text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-900'
@@ -288,7 +288,7 @@ function PDFErrorDisplay({
       <button
         type="button"
         onClick={onRetry}
-        className="inline-flex items-center rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none"
+        className="inline-flex cursor-pointer items-center rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none"
       >
         <svg
           className="mr-2 h-4 w-4"
