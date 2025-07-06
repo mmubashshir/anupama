@@ -7,7 +7,6 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
 import { useWindowHeight } from '~/hooks/use-height';
-import { useWindowWidth } from '~/hooks/use-width';
 
 // Set up PDF.js worker for Next.js
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -48,7 +47,6 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
     console.error('PDF loading error:', error);
   }, []);
 
-  const containerWidth = useWindowWidth();
   const containerHeight = useWindowHeight();
   // Function to get the PDF URL (with proxy for external URLs)
   const getPdfUrl = (url: string) => {
