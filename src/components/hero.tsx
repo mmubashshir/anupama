@@ -53,9 +53,7 @@ export default async function Hero() {
       {/* Featured */}
       <div className="grid grid-cols-1 lg:grid-cols-3">
         <div className="col-span-2">
-          <Link href={featuredPost.href}>
-            <FeaturedCard {...featuredPost} />
-          </Link>
+          <FeaturedCard {...featuredPost} />
         </div>
         <div className="col-span-1 flex flex-col gap-10 lg:flex-row">
           <div className="border-t border-l border-dashed border-black lg:mb-10 lg:ml-10 lg:border-solid lg:border-gray-200" />

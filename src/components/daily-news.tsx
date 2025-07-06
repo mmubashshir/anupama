@@ -55,22 +55,17 @@ export default async function DailyNews() {
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Main Featured Article */}
-        <Link
-          key={mainPost.slug}
+
+        <FeaturedCard
+          category={mainPost.categories?.nodes[0]?.name ?? ''}
+          title={mainPost.title ?? ''}
+          imageUrl={
+            mainPost.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
+          }
+          excerpt={mainPost.excerpt ?? ''}
+          authorName={mainPost.author?.node.name ?? ''}
           href={`/${CATEGORY.DailyNews}/${mainPost.slug}`}
-        >
-          {' '}
-          <FeaturedCard
-            category={mainPost.categories?.nodes[0]?.name ?? ''}
-            title={mainPost.title ?? ''}
-            href={`/${CATEGORY.DailyNews}/${mainPost.slug}`}
-            imageUrl={
-              mainPost.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
-            }
-            excerpt={mainPost.excerpt ?? ''}
-            authorName={mainPost.author?.node.name ?? ''}
-          />
-        </Link>
+        />
 
         {/* Sidebar News Items */}
         <div className="flex flex-col space-y-6 lg:space-y-8">
