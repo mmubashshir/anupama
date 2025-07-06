@@ -132,7 +132,7 @@ function MobileMagazineCard() {
           height={186}
           className="mx-auto w-auto object-contain"
         />
-        <div className="text-xl font-extrabold decoration-1 underline-offset-4 group-hover:underline lg:text-xl">
+        <div className="text-4xl font-extrabold decoration-1 underline-offset-4 group-hover:underline lg:text-xl">
           ಇತ್ತೀಚಿನ <ArrowUpRight className="mb-2 ml-1 inline h-6 w-6" />{' '}
           ಮಾಸಪತ್ರಿಕೆ
         </div>
