@@ -50,17 +50,6 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
 
   const containerHeight = useWindowHeight();
   const containerWidth = useWindowWidth();
-  // Function to get the PDF URL (with proxy for external URLs)
-  const getPdfUrl = (url: string) => {
-    // If the URL is external, use proxy to avoid CORS issues
-    if (url.startsWith('http')) {
-      return `/api/proxy-pdf?url=${encodeURIComponent(url)}`;
-    }
-
-    return url;
-  };
-
-  const finalPdfUrl = getPdfUrl(pdfURL);
 
   const handleRetry = () => {
     setError(null);
@@ -75,7 +64,7 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
   return (
     <div className="mt-0 inline overflow-hidden bg-white">
       <Document
-        file={finalPdfUrl}
+        file={pdfURL}
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={onDocumentLoadError}
         loading={
