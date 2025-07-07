@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useEffect, useRef, useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { cn } from '~/utils/cn';
@@ -27,7 +27,6 @@ function PostComment(props: {
   });
 
   const [content, setContent] = useState('');
-  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (formState.status === 'fail') {
@@ -40,7 +39,6 @@ function PostComment(props: {
       toast.success('ಕಮೆಂಟನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ!');
 
       setContent('');
-      formRef.current?.reset();
 
       if (formState.commentId) {
         const commentEle = document.querySelector(
@@ -56,7 +54,7 @@ function PostComment(props: {
     <div className="border-t border-gray-200 pt-8">
       <h3 className="mb-6 text-xl font-bold">ಕಮ್ಮೆಂಟ್ ಬಿಡಿ</h3>
 
-      <form ref={formRef} action={formAction} className="space-y-4">
+      <form action={formAction} className="space-y-4">
         <input
           name="name"
           type="text"
