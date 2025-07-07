@@ -1,6 +1,7 @@
 'use client';
 
 import { formatDistanceToNowStrict } from 'date-fns';
+import { kn } from 'date-fns/locale/kn';
 import { Clock } from 'lucide-react';
 
 import WPContentRenderer from '~/components/wp-content-renderer';
@@ -56,6 +57,7 @@ export default function Comment({ post }: CommentProps) {
                             new Date(`${comment.dateGmt}Z`),
                             {
                               addSuffix: true,
+                              locale: kn,
                             },
                           )}
                         </span>

@@ -133,7 +133,7 @@ export default async function CategoryListing({
                   <div className="flex gap-1">
                     <Clock className="h-4 w-4 stroke-1" />
                     {post.date
-                      ? new Date(post.date).toLocaleString('en-IN', {
+                      ? new Date(post.date).toLocaleString('kn-IN', {
                           timeZone: 'Asia/Kolkata',
                           year: 'numeric',
                           month: 'long',
@@ -141,7 +141,6 @@ export default async function CategoryListing({
                           hour: 'numeric',
                           minute: '2-digit',
                           hour12: true,
-                          timeZoneName: 'short',
                         })
                       : 'Unknown date'}
                   </div>
