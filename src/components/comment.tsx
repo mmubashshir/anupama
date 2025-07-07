@@ -31,7 +31,9 @@ export default function Comment({ post }: CommentProps) {
       {/* Existing Comments */}
       {post.comments?.nodes && post.comments.nodes.length > 0 ? (
         <div className="border-t border-gray-200 pt-8">
-          <h3 className="mb-6 flex items-center text-xl font-bold">Comments</h3>
+          <h3 className="mb-6 flex items-center text-xl font-bold">
+            ಕಮ್ಮೆಂಟ್ಸ್
+          </h3>
           <div className="space-y-3">
             {post.comments.nodes.map((comment, index) => (
               <div

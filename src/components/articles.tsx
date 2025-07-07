@@ -87,71 +87,114 @@ export default async function Articles() {
         </div>
       </div>
 
-      {/* Main Layout Container */}
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Main Featured Article (Left - Takes 3 columns out of 5) */}
-        <div className="lg:col-span-1">
-          <Link
-            key={articles[0].slug}
-            href={`/${articles[0].categorySlug}/${articles[0].slug}`}
-          >
-            <StoryCard
-              image={articles[0].image}
-              category={articles[0].category}
-              headline={articles[0].headline}
-              writerName={articles[0].author}
-            />
-          </Link>
-        </div>
+      {/* Mobile View - Show only 3 articles */}
+      <div className="space-y-3 lg:hidden">
+        {/* First article (StoryCard) */}
+        <Link
+          key={articles[0].slug}
+          href={`/${articles[0].categorySlug}/${articles[0].slug}`}
+          className="block"
+        >
+          <StoryCard
+            image={articles[0].image}
+            category={articles[0].category}
+            headline={articles[0].headline}
+            writerName={articles[0].author}
+          />
+        </Link>
 
-        {/* Secondary Articles (Right - Takes 1 column) */}
-        <div className="lg:col-span-1">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {articles.slice(1, 3).map((article) => (
-              <Link
-                key={article.slug}
-                href={`/${article.categorySlug}/${article.slug}`}
-              >
-                <ArticleCard
-                  key={article.key}
-                  image={article.image}
-                  category={article.category}
-                  categorySlug={article.categorySlug}
-                  headline={article.headline}
-                  subhead={article.subhead}
-                  author={article.author}
-                  date={article.date}
-                  slug={article.slug}
-                />
-              </Link>
-            ))}
-          </div>
+        {/* Second and third articles (ArticleCard) with proper spacing */}
+        <div className="space-y-7">
+          {articles.slice(1, 3).map((article) => (
+            <Link
+              key={article.slug}
+              href={`/${article.categorySlug}/${article.slug}`}
+              className="block"
+            >
+              <ArticleCard
+                key={article.key}
+                image={article.image}
+                category={article.category}
+                categorySlug={article.categorySlug}
+                headline={article.headline}
+                subhead={article.subhead}
+                author={article.author}
+                date={article.date}
+                slug={article.slug}
+              />
+            </Link>
+          ))}
         </div>
       </div>
 
-      {/* Divider */}
-      <div className="my-8 border-t border-dashed border-black" />
+      {/* Desktop View - Original Layout */}
+      <div className="hidden lg:block">
+        {/* Main Layout Container */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          {/* Main Featured Article (Left - Takes 3 columns out of 5) */}
+          <div className="lg:col-span-1">
+            <Link
+              key={articles[0].slug}
+              href={`/${articles[0].categorySlug}/${articles[0].slug}`}
+            >
+              <StoryCard
+                image={articles[0].image}
+                category={articles[0].category}
+                headline={articles[0].headline}
+                writerName={articles[0].author}
+              />
+            </Link>
+          </div>
 
-      {/* Bottom Row - 3 Column Grid */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {articles.slice(3).map((article) => (
-          <Link
-            key={article.slug}
-            href={`/${article.categorySlug}/${article.slug}`}
-          >
-            <ArticleCard
-              key={article.key}
-              image={article.image}
-              category={article.category}
-              categorySlug={article.categorySlug}
-              headline={article.headline}
-              subhead={article.subhead}
-              author={article.author}
-              date={article.date}
-              slug={article.slug}
-            />
-          </Link>
-        ))}
+          {/* Secondary Articles (Right - Takes 1 column) */}
+          <div className="lg:col-span-1">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              {articles.slice(1, 3).map((article) => (
+                <Link
+                  key={article.slug}
+                  href={`/${article.categorySlug}/${article.slug}`}
+                >
+                  <ArticleCard
+                    key={article.key}
+                    image={article.image}
+                    category={article.category}
+                    categorySlug={article.categorySlug}
+                    headline={article.headline}
+                    subhead={article.subhead}
+                    author={article.author}
+                    date={article.date}
+                    slug={article.slug}
+                  />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="my-8 border-t border-dashed border-black" />
+
+        {/* Bottom Row - 3 Column Grid */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {articles.slice(3).map((article) => (
+            <Link
+              key={article.slug}
+              href={`/${article.categorySlug}/${article.slug}`}
+            >
+              <ArticleCard
+                key={article.key}
+                image={article.image}
+                category={article.category}
+                categorySlug={article.categorySlug}
+                headline={article.headline}
+                subhead={article.subhead}
+                author={article.author}
+                date={article.date}
+                slug={article.slug}
+              />
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

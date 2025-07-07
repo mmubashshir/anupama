@@ -1,6 +1,8 @@
 import aboutUs from '~/constants/about-us';
 import Image from 'next/image';
 
+import anupamaCover from '../../../public/anupama-magazine.jpg';
+
 function AboutUs() {
   return (
     <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
@@ -11,7 +13,8 @@ function AboutUs() {
           className="mx-auto h-auto w-[300px] object-contain"
           width={300}
           height={434}
-          src="/anupama-magazine.jpg"
+          src={anupamaCover}
+          placeholder="blur"
           alt="anupama-magazine"
         />
 
