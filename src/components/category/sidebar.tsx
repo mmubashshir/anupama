@@ -55,7 +55,7 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
                     </p>
                     <div className="flex items-center gap-1 text-xs text-gray-500">
                       {post.date
-                        ? new Date(post.date).toLocaleDateString('en-US', {
+                        ? new Date(post.date).toLocaleDateString('kn-IN', {
                             year: 'numeric',
                             month: 'long',
                             day: 'numeric',
