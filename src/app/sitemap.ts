@@ -1,20 +1,16 @@
-import { BASE_URL } from '~/constants';
-
-import { fetchAllPosts } from '~/services/posts';
+import { fetchAllPostsOffset } from '~/utils/fetch-all-posts-wp';
 
 import type { MetadataRoute } from 'next';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts = await fetchAllPosts();
+  const posts = await fetchAllPostsOffset();
 
-  return [
-    { url: `${BASE_URL}/`, lastModified: new Date() },
-
-    ...posts.map((post) => ({
-      url: `${BASE_URL}/posts/${post.slug}`,
-      lastModified: post.date ?? undefined,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    })),
-  ];
+  return posts.map((post) => ({
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/posts/${post.slug}`,
+    lastModified: post.date ?? undefined,
+    priority: 0.7,
+  }));
 }
