@@ -48,6 +48,7 @@ export async function generateMetadata({
   const ogImage = post.featuredImage?.node.mediaDetails?.sizes?.find(
     (size) => size?.name === 'medium_large',
   );
+
   const firstImage =
     post.featuredImage?.node.mediaDetails?.sizes?.[0]?.sourceUrl ??
     getPlaceholderImage({ text: title });

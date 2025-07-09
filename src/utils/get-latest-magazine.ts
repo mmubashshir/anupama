@@ -14,24 +14,35 @@ interface MagazineCardProps {
 /**
  * Returns the latest magazine PDF URL, or a fallback.
  */
+/**
+ * Returns the latest magazine PDF URL and related assets.
+ */
 export async function getLatestMagazinePdfUrl(): Promise<MagazineCardProps> {
   const latestMagazineRaw = await fetchLimitedPosts({
     first: 1,
     filter: { categoryName: CATEGORY.MAGAZINE },
   });
 
-  const html = latestMagazineRaw.posts?.nodes[0]?.content ?? '';
+  const post = latestMagazineRaw.posts?.nodes[0];
+  const html = post?.content ?? '';
   const $ = loadHtml(html);
 
-  const pdfHref = $('a[href$=".pdf"]').attr('href');
+  const pdfHref = $('a[href$=".pdf"]').attr('href') ?? undefined;
+
+  const ogImageUrl =
+    post?.featuredImage?.node.mediaDetails?.sizes?.find(
+      (s) => s?.name === 'medium_large',
+    )?.sourceUrl ?? getPlaceholderImage();
 
   return {
     coverImageUrl:
-      latestMagazineRaw.posts?.nodes[0].featuredImage?.node.sourceUrl ??
-      getPlaceholderImage(),
-    ogImageUrl:
-      latestMagazineRaw.posts?.nodes[0].featuredImage?.node.mediaDetails
-        ?.sizes?.[0]?.sourceUrl ?? getPlaceholderImage(),
+      post?.featuredImage?.node.sourceUrl ??
+      getPlaceholderImage({
+        height: 500,
+        width: 400,
+        text: 'Magazine Image not found!',
+      }),
+    ogImageUrl,
     pdfUrl: pdfHref,
   };
 }

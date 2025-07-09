@@ -33,8 +33,6 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [
         {
           url: ogImageUrl ?? `${BASE_URL}/anupama-hero.png`,
-          width: 1200,
-          height: 630,
           alt: `Anupama Women's Monthly Cover`,
           type: 'image/jpeg',
         },
