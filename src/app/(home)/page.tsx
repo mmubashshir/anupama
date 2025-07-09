@@ -8,10 +8,9 @@ import HealthAndMedicine from '~/components/health-medicine';
 import Hero from '~/components/hero';
 import Social from '~/components/social';
 import Stories from '~/components/stories';
+import VideoNews from '~/components/video-news';
 
 import { getLatestMagazinePdfUrl } from '~/utils/get-latest-magazine';
-
-import VideoNews from '../video-news/page';
 
 export const revalidate = 60; // Revalidate every 1 minute
 

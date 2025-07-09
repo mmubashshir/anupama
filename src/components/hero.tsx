@@ -49,8 +49,11 @@ export default async function Hero() {
     : [];
 
   return (
-    <div className="mx-auto max-w-6xl p-4 pt-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl p-4 pt-6 sm:px-6 lg:px-8 lg:pt-10">
       {/* Featured */}
+      <h1 className="mb-5 text-3xl font-extrabold md:mb-7 md:text-5xl">
+        ಮುಖ್ಯ ಸುದ್ದಿ
+      </h1>
       <div className="grid grid-cols-1 lg:grid-cols-3">
         <div className="col-span-2">
           <FeaturedCard {...featuredPost} />

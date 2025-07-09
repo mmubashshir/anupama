@@ -6,7 +6,7 @@ import WPVideoRenderer from '~/components/wp-video-renderer';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
-import VideoCard from './components/video-card';
+import VideoCard from './video-card';
 
 export const revalidate = 60; // Revalidate every 1 minute
 
