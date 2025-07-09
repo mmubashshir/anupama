@@ -7111,7 +7111,7 @@ interface PostConnectionEdge implements Edge {
 """
 A chronological content entry typically used for blog posts, news articles, or similar date-based content.
 """
-type Post implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithExcerpt & NodeWithComments & NodeWithTrackbacks & NodeWithRevisions & MenuItemLinkable & WithAcfCustomFields {
+type Post implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithExcerpt & NodeWithComments & NodeWithTrackbacks & NodeWithRevisions & MenuItemLinkable & WithAcfCustomfields {
   """The ancestors of the content node."""
   ancestors(
     """The number of items to return after the referenced "after" cursor"""
@@ -7204,8 +7204,8 @@ type Post implements Node & ContentNode & UniformResourceIdentifiable & Database
   """The name of the Content Type the node belongs to"""
   contentTypeName: String!
 
-  """Fields of the CustomFields ACF Field Group"""
-  customFields: CustomFields
+  """Fields of the Customfields ACF Field Group"""
+  customfields: Customfields
 
   """The unique identifier stored in the database"""
   databaseId: Int!
@@ -7515,14 +7515,14 @@ interface NodeWithTrackbacks implements Node {
 }
 
 """
-The &quot;CustomFields&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;.
+The &quot;Customfields&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;.
 """
-type CustomFields implements CustomFields_Fields & AcfFieldGroup & AcfFieldGroupFields {
+type Customfields implements Customfields_Fields & AcfFieldGroup & AcfFieldGroupFields {
   """The name of the field group"""
   fieldGroupName: String @deprecated(reason: "Use __typename instead")
 
   """
-  Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;CustomFields&quot; Field Group
+  Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;Customfields&quot; Field Group
   """
   youtubeVideoUrl: String
 }
@@ -14324,22 +14324,22 @@ type Template_PageNoTitle implements ContentTemplate {
 }
 
 """
-Provides access to fields of the &quot;CustomFields&quot; ACF Field Group via the &quot;customFields&quot; field
+Provides access to fields of the &quot;Customfields&quot; ACF Field Group via the &quot;customfields&quot; field
 """
-interface WithAcfCustomFields {
-  """Fields of the CustomFields ACF Field Group"""
-  customFields: CustomFields
+interface WithAcfCustomfields {
+  """Fields of the Customfields ACF Field Group"""
+  customfields: Customfields
 }
 
 """
-Interface representing fields of the ACF &quot;CustomFields&quot; Field Group
+Interface representing fields of the ACF &quot;Customfields&quot; Field Group
 """
-interface CustomFields_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+interface Customfields_Fields implements AcfFieldGroup & AcfFieldGroupFields {
   """The name of the field group"""
   fieldGroupName: String @deprecated(reason: "Use __typename instead")
 
   """
-  Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;CustomFields&quot; Field Group
+  Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;Customfields&quot; Field Group
   """
   youtubeVideoUrl: String
 }

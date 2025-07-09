@@ -47,7 +47,7 @@ export const LIMITED_POSTS_QUERY = graphql(`
             slug
           }
         }
-        customFields {
+        customfields {
           youtubeVideoUrl
         }
       }
@@ -137,7 +137,7 @@ const FETCH_ALL_POSTS_QUERY = graphql(`
             name
           }
         }
-        customFields {
+        customfields {
           youtubeVideoUrl
         }
       }
