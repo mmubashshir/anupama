@@ -5,11 +5,13 @@ import type { MetadataRoute } from 'next';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.anupama.co.in';
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await fetchAllPostsOffset();
 
   return posts.map((post) => ({
-    url: `${process.env.NEXT_PUBLIC_SITE_URL}/posts/${post.slug}`,
+    url: `${base}/${post.categories?.nodes[0].slug}/${post.slug}`,
     lastModified: post.date ?? undefined,
     priority: 0.7,
   }));
