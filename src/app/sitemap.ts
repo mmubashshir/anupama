@@ -10,9 +10,15 @@ const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.anupama.co.in';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await fetchAllPostsOffset();
 
-  return posts.map((post) => ({
-    url: `${base}/${post.categories?.nodes[0].slug}/${post.slug}`,
-    lastModified: post.date ?? undefined,
-    priority: 0.7,
-  }));
+  return posts.map((post) => {
+    const lastModified = post.date
+      ? new Date(post.date).toISOString()
+      : undefined;
+
+    return {
+      url: `${base}/${post.categories?.nodes[0]?.slug ?? 'uncategorized'}/${post.slug}`,
+      lastModified,
+      priority: 0.7,
+    };
+  });
 }
