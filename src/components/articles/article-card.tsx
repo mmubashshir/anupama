@@ -33,7 +33,7 @@ export default function ArticleCard({
         />
 
         <div className="ml-4">
-          <p className="text-sm text-black">{category}</p>
+          <p className="text-sm font-semibold text-gray-500">{category}</p>
           <h3 className="text-xl font-extrabold decoration-1 underline-offset-4 group-hover:underline">
             {headline}
           </h3>
@@ -50,10 +50,10 @@ export default function ArticleCard({
         alt={headline}
         width={300}
         height={300}
-        className="mb-2 aspect-square w-full max-w-full object-cover group-hover:brightness-[1.1]"
+        className="mb-2 aspect-[3/2] w-full max-w-full object-cover group-hover:brightness-[1.1] md:aspect-square"
       />
       <div className="flex-1">
-        <span className="text-sm text-black">{category}</span>
+        <span className="text-sm font-semibold text-gray-500">{category}</span>
         <h3 className="line-clamp-3 text-2xl font-black decoration-1 underline-offset-4 group-hover:underline">
           {headline}
         </h3>

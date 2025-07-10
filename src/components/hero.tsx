@@ -54,11 +54,11 @@ export default async function Hero() {
       <h1 className="mb-5 text-3xl font-extrabold md:mb-7 md:text-5xl">
         ಮುಖ್ಯ ಸುದ್ದಿ
       </h1>
-      <div className="grid grid-cols-1 lg:grid-cols-3">
-        <div className="col-span-2">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="md:col-span-1 lg:col-span-2">
           <FeaturedCard {...featuredPost} />
         </div>
-        <div className="col-span-1 flex flex-col gap-10 lg:flex-row">
+        <div className="flex flex-col gap-6 md:col-span-2 lg:col-span-1">
           <div className="border-t border-l border-dashed border-black lg:mb-10 lg:ml-10 lg:border-solid lg:border-gray-200" />
           {latestMagazine.pdfUrl !== undefined && (
             <MagazineView pdfUrl={latestMagazine.pdfUrl}>

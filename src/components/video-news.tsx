@@ -51,7 +51,9 @@ export default async function VideoNews() {
                 </div>
 
                 <div className="group cursor-pointer p-4 text-center md:p-6">
-                  <span className="text-sm text-black">ವೀಡಿಯೊ</span>
+                  <span className="text-sm font-semibold text-gray-500">
+                    ವೀಡಿಯೊ
+                  </span>
                   <h2 className="text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-2xl">
                     {latestVideo.title ?? ''}
                   </h2>

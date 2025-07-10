@@ -29,7 +29,9 @@ export default function HealthcareCard({
 
         {/* Text */}
         <div className="min-w-0 flex-1">
-          <span className="text-sm text-black">{category}</span>
+          <span className="text-sm font-semibold text-gray-500">
+            {category}
+          </span>
 
           <h3 className="line-clamp-3 text-base font-black decoration-1 underline-offset-4 group-hover:underline sm:text-lg md:text-xl">
             {name}

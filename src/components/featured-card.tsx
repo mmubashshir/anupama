@@ -36,7 +36,7 @@ export default function FeaturedCard({
 
       {/* text block */}
       <div className="z-10 ml-auto flex flex-col gap-1.5 bg-white md:-mt-16 md:w-[90%] md:p-4">
-        <span className="text-sm">{category}</span>
+        <span className="text-sm font-semibold text-gray-500">{category}</span>
         <h2 className="text-lg font-extrabold group-hover:underline md:text-2xl">
           {title}
         </h2>

@@ -19,7 +19,9 @@ export default function NewsCard({
     <div className="group border-b border-gray-200 last:border-b-0">
       <div className="flex cursor-pointer gap-2">
         <div className="flex-1">
-          <span className="text-sm text-black">{category}</span>
+          <span className="text-sm font-semibold text-gray-500">
+            {category}
+          </span>
           <h3 className="mt-1 line-clamp-2 text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-xl">
             {title}
           </h3>
