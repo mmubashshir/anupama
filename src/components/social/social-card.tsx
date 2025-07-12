@@ -18,7 +18,7 @@ export function SocialCard({
           src={image}
           alt={headline}
           fill
-          className="object-cover group-hover:brightness-[1.1]"
+          className="aspect-[3/2] w-full object-cover group-hover:brightness-[1.1]"
         />
       </div>
       <div className="bg-white">

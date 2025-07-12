@@ -16,7 +16,7 @@ type Article = NonNullable<QueryResult['posts']>['nodes'][number];
 export default async function Social() {
   const [socialResult, lifeTreasureResult, cookingResult] =
     await Promise.allSettled([
-      fetchLifestyleArticles(4, CATEGORY.Social),
+      fetchLifestyleArticles(2, CATEGORY.Social),
       fetchLifestyleArticles(4, CATEGORY.LifeTreasure),
       fetchLifestyleArticles(4, CATEGORY.Cooking),
     ]);
