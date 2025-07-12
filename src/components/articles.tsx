@@ -9,6 +9,7 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 import { fetchLimitedPosts } from '~/services/posts';
 
 import ArticleCard from './articles/article-card';
+import { Container } from './container';
 import type { ArticleCardProps } from './articles/article-card';
 
 export default async function Articles() {
@@ -34,11 +35,11 @@ export default async function Articles() {
     societyResponse.status === 'rejected'
   ) {
     return (
-      <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+      <Container className="bg-white p-4 sm:px-6 lg:px-8">
         <h1 className="text-center text-2xl font-bold text-red-500">
           ದೋಷ ಸಂಭವಿಸಿದೆ, ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.
         </h1>
-      </div>
+      </Container>
     );
   }
 
@@ -73,7 +74,7 @@ export default async function Articles() {
     });
 
   return (
-    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8 lg:py-14">
+    <Container className="bg-white p-4 sm:px-6 lg:px-8 lg:py-14">
       <div className="pb-4 lg:pt-4">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-extrabold md:text-5xl">ಲೇಖನಗಳು</h1>
@@ -196,7 +197,7 @@ export default async function Articles() {
           ))}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 

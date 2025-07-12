@@ -6,6 +6,7 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
+import { Container } from './container';
 import StoryCard from './stories/story-card';
 
 export default async function Stories() {
@@ -25,11 +26,11 @@ export default async function Stories() {
     childrenStoryResponse.status === 'rejected'
   ) {
     return (
-      <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+      <Container className="bg-white p-4 sm:px-6 lg:px-8">
         <h1 className="text-center text-2xl font-bold text-red-500">
           ದೋಷ ಸಂಭವಿಸಿದೆ, ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.
         </h1>
-      </div>
+      </Container>
     );
   }
 
@@ -38,7 +39,7 @@ export default async function Stories() {
   const childrenStoryPost = childrenStoryResponse.value.posts?.nodes ?? [];
 
   return (
-    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8 lg:py-10">
+    <Container className="bg-white p-4 sm:px-6 lg:px-8 lg:py-10">
       <div className="pb-4">
         <div className="flex items-center justify-between">
           <h1 className="text-4xl font-extrabold md:text-5xl">ಕಥೆಗಳು</h1>
@@ -84,6 +85,6 @@ export default async function Stories() {
           </Link>
         ))}
       </section>
-    </div>
+    </Container>
   );
 }

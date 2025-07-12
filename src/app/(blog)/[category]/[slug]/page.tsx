@@ -9,6 +9,7 @@ import { after } from 'next/server';
 
 import Sidebar from '~/components/category/sidebar';
 import Comment from '~/components/comment';
+import { Container } from '~/components/container';
 import CreateComment from '~/components/create-comment';
 import NativeShareIcon from '~/components/native-share';
 import PostNavigation from '~/components/post-navigation';
@@ -106,11 +107,11 @@ export default async function Blog({ params }: PageParams) {
     allPostsInCategoryResponse.status === 'rejected'
   ) {
     return (
-      <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+      <Container className="bg-white p-4 sm:px-6 lg:px-8">
         <h1 className="text-center text-2xl font-bold text-red-500">
           Post not found
         </h1>
-      </div>
+      </Container>
     );
   }
 
@@ -161,7 +162,7 @@ export default async function Blog({ params }: PageParams) {
       : undefined;
 
   return (
-    <div className="mx-auto max-w-6xl p-4 sm:px-6 lg:px-8 lg:py-10">
+    <Container className="p-4 sm:px-6 lg:px-8 lg:py-10">
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* Main Content */}
         <div className="w-full lg:w-2/3">
@@ -253,6 +254,6 @@ export default async function Blog({ params }: PageParams) {
           category={category as CATEGORY}
         />
       </div>
-    </div>
+    </Container>
   );
 }

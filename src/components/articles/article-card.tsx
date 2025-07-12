@@ -54,10 +54,10 @@ export default function ArticleCard({
       />
       <div className="flex-1">
         <span className="text-sm font-semibold text-gray-500">{category}</span>
-        <h3 className="line-clamp-3 text-2xl font-black decoration-1 underline-offset-4 group-hover:underline">
+        <h3 className="line-clamp-2 text-2xl font-black decoration-1 underline-offset-4 group-hover:underline">
           {headline}
         </h3>
-        <p className="mb-2 text-base font-light text-black">{subhead}</p>
+        <p className="text-base font-light text-black">{subhead}</p>
         <p className="text-sm text-gray-500">-{author}</p>
       </div>
     </div>

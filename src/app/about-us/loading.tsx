@@ -1,21 +1,23 @@
+import { Container } from '~/components/container';
+
 // app/<route>/loading.tsx
 export default function Loading() {
   return (
     <div className="animate-pulse">
       {/* ───────────────────── Navbar skeleton ───────────────────── */}
       <header className="border-b border-gray-200 bg-white">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <Container className="flex h-14 items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="h-6 w-24 rounded bg-gray-300" /> {/* logo */}
           <div className="flex gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="h-4 w-16 rounded bg-gray-300" />
             ))}
           </div>
-        </div>
+        </Container>
       </header>
 
       {/* ───────────────────── “About us” section ───────────────────── */}
-      <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+      <Container as="section" className="px-4 py-8 sm:px-6 lg:px-8">
         {/* title */}
         <div className="h-8 w-40 rounded bg-gray-300" />
 
@@ -29,10 +31,10 @@ export default function Loading() {
             ))}
           </div>
         </div>
-      </section>
+      </Container>
 
       {/* ───────────────────── Authors section ───────────────────── */}
-      <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+      <Container as="section" className="px-4 py-8 sm:px-6 lg:px-8">
         {/* title */}
         <div className="h-8 w-32 rounded bg-gray-300" />
 
@@ -45,11 +47,11 @@ export default function Loading() {
             </div>
           ))}
         </div>
-      </section>
+      </Container>
 
       {/* ───────────────────── Footer skeleton ───────────────────── */}
       <footer className="bg-gray-100">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:px-8">
+        <Container className="grid gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:px-8">
           {/* left column (logo + details) */}
           <div className="space-y-3">
             <div className="h-6 w-24 rounded bg-gray-300" />
@@ -67,7 +69,7 @@ export default function Loading() {
               ))}
             </div>
           ))}
-        </div>
+        </Container>
 
         {/* copyright bar */}
         <div className="border-t border-gray-200 py-4 text-center">

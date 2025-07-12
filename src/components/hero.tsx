@@ -7,6 +7,7 @@ import { getLatestMagazinePdfUrl } from '~/utils/get-latest-magazine';
 import { fetchPopularPosts } from '~/services/popular-posts';
 import { fetchLimitedPosts } from '~/services/posts';
 
+import { Container } from './container';
 import FeaturedCard from './featured-card';
 import MagazineView from './magazine-viewer/magazine-view';
 
@@ -49,7 +50,7 @@ export default async function Hero() {
     : [];
 
   return (
-    <div className="mx-auto max-w-6xl p-4 pt-6 sm:px-6 lg:px-8 lg:pt-10">
+    <Container className="p-4 pt-6 sm:px-6 lg:px-8 lg:pt-10">
       {/* Featured */}
       <h1 className="mb-5 text-3xl font-extrabold md:mb-7 md:text-5xl">
         ಮುಖ್ಯ ಸುದ್ದಿ
@@ -98,7 +99,7 @@ export default async function Hero() {
           ))}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 

@@ -7,6 +7,7 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
+import { Container } from './container';
 import HealthCard from './health-medicine/health-card';
 
 export default async function HealthAndMedicine() {
@@ -30,11 +31,11 @@ export default async function HealthAndMedicine() {
     medicineResponse.status === 'rejected'
   ) {
     return (
-      <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+      <Container className="bg-white p-4 sm:px-6 lg:px-8">
         <h1 className="text-center text-2xl font-bold text-red-500">
           ದೋಷ ಸಂಭವಿಸಿದೆ, ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.
         </h1>
-      </div>
+      </Container>
     );
   }
 
@@ -44,7 +45,7 @@ export default async function HealthAndMedicine() {
   // Combine all posts
 
   return (
-    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+    <Container className="bg-white p-4 sm:px-6 lg:px-8">
       {/* Aarogya */}
 
       <div className="grid grid-cols-1 md:grid-cols-2">
@@ -120,6 +121,6 @@ export default async function HealthAndMedicine() {
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

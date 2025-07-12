@@ -6,6 +6,7 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 import { fetchLimitedPosts } from '~/services/posts';
 
 import { type ArticleCardProps } from './articles/article-card';
+import { Container } from './container';
 import { FoodCarousel } from './social/food-carousel';
 import { SocialCards } from './social/social-card';
 import type { LIMITED_POSTS_QUERY } from '~/services/posts';
@@ -27,11 +28,11 @@ export default async function Social() {
     cookingResult.status === 'rejected'
   ) {
     return (
-      <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+      <Container className="bg-white p-4 sm:px-6 lg:px-8">
         <h1 className="text-center text-2xl font-bold text-red-500">
           ದೋಷ ಸಂಭವಿಸಿದೆ, ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.
         </h1>
-      </div>
+      </Container>
     );
   }
 
@@ -47,13 +48,13 @@ export default async function Social() {
     cookingRaw.posts?.nodes.flatMap(mapToArticleCardProps) ?? [];
 
   return (
-    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8 lg:pb-14">
-      <div className="mx-auto max-w-6xl space-y-12">
+    <Container className="bg-white p-4 sm:px-6 lg:px-8 lg:pb-14">
+      <Container className="space-y-12">
         <SocialCards mainCards={social} sideCard={lifeTreasure} />
 
         <FoodCarousel items={cooking} />
-      </div>
-    </div>
+      </Container>
+    </Container>
   );
 }
 

@@ -6,13 +6,14 @@ import { Calendar, ChevronDown, Menu } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { Container } from '~/components/container';
 import MobileNavbar from '~/components/mobile-nav';
 
 export default function Header() {
   const [isNavBarOpen, setIsNavBarOpen] = useState(false);
 
   return (
-    <header className="mx-auto max-w-6xl px-8">
+    <Container as="header" className="px-8">
       {/* Mobile Top Bar - Made Sticky */}
       <div className="fixed top-0 right-0 left-0 z-40 container mx-auto flex h-16 items-center justify-between bg-white p-4 px-4 shadow-xs md:hidden">
         {/* Logo */}
@@ -91,11 +92,9 @@ export default function Header() {
         </div> */}
       </div>
       <DesktopNavbar />
-    </header>
+    </Container>
   );
 }
-
-// Desktop Navigation
 export function DesktopNavbar() {
   return (
     <div className="hidden border-t border-b-2 border-gray-500 border-t-gray-300 md:block">

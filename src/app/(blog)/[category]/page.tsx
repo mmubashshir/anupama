@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import Sidebar from '~/components/category/sidebar';
+import { Container } from '~/components/container';
 import Pagination from '~/components/pagination';
 import WPContentRenderer from '~/components/wp-content-renderer';
 
@@ -54,11 +55,11 @@ export default async function CategoryListing({
     recentPostsResponse.status === 'rejected'
   ) {
     return (
-      <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+      <Container className="bg-white p-4 sm:px-6 lg:px-8">
         <h1 className="text-center text-2xl font-bold text-red-500">
           {MESSAGES.TRY_AGAIN}
         </h1>
-      </div>
+      </Container>
     );
   }
 
@@ -114,7 +115,7 @@ export default async function CategoryListing({
   }
 
   return (
-    <div className="mx-auto max-w-6xl p-4 sm:px-6 lg:mb-6 lg:px-8 lg:py-10">
+    <Container className="p-4 sm:px-6 lg:mb-6 lg:px-8 lg:py-10">
       <div className="flex flex-col gap-8 lg:flex-row">
         <div className="w-full lg:w-2/3">
           {/* Blog Posts */}
@@ -207,6 +208,6 @@ export default async function CategoryListing({
           category={category as CATEGORY}
         />
       </div>
-    </div>
+    </Container>
   );
 }

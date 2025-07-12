@@ -1,4 +1,5 @@
 import BlogNav from '~/components/blog-nav';
+import { Container } from '~/components/container';
 
 export default function BlogLayout({
   children,
@@ -8,7 +9,7 @@ export default function BlogLayout({
   return (
     <>
       <BlogNav />
-      <main className="mx-auto max-w-6xl">{children}</main>
+      <Container as="main">{children}</Container>
     </>
   );
 }

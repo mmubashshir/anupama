@@ -8,6 +8,7 @@ import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
+import { Container } from './container';
 import FeaturedCard from './featured-card';
 
 export default async function DailyNews() {
@@ -39,7 +40,7 @@ export default async function DailyNews() {
   const [mainPost, ...otherPosts] = dailyNewsPosts;
 
   return (
-    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+    <Container className="bg-white p-4 sm:px-6 lg:px-8">
       <div className="pb-4 lg:pt-4">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-extrabold md:text-5xl">ಸುದ್ದಿಗಳು</h1>
@@ -83,6 +84,6 @@ export default async function DailyNews() {
           ))}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

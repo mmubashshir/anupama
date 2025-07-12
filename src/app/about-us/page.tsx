@@ -1,11 +1,13 @@
 import aboutUs from '~/constants/about-us';
 import Image from 'next/image';
 
+import { Container } from '~/components/container';
+
 import anupamaCover from '../../../public/anupama-magazine.jpg';
 
 function AboutUs() {
   return (
-    <div className="mx-auto max-w-6xl bg-white p-4 sm:px-6 lg:px-8">
+    <Container className="bg-white p-4 sm:px-6 lg:px-8">
       <h2 className="text-3xl font-extrabold md:text-4xl">ನಮ್ಮ ಬಗ್ಗೆ</h2>
 
       <div className="flex flex-col items-start gap-10 py-8 md:flex-row">
@@ -29,7 +31,7 @@ function AboutUs() {
           ))}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 

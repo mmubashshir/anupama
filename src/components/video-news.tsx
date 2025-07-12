@@ -6,6 +6,7 @@ import WPVideoRenderer from '~/components/wp-video-renderer';
 
 import { fetchLimitedPosts } from '~/services/posts';
 
+import { Container } from './container';
 import VideoCard from './video-card';
 
 export const revalidate = 60; // Revalidate every 1 minute
@@ -26,7 +27,7 @@ export default async function VideoNews() {
 
   return (
     <div className="bg-gray-100/90 pt-2">
-      <div className="mx-auto max-w-6xl p-4 py-10 sm:px-6 lg:px-8">
+      <Container className="p-4 py-10 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-extrabold md:text-5xl">ವೀಡಿಯೊ ಸುದ್ದಿ</h1>
           <Link
@@ -73,7 +74,7 @@ export default async function VideoNews() {
             ))}
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

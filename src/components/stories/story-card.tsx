@@ -27,9 +27,9 @@ function StoryCard({ image, category, headline, writerName }: StoryCardProps) {
 
       <div className="z-10 mt-3 ml-auto flex w-full flex-col bg-white md:-mt-16 md:w-[90%] md:p-4 md:text-left">
         <span className="text-sm font-semibold text-gray-500">{category}</span>
-        <h2 className="mt-1 text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-2xl">
+        <h3 className="mt-1 text-2xl leading-tight font-extrabold decoration-1 underline-offset-4 group-hover:underline">
           {headline}
-        </h2>
+        </h3>
         <WPContentRenderer
           className="text-sm text-gray-500"
           content={`~${writerName}`}

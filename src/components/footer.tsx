@@ -2,10 +2,12 @@ import { navLinks } from '~/constants/nav-links';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { Container } from './container';
+
 export default function Footer() {
   return (
     <footer className="bg-gray-100">
-      <div className="mx-auto max-w-6xl bg-gray-100 p-4 sm:px-6 lg:px-8 lg:py-10">
+      <Container className="bg-gray-100 p-4 sm:px-6 lg:px-8 lg:py-10">
         {/* Newsletter Section */}
         {/* <div className="mx-auto mb-16 max-w-6xl">
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
@@ -43,7 +45,7 @@ export default function Footer() {
         </div>
       </div> */}
 
-        <div className="mx-auto max-w-6xl">
+        <Container>
           <div className="mb-12 flex flex-col gap-12 pt-2 lg:flex-row lg:items-start">
             {/* Left: Company Info */}
             <div className="lg:w-1/3">
@@ -165,8 +167,8 @@ export default function Footer() {
               All Rights Reserved. Developed by Mubashir and Co.
             </p>
           </div>
-        </div>
-      </div>
+        </Container>
+      </Container>
     </footer>
   );
 }
