@@ -65,7 +65,8 @@ export default async function Articles() {
         categorySlug: article.categories?.nodes[0].slug ?? '',
         headline: article.title ?? '',
         subhead: '',
-        author: article.author?.node.name ?? '',
+        author:
+          article.authorinfo?.writtenBy ?? article.author?.node.name ?? '',
         date: new Date(article.date ?? ''),
       };
     })

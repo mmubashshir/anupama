@@ -84,7 +84,7 @@ export async function generateMetadata({
 
 export default async function Blog({ params }: PageParams) {
   const { slug, category } = await params;
-  const pagePath = `https://anupama.co.in/${category}/${slug}`;
+  const pagePath = `${BASE_URL}${category}/${slug}`;
   const [postResponse, postsResponse, allPostsInCategoryResponse] =
     await Promise.allSettled([
       fetchPostBySlug(slug),
@@ -181,13 +181,30 @@ export default async function Blog({ params }: PageParams) {
               </div>
 
               <h2 className="mb-2 text-3xl font-bold">{post.title} </h2>
-
               <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-500">
-                <div className="flex gap-1">
-                  <User className="h-4 w-4 stroke-1" />
-                  <span>{post.author?.node.name}</span>
+                {/* Author section */}
+                <div className="flex items-center gap-1">
+                  {post.authorinfo?.writerImage?.node.mediaItemUrl ? (
+                    <Image
+                      src={post.authorinfo.writerImage.node.mediaItemUrl}
+                      alt="Author image"
+                      className="h-7 w-7 rounded-full object-cover"
+                      width={64}
+                      height={64}
+                    />
+                  ) : (
+                    <User className="h-4 w-4 stroke-1" />
+                  )}
+
+                  <span>
+                    {post.authorinfo?.writtenBy ??
+                      post.author?.node.name ??
+                      'Unknown'}
+                  </span>
                 </div>
-                <div className="flex gap-1">
+
+                {/* Date section */}
+                <div className="flex items-center gap-1">
                   <Clock className="h-4 w-4 stroke-1" />
                   <span>
                     {post.date

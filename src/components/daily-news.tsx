@@ -64,7 +64,11 @@ export default async function DailyNews() {
             mainPost.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
           }
           excerpt={mainPost.excerpt ?? ''}
-          authorName={mainPost.author?.node.name ?? ''}
+          authorName={
+            mainPost.authorinfo?.writtenBy ??
+            mainPost.author?.node.name ??
+            'Unknown'
+          }
           href={`/${CATEGORY.DailyNews}/${mainPost.slug}`}
         />
 
@@ -78,7 +82,11 @@ export default async function DailyNews() {
                 imageUrl={
                   post.featuredImage?.node.sourceUrl ?? getPlaceholderImage()
                 }
-                authorName={post.author?.node.name ?? ''}
+                authorName={
+                  post.authorinfo?.writtenBy ??
+                  post.author?.node.name ??
+                  'Unknown'
+                }
               />
             </Link>
           ))}

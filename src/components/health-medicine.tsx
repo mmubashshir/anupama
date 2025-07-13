@@ -76,7 +76,11 @@ export default async function HealthAndMedicine() {
                       post.featuredImage?.node.sourceUrl ??
                       getPlaceholderImage()
                     }
-                    author={post.author?.node.name ?? ''}
+                    author={
+                      post.authorinfo?.writtenBy ??
+                      post.author?.node.name ??
+                      'Unkwown'
+                    }
                   />
                 </Link>
                 {index === 0 && <hr className="mb-2 border-gray-300" />}
@@ -112,7 +116,11 @@ export default async function HealthAndMedicine() {
                       post.featuredImage?.node.sourceUrl ??
                       getPlaceholderImage()
                     }
-                    author={post.author?.node.name ?? ''}
+                    author={
+                      post.authorinfo?.writtenBy ??
+                      post.author?.node.name ??
+                      'Unknwown'
+                    }
                   />
                 </Link>
                 {index === 0 && <hr className="mb-2 border-gray-300" />}

@@ -47,15 +47,16 @@ export const LIMITED_POSTS_QUERY = graphql(`
             slug
           }
         }
-        customfields {
-          youtubeVideoUrl
-        }
         authorinfo {
           writtenBy
           writerImage {
             node {
-              sourceUrl
+              mediaItemUrl
             }
+          }
+        }
+        customfields {
+          youtubeVideoUrl
         }
       }
       pageInfo {
@@ -105,6 +106,14 @@ const FETCH_POST_BY_SLUG_QUERY = graphql(`
               fileSize
               name
             }
+          }
+        }
+      }
+      authorinfo {
+        writtenBy
+        writerImage {
+          node {
+            mediaItemUrl
           }
         }
       }

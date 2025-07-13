@@ -29,7 +29,10 @@ export default async function Hero() {
     category: featured?.categories?.nodes[0]?.name ?? '',
     title: featured?.title ?? '',
     excerpt: featured?.excerpt ?? '',
-    authorName: featured?.author?.node.name ?? '',
+    authorName:
+      featured?.authorinfo?.writtenBy ??
+      featured?.author?.node.name ??
+      'Unknown',
   };
 
   const trendingPosts = Array.isArray(trendingPostsRaw)
@@ -94,7 +97,11 @@ export default async function Hero() {
               title={post.title ?? ''}
               category={post.categories.nodes[0].name}
               imageUrl={post.featuredImage?.node.sourceUrl ?? ''}
-              author={post.author?.node.name ?? ''}
+              author={
+                post?.authorinfo?.writtenBy ??
+                post.author?.node.name ??
+                'Unknown'
+              }
             />
           ))}
         </div>

@@ -63,7 +63,11 @@ export default async function Stories() {
               }
               category={post.categories?.nodes[0]?.name ?? ''}
               headline={post.title ?? ''}
-              writerName={post.author?.node.name ?? ''}
+              writerName={
+                post.authorinfo?.writtenBy ??
+                post.author?.node.name ??
+                'Unknown'
+              }
             />
           </Link>
         ))}

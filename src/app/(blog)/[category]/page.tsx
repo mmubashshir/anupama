@@ -141,9 +141,24 @@ export default async function CategoryListing({
                   <h2 className="mt-6 text-3xl font-bold">{post.title}</h2>
                 </Link>
                 <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-500">
-                  <div className="flex gap-1">
-                    <User className="h-4 w-4 stroke-1" />
-                    <span>{post.author?.node.name}</span>
+                  <div className="flex items-center gap-1">
+                    {post.authorinfo?.writerImage?.node.mediaItemUrl ? (
+                      <Image
+                        src={post.authorinfo.writerImage.node.mediaItemUrl}
+                        alt="Author image"
+                        className="h-6 w-6 rounded-full object-cover"
+                        width={64}
+                        height={64}
+                      />
+                    ) : (
+                      <User className="h-4 w-4 stroke-1" />
+                    )}
+
+                    <span>
+                      {post.authorinfo?.writtenBy ??
+                        post.author?.node.name ??
+                        'Unknown'}
+                    </span>
                   </div>
                   <div className="flex gap-1">
                     <Clock className="h-4 w-4 stroke-1" />
