@@ -98,7 +98,7 @@ export default async function Hero() {
               category={post.categories.nodes[0].name}
               imageUrl={post.featuredImage?.node.sourceUrl ?? ''}
               author={
-                post?.authorinfo?.writtenBy ??
+                post.authorinfo?.writtenBy ??
                 post.author?.node.name ??
                 'Unknown'
               }

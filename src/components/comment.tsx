@@ -35,12 +35,12 @@ export default function Comment({ post }: CommentProps) {
           <h3 className="mb-6 flex items-center text-xl font-bold">
             ಕಮ್ಮೆಂಟ್ಸ್
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {post.comments.nodes.map((comment, index) => (
               <div
                 key={comment.id}
                 data-commentid={String(comment.id)}
-                className={`pb-4 ${index !== (post.comments?.nodes.length ?? 0) - 1 ? 'border-b border-gray-100' : ''}`}
+                className={`pb-4 ${index !== (post.comments?.nodes.length ?? 0) - 1 ? '' : ''}`}
               >
                 <div className="mb-1 flex items-center justify-between">
                   <div className="flex items-center gap-2 sm:gap-3">

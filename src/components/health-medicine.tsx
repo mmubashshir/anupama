@@ -71,7 +71,6 @@ export default async function HealthAndMedicine() {
                 <Link href={`/${CATEGORY.Health}/${post.slug}`}>
                   <HealthCard
                     name={post.title ?? 'Untitled'}
-                    category={post.categories?.nodes[0]?.name ?? ''}
                     imageUrl={
                       post.featuredImage?.node.sourceUrl ??
                       getPlaceholderImage()
@@ -111,7 +110,7 @@ export default async function HealthAndMedicine() {
                 <Link href={`/${CATEGORY.Medical}/${post.slug}`}>
                   <HealthCard
                     name={post.title ?? 'Untitled'}
-                    category={post.categories?.nodes[0]?.name ?? ''}
+                    // category={post.categories?.nodes[0]?.name ?? ''}
                     imageUrl={
                       post.featuredImage?.node.sourceUrl ??
                       getPlaceholderImage()

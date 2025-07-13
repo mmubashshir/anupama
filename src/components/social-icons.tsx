@@ -13,9 +13,9 @@ export function SocialIcons(prop: ShareTypeProp) {
       <Image
         className="opacity-75 hover:opacity-100"
         src={prop.image}
-        alt="prop.image"
-        width={18}
-        height={18}
+        alt="share icon"
+        width={prop.width ?? 25}
+        height={prop.height ?? 25}
       />
     </Link>
   );
@@ -24,10 +24,12 @@ export function SocialIcons(prop: ShareTypeProp) {
 export enum ShareType {
   FACEBOOK = '/facebook.png',
   WHATSAPP = '/whatsapp.png',
-  NATIVE = '/native.png',
+  NATIVE = '/native.jpg',
 }
 
 export interface ShareTypeProp {
   image: ShareType;
   url: string;
+  width?: number;
+  height?: number;
 }

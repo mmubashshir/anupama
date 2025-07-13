@@ -180,7 +180,8 @@ export default async function Blog({ params }: PageParams) {
                 />
               </div>
 
-              <h2 className="mb-2 text-3xl font-bold">{post.title} </h2>
+              <h2 className="mb-2 text-3xl font-extrabold">{post.title} </h2>
+
               <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-500">
                 {/* Author section */}
                 <div className="flex items-center gap-1">
@@ -188,7 +189,7 @@ export default async function Blog({ params }: PageParams) {
                     <Image
                       src={post.authorinfo.writerImage.node.mediaItemUrl}
                       alt="Author image"
-                      className="h-7 w-7 rounded-full object-cover"
+                      className="h-12 w-12 rounded-full object-cover"
                       width={64}
                       height={64}
                     />
@@ -219,20 +220,33 @@ export default async function Blog({ params }: PageParams) {
                 </div>
               </div>
 
-              <WPContentRenderer content={post.content} />
+              <WPContentRenderer
+                content={post.content}
+                className="text-justify font-medium"
+              />
             </article>
           </div>
 
-          <div className="mb-8 flex items-center justify-end gap-4">
-            <SocialIcons
-              url={`https://wa.me/whatsappphonenumber/?text=${pagePath}`}
-              image={ShareType.WHATSAPP}
-            />
-            <SocialIcons
-              url={`https://www.facebook.com/share.php?u=${pagePath}`}
-              image={ShareType.FACEBOOK}
-            />
-            <NativeShareIcon url={pagePath} image={ShareType.NATIVE} />
+          <div className="mb-8 flex items-center justify-end gap-2">
+            <div className="flex h-8 w-8 items-center justify-center">
+              <SocialIcons
+                url={`https://wa.me/whatsappphonenumber/?text=${pagePath}`}
+                image={ShareType.WHATSAPP}
+                width={32}
+                height={32}
+              />
+            </div>
+            <div className="flex h-8 w-8 items-center justify-center">
+              <SocialIcons
+                url={`https://www.facebook.com/share.php?u=${pagePath}`}
+                image={ShareType.FACEBOOK}
+                width={22}
+                height={22}
+              />
+            </div>
+            <div className="flex h-8 w-8 items-center justify-center">
+              <NativeShareIcon url={pagePath} image={ShareType.NATIVE} />
+            </div>
           </div>
 
           {/* Leave a Comment */}
