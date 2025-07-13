@@ -180,7 +180,31 @@ export default async function Blog({ params }: PageParams) {
                 />
               </div>
 
-              <h2 className="mb-2 text-3xl font-extrabold">{post.title} </h2>
+              <div className="mb-4 flex flex-wrap items-center gap-4">
+                <h2 className="text-3xl font-extrabold">{post.title}</h2>
+
+                <div className="flex items-center gap-1">
+                  <div className="flex h-8 w-8 items-center justify-center">
+                    <SocialIcons
+                      url={`https://wa.me/whatsappphonenumber/?text=${pagePath}`}
+                      image={ShareType.WHATSAPP}
+                      width={32}
+                      height={32}
+                    />
+                  </div>
+                  <div className="flex h-8 w-8 items-center justify-center">
+                    <SocialIcons
+                      url={`https://www.facebook.com/share.php?u=${pagePath}`}
+                      image={ShareType.FACEBOOK}
+                      width={22}
+                      height={22}
+                    />
+                  </div>
+                  <div className="flex h-8 w-8 items-center justify-center">
+                    <NativeShareIcon url={pagePath} image={ShareType.NATIVE} />
+                  </div>
+                </div>
+              </div>
 
               <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-500">
                 {/* Author section */}
