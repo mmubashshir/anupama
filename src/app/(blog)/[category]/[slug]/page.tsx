@@ -180,10 +180,49 @@ export default async function Blog({ params }: PageParams) {
                 />
               </div>
 
-              <div className="mb-4 flex flex-wrap items-center gap-4">
-                <h2 className="text-3xl font-extrabold">{post.title}</h2>
+              <h2 className="mt-4 text-3xl font-extrabold">{post.title}</h2>
 
-                <div className="flex items-center gap-1">
+              <div className="mt-2 mb-4 flex flex-wrap items-center justify-between text-sm text-gray-500">
+                {/* Left: Author + Date */}
+                <div className="flex flex-wrap items-center gap-2">
+                  {/* Author section */}
+                  <div className="flex items-center gap-1">
+                    {post.authorinfo?.writerImage?.node.mediaItemUrl ? (
+                      <Image
+                        src={post.authorinfo.writerImage.node.mediaItemUrl}
+                        alt="Author image"
+                        className="h-12 w-12 rounded-full object-cover"
+                        width={64}
+                        height={64}
+                      />
+                    ) : (
+                      <User className="h-4 w-4 stroke-1" />
+                    )}
+                    <span>
+                      {post.authorinfo?.writtenBy ??
+                        post.author?.node.name ??
+                        'Unknown'}
+                    </span>
+                  </div>
+
+                  {/* Date section */}
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-4 w-4 stroke-1" />
+                    <span>
+                      {post.date
+                        ? new Date(post.date).toLocaleString('kn-IN', {
+                            timeZone: 'Asia/Kolkata',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })
+                        : 'Unknown date'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Right: Social Icons */}
+                <div className="flex items-center gap-2 md:mt-0">
                   <div className="flex h-8 w-8 items-center justify-center">
                     <SocialIcons
                       url={`https://wa.me/whatsappphonenumber/?text=${pagePath}`}
@@ -203,44 +242,6 @@ export default async function Blog({ params }: PageParams) {
                   <div className="flex h-8 w-8 items-center justify-center">
                     <NativeShareIcon url={pagePath} image={ShareType.NATIVE} />
                   </div>
-                </div>
-              </div>
-
-              <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-500">
-                {/* Author section */}
-                <div className="flex items-center gap-1">
-                  {post.authorinfo?.writerImage?.node.mediaItemUrl ? (
-                    <Image
-                      src={post.authorinfo.writerImage.node.mediaItemUrl}
-                      alt="Author image"
-                      className="h-12 w-12 rounded-full object-cover"
-                      width={64}
-                      height={64}
-                    />
-                  ) : (
-                    <User className="h-4 w-4 stroke-1" />
-                  )}
-
-                  <span>
-                    {post.authorinfo?.writtenBy ??
-                      post.author?.node.name ??
-                      'Unknown'}
-                  </span>
-                </div>
-
-                {/* Date section */}
-                <div className="flex items-center gap-1">
-                  <Clock className="h-4 w-4 stroke-1" />
-                  <span>
-                    {post.date
-                      ? new Date(post.date).toLocaleString('kn-IN', {
-                          timeZone: 'Asia/Kolkata',
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })
-                      : 'Unknown date'}
-                  </span>
                 </div>
               </div>
 
