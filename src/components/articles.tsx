@@ -177,7 +177,7 @@ export default async function Articles() {
 
         {/* Bottom Row - 3 Column Grid */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {articles.slice(3).map((article) => (
+          {articles.slice(4).map((article) => (
             <Link
               key={article.slug}
               href={`/${article.categorySlug}/${article.slug}`}

@@ -12,7 +12,7 @@ export function SocialCard({
   author,
 }: ArticleCardProps) {
   return (
-    <div className="group p-0">
+    <div className="group">
       <div className="relative">
         <Image
           src={image}
@@ -23,7 +23,7 @@ export function SocialCard({
         />
       </div>
       <div className="bg-white">
-        <h3 className="mb-2 line-clamp-2 pt-4 text-2xl leading-tight font-black decoration-1 underline-offset-4 group-hover:underline">
+        <h3 className="line-clamp-2 pt-4 text-2xl leading-tight font-black decoration-1 underline-offset-4 group-hover:underline">
           {headline}
         </h3>
         <p className="text-sm leading-relaxed font-semibold">{subhead}</p>

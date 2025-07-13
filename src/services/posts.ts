@@ -50,6 +50,13 @@ export const LIMITED_POSTS_QUERY = graphql(`
         customfields {
           youtubeVideoUrl
         }
+        authorinfo {
+          writtenBy
+          writerImage {
+            node {
+              sourceUrl
+            }
+        }
       }
       pageInfo {
         offsetPagination {
