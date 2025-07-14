@@ -68,14 +68,14 @@ export default function Pagination({
     <div className="mt-8 flex items-center justify-center gap-2 text-base">
       <Link
         href={`${basePath}?page=${currentPage - 1}`}
-        className={`inline-flex h-10 w-10 items-center justify-center rounded ${currentPage === 1 ? 'pointer-events-none text-gray-300' : 'hover:bg-gray-100'}`}
+        className={`inline-flex h-10 w-10 items-center justify-center ${currentPage === 1 ? 'pointer-events-none text-gray-300' : 'hover:bg-gray-100'}`}
       >
         <ChevronLeft />
       </Link>
       {createPageLinks()}
       <Link
         href={`${basePath}?page=${currentPage + 1}`}
-        className={`inline-flex h-10 w-10 items-center justify-center rounded ${currentPage === totalPages ? 'pointer-events-none text-gray-300' : 'hover:bg-gray-100'}`}
+        className={`inline-flex h-10 w-10 items-center justify-center ${currentPage === totalPages ? 'pointer-events-none text-gray-300' : 'hover:bg-gray-100'}`}
       >
         <ChevronRight />
       </Link>

@@ -172,7 +172,7 @@ export function OpacityCarouselPrevButton(
     <button
       type="button"
       className={cn(
-        'z-10 m-0 flex aspect-square cursor-pointer touch-manipulation items-center justify-center rounded-full border-0 border-none bg-transparent p-0 outline-none disabled:cursor-not-allowed disabled:opacity-50',
+        'z-10 m-0 flex aspect-square cursor-pointer touch-manipulation items-center justify-center border-0 border-none bg-transparent p-0 outline-none disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
       disabled={context?.emblaApi?.canScrollPrev() === false || disabled}
@@ -200,7 +200,7 @@ export function OpacityCarouselNextButton(
     <button
       type="button"
       className={cn(
-        'z-10 m-0 flex aspect-square cursor-pointer touch-manipulation items-center justify-center rounded-full border-0 border-none bg-transparent p-0 outline-none disabled:cursor-not-allowed disabled:opacity-50',
+        'z-10 m-0 flex aspect-square cursor-pointer touch-manipulation items-center justify-center border-0 border-none bg-transparent p-0 outline-none disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
       disabled={context?.emblaApi?.canScrollNext() === false || disabled}

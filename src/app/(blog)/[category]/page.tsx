@@ -78,7 +78,7 @@ export default async function CategoryListing({
         </h2>
         <Link
           href=""
-          className="rounded-md bg-red-500 px-4 py-2 text-center text-white transition hover:bg-red-600"
+          className="bg-red-500 px-4 py-2 text-center text-white transition hover:bg-red-600"
         >
           Refresh
         </Link>
@@ -99,13 +99,13 @@ export default async function CategoryListing({
         <div className="flex gap-3">
           <Link
             href=""
-            className="rounded-md bg-red-500 px-4 py-2 text-white transition hover:bg-red-600"
+            className="bg-red-500 px-4 py-2 text-white transition hover:bg-red-600"
           >
             Refresh
           </Link>
           <Link
             href={`/${category}`}
-            className="rounded-md border border-gray-300 px-4 py-2 text-gray-700 transition hover:bg-gray-100"
+            className="border border-gray-300 px-4 py-2 text-gray-700 transition hover:bg-gray-100"
           >
             First page
           </Link>
@@ -148,7 +148,7 @@ export default async function CategoryListing({
                       <Image
                         src={post.authorinfo.writerImage.node.mediaItemUrl}
                         alt="Author image"
-                        className="h-6 w-6 rounded-full object-cover"
+                        className="h-12 w-12 rounded-full object-cover"
                         width={64}
                         height={64}
                       />

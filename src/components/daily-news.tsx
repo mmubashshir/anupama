@@ -29,7 +29,7 @@ export default async function DailyNews() {
         </h2>
         <Link
           href=""
-          className="rounded-md bg-red-500 px-4 py-2 text-center text-white transition hover:bg-red-600"
+          className="bg-red-500 px-4 py-2 text-center text-white transition hover:bg-red-600"
         >
           Refresh
         </Link>
