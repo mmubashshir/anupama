@@ -9,7 +9,7 @@ import { fetchLimitedPosts } from '~/services/posts';
 import { Container } from './container';
 import VideoCard from './video-card';
 
-export const revalidate = 60; // Revalidate every 1 minute
+export const revalidate = 60;
 
 export default async function VideoNews() {
   const videoPosts = await fetchLimitedPosts({
@@ -20,9 +20,7 @@ export default async function VideoNews() {
   });
 
   const posts = videoPosts.posts?.nodes ?? [];
-
   const latestVideo = posts.length > 0 ? posts[0] : null;
-
   const otherVideos = posts.slice(1, 5);
 
   return (
@@ -40,7 +38,6 @@ export default async function VideoNews() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 pt-6 lg:grid-cols-3">
-          {/* Main Featured Article */}
           <div className="overflow-hidden lg:col-span-2">
             {latestVideo ? (
               <div className="relative bg-white inset-shadow-2xs">
@@ -50,26 +47,24 @@ export default async function VideoNews() {
                     content={latestVideo.content}
                   />
                 </div>
-
                 <div className="group cursor-pointer p-4 text-center md:p-6">
-                  <span className="text-sm font-semibold text-gray-500">
-                    ವೀಡಿಯೊ
-                  </span>
-                  <h2 className="text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-2xl">
-                    {latestVideo.title ?? ''}
-                  </h2>
+                  <Link href={`/${CATEGORY.VideoNews}#video-${latestVideo.id}`}>
+                    <h2 className="text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-2xl">
+                      {latestVideo.title ?? ''}
+                    </h2>
+                  </Link>
                 </div>
               </div>
             ) : null}
           </div>
 
-          {/* Other Video Suggestions */}
           <div className="hidden space-y-4 md:block">
             {otherVideos.map((videoPost) => (
               <VideoCard
                 key={videoPost.id}
                 title={videoPost.title ?? ''}
                 videoContent={videoPost.content ?? ''}
+                linkId={`video-${videoPost.id}`}
               />
             ))}
           </div>

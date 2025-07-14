@@ -8,12 +8,8 @@ function WPContentRenderer(props: {
 }) {
   const { content, className } = props;
 
-  if (!content) {
-    return (
-      <div>
-        <p>No Content found</p>
-      </div>
-    );
+  if (!content || content.trim() === '') {
+    return null;
   }
 
   const sanitizedHtml = sanitizeHtml(content);

@@ -13,7 +13,7 @@ export const navLinks: NavLink[] = [
         href: '/daily-news',
       },
       {
-        title: 'ವಿಡಿಯೋ ಸುದ್ದಿ',
+        title: 'ವೀಡಿಯೊ ಸುದ್ದಿ',
         href: '/video-news',
       },
     ],
