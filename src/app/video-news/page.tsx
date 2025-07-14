@@ -5,11 +5,12 @@ import { Clock, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Sidebar from '~/components/category/sidebar';
 import { Container } from '~/components/container';
 import Pagination from '~/components/pagination';
+import VideoCardCompact from '~/components/video-card-compact';
 import WPContentRenderer from '~/components/wp-content-renderer';
 
+import { extractYouTubeIframe } from '~/utils/extract-iframe';
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
 
 import { fetchLimitedPosts } from '~/services/posts';
@@ -113,20 +114,36 @@ export default async function VideNews({
           {/* Blog Posts */}
           <div className="flex flex-col gap-12">
             {categoryPosts.map((post, index) => (
-              <div key={post.id} className="flex flex-col">
-                <div className="overflow-hidden">
-                  <Image
-                    src={
-                      post.featuredImage?.node.sourceUrl ??
-                      getPlaceholderImage()
-                    }
-                    alt={post.title ?? ''}
-                    width={400}
-                    height={250}
-                    className="aspect-[3/2] w-full object-cover transition duration-400 hover:scale-110 hover:brightness-50"
-                  />
+              <div
+                key={post.id}
+                id={`video-${post.id}`}
+                className="flex scroll-mt-32 flex-col"
+              >
+                <div className="relative w-full overflow-hidden">
+                  <div className="relative mx-auto aspect-video w-full max-w-4xl">
+                    {extractYouTubeIframe(post.content ?? '') ? (
+                      <div
+                        className="h-full w-full"
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            extractYouTubeIframe(post.content ?? '') ?? '',
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        src={
+                          post.featuredImage?.node.sourceUrl ??
+                          getPlaceholderImage()
+                        }
+                        alt={post.title ?? ''}
+                        width={400}
+                        height={250}
+                        className="w-full object-cover"
+                      />
+                    )}
+                  </div>
                 </div>
-                <h2 className="line-clamp-2 pt-4 text-3xl font-extrabold">
+                <h2 className="line-clamp-2 pt-4 text-2xl font-extrabold md:text-3xl">
                   {post.title}
                 </h2>
                 <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-500">
@@ -181,25 +198,18 @@ export default async function VideNews({
           )}
         </div>
 
-        {/* Sidebar */}
-        <Sidebar
-          recentPosts={recentPosts.map((post) => ({
-            id: post.id,
-            slug: post.slug,
-            title: post.title,
-            date: post.date,
-            featuredImage: post.featuredImage
-              ? {
-                  node: {
-                    sourceUrl:
-                      post.featuredImage.node.sourceUrl ??
-                      getPlaceholderImage(),
-                  },
-                }
-              : null,
-          }))}
-          category={CATEGORY.VideoNews as CATEGORY}
-        />
+        <div className="w-full lg:w-1/3">
+          <div className="sticky top-8 space-y-4">
+            <VideoCardCompact
+              posts={recentPosts.map((post) => ({
+                id: post.id,
+                title: post.title ?? '',
+                videoContent: post.content ?? '',
+                date: post.date ?? '',
+              }))}
+            />
+          </div>
+        </div>
       </div>
     </Container>
   );
