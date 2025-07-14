@@ -19,7 +19,7 @@ interface SidebarProps {
 
 export default function Sidebar({ recentPosts, category }: SidebarProps) {
   return (
-    <div className="w-full py-4 lg:w-1/3">
+    <div className="w-full py-4 md:pt-0 lg:w-1/3">
       <div className="sticky top-8">
         <div className="space-y-8">
           {/* Recent Posts */}

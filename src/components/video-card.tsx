@@ -17,7 +17,6 @@ export default function VideoCard({ title, videoContent }: VideoCardProps) {
         </div>
         {/* Text */}
         <div className="text-left">
-          <span className="text-sm font-semibold text-gray-500">ವೀಡಿಯೊ</span>
           <h3 className="mt-1 text-lg leading-tight font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-xl">
             {title}
           </h3>
