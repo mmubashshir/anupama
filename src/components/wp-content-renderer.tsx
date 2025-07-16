@@ -12,7 +12,10 @@ function WPContentRenderer(props: {
     return null;
   }
 
-  const sanitizedHtml = sanitizeHtml(content);
+  const sanitizedHtml = sanitizeHtml(content, {
+    nonBooleanAttributes: ['class', 'style', 'aria-*'],
+    allowedAttributes: { '*': ['class', 'style', 'aria-*'] },
+  });
 
   return (
     <article
