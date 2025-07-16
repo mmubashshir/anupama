@@ -84,7 +84,7 @@ export async function generateMetadata({
 
 export default async function Blog({ params }: PageParams) {
   const { slug, category } = await params;
-  const pagePath = `${BASE_URL}${category}/${slug}`;
+  const pagePath = `${BASE_URL}/${category}/${slug}`;
   const [postResponse, postsResponse, allPostsInCategoryResponse] =
     await Promise.allSettled([
       fetchPostBySlug(slug),
@@ -263,7 +263,7 @@ export default async function Blog({ params }: PageParams) {
             </div>
             <div className="flex h-8 w-8 items-center justify-center">
               <SocialIcons
-                url={`https://www.facebook.com/share.php?u=${pagePath}`}
+                url={`https://www.facebook.com/sharer/sharer.php?u=${pagePath}`}
                 image={ShareType.FACEBOOK}
                 width={22}
                 height={22}
