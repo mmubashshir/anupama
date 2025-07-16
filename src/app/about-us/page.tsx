@@ -40,13 +40,15 @@ export default function AboutUs() {
 function WriterCard({ name, image, position }: WriterCardProps) {
   return (
     <div className="flex w-86 gap-4">
-      <Image
-        className="rounded-full"
-        src={image}
-        alt={name}
-        width={100}
-        height={100}
-      />
+      <div className="h-24 w-24">
+        <Image
+          className="h-full w-full rounded-full object-cover"
+          src={image}
+          alt={name}
+          width={100}
+          height={100}
+        />
+      </div>
       <div className="flex flex-col justify-center gap-2">
         <h3 className="text-lg">{name}</h3>
         <span className="text-gray-600">{position}</span>
