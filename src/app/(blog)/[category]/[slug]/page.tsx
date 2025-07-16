@@ -1,7 +1,7 @@
 import { env } from 'process';
 import { createComment } from '~/app/actions/post-comment';
 import { BASE_URL } from '~/constants';
-import { type CATEGORY } from '~/enum/categories';
+import { CATEGORY } from '~/enum/categories';
 import { Clock, User } from 'lucide-react';
 import { type Metadata } from 'next';
 import Image from 'next/image';
@@ -97,6 +97,7 @@ export default async function Blog({ params }: PageParams) {
       fetchAllPosts({
         filter: {
           categoryName: category,
+          categoryNameNotIn: [CATEGORY.ADS],
         },
       }),
     ]);

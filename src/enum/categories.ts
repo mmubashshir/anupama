@@ -16,4 +16,5 @@ export enum CATEGORY {
   LifeTreasure = 'life-treasure',
   Editorial = 'editorial',
   MAGAZINE = 'magazine',
+  ADS = 'ads',
 }

@@ -11,6 +11,7 @@ import Stories from '~/components/stories';
 import VideoNews from '~/components/video-news';
 
 import { getLatestMagazinePdfUrl } from '~/utils/get-latest-magazine';
+import Advertisement from '~/components/advertisement';
 
 export const revalidate = 60; // Revalidate every 1 minute
 
@@ -56,6 +57,7 @@ export default function Home() {
   return (
     <>
       <Header />
+      <Advertisement />
       <Hero />
       <DailyNews />
       <VideoNews />
