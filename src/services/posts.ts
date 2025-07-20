@@ -7,6 +7,7 @@ import type { ResultOf, VariablesOf } from '~/utils/graphql-client';
 interface FetchAllPostsOptions {
   filter?: {
     categoryName?: string;
+    categoryNameNotIn?: string[];
   };
 }
 
@@ -55,6 +56,14 @@ export const LIMITED_POSTS_QUERY = graphql(`
             }
           }
         }
+        addetails {
+        adImage {
+         node {
+         mediaItemUrl
+         }
+         }
+        adLink
+         }
         customfields {
           youtubeVideoUrl
         }
@@ -117,6 +126,14 @@ const FETCH_POST_BY_SLUG_QUERY = graphql(`
           }
         }
       }
+         addetails {
+        adImage {
+         node {
+         mediaItemUrl
+         }
+         }
+        adLink
+         }
       categories {
         nodes {
           name
@@ -148,6 +165,14 @@ const FETCH_ALL_POSTS_QUERY = graphql(`
             sourceUrl
           }
         }
+        addetails {
+        adImage {
+         node {
+         mediaItemUrl
+         }
+         }
+        adLink
+         }
         categories {
           nodes {
             name
@@ -196,6 +221,21 @@ export async function fetchAllPosts(
     query: FETCH_ALL_POSTS_QUERY,
     variables: {
       filter: options?.filter ?? {},
+    },
+  });
+
+  return result.data.posts?.nodes ?? [];
+}
+
+export async function fetchOnlyAds(): Promise<
+  NonNullable<ResultOf<typeof FETCH_ALL_POSTS_QUERY>['posts']>['nodes']
+> {
+  const result = await query({
+    query: FETCH_ALL_POSTS_QUERY,
+    variables: {
+      filter: {
+        categoryName: 'ads',
+      },
     },
   });
 
