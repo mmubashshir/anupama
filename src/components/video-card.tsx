@@ -16,16 +16,16 @@ export default function VideoCard({
   return (
     <div className="border-b border-gray-200 py-4 last:border-b-0">
       <div className="group flex cursor-pointer flex-row-reverse items-start gap-3">
-        <div className="w-42">
+        <div className="aspect-video w-40 shrink-0 overflow-hidden">
           <WPVideoRenderer
-            className="video-container group-hover:brightness-[1.1]"
+            className="video-container h-full w-full object-cover group-hover:brightness-[1.1]"
             content={videoContent}
           />
         </div>
         {/* Text */}{' '}
         <Link href={`/video-news#${linkId}`}>
           <div className="text-left">
-            <h3 className="mt-1 line-clamp-2 text-lg leading-tight font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-xl">
+            <h3 className="mt-1 line-clamp-3 text-lg leading-tight font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-xl">
               {title}
             </h3>
           </div>

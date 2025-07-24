@@ -55,9 +55,6 @@ export const LIMITED_POSTS_QUERY = graphql(`
             }
           }
         }
-        customfields {
-          youtubeVideoUrl
-        }
       }
       pageInfo {
         offsetPagination {
@@ -152,9 +149,6 @@ const FETCH_ALL_POSTS_QUERY = graphql(`
           nodes {
             name
           }
-        }
-        customfields {
-          youtubeVideoUrl
         }
       }
     }

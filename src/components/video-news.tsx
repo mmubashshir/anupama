@@ -13,7 +13,7 @@ export const revalidate = 60;
 
 export default async function VideoNews() {
   const videoPosts = await fetchLimitedPosts({
-    first: 4,
+    first: 5,
     filter: {
       categoryName: CATEGORY.VideoNews,
     },

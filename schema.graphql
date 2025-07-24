@@ -5,6 +5,59 @@ schema {
 
 """The root entry point into the Graph"""
 type RootQuery {
+  """An object of the advertisement Type. """
+  advertisement(
+    """The globally unique identifier of the object."""
+    id: ID!
+
+    """Type of unique identifier to fetch by. Default is Global ID"""
+    idType: AdvertisementIdType
+
+    """
+    Whether to return the Preview Node instead of the Published Node. When the ID of a Node is provided along with asPreview being set to true, the preview node with un-published changes will be returned instead of the published node. If no preview node exists or the requester doesn't have proper capabilities to preview, no node will be returned. If the ID provided is a URI and has a preview query arg, it will be used as a fallback if the "asPreview" argument is not explicitly provided as an argument.
+    """
+    asPreview: Boolean
+  ): Advertisement
+
+  """A advertisement object"""
+  advertisementBy(
+    """Get the advertisement object by its global ID"""
+    id: ID
+
+    """Get the advertisement by its database ID"""
+    advertisementId: Int
+
+    """Get the advertisement by its uri"""
+    uri: String
+
+    """
+    Get the advertisement by its slug (only available for non-hierarchical types)
+    """
+    slug: String
+  ): Advertisement @deprecated(reason: "Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)")
+
+  """Connection between the RootQuery type and the advertisement type"""
+  advertisements(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """Arguments for filtering the connection"""
+    where: RootQueryToAdvertisementConnectionWhereArgs
+  ): RootQueryToAdvertisementConnection
+
   """Entry point to get all settings for the site"""
   allSettings: Settings
 
@@ -686,232 +739,388 @@ type RootQuery {
   writingSettings: WritingSettings
 }
 
-"""All of the registered settings"""
-type Settings {
-  """Settings of the the string Settings Group"""
-  discussionSettingsDefaultCommentStatus: String
-
-  """Settings of the the string Settings Group"""
-  discussionSettingsDefaultPingStatus: String
-
-  """Settings of the the string Settings Group"""
-  generalSettingsDateFormat: String
-
-  """Settings of the the string Settings Group"""
-  generalSettingsDescription: String
-
-  """Settings of the the string Settings Group"""
-  generalSettingsEmail: String
-
-  """Settings of the the string Settings Group"""
-  generalSettingsLanguage: String
-
-  """Settings of the the integer Settings Group"""
-  generalSettingsStartOfWeek: Int
-
-  """Settings of the the string Settings Group"""
-  generalSettingsTimeFormat: String
-
-  """Settings of the the string Settings Group"""
-  generalSettingsTimezone: String
-
-  """Settings of the the string Settings Group"""
-  generalSettingsTitle: String
-
-  """Settings of the the string Settings Group"""
-  generalSettingsUrl: String
-
-  """Settings of the the integer Settings Group"""
-  readingSettingsPageForPosts: Int
-
-  """Settings of the the integer Settings Group"""
-  readingSettingsPageOnFront: Int
-
-  """Settings of the the integer Settings Group"""
-  readingSettingsPostsPerPage: Int
-
-  """Settings of the the string Settings Group"""
-  readingSettingsShowOnFront: String
-
-  """Settings of the the integer Settings Group"""
-  writingSettingsDefaultCategory: Int
-
-  """Settings of the the string Settings Group"""
-  writingSettingsDefaultPostFormat: String
-
-  """Settings of the the boolean Settings Group"""
-  writingSettingsUseSmilies: Boolean
-}
-
-"""Arguments for filtering the RootQueryToCategoryConnection connection"""
-input RootQueryToCategoryConnectionWhereArgs {
-  """
-  Unique cache key to be produced when this query is stored in an object cache. Default is 'core'.
-  """
-  cacheDomain: String
-
-  """
-  Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0.
-  """
-  childOf: Int
-
-  """
-  True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false.
-  """
-  childless: Boolean
-
-  """
-  Retrieve terms where the description is LIKE the input value. Default empty.
-  """
-  descriptionLike: String
-
-  """
-  Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array.
-  """
-  exclude: [ID]
-
-  """
-  Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array.
-  """
-  excludeTree: [ID]
-
-  """
-  Whether to hide terms not assigned to any posts. Accepts true or false. Default false
-  """
-  hideEmpty: Boolean
-
-  """
-  Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true.
-  """
-  hierarchical: Boolean
-
-  """Array of term ids to include. Default empty array."""
-  include: [ID]
-
-  """Array of names to return term(s) for. Default empty."""
-  name: [String]
-
-  """Retrieve terms where the name is LIKE the input value. Default empty."""
-  nameLike: String
-
-  """
-  Array of object IDs. Results will be limited to terms associated with these objects.
-  """
-  objectIds: [ID]
-
-  """Direction the connection should be ordered in"""
-  order: OrderEnum
-
-  """Field(s) to order terms by. Defaults to 'name'."""
-  orderby: TermObjectsConnectionOrderbyEnum
-
-  """
-  Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false.
-  """
-  padCounts: Boolean
-
-  """Parent term ID to retrieve direct-child terms of. Default empty."""
-  parent: Int
-
-  """
-  Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty.
-  """
-  search: String
-
-  """Array of slugs to return term(s) for. Default empty."""
-  slug: [String]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID] @deprecated(reason: "Use `termTaxonomyId` instead")
-
-  """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomyId: [ID]
-
-  """Whether to prime meta caches for matched terms. Default true."""
-  updateTermMetaCache: Boolean
-}
-
 """
-Sort direction for ordered results. Determines whether items are returned in ascending or descending order.
+Identifier types for retrieving a specific Advertisement. Specifies which unique attribute is used to find an exact Advertisement.
 """
-enum OrderEnum {
-  """
-  Results ordered from lowest to highest values (i.e. A-Z, oldest-newest)
-  """
-  ASC
+enum AdvertisementIdType {
+  """Identify a resource by the Database ID."""
+  DATABASE_ID
+
+  """Identify a resource by the (hashed) Global ID."""
+  ID
 
   """
-  Results ordered from highest to lowest values (i.e. Z-A, newest-oldest)
+  Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier.
   """
-  DESC
-}
-
-"""
-Sorting attributes for taxonomy term collections. Determines which property of taxonomy terms is used for ordering results.
-"""
-enum TermObjectsConnectionOrderbyEnum {
-  """Ordering by number of associated content items."""
-  COUNT
-
-  """Alphabetical ordering by term description text."""
-  DESCRIPTION
-
-  """Alphabetical ordering by term name."""
-  NAME
-
-  """Alphabetical ordering by URL-friendly name."""
   SLUG
 
-  """Ordering by assigned term grouping value."""
-  TERM_GROUP
-
-  """Ordering by internal identifier."""
-  TERM_ID
-
-  """Ordering by manually defined sort position."""
-  TERM_ORDER
+  """Identify a resource by the URI."""
+  URI
 }
 
-"""Connection between the RootQuery type and the category type"""
-type RootQueryToCategoryConnection implements CategoryConnection & Connection {
-  """Edges for the RootQueryToCategoryConnection connection"""
-  edges: [RootQueryToCategoryConnectionEdge!]!
+"""The advertisement type"""
+type Advertisement implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & MenuItemLinkable & WithAcfAddetails {
+  """Fields of the Addetails ACF Field Group"""
+  addetails: Addetails
 
-  """The nodes of the connection, without the edges"""
-  nodes: [Category!]!
+  """The id field matches the WP_Post-&gt;ID field."""
+  advertisementId: Int! @deprecated(reason: "Deprecated in favor of the databaseId field")
 
-  """Information about pagination in a connection."""
-  pageInfo: RootQueryToCategoryConnectionPageInfo!
-}
+  """The ancestors of the content node."""
+  ancestors(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
 
-"""
-A paginated collection of category Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of category Nodes
-"""
-interface CategoryConnection implements Connection {
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): AdvertisementToAdvertisementConnection @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
+  """Connection between the ContentNode type and the ContentType type"""
+  contentType: ContentNodeToContentTypeConnectionEdge
+
+  """The name of the Content Type the node belongs to"""
+  contentTypeName: String!
+
+  """The unique identifier stored in the database"""
+  databaseId: Int!
+
+  """Post publishing date."""
+  date: String
+
+  """The publishing date set in GMT."""
+  dateGmt: String
+
+  """The desired slug of the post"""
+  desiredSlug: String
+
   """
-  A list of edges (relational context) between RootQuery and connected category Nodes
+  If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
   """
-  edges: [CategoryConnectionEdge!]!
+  editingLockedBy: ContentNodeToEditLockConnectionEdge
 
-  """A list of connected category Nodes"""
-  nodes: [Category!]!
+  """The RSS enclosure for the object"""
+  enclosure: String
 
-  """Information about pagination in a connection."""
-  pageInfo: CategoryConnectionPageInfo!
+  """Connection between the ContentNode type and the EnqueuedScript type"""
+  enqueuedScripts(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): ContentNodeToEnqueuedScriptConnection
+
+  """
+  Connection between the ContentNode type and the EnqueuedStylesheet type
+  """
+  enqueuedStylesheets(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): ContentNodeToEnqueuedStylesheetConnection
+
+  """
+  The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+  """
+  guid: String
+
+  """Whether the advertisements object is password protected."""
+  hasPassword: Boolean
+
+  """The globally unique identifier of the advertisements object."""
+  id: ID!
+
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
+  """Whether the node is a Content Node"""
+  isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
+
+  """Whether the object is a node in the preview state"""
+  isPreview: Boolean
+
+  """Whether the object is restricted from the current viewer"""
+  isRestricted: Boolean
+
+  """Whether the node is a Term"""
+  isTermNode: Boolean!
+
+  """The user that most recently edited the node"""
+  lastEditedBy: ContentNodeToEditLastConnectionEdge
+
+  """The permalink of the post"""
+  link: String
+
+  """
+  The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time.
+  """
+  modified: String
+
+  """
+  The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+  """
+  modifiedGmt: String
+
+  """The parent of the content node."""
+  parent: AdvertisementToParentConnectionEdge @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+
+  """The password for the advertisements object."""
+  password: String
+
+  """Connection between the Advertisement type and the advertisement type"""
+  preview: AdvertisementToPreviewConnectionEdge
+
+  """The database id of the preview node"""
+  previewRevisionDatabaseId: Int
+
+  """Whether the object is a node in the preview state"""
+  previewRevisionId: ID
+
+  """
+  The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
+  """
+  slug: String
+
+  """The current status of the object"""
+  status: String
+
+  """The template assigned to the node"""
+  template: ContentTemplate
+
+  """The unique resource identifier path"""
+  uri: String
 }
 
 """
-A paginated relationship between objects. Supports cursor-based pagination with edges containing relationship metadata and nodes containing the related objects.
+An object with a globally unique identifier. All objects that can be identified by a unique ID implement this interface.
 """
-interface Connection {
-  """A list of edges (relational context) between connected nodes"""
-  edges: [Edge!]!
+interface Node {
+  """The globally unique ID for the object"""
+  id: ID!
+}
 
-  """A list of connected nodes"""
-  nodes: [Node!]!
+"""
+Base interface for content objects like posts, pages, and media items. Provides common fields available across these content types.
+"""
+interface ContentNode implements Node & UniformResourceIdentifiable {
+  """Connection between the ContentNode type and the ContentType type"""
+  contentType: ContentNodeToContentTypeConnectionEdge
 
-  """Information about pagination in a connection."""
-  pageInfo: PageInfo!
+  """The name of the Content Type the node belongs to"""
+  contentTypeName: String!
+
+  """The ID of the node in the database."""
+  databaseId: Int!
+
+  """Post publishing date."""
+  date: String
+
+  """The publishing date set in GMT."""
+  dateGmt: String
+
+  """The desired slug of the post"""
+  desiredSlug: String
+
+  """
+  If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+  """
+  editingLockedBy: ContentNodeToEditLockConnectionEdge
+
+  """The RSS enclosure for the object"""
+  enclosure: String
+
+  """Connection between the ContentNode type and the EnqueuedScript type"""
+  enqueuedScripts(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): ContentNodeToEnqueuedScriptConnection
+
+  """
+  Connection between the ContentNode type and the EnqueuedStylesheet type
+  """
+  enqueuedStylesheets(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): ContentNodeToEnqueuedStylesheetConnection
+
+  """
+  The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+  """
+  guid: String
+
+  """The globally unique ID for the object"""
+  id: ID!
+
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
+  """Whether the node is a Content Node"""
+  isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
+
+  """Whether the object is a node in the preview state"""
+  isPreview: Boolean
+
+  """Whether the object is restricted from the current viewer"""
+  isRestricted: Boolean
+
+  """Whether the node is a Term"""
+  isTermNode: Boolean!
+
+  """The user that most recently edited the node"""
+  lastEditedBy: ContentNodeToEditLastConnectionEdge
+
+  """The permalink of the post"""
+  link: String
+
+  """
+  The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time.
+  """
+  modified: String
+
+  """
+  The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+  """
+  modifiedGmt: String
+
+  """The database id of the preview node"""
+  previewRevisionDatabaseId: Int
+
+  """Whether the object is a node in the preview state"""
+  previewRevisionId: ID
+
+  """
+  The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
+  """
+  slug: String
+
+  """The current status of the object"""
+  status: String
+
+  """The template assigned to a node of content"""
+  template: ContentTemplate
+
+  """The unique resource identifier path"""
+  uri: String
+}
+
+"""
+An interface for content that can be accessed via a unique URI/URL path. Implemented by content types that have their own permalinks.
+"""
+interface UniformResourceIdentifiable implements Node {
+  """The globally unique ID for the object"""
+  id: ID!
+
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
+  """Whether the node is a Content Node"""
+  isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
+
+  """Whether the node is a Term"""
+  isTermNode: Boolean!
+
+  """The unique resource identifier path"""
+  uri: String
+}
+
+"""Connection between the ContentNode type and the ContentType type"""
+type ContentNodeToContentTypeConnectionEdge implements OneToOneConnection & Edge & ContentTypeConnectionEdge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The node of the connection, without the edges"""
+  node: ContentType!
+}
+
+"""
+A direct one-to-one relationship between objects. Unlike plural connections, this represents a single related object rather than a collection.
+"""
+interface OneToOneConnection implements Edge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The connected node"""
+  node: Node!
 }
 
 """
@@ -928,11 +1137,217 @@ interface Edge {
 }
 
 """
-An object with a globally unique identifier. All objects that can be identified by a unique ID implement this interface.
+Represents a connection to a ContentType. Contains both the ContentType Node and metadata about the relationship.
 """
-interface Node {
-  """The globally unique ID for the object"""
+interface ContentTypeConnectionEdge implements Edge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The connected ContentType Node"""
+  node: ContentType!
+}
+
+"""An Post Type object"""
+type ContentType implements Node & UniformResourceIdentifiable {
+  """Whether this content type should can be exported."""
+  canExport: Boolean
+
+  """Connection between the ContentType type and the Taxonomy type"""
+  connectedTaxonomies(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): ContentTypeToTaxonomyConnection
+
+  """Connection between the ContentType type and the ContentNode type"""
+  contentNodes(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """Arguments for filtering the connection"""
+    where: ContentTypeToContentNodeConnectionWhereArgs
+  ): ContentTypeToContentNodeConnection
+
+  """
+  Whether content of this type should be deleted when the author of it is deleted from the system.
+  """
+  deleteWithUser: Boolean
+
+  """Description of the content type."""
+  description: String
+
+  """
+  Whether to exclude nodes of this content type from front end search results.
+  """
+  excludeFromSearch: Boolean
+
+  """The plural name of the content type within the GraphQL Schema."""
+  graphqlPluralName: String
+
+  """The singular name of the content type within the GraphQL Schema."""
+  graphqlSingleName: String
+
+  """
+  Whether this content type should have archives. Content archives are generated by type and by date.
+  """
+  hasArchive: Boolean
+
+  """Whether the content type is hierarchical, for example pages."""
+  hierarchical: Boolean
+
+  """The globally unique identifier of the post-type object."""
   id: ID!
+
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
+  """Whether the node is a Content Node"""
+  isContentNode: Boolean!
+
+  """Whether this page is set to the static front page."""
+  isFrontPage: Boolean!
+
+  """Whether this page is set to the blog posts page."""
+  isPostsPage: Boolean!
+
+  """Whether the object is restricted from the current viewer"""
+  isRestricted: Boolean
+
+  """Whether the node is a Term"""
+  isTermNode: Boolean!
+
+  """Display name of the content type."""
+  label: String
+
+  """Details about the content type labels."""
+  labels: PostTypeLabelDetails
+
+  """The name of the icon file to display as a menu icon."""
+  menuIcon: String
+
+  """
+  The position of this post type in the menu. Only applies if show_in_menu is true.
+  """
+  menuPosition: Int
+
+  """
+  The internal name of the post type. This should not be used for display purposes.
+  """
+  name: String
+
+  """
+  Whether a content type is intended for use publicly either via the admin interface or by front-end users. While the default settings of exclude_from_search, publicly_queryable, show_ui, and show_in_nav_menus are inherited from public, each does not rely on this relationship and controls a very specific intention.
+  """
+  public: Boolean
+
+  """
+  Whether queries can be performed on the front end for the content type as part of parse_request().
+  """
+  publiclyQueryable: Boolean
+
+  """
+  Name of content type to display in REST API &quot;wp/v2&quot; namespace.
+  """
+  restBase: String
+
+  """The REST Controller class assigned to handling this content type."""
+  restControllerClass: String
+
+  """Makes this content type available via the admin bar."""
+  showInAdminBar: Boolean
+
+  """Whether to add the content type to the GraphQL Schema."""
+  showInGraphql: Boolean
+
+  """
+  Where to show the content type in the admin menu. To work, $show_ui must be true. If true, the post type is shown in its own top level menu. If false, no menu is shown. If a string of an existing top level menu (eg. &quot;tools.php&quot; or &quot;edit.php?post_type=page&quot;), the post type will be placed as a sub-menu of that.
+  """
+  showInMenu: Boolean
+
+  """Makes this content type available for selection in navigation menus."""
+  showInNavMenus: Boolean
+
+  """
+  Whether the content type is associated with a route under the the REST API &quot;wp/v2&quot; namespace.
+  """
+  showInRest: Boolean
+
+  """
+  Whether to generate and allow a UI for managing this content type in the admin.
+  """
+  showUi: Boolean
+
+  """The unique resource identifier path"""
+  uri: String
+}
+
+"""Connection between the ContentType type and the Taxonomy type"""
+type ContentTypeToTaxonomyConnection implements TaxonomyConnection & Connection {
+  """Edges for the ContentTypeToTaxonomyConnection connection"""
+  edges: [ContentTypeToTaxonomyConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [Taxonomy!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: ContentTypeToTaxonomyConnectionPageInfo!
+}
+
+"""
+A paginated collection of Taxonomy Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of Taxonomy Nodes
+"""
+interface TaxonomyConnection implements Connection {
+  """
+  A list of edges (relational context) between RootQuery and connected Taxonomy Nodes
+  """
+  edges: [TaxonomyConnectionEdge!]!
+
+  """A list of connected Taxonomy Nodes"""
+  nodes: [Taxonomy!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: TaxonomyConnectionPageInfo!
+}
+
+"""
+A paginated relationship between objects. Supports cursor-based pagination with edges containing relationship metadata and nodes containing the related objects.
+"""
+interface Connection {
+  """A list of edges (relational context) between connected nodes"""
+  edges: [Edge!]!
+
+  """A list of connected nodes"""
+  nodes: [Node!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: PageInfo!
 }
 
 """
@@ -953,212 +1368,286 @@ interface PageInfo {
 }
 
 """
-Represents a connection to a category. Contains both the category Node and metadata about the relationship.
+Represents a connection to a Taxonomy. Contains both the Taxonomy Node and metadata about the relationship.
 """
-interface CategoryConnectionEdge implements Edge {
+interface TaxonomyConnectionEdge implements Edge {
   """
   Opaque reference to the nodes position in the connection. Value can be used with pagination args.
   """
   cursor: String
 
-  """The connected category Node"""
-  node: Category!
+  """The connected Taxonomy Node"""
+  node: Taxonomy!
 }
 
-"""
-A taxonomy term that classifies content. Categories support hierarchy and can be used to create a nested structure.
-"""
-type Category implements Node & TermNode & UniformResourceIdentifiable & DatabaseIdentifier & HierarchicalTermNode & HierarchicalNode & MenuItemLinkable {
+"""A taxonomy object"""
+type Taxonomy implements Node {
+  """List of Content Types associated with the Taxonomy"""
+  connectedContentTypes(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): TaxonomyToContentTypeConnection
+
+  """List of Term Nodes associated with the Taxonomy"""
+  connectedTerms(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): TaxonomyToTermNodeConnection
+
   """
-  The ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root).
+  Description of the taxonomy. This field is equivalent to WP_Taxonomy-&gt;description
   """
-  ancestors(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
-
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
-
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
-
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-  ): CategoryToAncestorsCategoryConnection
-
-  """The id field matches the WP_Post-&gt;ID field."""
-  categoryId: Int @deprecated(reason: "Deprecated in favor of databaseId")
-
-  """Connection between the category type and its children categories."""
-  children(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
-
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
-
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
-
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-
-    """Arguments for filtering the connection"""
-    where: CategoryToCategoryConnectionWhereArgs
-  ): CategoryToCategoryConnection
-
-  """Connection between the Category type and the ContentNode type"""
-  contentNodes(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
-
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
-
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
-
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-
-    """Arguments for filtering the connection"""
-    where: CategoryToContentNodeConnectionWhereArgs
-  ): CategoryToContentNodeConnection
-
-  """The number of objects connected to the object"""
-  count: Int
-
-  """The unique identifier stored in the database"""
-  databaseId: Int!
-
-  """The description of the object"""
   description: String
 
-  """Connection between the TermNode type and the EnqueuedScript type"""
-  enqueuedScripts(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
+  """The plural name of the post type within the GraphQL Schema."""
+  graphqlPluralName: String
 
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
+  """The singular name of the post type within the GraphQL Schema."""
+  graphqlSingleName: String
 
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
+  """Whether the taxonomy is hierarchical"""
+  hierarchical: Boolean
 
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-  ): TermNodeToEnqueuedScriptConnection
-
-  """Connection between the TermNode type and the EnqueuedStylesheet type"""
-  enqueuedStylesheets(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
-
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
-
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
-
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-  ): TermNodeToEnqueuedStylesheetConnection
-
-  """The globally unique ID for the object"""
+  """The globally unique identifier of the taxonomy object."""
   id: ID!
-
-  """Whether the node is a Comment"""
-  isComment: Boolean!
-
-  """Whether the node is a Content Node"""
-  isContentNode: Boolean!
-
-  """Whether the node represents the front page."""
-  isFrontPage: Boolean!
-
-  """Whether  the node represents the blog page."""
-  isPostsPage: Boolean!
 
   """Whether the object is restricted from the current viewer"""
   isRestricted: Boolean
 
-  """Whether the node is a Term"""
-  isTermNode: Boolean!
+  """Name of the taxonomy shown in the menu. Usually plural."""
+  label: String
 
-  """The link to the term"""
-  link: String
-
-  """The human friendly name of the object."""
+  """
+  The display name of the taxonomy. This field is equivalent to WP_Taxonomy-&gt;label
+  """
   name: String
 
-  """Connection between the category type and its parent category."""
-  parent: CategoryToParentCategoryConnectionEdge
+  """Whether the taxonomy is publicly queryable"""
+  public: Boolean
 
-  """Database id of the parent node"""
-  parentDatabaseId: Int
+  """
+  Name of content type to display in REST API &quot;wp/v2&quot; namespace.
+  """
+  restBase: String
 
-  """The globally unique identifier of the parent node."""
-  parentId: ID
+  """The REST Controller class assigned to handling this content type."""
+  restControllerClass: String
 
-  """Connection between the Category type and the post type"""
-  posts(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
+  """
+  Whether to show the taxonomy as part of a tag cloud widget. This field is equivalent to WP_Taxonomy-&gt;show_tagcloud
+  """
+  showCloud: Boolean
 
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
+  """
+  Whether to display a column for the taxonomy on its post type listing screens.
+  """
+  showInAdminColumn: Boolean
 
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
+  """Whether to add the post type to the GraphQL Schema."""
+  showInGraphql: Boolean
 
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
+  """Whether to show the taxonomy in the admin menu"""
+  showInMenu: Boolean
 
-    """Arguments for filtering the connection"""
-    where: CategoryToPostConnectionWhereArgs
-  ): CategoryToPostConnection
+  """Whether the taxonomy is available for selection in navigation menus."""
+  showInNavMenus: Boolean
 
-  """An alphanumeric identifier for the object unique to its type."""
-  slug: String
+  """Whether to show the taxonomy in the quick/bulk edit panel."""
+  showInQuickEdit: Boolean
 
-  """Connection between the Category type and the Taxonomy type"""
-  taxonomy: CategoryToTaxonomyConnectionEdge
+  """
+  Whether to add the post type route in the REST API &quot;wp/v2&quot; namespace.
+  """
+  showInRest: Boolean
 
-  """The name of the taxonomy that the object is associated with"""
-  taxonomyName: String
+  """
+  Whether to generate and allow a UI for managing terms in this taxonomy in the admin
+  """
+  showUi: Boolean
+}
 
-  """The ID of the term group that this term object belongs to"""
-  termGroupId: Int
+"""Connection between the Taxonomy type and the ContentType type"""
+type TaxonomyToContentTypeConnection implements ContentTypeConnection & Connection {
+  """Edges for the TaxonomyToContentTypeConnection connection"""
+  edges: [TaxonomyToContentTypeConnectionEdge!]!
 
-  """The taxonomy ID that the object is associated with"""
-  termTaxonomyId: Int
+  """The nodes of the connection, without the edges"""
+  nodes: [ContentType!]!
 
-  """The unique resource identifier path"""
-  uri: String
+  """Information about pagination in a connection."""
+  pageInfo: TaxonomyToContentTypeConnectionPageInfo!
+}
+
+"""
+A paginated collection of ContentType Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of ContentType Nodes
+"""
+interface ContentTypeConnection implements Connection {
+  """
+  A list of edges (relational context) between RootQuery and connected ContentType Nodes
+  """
+  edges: [ContentTypeConnectionEdge!]!
+
+  """A list of connected ContentType Nodes"""
+  nodes: [ContentType!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: ContentTypeConnectionPageInfo!
+}
+
+"""
+Pagination metadata specific to &quot;ContentTypeConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;ContentTypeConnectionEdge&quot; Nodes.
+"""
+interface ContentTypeConnectionPageInfo implements WPPageInfo & PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""
+Metadata for cursor-based pagination. Provides cursors for continuing pagination and boolean flags indicating if more items exist in either direction.
+"""
+interface WPPageInfo implements PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""Get information about the offset pagination state"""
+type OffsetPaginationPageInfo {
+  """
+  True if there is one or more nodes available in this connection. Eg. you can increase the offset at least by one.
+  """
+  hasMore: Boolean
+
+  """True when offset can be decresed eg. offset is 0&lt;"""
+  hasPrevious: Boolean
+
+  """Total amount of nodes in this connection"""
+  total: Int
+}
+
+"""An edge in a connection"""
+type TaxonomyToContentTypeConnectionEdge implements ContentTypeConnectionEdge & Edge {
+  """A cursor for use in pagination"""
+  cursor: String
+
+  """The item at the end of the edge"""
+  node: ContentType!
+}
+
+"""
+Pagination metadata specific to &quot;TaxonomyToContentTypeConnection&quot; collections. Provides cursors and flags for navigating through sets of TaxonomyToContentTypeConnection Nodes.
+"""
+type TaxonomyToContentTypeConnectionPageInfo implements ContentTypeConnectionPageInfo & WPPageInfo & PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""Connection between the Taxonomy type and the TermNode type"""
+type TaxonomyToTermNodeConnection implements TermNodeConnection & Connection {
+  """Edges for the TaxonomyToTermNodeConnection connection"""
+  edges: [TaxonomyToTermNodeConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [TermNode!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: TaxonomyToTermNodeConnectionPageInfo!
+}
+
+"""
+A paginated collection of TermNode Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of TermNode Nodes
+"""
+interface TermNodeConnection implements Connection {
+  """
+  A list of edges (relational context) between RootQuery and connected TermNode Nodes
+  """
+  edges: [TermNodeConnectionEdge!]!
+
+  """A list of connected TermNode Nodes"""
+  nodes: [TermNode!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: TermNodeConnectionPageInfo!
+}
+
+"""
+Represents a connection to a TermNode. Contains both the TermNode Node and metadata about the relationship.
+"""
+interface TermNodeConnectionEdge implements Edge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The connected TermNode Node"""
+  node: TermNode!
 }
 
 """
@@ -1250,32 +1739,6 @@ interface TermNode implements Node & UniformResourceIdentifiable {
 
   """The taxonomy ID that the object is associated with"""
   termTaxonomyId: Int
-
-  """The unique resource identifier path"""
-  uri: String
-}
-
-"""
-An interface for content that can be accessed via a unique URI/URL path. Implemented by content types that have their own permalinks.
-"""
-interface UniformResourceIdentifiable implements Node {
-  """The globally unique ID for the object"""
-  id: ID!
-
-  """Whether the node is a Comment"""
-  isComment: Boolean!
-
-  """Whether the node is a Content Node"""
-  isContentNode: Boolean!
-
-  """Whether the node represents the front page."""
-  isFrontPage: Boolean!
-
-  """Whether  the node represents the blog page."""
-  isPostsPage: Boolean!
-
-  """Whether the node is a Term"""
-  isTermNode: Boolean!
 
   """The unique resource identifier path"""
   uri: String
@@ -1459,42 +1922,6 @@ interface EnqueuedScriptConnectionPageInfo implements WPPageInfo & PageInfo {
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
-}
-
-"""
-Metadata for cursor-based pagination. Provides cursors for continuing pagination and boolean flags indicating if more items exist in either direction.
-"""
-interface WPPageInfo implements PageInfo {
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """
-  Get information about the offset pagination state in the current connection
-  """
-  offsetPagination: OffsetPaginationPageInfo
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-}
-
-"""Get information about the offset pagination state"""
-type OffsetPaginationPageInfo {
-  """
-  True if there is one or more nodes available in this connection. Eg. you can increase the offset at least by one.
-  """
-  hasMore: Boolean
-
-  """True when offset can be decresed eg. offset is 0&lt;"""
-  hasPrevious: Boolean
-
-  """Total amount of nodes in this connection"""
-  total: Int
 }
 
 """An edge in a connection"""
@@ -1683,182 +2110,40 @@ type TermNodeToEnqueuedStylesheetConnectionPageInfo implements EnqueuedStyleshee
 }
 
 """
-An object that has a unique numeric identifier in the database. Provides consistent access to the database ID across different object types.
+Pagination metadata specific to &quot;TermNodeConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;TermNodeConnectionEdge&quot; Nodes.
 """
-interface DatabaseIdentifier {
-  """The unique identifier stored in the database"""
-  databaseId: Int!
-}
+interface TermNodeConnectionPageInfo implements WPPageInfo & PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
 
-"""Term node with hierarchical (parent/child) relationships"""
-interface HierarchicalTermNode implements Node & TermNode & UniformResourceIdentifiable & DatabaseIdentifier & HierarchicalNode {
-  """The number of objects connected to the object"""
-  count: Int
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
 
-  """The unique identifier stored in the database"""
-  databaseId: Int!
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
 
-  """The description of the object"""
-  description: String
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
 
-  """Connection between the TermNode type and the EnqueuedScript type"""
-  enqueuedScripts(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
-
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
-
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
-
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-  ): TermNodeToEnqueuedScriptConnection
-
-  """Connection between the TermNode type and the EnqueuedStylesheet type"""
-  enqueuedStylesheets(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
-
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
-
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
-
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-  ): TermNodeToEnqueuedStylesheetConnection
-
-  """The globally unique ID for the object"""
-  id: ID!
-
-  """Whether the node is a Comment"""
-  isComment: Boolean!
-
-  """Whether the node is a Content Node"""
-  isContentNode: Boolean!
-
-  """Whether the node represents the front page."""
-  isFrontPage: Boolean!
-
-  """Whether  the node represents the blog page."""
-  isPostsPage: Boolean!
-
-  """Whether the object is restricted from the current viewer"""
-  isRestricted: Boolean
-
-  """Whether the node is a Term"""
-  isTermNode: Boolean!
-
-  """The link to the term"""
-  link: String
-
-  """The human friendly name of the object."""
-  name: String
-
-  """Database id of the parent node"""
-  parentDatabaseId: Int
-
-  """The globally unique identifier of the parent node."""
-  parentId: ID
-
-  """An alphanumeric identifier for the object unique to its type."""
-  slug: String
-
-  """The name of the taxonomy that the object is associated with"""
-  taxonomyName: String
-
-  """The ID of the term group that this term object belongs to"""
-  termGroupId: Int
-
-  """The taxonomy ID that the object is associated with"""
-  termTaxonomyId: Int
-
-  """The unique resource identifier path"""
-  uri: String
-}
-
-"""
-Content that can exist in a parent-child structure. Provides fields for navigating up (parent) and down (children) through the hierarchy.
-"""
-interface HierarchicalNode implements Node & DatabaseIdentifier {
-  """The unique identifier stored in the database"""
-  databaseId: Int!
-
-  """The globally unique ID for the object"""
-  id: ID!
-
-  """Database id of the parent node"""
-  parentDatabaseId: Int
-
-  """The globally unique identifier of the parent node."""
-  parentId: ID
-}
-
-"""
-Content that can be referenced by navigation menu items. Provides the essential fields needed to create links within navigation structures.
-"""
-interface MenuItemLinkable implements Node & UniformResourceIdentifiable & DatabaseIdentifier {
-  """The unique identifier stored in the database"""
-  databaseId: Int!
-
-  """The globally unique ID for the object"""
-  id: ID!
-
-  """Whether the node is a Comment"""
-  isComment: Boolean!
-
-  """Whether the node is a Content Node"""
-  isContentNode: Boolean!
-
-  """Whether the node represents the front page."""
-  isFrontPage: Boolean!
-
-  """Whether  the node represents the blog page."""
-  isPostsPage: Boolean!
-
-  """Whether the node is a Term"""
-  isTermNode: Boolean!
-
-  """The unique resource identifier path"""
-  uri: String
-}
-
-"""Connection between the Category type and the category type"""
-type CategoryToAncestorsCategoryConnection implements CategoryConnection & Connection {
-  """Edges for the CategoryToAncestorsCategoryConnection connection"""
-  edges: [CategoryToAncestorsCategoryConnectionEdge!]!
-
-  """The nodes of the connection, without the edges"""
-  nodes: [Category!]!
-
-  """Information about pagination in a connection."""
-  pageInfo: CategoryToAncestorsCategoryConnectionPageInfo!
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
 }
 
 """An edge in a connection"""
-type CategoryToAncestorsCategoryConnectionEdge implements CategoryConnectionEdge & Edge {
+type TaxonomyToTermNodeConnectionEdge implements TermNodeConnectionEdge & Edge {
   """A cursor for use in pagination"""
   cursor: String
 
   """The item at the end of the edge"""
-  node: Category!
+  node: TermNode!
 }
 
 """
-Pagination metadata specific to &quot;CategoryToAncestorsCategoryConnection&quot; collections. Provides cursors and flags for navigating through sets of CategoryToAncestorsCategoryConnection Nodes.
+Pagination metadata specific to &quot;TaxonomyToTermNodeConnection&quot; collections. Provides cursors and flags for navigating through sets of TaxonomyToTermNodeConnection Nodes.
 """
-type CategoryToAncestorsCategoryConnectionPageInfo implements CategoryConnectionPageInfo & WPPageInfo & PageInfo {
+type TaxonomyToTermNodeConnectionPageInfo implements TermNodeConnectionPageInfo & WPPageInfo & PageInfo {
   """When paginating forwards, the cursor to continue."""
   endCursor: String
 
@@ -1878,9 +2163,9 @@ type CategoryToAncestorsCategoryConnectionPageInfo implements CategoryConnection
 }
 
 """
-Pagination metadata specific to &quot;CategoryConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;CategoryConnectionEdge&quot; Nodes.
+Pagination metadata specific to &quot;TaxonomyConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;TaxonomyConnectionEdge&quot; Nodes.
 """
-interface CategoryConnectionPageInfo implements WPPageInfo & PageInfo {
+interface TaxonomyConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating forwards, the cursor to continue."""
   endCursor: String
 
@@ -1897,121 +2182,21 @@ interface CategoryConnectionPageInfo implements WPPageInfo & PageInfo {
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
-}
-
-"""Arguments for filtering the CategoryToCategoryConnection connection"""
-input CategoryToCategoryConnectionWhereArgs {
-  """
-  Unique cache key to be produced when this query is stored in an object cache. Default is 'core'.
-  """
-  cacheDomain: String
-
-  """
-  Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0.
-  """
-  childOf: Int
-
-  """
-  True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false.
-  """
-  childless: Boolean
-
-  """
-  Retrieve terms where the description is LIKE the input value. Default empty.
-  """
-  descriptionLike: String
-
-  """
-  Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array.
-  """
-  exclude: [ID]
-
-  """
-  Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array.
-  """
-  excludeTree: [ID]
-
-  """
-  Whether to hide terms not assigned to any posts. Accepts true or false. Default false
-  """
-  hideEmpty: Boolean
-
-  """
-  Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true.
-  """
-  hierarchical: Boolean
-
-  """Array of term ids to include. Default empty array."""
-  include: [ID]
-
-  """Array of names to return term(s) for. Default empty."""
-  name: [String]
-
-  """Retrieve terms where the name is LIKE the input value. Default empty."""
-  nameLike: String
-
-  """
-  Array of object IDs. Results will be limited to terms associated with these objects.
-  """
-  objectIds: [ID]
-
-  """Direction the connection should be ordered in"""
-  order: OrderEnum
-
-  """Field(s) to order terms by. Defaults to 'name'."""
-  orderby: TermObjectsConnectionOrderbyEnum
-
-  """
-  Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false.
-  """
-  padCounts: Boolean
-
-  """Parent term ID to retrieve direct-child terms of. Default empty."""
-  parent: Int
-
-  """
-  Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty.
-  """
-  search: String
-
-  """Array of slugs to return term(s) for. Default empty."""
-  slug: [String]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID] @deprecated(reason: "Use `termTaxonomyId` instead")
-
-  """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomyId: [ID]
-
-  """Whether to prime meta caches for matched terms. Default true."""
-  updateTermMetaCache: Boolean
-}
-
-"""Connection between the Category type and the category type"""
-type CategoryToCategoryConnection implements CategoryConnection & Connection {
-  """Edges for the CategoryToCategoryConnection connection"""
-  edges: [CategoryToCategoryConnectionEdge!]!
-
-  """The nodes of the connection, without the edges"""
-  nodes: [Category!]!
-
-  """Information about pagination in a connection."""
-  pageInfo: CategoryToCategoryConnectionPageInfo!
 }
 
 """An edge in a connection"""
-type CategoryToCategoryConnectionEdge implements CategoryConnectionEdge & Edge {
+type ContentTypeToTaxonomyConnectionEdge implements TaxonomyConnectionEdge & Edge {
   """A cursor for use in pagination"""
   cursor: String
 
   """The item at the end of the edge"""
-  node: Category!
+  node: Taxonomy!
 }
 
 """
-Pagination metadata specific to &quot;CategoryToCategoryConnection&quot; collections. Provides cursors and flags for navigating through sets of CategoryToCategoryConnection Nodes.
+Pagination metadata specific to &quot;ContentTypeToTaxonomyConnection&quot; collections. Provides cursors and flags for navigating through sets of ContentTypeToTaxonomyConnection Nodes.
 """
-type CategoryToCategoryConnectionPageInfo implements CategoryConnectionPageInfo & WPPageInfo & PageInfo {
+type ContentTypeToTaxonomyConnectionPageInfo implements TaxonomyConnectionPageInfo & WPPageInfo & PageInfo {
   """When paginating forwards, the cursor to continue."""
   endCursor: String
 
@@ -2030,10 +2215,12 @@ type CategoryToCategoryConnectionPageInfo implements CategoryConnectionPageInfo 
   startCursor: String
 }
 
-"""Arguments for filtering the CategoryToContentNodeConnection connection"""
-input CategoryToContentNodeConnectionWhereArgs {
+"""
+Arguments for filtering the ContentTypeToContentNodeConnection connection
+"""
+input ContentTypeToContentNodeConnectionWhereArgs {
   """The Types of content to filter"""
-  contentTypes: [ContentTypesOfCategoryEnum]
+  contentTypes: [ContentTypeEnum]
 
   """Filter the connection based on dates"""
   dateQuery: DateQueryInput
@@ -2091,8 +2278,19 @@ input CategoryToContentNodeConnectionWhereArgs {
   title: String
 }
 
-"""Allowed Content Types of the Category taxonomy."""
-enum ContentTypesOfCategoryEnum {
+"""
+Available content entity types that can be queried or filtered. Identifies the primary content structures available in the system.
+"""
+enum ContentTypeEnum {
+  """The Type of Content object"""
+  ADVERTISEMENTS
+
+  """The Type of Content object"""
+  ATTACHMENT
+
+  """The Type of Content object"""
+  PAGE
+
   """The Type of Content object"""
   POST
 }
@@ -2522,6 +2720,21 @@ enum PostObjectsConnectionOrderbyEnum {
 }
 
 """
+Sort direction for ordered results. Determines whether items are returned in ascending or descending order.
+"""
+enum OrderEnum {
+  """
+  Results ordered from lowest to highest values (i.e. A-Z, oldest-newest)
+  """
+  ASC
+
+  """
+  Results ordered from highest to lowest values (i.e. Z-A, newest-oldest)
+  """
+  DESC
+}
+
+"""
 Publishing status that controls the visibility and editorial state of content. Determines whether content is published, pending review, in draft state, or private.
 """
 enum PostStatusEnum {
@@ -2565,16 +2778,16 @@ enum PostStatusEnum {
   TRASH
 }
 
-"""Connection between the Category type and the ContentNode type"""
-type CategoryToContentNodeConnection implements ContentNodeConnection & Connection {
-  """Edges for the CategoryToContentNodeConnection connection"""
-  edges: [CategoryToContentNodeConnectionEdge!]!
+"""Connection between the ContentType type and the ContentNode type"""
+type ContentTypeToContentNodeConnection implements ContentNodeConnection & Connection {
+  """Edges for the ContentTypeToContentNodeConnection connection"""
+  edges: [ContentTypeToContentNodeConnectionEdge!]!
 
   """The nodes of the connection, without the edges"""
   nodes: [ContentNode!]!
 
   """Information about pagination in a connection."""
-  pageInfo: CategoryToContentNodeConnectionPageInfo!
+  pageInfo: ContentTypeToContentNodeConnectionPageInfo!
 }
 
 """
@@ -2607,522 +2820,9 @@ interface ContentNodeConnectionEdge implements Edge {
 }
 
 """
-Base interface for content objects like posts, pages, and media items. Provides common fields available across these content types.
+Pagination metadata specific to &quot;ContentNodeConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;ContentNodeConnectionEdge&quot; Nodes.
 """
-interface ContentNode implements Node & UniformResourceIdentifiable {
-  """Connection between the ContentNode type and the ContentType type"""
-  contentType: ContentNodeToContentTypeConnectionEdge
-
-  """The name of the Content Type the node belongs to"""
-  contentTypeName: String!
-
-  """The ID of the node in the database."""
-  databaseId: Int!
-
-  """Post publishing date."""
-  date: String
-
-  """The publishing date set in GMT."""
-  dateGmt: String
-
-  """The desired slug of the post"""
-  desiredSlug: String
-
-  """
-  If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
-  """
-  editingLockedBy: ContentNodeToEditLockConnectionEdge
-
-  """The RSS enclosure for the object"""
-  enclosure: String
-
-  """Connection between the ContentNode type and the EnqueuedScript type"""
-  enqueuedScripts(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
-
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
-
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
-
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-  ): ContentNodeToEnqueuedScriptConnection
-
-  """
-  Connection between the ContentNode type and the EnqueuedStylesheet type
-  """
-  enqueuedStylesheets(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
-
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
-
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
-
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-  ): ContentNodeToEnqueuedStylesheetConnection
-
-  """
-  The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
-  """
-  guid: String
-
-  """The globally unique ID for the object"""
-  id: ID!
-
-  """Whether the node is a Comment"""
-  isComment: Boolean!
-
-  """Whether the node is a Content Node"""
-  isContentNode: Boolean!
-
-  """Whether the node represents the front page."""
-  isFrontPage: Boolean!
-
-  """Whether  the node represents the blog page."""
-  isPostsPage: Boolean!
-
-  """Whether the object is a node in the preview state"""
-  isPreview: Boolean
-
-  """Whether the object is restricted from the current viewer"""
-  isRestricted: Boolean
-
-  """Whether the node is a Term"""
-  isTermNode: Boolean!
-
-  """The user that most recently edited the node"""
-  lastEditedBy: ContentNodeToEditLastConnectionEdge
-
-  """The permalink of the post"""
-  link: String
-
-  """
-  The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time.
-  """
-  modified: String
-
-  """
-  The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
-  """
-  modifiedGmt: String
-
-  """The database id of the preview node"""
-  previewRevisionDatabaseId: Int
-
-  """Whether the object is a node in the preview state"""
-  previewRevisionId: ID
-
-  """
-  The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
-  """
-  slug: String
-
-  """The current status of the object"""
-  status: String
-
-  """The template assigned to a node of content"""
-  template: ContentTemplate
-
-  """The unique resource identifier path"""
-  uri: String
-}
-
-"""Connection between the ContentNode type and the ContentType type"""
-type ContentNodeToContentTypeConnectionEdge implements OneToOneConnection & Edge & ContentTypeConnectionEdge {
-  """
-  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
-  """
-  cursor: String
-
-  """The node of the connection, without the edges"""
-  node: ContentType!
-}
-
-"""
-A direct one-to-one relationship between objects. Unlike plural connections, this represents a single related object rather than a collection.
-"""
-interface OneToOneConnection implements Edge {
-  """
-  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
-  """
-  cursor: String
-
-  """The connected node"""
-  node: Node!
-}
-
-"""
-Represents a connection to a ContentType. Contains both the ContentType Node and metadata about the relationship.
-"""
-interface ContentTypeConnectionEdge implements Edge {
-  """
-  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
-  """
-  cursor: String
-
-  """The connected ContentType Node"""
-  node: ContentType!
-}
-
-"""An Post Type object"""
-type ContentType implements Node & UniformResourceIdentifiable {
-  """Whether this content type should can be exported."""
-  canExport: Boolean
-
-  """Connection between the ContentType type and the Taxonomy type"""
-  connectedTaxonomies(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
-
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
-
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
-
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-  ): ContentTypeToTaxonomyConnection
-
-  """Connection between the ContentType type and the ContentNode type"""
-  contentNodes(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
-
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
-
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
-
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-
-    """Arguments for filtering the connection"""
-    where: ContentTypeToContentNodeConnectionWhereArgs
-  ): ContentTypeToContentNodeConnection
-
-  """
-  Whether content of this type should be deleted when the author of it is deleted from the system.
-  """
-  deleteWithUser: Boolean
-
-  """Description of the content type."""
-  description: String
-
-  """
-  Whether to exclude nodes of this content type from front end search results.
-  """
-  excludeFromSearch: Boolean
-
-  """The plural name of the content type within the GraphQL Schema."""
-  graphqlPluralName: String
-
-  """The singular name of the content type within the GraphQL Schema."""
-  graphqlSingleName: String
-
-  """
-  Whether this content type should have archives. Content archives are generated by type and by date.
-  """
-  hasArchive: Boolean
-
-  """Whether the content type is hierarchical, for example pages."""
-  hierarchical: Boolean
-
-  """The globally unique identifier of the post-type object."""
-  id: ID!
-
-  """Whether the node is a Comment"""
-  isComment: Boolean!
-
-  """Whether the node is a Content Node"""
-  isContentNode: Boolean!
-
-  """Whether this page is set to the static front page."""
-  isFrontPage: Boolean!
-
-  """Whether this page is set to the blog posts page."""
-  isPostsPage: Boolean!
-
-  """Whether the object is restricted from the current viewer"""
-  isRestricted: Boolean
-
-  """Whether the node is a Term"""
-  isTermNode: Boolean!
-
-  """Display name of the content type."""
-  label: String
-
-  """Details about the content type labels."""
-  labels: PostTypeLabelDetails
-
-  """The name of the icon file to display as a menu icon."""
-  menuIcon: String
-
-  """
-  The position of this post type in the menu. Only applies if show_in_menu is true.
-  """
-  menuPosition: Int
-
-  """
-  The internal name of the post type. This should not be used for display purposes.
-  """
-  name: String
-
-  """
-  Whether a content type is intended for use publicly either via the admin interface or by front-end users. While the default settings of exclude_from_search, publicly_queryable, show_ui, and show_in_nav_menus are inherited from public, each does not rely on this relationship and controls a very specific intention.
-  """
-  public: Boolean
-
-  """
-  Whether queries can be performed on the front end for the content type as part of parse_request().
-  """
-  publiclyQueryable: Boolean
-
-  """
-  Name of content type to display in REST API &quot;wp/v2&quot; namespace.
-  """
-  restBase: String
-
-  """The REST Controller class assigned to handling this content type."""
-  restControllerClass: String
-
-  """Makes this content type available via the admin bar."""
-  showInAdminBar: Boolean
-
-  """Whether to add the content type to the GraphQL Schema."""
-  showInGraphql: Boolean
-
-  """
-  Where to show the content type in the admin menu. To work, $show_ui must be true. If true, the post type is shown in its own top level menu. If false, no menu is shown. If a string of an existing top level menu (eg. &quot;tools.php&quot; or &quot;edit.php?post_type=page&quot;), the post type will be placed as a sub-menu of that.
-  """
-  showInMenu: Boolean
-
-  """Makes this content type available for selection in navigation menus."""
-  showInNavMenus: Boolean
-
-  """
-  Whether the content type is associated with a route under the the REST API &quot;wp/v2&quot; namespace.
-  """
-  showInRest: Boolean
-
-  """
-  Whether to generate and allow a UI for managing this content type in the admin.
-  """
-  showUi: Boolean
-
-  """The unique resource identifier path"""
-  uri: String
-}
-
-"""Connection between the ContentType type and the Taxonomy type"""
-type ContentTypeToTaxonomyConnection implements TaxonomyConnection & Connection {
-  """Edges for the ContentTypeToTaxonomyConnection connection"""
-  edges: [ContentTypeToTaxonomyConnectionEdge!]!
-
-  """The nodes of the connection, without the edges"""
-  nodes: [Taxonomy!]!
-
-  """Information about pagination in a connection."""
-  pageInfo: ContentTypeToTaxonomyConnectionPageInfo!
-}
-
-"""
-A paginated collection of Taxonomy Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of Taxonomy Nodes
-"""
-interface TaxonomyConnection implements Connection {
-  """
-  A list of edges (relational context) between RootQuery and connected Taxonomy Nodes
-  """
-  edges: [TaxonomyConnectionEdge!]!
-
-  """A list of connected Taxonomy Nodes"""
-  nodes: [Taxonomy!]!
-
-  """Information about pagination in a connection."""
-  pageInfo: TaxonomyConnectionPageInfo!
-}
-
-"""
-Represents a connection to a Taxonomy. Contains both the Taxonomy Node and metadata about the relationship.
-"""
-interface TaxonomyConnectionEdge implements Edge {
-  """
-  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
-  """
-  cursor: String
-
-  """The connected Taxonomy Node"""
-  node: Taxonomy!
-}
-
-"""A taxonomy object"""
-type Taxonomy implements Node {
-  """List of Content Types associated with the Taxonomy"""
-  connectedContentTypes(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
-
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
-
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
-
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-  ): TaxonomyToContentTypeConnection
-
-  """List of Term Nodes associated with the Taxonomy"""
-  connectedTerms(
-    """The number of items to return after the referenced "after" cursor"""
-    first: Int
-
-    """The number of items to return before the referenced "before" cursor"""
-    last: Int
-
-    """
-    Cursor used along with the "first" argument to reference where in the dataset to get data
-    """
-    after: String
-
-    """
-    Cursor used along with the "last" argument to reference where in the dataset to get data
-    """
-    before: String
-  ): TaxonomyToTermNodeConnection
-
-  """
-  Description of the taxonomy. This field is equivalent to WP_Taxonomy-&gt;description
-  """
-  description: String
-
-  """The plural name of the post type within the GraphQL Schema."""
-  graphqlPluralName: String
-
-  """The singular name of the post type within the GraphQL Schema."""
-  graphqlSingleName: String
-
-  """Whether the taxonomy is hierarchical"""
-  hierarchical: Boolean
-
-  """The globally unique identifier of the taxonomy object."""
-  id: ID!
-
-  """Whether the object is restricted from the current viewer"""
-  isRestricted: Boolean
-
-  """Name of the taxonomy shown in the menu. Usually plural."""
-  label: String
-
-  """
-  The display name of the taxonomy. This field is equivalent to WP_Taxonomy-&gt;label
-  """
-  name: String
-
-  """Whether the taxonomy is publicly queryable"""
-  public: Boolean
-
-  """
-  Name of content type to display in REST API &quot;wp/v2&quot; namespace.
-  """
-  restBase: String
-
-  """The REST Controller class assigned to handling this content type."""
-  restControllerClass: String
-
-  """
-  Whether to show the taxonomy as part of a tag cloud widget. This field is equivalent to WP_Taxonomy-&gt;show_tagcloud
-  """
-  showCloud: Boolean
-
-  """
-  Whether to display a column for the taxonomy on its post type listing screens.
-  """
-  showInAdminColumn: Boolean
-
-  """Whether to add the post type to the GraphQL Schema."""
-  showInGraphql: Boolean
-
-  """Whether to show the taxonomy in the admin menu"""
-  showInMenu: Boolean
-
-  """Whether the taxonomy is available for selection in navigation menus."""
-  showInNavMenus: Boolean
-
-  """Whether to show the taxonomy in the quick/bulk edit panel."""
-  showInQuickEdit: Boolean
-
-  """
-  Whether to add the post type route in the REST API &quot;wp/v2&quot; namespace.
-  """
-  showInRest: Boolean
-
-  """
-  Whether to generate and allow a UI for managing terms in this taxonomy in the admin
-  """
-  showUi: Boolean
-}
-
-"""Connection between the Taxonomy type and the ContentType type"""
-type TaxonomyToContentTypeConnection implements ContentTypeConnection & Connection {
-  """Edges for the TaxonomyToContentTypeConnection connection"""
-  edges: [TaxonomyToContentTypeConnectionEdge!]!
-
-  """The nodes of the connection, without the edges"""
-  nodes: [ContentType!]!
-
-  """Information about pagination in a connection."""
-  pageInfo: TaxonomyToContentTypeConnectionPageInfo!
-}
-
-"""
-A paginated collection of ContentType Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of ContentType Nodes
-"""
-interface ContentTypeConnection implements Connection {
-  """
-  A list of edges (relational context) between RootQuery and connected ContentType Nodes
-  """
-  edges: [ContentTypeConnectionEdge!]!
-
-  """A list of connected ContentType Nodes"""
-  nodes: [ContentType!]!
-
-  """Information about pagination in a connection."""
-  pageInfo: ContentTypeConnectionPageInfo!
-}
-
-"""
-Pagination metadata specific to &quot;ContentTypeConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;ContentTypeConnectionEdge&quot; Nodes.
-"""
-interface ContentTypeConnectionPageInfo implements WPPageInfo & PageInfo {
+interface ContentNodeConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating forwards, the cursor to continue."""
   endCursor: String
 
@@ -3139,273 +2839,6 @@ interface ContentTypeConnectionPageInfo implements WPPageInfo & PageInfo {
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
-}
-
-"""An edge in a connection"""
-type TaxonomyToContentTypeConnectionEdge implements ContentTypeConnectionEdge & Edge {
-  """A cursor for use in pagination"""
-  cursor: String
-
-  """The item at the end of the edge"""
-  node: ContentType!
-}
-
-"""
-Pagination metadata specific to &quot;TaxonomyToContentTypeConnection&quot; collections. Provides cursors and flags for navigating through sets of TaxonomyToContentTypeConnection Nodes.
-"""
-type TaxonomyToContentTypeConnectionPageInfo implements ContentTypeConnectionPageInfo & WPPageInfo & PageInfo {
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """
-  Get information about the offset pagination state in the current connection
-  """
-  offsetPagination: OffsetPaginationPageInfo
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-}
-
-"""Connection between the Taxonomy type and the TermNode type"""
-type TaxonomyToTermNodeConnection implements TermNodeConnection & Connection {
-  """Edges for the TaxonomyToTermNodeConnection connection"""
-  edges: [TaxonomyToTermNodeConnectionEdge!]!
-
-  """The nodes of the connection, without the edges"""
-  nodes: [TermNode!]!
-
-  """Information about pagination in a connection."""
-  pageInfo: TaxonomyToTermNodeConnectionPageInfo!
-}
-
-"""
-A paginated collection of TermNode Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of TermNode Nodes
-"""
-interface TermNodeConnection implements Connection {
-  """
-  A list of edges (relational context) between RootQuery and connected TermNode Nodes
-  """
-  edges: [TermNodeConnectionEdge!]!
-
-  """A list of connected TermNode Nodes"""
-  nodes: [TermNode!]!
-
-  """Information about pagination in a connection."""
-  pageInfo: TermNodeConnectionPageInfo!
-}
-
-"""
-Represents a connection to a TermNode. Contains both the TermNode Node and metadata about the relationship.
-"""
-interface TermNodeConnectionEdge implements Edge {
-  """
-  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
-  """
-  cursor: String
-
-  """The connected TermNode Node"""
-  node: TermNode!
-}
-
-"""
-Pagination metadata specific to &quot;TermNodeConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;TermNodeConnectionEdge&quot; Nodes.
-"""
-interface TermNodeConnectionPageInfo implements WPPageInfo & PageInfo {
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """
-  Get information about the offset pagination state in the current connection
-  """
-  offsetPagination: OffsetPaginationPageInfo
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-}
-
-"""An edge in a connection"""
-type TaxonomyToTermNodeConnectionEdge implements TermNodeConnectionEdge & Edge {
-  """A cursor for use in pagination"""
-  cursor: String
-
-  """The item at the end of the edge"""
-  node: TermNode!
-}
-
-"""
-Pagination metadata specific to &quot;TaxonomyToTermNodeConnection&quot; collections. Provides cursors and flags for navigating through sets of TaxonomyToTermNodeConnection Nodes.
-"""
-type TaxonomyToTermNodeConnectionPageInfo implements TermNodeConnectionPageInfo & WPPageInfo & PageInfo {
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """
-  Get information about the offset pagination state in the current connection
-  """
-  offsetPagination: OffsetPaginationPageInfo
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-}
-
-"""
-Pagination metadata specific to &quot;TaxonomyConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;TaxonomyConnectionEdge&quot; Nodes.
-"""
-interface TaxonomyConnectionPageInfo implements WPPageInfo & PageInfo {
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """
-  Get information about the offset pagination state in the current connection
-  """
-  offsetPagination: OffsetPaginationPageInfo
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-}
-
-"""An edge in a connection"""
-type ContentTypeToTaxonomyConnectionEdge implements TaxonomyConnectionEdge & Edge {
-  """A cursor for use in pagination"""
-  cursor: String
-
-  """The item at the end of the edge"""
-  node: Taxonomy!
-}
-
-"""
-Pagination metadata specific to &quot;ContentTypeToTaxonomyConnection&quot; collections. Provides cursors and flags for navigating through sets of ContentTypeToTaxonomyConnection Nodes.
-"""
-type ContentTypeToTaxonomyConnectionPageInfo implements TaxonomyConnectionPageInfo & WPPageInfo & PageInfo {
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """
-  Get information about the offset pagination state in the current connection
-  """
-  offsetPagination: OffsetPaginationPageInfo
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-}
-
-"""
-Arguments for filtering the ContentTypeToContentNodeConnection connection
-"""
-input ContentTypeToContentNodeConnectionWhereArgs {
-  """The Types of content to filter"""
-  contentTypes: [ContentTypeEnum]
-
-  """Filter the connection based on dates"""
-  dateQuery: DateQueryInput
-
-  """
-  True for objects with passwords; False for objects without passwords; null for all objects with or without passwords
-  """
-  hasPassword: Boolean
-
-  """Specific database ID of the object"""
-  id: Int
-
-  """Array of IDs for the objects to retrieve"""
-  in: [ID]
-
-  """Get objects with a specific mimeType property"""
-  mimeType: MimeTypeEnum
-
-  """Slug / post_name of the object"""
-  name: String
-
-  """Specify objects to retrieve. Use slugs"""
-  nameIn: [String]
-
-  """
-  Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored
-  """
-  notIn: [ID]
-
-  """What parameter to use to order the objects by."""
-  orderby: [PostObjectsConnectionOrderbyInput]
-
-  """Use ID to return only children. Use 0 to return only top-level items"""
-  parent: ID
-
-  """Specify objects whose parent is in an array"""
-  parentIn: [ID]
-
-  """Specify posts whose parent is not in an array"""
-  parentNotIn: [ID]
-
-  """Show posts with a specific password."""
-  password: String
-
-  """Show Posts based on a keyword search"""
-  search: String
-
-  """Retrieve posts where post status is in an array."""
-  stati: [PostStatusEnum]
-
-  """Show posts with a specific status."""
-  status: PostStatusEnum
-
-  """Title of the object"""
-  title: String
-}
-
-"""
-Available content entity types that can be queried or filtered. Identifies the primary content structures available in the system.
-"""
-enum ContentTypeEnum {
-  """The Type of Content object"""
-  ATTACHMENT
-
-  """The Type of Content object"""
-  PAGE
-
-  """The Type of Content object"""
-  POST
-}
-
-"""Connection between the ContentType type and the ContentNode type"""
-type ContentTypeToContentNodeConnection implements ContentNodeConnection & Connection {
-  """Edges for the ContentTypeToContentNodeConnection connection"""
-  edges: [ContentTypeToContentNodeConnectionEdge!]!
-
-  """The nodes of the connection, without the edges"""
-  nodes: [ContentNode!]!
-
-  """Information about pagination in a connection."""
-  pageInfo: ContentTypeToContentNodeConnectionPageInfo!
 }
 
 """An edge in a connection"""
@@ -3421,28 +2854,6 @@ type ContentTypeToContentNodeConnectionEdge implements ContentNodeConnectionEdge
 Pagination metadata specific to &quot;ContentTypeToContentNodeConnection&quot; collections. Provides cursors and flags for navigating through sets of ContentTypeToContentNodeConnection Nodes.
 """
 type ContentTypeToContentNodeConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """
-  Get information about the offset pagination state in the current connection
-  """
-  offsetPagination: OffsetPaginationPageInfo
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-}
-
-"""
-Pagination metadata specific to &quot;ContentNodeConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;ContentNodeConnectionEdge&quot; Nodes.
-"""
-interface ContentNodeConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating forwards, the cursor to continue."""
   endCursor: String
 
@@ -3886,6 +3297,14 @@ interface Commenter implements Node & DatabaseIdentifier {
 
   """The url of the author of a comment."""
   url: String
+}
+
+"""
+An object that has a unique numeric identifier in the database. Provides consistent access to the database ID across different object types.
+"""
+interface DatabaseIdentifier {
+  """The unique identifier stored in the database"""
+  databaseId: Int!
 }
 
 """
@@ -5458,6 +4877,23 @@ interface HierarchicalContentNode implements Node & ContentNode & UniformResourc
 }
 
 """
+Content that can exist in a parent-child structure. Provides fields for navigating up (parent) and down (children) through the hierarchy.
+"""
+interface HierarchicalNode implements Node & DatabaseIdentifier {
+  """The unique identifier stored in the database"""
+  databaseId: Int!
+
+  """The globally unique ID for the object"""
+  id: ID!
+
+  """Database id of the parent node"""
+  parentDatabaseId: Int
+
+  """The globally unique identifier of the parent node."""
+  parentId: ID
+}
+
+"""
 Arguments for filtering the HierarchicalContentNodeToContentNodeAncestorsConnection connection
 """
 input HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs {
@@ -6634,6 +6070,35 @@ interface NodeWithPageAttributes implements Node {
   menuOrder: Int
 }
 
+"""
+Content that can be referenced by navigation menu items. Provides the essential fields needed to create links within navigation structures.
+"""
+interface MenuItemLinkable implements Node & UniformResourceIdentifiable & DatabaseIdentifier {
+  """The unique identifier stored in the database"""
+  databaseId: Int!
+
+  """The globally unique ID for the object"""
+  id: ID!
+
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
+  """Whether the node is a Content Node"""
+  isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
+
+  """Whether the node is a Term"""
+  isTermNode: Boolean!
+
+  """The unique resource identifier path"""
+  uri: String
+}
+
 """Arguments for filtering the PageToCommentConnection connection"""
 input PageToCommentConnectionWhereArgs {
   """Comment author email address."""
@@ -7111,7 +6576,7 @@ interface PostConnectionEdge implements Edge {
 """
 A chronological content entry typically used for blog posts, news articles, or similar date-based content.
 """
-type Post implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithExcerpt & NodeWithComments & NodeWithTrackbacks & NodeWithRevisions & MenuItemLinkable & WithAcfAuthorinfo & WithAcfCustomfields {
+type Post implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithExcerpt & NodeWithComments & NodeWithTrackbacks & NodeWithRevisions & MenuItemLinkable & WithAcfAuthorinfo {
   """The ancestors of the content node."""
   ancestors(
     """The number of items to return after the referenced "after" cursor"""
@@ -7206,9 +6671,6 @@ type Post implements Node & ContentNode & UniformResourceIdentifiable & Database
 
   """The name of the Content Type the node belongs to"""
   contentTypeName: String!
-
-  """Fields of the Customfields ACF Field Group"""
-  customfields: Customfields
 
   """The unique identifier stored in the database"""
   databaseId: Int!
@@ -7547,7 +7009,7 @@ interface AcfFieldGroupFields {
   fieldGroupName: String @deprecated(reason: "Use __typename instead")
 }
 
-"""Connection between the Authorinfo_Fields type and the MediaItem type"""
+"""Connection between the Addetails_Fields type and the MediaItem type"""
 type AcfMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItemConnectionEdge {
   """
   Opaque reference to the nodes position in the connection. Value can be used with pagination args.
@@ -7556,19 +7018,6 @@ type AcfMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItem
 
   """The node of the connection, without the edges"""
   node: MediaItem!
-}
-
-"""
-The &quot;Customfields&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;.
-"""
-type Customfields implements Customfields_Fields & AcfFieldGroup & AcfFieldGroupFields {
-  """The name of the field group"""
-  fieldGroupName: String @deprecated(reason: "Use __typename instead")
-
-  """
-  Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;Customfields&quot; Field Group
-  """
-  youtubeVideoUrl: String
 }
 
 """Connection between the Post type and the post type"""
@@ -7724,6 +7173,32 @@ input PostToCategoryConnectionWhereArgs {
   updateTermMetaCache: Boolean
 }
 
+"""
+Sorting attributes for taxonomy term collections. Determines which property of taxonomy terms is used for ordering results.
+"""
+enum TermObjectsConnectionOrderbyEnum {
+  """Ordering by number of associated content items."""
+  COUNT
+
+  """Alphabetical ordering by term description text."""
+  DESCRIPTION
+
+  """Alphabetical ordering by term name."""
+  NAME
+
+  """Alphabetical ordering by URL-friendly name."""
+  SLUG
+
+  """Ordering by assigned term grouping value."""
+  TERM_GROUP
+
+  """Ordering by internal identifier."""
+  TERM_ID
+
+  """Ordering by manually defined sort position."""
+  TERM_ORDER
+}
+
 """Connection between the Post type and the category type"""
 type PostToCategoryConnection implements CategoryConnection & Connection {
   """Edges for the PostToCategoryConnection connection"""
@@ -7734,6 +7209,808 @@ type PostToCategoryConnection implements CategoryConnection & Connection {
 
   """Information about pagination in a connection."""
   pageInfo: PostToCategoryConnectionPageInfo!
+}
+
+"""
+A paginated collection of category Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of category Nodes
+"""
+interface CategoryConnection implements Connection {
+  """
+  A list of edges (relational context) between RootQuery and connected category Nodes
+  """
+  edges: [CategoryConnectionEdge!]!
+
+  """A list of connected category Nodes"""
+  nodes: [Category!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: CategoryConnectionPageInfo!
+}
+
+"""
+Represents a connection to a category. Contains both the category Node and metadata about the relationship.
+"""
+interface CategoryConnectionEdge implements Edge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The connected category Node"""
+  node: Category!
+}
+
+"""
+A taxonomy term that classifies content. Categories support hierarchy and can be used to create a nested structure.
+"""
+type Category implements Node & TermNode & UniformResourceIdentifiable & DatabaseIdentifier & HierarchicalTermNode & HierarchicalNode & MenuItemLinkable {
+  """
+  The ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root).
+  """
+  ancestors(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): CategoryToAncestorsCategoryConnection
+
+  """The id field matches the WP_Post-&gt;ID field."""
+  categoryId: Int @deprecated(reason: "Deprecated in favor of databaseId")
+
+  """Connection between the category type and its children categories."""
+  children(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """Arguments for filtering the connection"""
+    where: CategoryToCategoryConnectionWhereArgs
+  ): CategoryToCategoryConnection
+
+  """Connection between the Category type and the ContentNode type"""
+  contentNodes(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """Arguments for filtering the connection"""
+    where: CategoryToContentNodeConnectionWhereArgs
+  ): CategoryToContentNodeConnection
+
+  """The number of objects connected to the object"""
+  count: Int
+
+  """The unique identifier stored in the database"""
+  databaseId: Int!
+
+  """The description of the object"""
+  description: String
+
+  """Connection between the TermNode type and the EnqueuedScript type"""
+  enqueuedScripts(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): TermNodeToEnqueuedScriptConnection
+
+  """Connection between the TermNode type and the EnqueuedStylesheet type"""
+  enqueuedStylesheets(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): TermNodeToEnqueuedStylesheetConnection
+
+  """The globally unique ID for the object"""
+  id: ID!
+
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
+  """Whether the node is a Content Node"""
+  isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
+
+  """Whether the object is restricted from the current viewer"""
+  isRestricted: Boolean
+
+  """Whether the node is a Term"""
+  isTermNode: Boolean!
+
+  """The link to the term"""
+  link: String
+
+  """The human friendly name of the object."""
+  name: String
+
+  """Connection between the category type and its parent category."""
+  parent: CategoryToParentCategoryConnectionEdge
+
+  """Database id of the parent node"""
+  parentDatabaseId: Int
+
+  """The globally unique identifier of the parent node."""
+  parentId: ID
+
+  """Connection between the Category type and the post type"""
+  posts(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """Arguments for filtering the connection"""
+    where: CategoryToPostConnectionWhereArgs
+  ): CategoryToPostConnection
+
+  """An alphanumeric identifier for the object unique to its type."""
+  slug: String
+
+  """Connection between the Category type and the Taxonomy type"""
+  taxonomy: CategoryToTaxonomyConnectionEdge
+
+  """The name of the taxonomy that the object is associated with"""
+  taxonomyName: String
+
+  """The ID of the term group that this term object belongs to"""
+  termGroupId: Int
+
+  """The taxonomy ID that the object is associated with"""
+  termTaxonomyId: Int
+
+  """The unique resource identifier path"""
+  uri: String
+}
+
+"""Term node with hierarchical (parent/child) relationships"""
+interface HierarchicalTermNode implements Node & TermNode & UniformResourceIdentifiable & DatabaseIdentifier & HierarchicalNode {
+  """The number of objects connected to the object"""
+  count: Int
+
+  """The unique identifier stored in the database"""
+  databaseId: Int!
+
+  """The description of the object"""
+  description: String
+
+  """Connection between the TermNode type and the EnqueuedScript type"""
+  enqueuedScripts(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): TermNodeToEnqueuedScriptConnection
+
+  """Connection between the TermNode type and the EnqueuedStylesheet type"""
+  enqueuedStylesheets(
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+  ): TermNodeToEnqueuedStylesheetConnection
+
+  """The globally unique ID for the object"""
+  id: ID!
+
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
+  """Whether the node is a Content Node"""
+  isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
+
+  """Whether the object is restricted from the current viewer"""
+  isRestricted: Boolean
+
+  """Whether the node is a Term"""
+  isTermNode: Boolean!
+
+  """The link to the term"""
+  link: String
+
+  """The human friendly name of the object."""
+  name: String
+
+  """Database id of the parent node"""
+  parentDatabaseId: Int
+
+  """The globally unique identifier of the parent node."""
+  parentId: ID
+
+  """An alphanumeric identifier for the object unique to its type."""
+  slug: String
+
+  """The name of the taxonomy that the object is associated with"""
+  taxonomyName: String
+
+  """The ID of the term group that this term object belongs to"""
+  termGroupId: Int
+
+  """The taxonomy ID that the object is associated with"""
+  termTaxonomyId: Int
+
+  """The unique resource identifier path"""
+  uri: String
+}
+
+"""Connection between the Category type and the category type"""
+type CategoryToAncestorsCategoryConnection implements CategoryConnection & Connection {
+  """Edges for the CategoryToAncestorsCategoryConnection connection"""
+  edges: [CategoryToAncestorsCategoryConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [Category!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: CategoryToAncestorsCategoryConnectionPageInfo!
+}
+
+"""An edge in a connection"""
+type CategoryToAncestorsCategoryConnectionEdge implements CategoryConnectionEdge & Edge {
+  """A cursor for use in pagination"""
+  cursor: String
+
+  """The item at the end of the edge"""
+  node: Category!
+}
+
+"""
+Pagination metadata specific to &quot;CategoryToAncestorsCategoryConnection&quot; collections. Provides cursors and flags for navigating through sets of CategoryToAncestorsCategoryConnection Nodes.
+"""
+type CategoryToAncestorsCategoryConnectionPageInfo implements CategoryConnectionPageInfo & WPPageInfo & PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""
+Pagination metadata specific to &quot;CategoryConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;CategoryConnectionEdge&quot; Nodes.
+"""
+interface CategoryConnectionPageInfo implements WPPageInfo & PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""Arguments for filtering the CategoryToCategoryConnection connection"""
+input CategoryToCategoryConnectionWhereArgs {
+  """
+  Unique cache key to be produced when this query is stored in an object cache. Default is 'core'.
+  """
+  cacheDomain: String
+
+  """
+  Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0.
+  """
+  childOf: Int
+
+  """
+  True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false.
+  """
+  childless: Boolean
+
+  """
+  Retrieve terms where the description is LIKE the input value. Default empty.
+  """
+  descriptionLike: String
+
+  """
+  Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array.
+  """
+  exclude: [ID]
+
+  """
+  Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array.
+  """
+  excludeTree: [ID]
+
+  """
+  Whether to hide terms not assigned to any posts. Accepts true or false. Default false
+  """
+  hideEmpty: Boolean
+
+  """
+  Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true.
+  """
+  hierarchical: Boolean
+
+  """Array of term ids to include. Default empty array."""
+  include: [ID]
+
+  """Array of names to return term(s) for. Default empty."""
+  name: [String]
+
+  """Retrieve terms where the name is LIKE the input value. Default empty."""
+  nameLike: String
+
+  """
+  Array of object IDs. Results will be limited to terms associated with these objects.
+  """
+  objectIds: [ID]
+
+  """Direction the connection should be ordered in"""
+  order: OrderEnum
+
+  """Field(s) to order terms by. Defaults to 'name'."""
+  orderby: TermObjectsConnectionOrderbyEnum
+
+  """
+  Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false.
+  """
+  padCounts: Boolean
+
+  """Parent term ID to retrieve direct-child terms of. Default empty."""
+  parent: Int
+
+  """
+  Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty.
+  """
+  search: String
+
+  """Array of slugs to return term(s) for. Default empty."""
+  slug: [String]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID] @deprecated(reason: "Use `termTaxonomyId` instead")
+
+  """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomyId: [ID]
+
+  """Whether to prime meta caches for matched terms. Default true."""
+  updateTermMetaCache: Boolean
+}
+
+"""Connection between the Category type and the category type"""
+type CategoryToCategoryConnection implements CategoryConnection & Connection {
+  """Edges for the CategoryToCategoryConnection connection"""
+  edges: [CategoryToCategoryConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [Category!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: CategoryToCategoryConnectionPageInfo!
+}
+
+"""An edge in a connection"""
+type CategoryToCategoryConnectionEdge implements CategoryConnectionEdge & Edge {
+  """A cursor for use in pagination"""
+  cursor: String
+
+  """The item at the end of the edge"""
+  node: Category!
+}
+
+"""
+Pagination metadata specific to &quot;CategoryToCategoryConnection&quot; collections. Provides cursors and flags for navigating through sets of CategoryToCategoryConnection Nodes.
+"""
+type CategoryToCategoryConnectionPageInfo implements CategoryConnectionPageInfo & WPPageInfo & PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""Arguments for filtering the CategoryToContentNodeConnection connection"""
+input CategoryToContentNodeConnectionWhereArgs {
+  """The Types of content to filter"""
+  contentTypes: [ContentTypesOfCategoryEnum]
+
+  """Filter the connection based on dates"""
+  dateQuery: DateQueryInput
+
+  """
+  True for objects with passwords; False for objects without passwords; null for all objects with or without passwords
+  """
+  hasPassword: Boolean
+
+  """Specific database ID of the object"""
+  id: Int
+
+  """Array of IDs for the objects to retrieve"""
+  in: [ID]
+
+  """Get objects with a specific mimeType property"""
+  mimeType: MimeTypeEnum
+
+  """Slug / post_name of the object"""
+  name: String
+
+  """Specify objects to retrieve. Use slugs"""
+  nameIn: [String]
+
+  """
+  Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored
+  """
+  notIn: [ID]
+
+  """What parameter to use to order the objects by."""
+  orderby: [PostObjectsConnectionOrderbyInput]
+
+  """Use ID to return only children. Use 0 to return only top-level items"""
+  parent: ID
+
+  """Specify objects whose parent is in an array"""
+  parentIn: [ID]
+
+  """Specify posts whose parent is not in an array"""
+  parentNotIn: [ID]
+
+  """Show posts with a specific password."""
+  password: String
+
+  """Show Posts based on a keyword search"""
+  search: String
+
+  """Retrieve posts where post status is in an array."""
+  stati: [PostStatusEnum]
+
+  """Show posts with a specific status."""
+  status: PostStatusEnum
+
+  """Title of the object"""
+  title: String
+}
+
+"""Allowed Content Types of the Category taxonomy."""
+enum ContentTypesOfCategoryEnum {
+  """The Type of Content object"""
+  POST
+}
+
+"""Connection between the Category type and the ContentNode type"""
+type CategoryToContentNodeConnection implements ContentNodeConnection & Connection {
+  """Edges for the CategoryToContentNodeConnection connection"""
+  edges: [CategoryToContentNodeConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [ContentNode!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: CategoryToContentNodeConnectionPageInfo!
+}
+
+"""An edge in a connection"""
+type CategoryToContentNodeConnectionEdge implements ContentNodeConnectionEdge & Edge {
+  """A cursor for use in pagination"""
+  cursor: String
+
+  """The item at the end of the edge"""
+  node: ContentNode!
+}
+
+"""
+Pagination metadata specific to &quot;CategoryToContentNodeConnection&quot; collections. Provides cursors and flags for navigating through sets of CategoryToContentNodeConnection Nodes.
+"""
+type CategoryToContentNodeConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""Connection between the Category type and the category type"""
+type CategoryToParentCategoryConnectionEdge implements OneToOneConnection & Edge & CategoryConnectionEdge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The node of the connection, without the edges"""
+  node: Category!
+}
+
+"""Arguments for filtering the CategoryToPostConnection connection"""
+input CategoryToPostConnectionWhereArgs {
+  """
+  The user that's connected as the author of the object. Use the userId for the author object.
+  """
+  author: Int
+
+  """Find objects connected to author(s) in the array of author's userIds"""
+  authorIn: [ID]
+
+  """Find objects connected to the author by the author's nicename"""
+  authorName: String
+
+  """
+  Find objects NOT connected to author(s) in the array of author's userIds
+  """
+  authorNotIn: [ID]
+
+  """Category ID"""
+  categoryId: Int
+
+  """
+  Array of category IDs, used to display objects from one category OR another
+  """
+  categoryIn: [ID]
+
+  """Use Category Slug"""
+  categoryName: String
+
+  """
+  Array of category IDs, used to display objects from one category OR another
+  """
+  categoryNotIn: [ID]
+
+  """Filter the connection based on dates"""
+  dateQuery: DateQueryInput
+
+  """
+  True for objects with passwords; False for objects without passwords; null for all objects with or without passwords
+  """
+  hasPassword: Boolean
+
+  """Specific database ID of the object"""
+  id: Int
+
+  """Array of IDs for the objects to retrieve"""
+  in: [ID]
+
+  """Get objects with a specific mimeType property"""
+  mimeType: MimeTypeEnum
+
+  """Slug / post_name of the object"""
+  name: String
+
+  """Specify objects to retrieve. Use slugs"""
+  nameIn: [String]
+
+  """
+  Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored
+  """
+  notIn: [ID]
+
+  """What parameter to use to order the objects by."""
+  orderby: [PostObjectsConnectionOrderbyInput]
+
+  """Use ID to return only children. Use 0 to return only top-level items"""
+  parent: ID
+
+  """Specify objects whose parent is in an array"""
+  parentIn: [ID]
+
+  """Specify posts whose parent is not in an array"""
+  parentNotIn: [ID]
+
+  """Show posts with a specific password."""
+  password: String
+
+  """Show Posts based on a keyword search"""
+  search: String
+
+  """Retrieve posts where post status is in an array."""
+  stati: [PostStatusEnum]
+
+  """Show posts with a specific status."""
+  status: PostStatusEnum
+
+  """Tag Slug"""
+  tag: String
+
+  """Use Tag ID"""
+  tagId: String
+
+  """Array of tag IDs, used to display objects from one tag OR another"""
+  tagIn: [ID]
+
+  """Array of tag IDs, used to display objects from one tag OR another"""
+  tagNotIn: [ID]
+
+  """Array of tag slugs, used to display objects from one tag AND another"""
+  tagSlugAnd: [String]
+
+  """Array of tag slugs, used to include objects in ANY specified tags"""
+  tagSlugIn: [String]
+
+  """Title of the object"""
+  title: String
+}
+
+"""Connection between the Category type and the post type"""
+type CategoryToPostConnection implements PostConnection & Connection {
+  """Edges for the CategoryToPostConnection connection"""
+  edges: [CategoryToPostConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [Post!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: CategoryToPostConnectionPageInfo!
+}
+
+"""An edge in a connection"""
+type CategoryToPostConnectionEdge implements PostConnectionEdge & Edge {
+  """A cursor for use in pagination"""
+  cursor: String
+
+  """The item at the end of the edge"""
+  node: Post!
+}
+
+"""
+Pagination metadata specific to &quot;CategoryToPostConnection&quot; collections. Provides cursors and flags for navigating through sets of CategoryToPostConnection Nodes.
+"""
+type CategoryToPostConnectionPageInfo implements PostConnectionPageInfo & WPPageInfo & PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""Connection between the Category type and the Taxonomy type"""
+type CategoryToTaxonomyConnectionEdge implements OneToOneConnection & Edge & TaxonomyConnectionEdge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The node of the connection, without the edges"""
+  node: Taxonomy!
 }
 
 """An edge in a connection"""
@@ -9677,19 +9954,69 @@ type UserToUserRoleConnectionPageInfo implements UserRoleConnectionPageInfo & WP
   startCursor: String
 }
 
-"""An edge in a connection"""
-type CategoryToContentNodeConnectionEdge implements ContentNodeConnectionEdge & Edge {
-  """A cursor for use in pagination"""
-  cursor: String
+"""
+The &quot;Addetails&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;.
+"""
+type Addetails implements Addetails_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  """
+  Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Addetails&quot; Field Group
+  """
+  adImage: AcfMediaItemConnectionEdge
 
-  """The item at the end of the edge"""
-  node: ContentNode!
+  """
+  Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;Addetails&quot; Field Group
+  """
+  adLink: String
+
+  """The name of the field group"""
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+}
+
+"""Connection between the Advertisement type and the advertisement type"""
+type AdvertisementToAdvertisementConnection implements AdvertisementConnection & Connection {
+  """Edges for the AdvertisementToAdvertisementConnection connection"""
+  edges: [AdvertisementToAdvertisementConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [Advertisement!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: AdvertisementToAdvertisementConnectionPageInfo!
 }
 
 """
-Pagination metadata specific to &quot;CategoryToContentNodeConnection&quot; collections. Provides cursors and flags for navigating through sets of CategoryToContentNodeConnection Nodes.
+A paginated collection of advertisement Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of advertisement Nodes
 """
-type CategoryToContentNodeConnectionPageInfo implements ContentNodeConnectionPageInfo & WPPageInfo & PageInfo {
+interface AdvertisementConnection implements Connection {
+  """
+  A list of edges (relational context) between RootQuery and connected advertisement Nodes
+  """
+  edges: [AdvertisementConnectionEdge!]!
+
+  """A list of connected advertisement Nodes"""
+  nodes: [Advertisement!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: AdvertisementConnectionPageInfo!
+}
+
+"""
+Represents a connection to a advertisement. Contains both the advertisement Node and metadata about the relationship.
+"""
+interface AdvertisementConnectionEdge implements Edge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The connected advertisement Node"""
+  node: Advertisement!
+}
+
+"""
+Pagination metadata specific to &quot;AdvertisementConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;AdvertisementConnectionEdge&quot; Nodes.
+"""
+interface AdvertisementConnectionPageInfo implements WPPageInfo & PageInfo {
   """When paginating forwards, the cursor to continue."""
   endCursor: String
 
@@ -9708,51 +10035,63 @@ type CategoryToContentNodeConnectionPageInfo implements ContentNodeConnectionPag
   startCursor: String
 }
 
-"""Connection between the Category type and the category type"""
-type CategoryToParentCategoryConnectionEdge implements OneToOneConnection & Edge & CategoryConnectionEdge {
+"""An edge in a connection"""
+type AdvertisementToAdvertisementConnectionEdge implements AdvertisementConnectionEdge & Edge {
+  """A cursor for use in pagination"""
+  cursor: String @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
+  """The item at the end of the edge"""
+  node: Advertisement! @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+}
+
+"""
+Pagination metadata specific to &quot;AdvertisementToAdvertisementConnection&quot; collections. Provides cursors and flags for navigating through sets of AdvertisementToAdvertisementConnection Nodes.
+"""
+type AdvertisementToAdvertisementConnectionPageInfo implements AdvertisementConnectionPageInfo & WPPageInfo & PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""Connection between the Advertisement type and the advertisement type"""
+type AdvertisementToParentConnectionEdge implements OneToOneConnection & Edge & AdvertisementConnectionEdge {
   """
   Opaque reference to the nodes position in the connection. Value can be used with pagination args.
   """
   cursor: String
 
   """The node of the connection, without the edges"""
-  node: Category!
+  node: Advertisement! @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
 }
 
-"""Arguments for filtering the CategoryToPostConnection connection"""
-input CategoryToPostConnectionWhereArgs {
+"""Connection between the Advertisement type and the advertisement type"""
+type AdvertisementToPreviewConnectionEdge implements OneToOneConnection & Edge & AdvertisementConnectionEdge {
   """
-  The user that's connected as the author of the object. Use the userId for the author object.
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
   """
-  author: Int
+  cursor: String
 
-  """Find objects connected to author(s) in the array of author's userIds"""
-  authorIn: [ID]
+  """The node of the connection, without the edges"""
+  node: Advertisement!
+}
 
-  """Find objects connected to the author by the author's nicename"""
-  authorName: String
-
-  """
-  Find objects NOT connected to author(s) in the array of author's userIds
-  """
-  authorNotIn: [ID]
-
-  """Category ID"""
-  categoryId: Int
-
-  """
-  Array of category IDs, used to display objects from one category OR another
-  """
-  categoryIn: [ID]
-
-  """Use Category Slug"""
-  categoryName: String
-
-  """
-  Array of category IDs, used to display objects from one category OR another
-  """
-  categoryNotIn: [ID]
-
+"""
+Arguments for filtering the RootQueryToAdvertisementConnection connection
+"""
+input RootQueryToAdvertisementConnectionWhereArgs {
   """Filter the connection based on dates"""
   dateQuery: DateQueryInput
 
@@ -9781,6 +10120,9 @@ input CategoryToPostConnectionWhereArgs {
   """
   notIn: [ID]
 
+  """Paginate Advertisements with offsets"""
+  offsetPagination: OffsetPagination
+
   """What parameter to use to order the objects by."""
   orderby: [PostObjectsConnectionOrderbyInput]
 
@@ -9805,53 +10147,44 @@ input CategoryToPostConnectionWhereArgs {
   """Show posts with a specific status."""
   status: PostStatusEnum
 
-  """Tag Slug"""
-  tag: String
-
-  """Use Tag ID"""
-  tagId: String
-
-  """Array of tag IDs, used to display objects from one tag OR another"""
-  tagIn: [ID]
-
-  """Array of tag IDs, used to display objects from one tag OR another"""
-  tagNotIn: [ID]
-
-  """Array of tag slugs, used to display objects from one tag AND another"""
-  tagSlugAnd: [String]
-
-  """Array of tag slugs, used to include objects in ANY specified tags"""
-  tagSlugIn: [String]
-
   """Title of the object"""
   title: String
 }
 
-"""Connection between the Category type and the post type"""
-type CategoryToPostConnection implements PostConnection & Connection {
-  """Edges for the CategoryToPostConnection connection"""
-  edges: [CategoryToPostConnectionEdge!]!
+"""Offset pagination input type"""
+input OffsetPagination {
+  """Number of post to show per page. Passed to posts_per_page of WP_Query."""
+  offset: Int
+
+  """Number of post to show per page. Passed to posts_per_page of WP_Query."""
+  size: Int
+}
+
+"""Connection between the RootQuery type and the advertisement type"""
+type RootQueryToAdvertisementConnection implements AdvertisementConnection & Connection {
+  """Edges for the RootQueryToAdvertisementConnection connection"""
+  edges: [RootQueryToAdvertisementConnectionEdge!]!
 
   """The nodes of the connection, without the edges"""
-  nodes: [Post!]!
+  nodes: [Advertisement!]!
 
   """Information about pagination in a connection."""
-  pageInfo: CategoryToPostConnectionPageInfo!
+  pageInfo: RootQueryToAdvertisementConnectionPageInfo!
 }
 
 """An edge in a connection"""
-type CategoryToPostConnectionEdge implements PostConnectionEdge & Edge {
+type RootQueryToAdvertisementConnectionEdge implements AdvertisementConnectionEdge & Edge {
   """A cursor for use in pagination"""
   cursor: String
 
   """The item at the end of the edge"""
-  node: Post!
+  node: Advertisement!
 }
 
 """
-Pagination metadata specific to &quot;CategoryToPostConnection&quot; collections. Provides cursors and flags for navigating through sets of CategoryToPostConnection Nodes.
+Pagination metadata specific to &quot;RootQueryToAdvertisementConnection&quot; collections. Provides cursors and flags for navigating through sets of RootQueryToAdvertisementConnection Nodes.
 """
-type CategoryToPostConnectionPageInfo implements PostConnectionPageInfo & WPPageInfo & PageInfo {
+type RootQueryToAdvertisementConnectionPageInfo implements AdvertisementConnectionPageInfo & WPPageInfo & PageInfo {
   """When paginating forwards, the cursor to continue."""
   endCursor: String
 
@@ -9870,15 +10203,161 @@ type CategoryToPostConnectionPageInfo implements PostConnectionPageInfo & WPPage
   startCursor: String
 }
 
-"""Connection between the Category type and the Taxonomy type"""
-type CategoryToTaxonomyConnectionEdge implements OneToOneConnection & Edge & TaxonomyConnectionEdge {
-  """
-  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
-  """
-  cursor: String
+"""All of the registered settings"""
+type Settings {
+  """Settings of the the string Settings Group"""
+  discussionSettingsDefaultCommentStatus: String
 
-  """The node of the connection, without the edges"""
-  node: Taxonomy!
+  """Settings of the the string Settings Group"""
+  discussionSettingsDefaultPingStatus: String
+
+  """Settings of the the string Settings Group"""
+  generalSettingsDateFormat: String
+
+  """Settings of the the string Settings Group"""
+  generalSettingsDescription: String
+
+  """Settings of the the string Settings Group"""
+  generalSettingsEmail: String
+
+  """Settings of the the string Settings Group"""
+  generalSettingsLanguage: String
+
+  """Settings of the the integer Settings Group"""
+  generalSettingsStartOfWeek: Int
+
+  """Settings of the the string Settings Group"""
+  generalSettingsTimeFormat: String
+
+  """Settings of the the string Settings Group"""
+  generalSettingsTimezone: String
+
+  """Settings of the the string Settings Group"""
+  generalSettingsTitle: String
+
+  """Settings of the the string Settings Group"""
+  generalSettingsUrl: String
+
+  """Settings of the the integer Settings Group"""
+  readingSettingsPageForPosts: Int
+
+  """Settings of the the integer Settings Group"""
+  readingSettingsPageOnFront: Int
+
+  """Settings of the the integer Settings Group"""
+  readingSettingsPostsPerPage: Int
+
+  """Settings of the the string Settings Group"""
+  readingSettingsShowOnFront: String
+
+  """Settings of the the integer Settings Group"""
+  writingSettingsDefaultCategory: Int
+
+  """Settings of the the string Settings Group"""
+  writingSettingsDefaultPostFormat: String
+
+  """Settings of the the boolean Settings Group"""
+  writingSettingsUseSmilies: Boolean
+}
+
+"""Arguments for filtering the RootQueryToCategoryConnection connection"""
+input RootQueryToCategoryConnectionWhereArgs {
+  """
+  Unique cache key to be produced when this query is stored in an object cache. Default is 'core'.
+  """
+  cacheDomain: String
+
+  """
+  Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0.
+  """
+  childOf: Int
+
+  """
+  True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false.
+  """
+  childless: Boolean
+
+  """
+  Retrieve terms where the description is LIKE the input value. Default empty.
+  """
+  descriptionLike: String
+
+  """
+  Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array.
+  """
+  exclude: [ID]
+
+  """
+  Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array.
+  """
+  excludeTree: [ID]
+
+  """
+  Whether to hide terms not assigned to any posts. Accepts true or false. Default false
+  """
+  hideEmpty: Boolean
+
+  """
+  Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true.
+  """
+  hierarchical: Boolean
+
+  """Array of term ids to include. Default empty array."""
+  include: [ID]
+
+  """Array of names to return term(s) for. Default empty."""
+  name: [String]
+
+  """Retrieve terms where the name is LIKE the input value. Default empty."""
+  nameLike: String
+
+  """
+  Array of object IDs. Results will be limited to terms associated with these objects.
+  """
+  objectIds: [ID]
+
+  """Direction the connection should be ordered in"""
+  order: OrderEnum
+
+  """Field(s) to order terms by. Defaults to 'name'."""
+  orderby: TermObjectsConnectionOrderbyEnum
+
+  """
+  Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false.
+  """
+  padCounts: Boolean
+
+  """Parent term ID to retrieve direct-child terms of. Default empty."""
+  parent: Int
+
+  """
+  Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty.
+  """
+  search: String
+
+  """Array of slugs to return term(s) for. Default empty."""
+  slug: [String]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID] @deprecated(reason: "Use `termTaxonomyId` instead")
+
+  """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomyId: [ID]
+
+  """Whether to prime meta caches for matched terms. Default true."""
+  updateTermMetaCache: Boolean
+}
+
+"""Connection between the RootQuery type and the category type"""
+type RootQueryToCategoryConnection implements CategoryConnection & Connection {
+  """Edges for the RootQueryToCategoryConnection connection"""
+  edges: [RootQueryToCategoryConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [Category!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: RootQueryToCategoryConnectionPageInfo!
 }
 
 """An edge in a connection"""
@@ -10165,15 +10644,6 @@ input RootQueryToContentNodeConnectionWhereArgs {
 
   """Title of the object"""
   title: String
-}
-
-"""Offset pagination input type"""
-input OffsetPagination {
-  """Number of post to show per page. Passed to posts_per_page of WP_Query."""
-  offset: Int
-
-  """Number of post to show per page. Passed to posts_per_page of WP_Query."""
-  size: Int
 }
 
 """Connection between the RootQuery type and the ContentNode type"""
@@ -10787,7 +11257,7 @@ interface MenuItemLinkableConnectionEdge implements Edge {
 }
 
 """Deprecated in favor of MenuItemLinkeable Interface"""
-union MenuItemObjectUnion = Post | Page | Category | Tag | PostFormat
+union MenuItemObjectUnion = Post | Page | Advertisement | Category | Tag | PostFormat
 
 """Connection between the MenuItem type and the Menu type"""
 type MenuItemToMenuConnectionEdge implements OneToOneConnection & Edge & MenuConnectionEdge {
@@ -12650,6 +13120,12 @@ type WritingSettings {
 
 """The root mutation"""
 type RootMutation {
+  """The createAdvertisement mutation"""
+  createAdvertisement(
+    """Input for the createAdvertisement mutation"""
+    input: CreateAdvertisementInput!
+  ): CreateAdvertisementPayload
+
   """The createCategory mutation"""
   createCategory(
     """Input for the createCategory mutation"""
@@ -12697,6 +13173,12 @@ type RootMutation {
     """Input for the createUser mutation"""
     input: CreateUserInput!
   ): CreateUserPayload
+
+  """The deleteAdvertisement mutation"""
+  deleteAdvertisement(
+    """Input for the deleteAdvertisement mutation"""
+    input: DeleteAdvertisementInput!
+  ): DeleteAdvertisementPayload
 
   """The deleteCategory mutation"""
   deleteCategory(
@@ -12776,6 +13258,12 @@ type RootMutation {
     input: SendPasswordResetEmailInput!
   ): SendPasswordResetEmailPayload
 
+  """The updateAdvertisement mutation"""
+  updateAdvertisement(
+    """Input for the updateAdvertisement mutation"""
+    input: UpdateAdvertisementInput!
+  ): UpdateAdvertisementPayload
+
   """The updateCategory mutation"""
   updateCategory(
     """Input for the updateCategory mutation"""
@@ -12829,6 +13317,44 @@ type RootMutation {
     """Input for the updateUser mutation"""
     input: UpdateUserInput!
   ): UpdateUserPayload
+}
+
+"""Input for the createAdvertisement mutation."""
+input CreateAdvertisementInput {
+  """
+  This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+  """
+  clientMutationId: String
+
+  """
+  The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17 
+  """
+  date: String
+
+  """
+  A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types.
+  """
+  menuOrder: Int
+
+  """The password used to protect the content of the object"""
+  password: String
+
+  """The slug of the object"""
+  slug: String
+
+  """The status of the object"""
+  status: PostStatusEnum
+}
+
+"""The payload for the createAdvertisement mutation."""
+type CreateAdvertisementPayload {
+  """The Post object mutation type."""
+  advertisement: Advertisement
+
+  """
+  If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+  """
+  clientMutationId: String
 }
 
 """Input for the createCategory mutation."""
@@ -13382,6 +13908,39 @@ type CreateUserPayload {
   user: User
 }
 
+"""Input for the deleteAdvertisement mutation."""
+input DeleteAdvertisementInput {
+  """
+  This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+  """
+  clientMutationId: String
+
+  """
+  Whether the object should be force deleted instead of being moved to the trash
+  """
+  forceDelete: Boolean
+
+  """The ID of the advertisement to delete"""
+  id: ID!
+
+  """Override the edit lock when another user is editing the post"""
+  ignoreEditLock: Boolean
+}
+
+"""The payload for the deleteAdvertisement mutation."""
+type DeleteAdvertisementPayload {
+  """The object before it was deleted"""
+  advertisement: Advertisement
+
+  """
+  If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+  """
+  clientMutationId: String
+
+  """The ID of the deleted object"""
+  deletedId: ID
+}
+
 """Input for the deleteCategory mutation."""
 input DeleteCategoryInput {
   """
@@ -13762,6 +14321,50 @@ type SendPasswordResetEmailPayload {
 
   """The user that the password reset email was sent to"""
   user: User @deprecated(reason: "This field will be removed in a future version of WPGraphQL")
+}
+
+"""Input for the updateAdvertisement mutation."""
+input UpdateAdvertisementInput {
+  """
+  This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+  """
+  clientMutationId: String
+
+  """
+  The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17 
+  """
+  date: String
+
+  """The ID of the advertisement object"""
+  id: ID!
+
+  """Override the edit lock when another user is editing the post"""
+  ignoreEditLock: Boolean
+
+  """
+  A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types.
+  """
+  menuOrder: Int
+
+  """The password used to protect the content of the object"""
+  password: String
+
+  """The slug of the object"""
+  slug: String
+
+  """The status of the object"""
+  status: PostStatusEnum
+}
+
+"""The payload for the updateAdvertisement mutation."""
+type UpdateAdvertisementPayload {
+  """The Post object mutation type."""
+  advertisement: Advertisement
+
+  """
+  If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+  """
+  clientMutationId: String
 }
 
 """Input for the updateCategory mutation."""
@@ -14356,6 +14959,32 @@ type Template_PageNoTitle implements ContentTemplate {
 }
 
 """
+Provides access to fields of the &quot;Addetails&quot; ACF Field Group via the &quot;addetails&quot; field
+"""
+interface WithAcfAddetails {
+  """Fields of the Addetails ACF Field Group"""
+  addetails: Addetails
+}
+
+"""
+Interface representing fields of the ACF &quot;Addetails&quot; Field Group
+"""
+interface Addetails_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  """
+  Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Addetails&quot; Field Group
+  """
+  adImage: AcfMediaItemConnectionEdge
+
+  """
+  Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;Addetails&quot; Field Group
+  """
+  adLink: String
+
+  """The name of the field group"""
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+}
+
+"""
 Provides access to fields of the &quot;Authorinfo&quot; ACF Field Group via the &quot;authorinfo&quot; field
 """
 interface WithAcfAuthorinfo {
@@ -14379,25 +15008,4 @@ interface Authorinfo_Fields implements AcfFieldGroup & AcfFieldGroupFields {
   Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;Authorinfo&quot; Field Group
   """
   writtenBy: String
-}
-
-"""
-Provides access to fields of the &quot;Customfields&quot; ACF Field Group via the &quot;customfields&quot; field
-"""
-interface WithAcfCustomfields {
-  """Fields of the Customfields ACF Field Group"""
-  customfields: Customfields
-}
-
-"""
-Interface representing fields of the ACF &quot;Customfields&quot; Field Group
-"""
-interface Customfields_Fields implements AcfFieldGroup & AcfFieldGroupFields {
-  """The name of the field group"""
-  fieldGroupName: String @deprecated(reason: "Use __typename instead")
-
-  """
-  Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;Customfields&quot; Field Group
-  """
-  youtubeVideoUrl: String
 }

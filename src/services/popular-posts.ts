@@ -58,9 +58,6 @@ const GET_POPULAR_POSTS_QUERY = graphql(`
             slug
           }
         }
-        customfields {
-          youtubeVideoUrl
-        }
         authorinfo {
           writtenBy
           writerImage {
