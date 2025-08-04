@@ -36,7 +36,7 @@ function WPVideoRenderer(props: {
 
   return (
     <article
-      className={cn('article', className)}
+      className={cn('video-article', className)}
       dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
     />
   );
