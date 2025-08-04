@@ -13,8 +13,20 @@ function WPContentRenderer(props: {
   }
 
   const sanitizedHtml = sanitizeHtml(content, {
-    nonBooleanAttributes: ['class', 'style', 'aria-*'],
-    allowedAttributes: { '*': ['class', 'style', 'aria-*'] },
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['iframe']),
+    allowedAttributes: {
+      ...sanitizeHtml.defaults.allowedAttributes,
+      iframe: [
+        'src',
+        'frameborder',
+        'allow',
+        'allowfullscreen',
+        'loading',
+        'title',
+        'referrerpolicy',
+      ],
+    },
+    allowedSchemes: ['https'],
   });
 
   return (
