@@ -109,6 +109,7 @@ export default async function Hero() {
               {/* Desktop: ArticleCard */}
               <div className="hidden lg:block">
                 <ArticleCard
+                  key={post.slug}
                   image={post.featuredImage?.node.sourceUrl ?? ''}
                   category={post.categories.nodes[0].name}
                   categorySlug={post.categories.nodes[0].name}
@@ -119,6 +120,7 @@ export default async function Hero() {
                     post.author?.node.name ??
                     'Unknown'
                   }
+                  date={new Date()}
                   slug={post.slug}
                 />
               </div>
