@@ -1,3 +1,4 @@
+import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,6 +8,7 @@ import { getLatestMagazinePdfUrl } from '~/utils/get-latest-magazine';
 import { fetchPopularPosts } from '~/services/popular-posts';
 import { fetchLimitedPosts } from '~/services/posts';
 
+import ArticleCard from './articles/article-card';
 import { Container } from './container';
 import FeaturedCard from './featured-card';
 import MagazineView from './magazine-viewer/magazine-view';
@@ -88,18 +90,39 @@ export default async function Hero() {
         </h1>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {trendingPosts.map((post) => (
-            <TrendingPostsCard
-              key={post.slug}
-              url={`/${post.categories.nodes[0].slug}/${post.slug}`}
-              title={post.title ?? ''}
-              category={post.categories.nodes[0].name}
-              imageUrl={post.featuredImage?.node.sourceUrl ?? ''}
-              author={
-                post.authorinfo?.writtenBy ??
-                post.author?.node.name ??
-                'Unknown'
-              }
-            />
+            <React.Fragment key={post.slug}>
+              {/* Mobile: TrendingPostsCard */}
+              <div className="block lg:hidden">
+                <TrendingPostsCard
+                  url={`/${post.categories.nodes[0].slug}/${post.slug}`}
+                  title={post.title ?? ''}
+                  category={post.categories.nodes[0].name}
+                  imageUrl={post.featuredImage?.node.sourceUrl ?? ''}
+                  author={
+                    post.authorinfo?.writtenBy ??
+                    post.author?.node.name ??
+                    'Unknown'
+                  }
+                />
+              </div>
+
+              {/* Desktop: ArticleCard */}
+              <div className="hidden lg:block">
+                <ArticleCard
+                  image={post.featuredImage?.node.sourceUrl ?? ''}
+                  category={post.categories.nodes[0].name}
+                  categorySlug={post.categories.nodes[0].name}
+                  headline={post.title ?? ''}
+                  subhead={''}
+                  author={
+                    post.authorinfo?.writtenBy ??
+                    post.author?.node.name ??
+                    'Unknown'
+                  }
+                  slug={post.slug}
+                />
+              </div>
+            </React.Fragment>
           ))}
         </div>
       </div>
@@ -195,15 +218,14 @@ function TrendingPostsCard({
           alt={title}
           width={147}
           height={147}
-          className="h-[100px] w-[100px] object-cover group-hover:brightness-110 md:aspect-square md:h-auto md:w-[147px]"
+          className="aspect-[3/2] h-[100px] w-auto object-cover group-hover:brightness-110 md:h-[147px]"
         />
 
         <div className="flex flex-col gap-1 md:gap-3">
           <h3 className="text-sm font-semibold text-gray-500">{category}</h3>
-          <p className="line-clamp-2 text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline md:line-clamp-3">
+          <p className="line-clamp-3 text-lg font-extrabold decoration-1 underline-offset-4 group-hover:underline md:line-clamp-3">
             {title}
           </p>
-          <p className="text-sm text-gray-500">~{author}</p>
         </div>
       </div>
     </Link>
