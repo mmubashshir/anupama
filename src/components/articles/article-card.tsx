@@ -50,7 +50,7 @@ export default function ArticleCard({
         alt={headline}
         width={300}
         height={300}
-        className="mb-2 aspect-[3/2] w-full max-w-full object-cover group-hover:brightness-[1.1] md:aspect-square"
+        className="mb-2 aspect-[3/2] w-full max-w-full object-cover group-hover:brightness-[1.1]"
       />
       <div className="flex-1">
         <span className="text-sm font-semibold text-gray-500">{category}</span>

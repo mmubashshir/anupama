@@ -19,11 +19,11 @@ export function SocialCard({
           alt={headline}
           width={700}
           height={300}
-          className="aspect-[3/2] w-full object-cover group-hover:brightness-[1.1] md:aspect-square"
+          className="aspect-[3/2] w-full object-cover group-hover:brightness-[1.1]"
         />
       </div>
       <div className="bg-white">
-        <h3 className="line-clamp-2 pt-4 text-2xl leading-tight font-black decoration-1 underline-offset-4 group-hover:underline">
+        <h3 className="line-clamp-3 pt-4 text-2xl leading-tight font-black decoration-1 underline-offset-4 group-hover:underline">
           {headline}
         </h3>
         <p className="text-sm leading-relaxed font-semibold">{subhead}</p>
