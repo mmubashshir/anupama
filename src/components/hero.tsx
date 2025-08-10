@@ -53,72 +53,71 @@ export default async function Hero() {
     : [];
 
   return (
-    <Container className="p-4 flex flex-col sm:px-6 lg:px-8 lg:pt-10">
-    {/* Featured */}
-    <h1 className="mb-5 text-3xl font-extrabold md:mb-7 md:text-5xl">
-      ಮುಖ್ಯ ಸುದ್ದಿ
-    </h1>
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      <div className="md:col-span-1 lg:col-span-2">
-        <FeaturedCard {...featuredPost} showBorder={false} />
+    <Container className="mt-20 flex flex-col p-4 sm:px-6 md:mt-0 md:pt-10 lg:px-8">
+      {/* Featured */}
+      <h1 className="mb-5 text-3xl font-extrabold md:mb-7 md:text-5xl">
+        ಮುಖ್ಯ ಸುದ್ದಿ
+      </h1>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="md:col-span-1 lg:col-span-2">
+          <FeaturedCard {...featuredPost} showBorder={false} />
+        </div>
+
+        {/* Magazine on Desktop */}
+        <div className="col-span-1 hidden flex-col gap-10 lg:flex lg:flex-row">
+          <div className="border-t border-l border-dashed border-black lg:mb-10 lg:ml-10 lg:border-solid lg:border-gray-200" />
+          {latestMagazine.pdfUrl !== undefined && (
+            <MagazineView pdfUrl={latestMagazine.pdfUrl}>
+              <MagazineCard
+                coverImageUrl={
+                  latestMagazine.coverImageUrl ?? '/anupama-magazine.jpg'
+                }
+              />
+            </MagazineView>
+          )}
+        </div>
       </div>
-  
-      {/* Magazine on Desktop */}
-      <div className="hidden lg:flex col-span-1 flex-col gap-10 lg:flex-row">
-        <div className="border-t border-l border-dashed border-black lg:mb-10 lg:ml-10 lg:border-solid lg:border-gray-200" />
-        {latestMagazine.pdfUrl !== undefined && (
+
+      {/* Divider */}
+      <div className="hidden border-t border-dashed border-black lg:block" />
+
+      {/* Trending */}
+      <div className="pt-4 pb-8 lg:pt-8">
+        <h1 className="mb-7 text-3xl font-extrabold md:text-5xl">
+          ಟ್ರೆಂಡಿಂಗ್ ಸುದ್ದಿ
+        </h1>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {trendingPosts.map((post) => (
+            <TrendingPostsCard
+              key={post.slug}
+              url={`/${post.categories.nodes[0].slug}/${post.slug}`}
+              title={post.title ?? ''}
+              category={post.categories.nodes[0].name}
+              imageUrl={post.featuredImage?.node.sourceUrl ?? ''}
+              author={
+                post.authorinfo?.writtenBy ??
+                post.author?.node.name ??
+                'Unknown'
+              }
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Magazine on Mobile (after Trending) */}
+      {latestMagazine.pdfUrl !== undefined && (
+        <div className="block lg:hidden">
+          <div className="my-8 border-t border-dashed border-black md:hidden" />
           <MagazineView pdfUrl={latestMagazine.pdfUrl}>
-            <MagazineCard
+            <MobileMagazineCard
               coverImageUrl={
                 latestMagazine.coverImageUrl ?? '/anupama-magazine.jpg'
               }
             />
           </MagazineView>
-        )}
-      </div>
-    </div>
-  
-    {/* Divider */}
-    <div className="hidden border-t border-dashed border-black lg:block" />
-  
-    {/* Trending */}
-    <div className="pt-4 lg:pt-8 pb-8">
-      <h1 className="mb-7 text-3xl font-extrabold md:text-5xl">
-        ಟ್ರೆಂಡಿಂಗ್ ಸುದ್ದಿ
-      </h1>
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {trendingPosts.map((post) => (
-          <TrendingPostsCard
-            key={post.slug}
-            url={`/${post.categories.nodes[0].slug}/${post.slug}`}
-            title={post.title ?? ''}
-            category={post.categories.nodes[0].name}
-            imageUrl={post.featuredImage?.node.sourceUrl ?? ''}
-            author={
-              post.authorinfo?.writtenBy ??
-              post.author?.node.name ??
-              'Unknown'
-            }
-          />
-        ))}
-      </div>
-    </div>
-  
-    {/* Magazine on Mobile (after Trending) */}
-    {latestMagazine.pdfUrl !== undefined && (
-      <div className=" block lg:hidden">
-          <div className=" border-t my-8 border-dashed border-black md:hidden" />
-        <MagazineView pdfUrl={latestMagazine.pdfUrl}>
-          <MobileMagazineCard
-            coverImageUrl={
-              latestMagazine.coverImageUrl ?? '/anupama-magazine.jpg'
-            }
-          />
-        </MagazineView>
-      </div>
-    )}
-  </Container>
-  
+        </div>
+      )}
+    </Container>
   );
 }
 
