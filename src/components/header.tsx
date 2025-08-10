@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { navLinks, subLinks } from '~/constants/nav-links';
-import { useScrollPosition } from '~/hooks/use-scroll-position';
 import { ChevronDown, FacebookIcon, Menu, Youtube } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,10 +10,7 @@ import { Container } from '~/components/container';
 import MobileNavbar from '~/components/mobile-nav';
 
 export default function Header() {
-  const scrollPosition = useScrollPosition();
   const [isNavBarOpen, setIsNavBarOpen] = useState(false);
-
-  const isQuickLinksHidden = scrollPosition > 120;
 
   return (
     <div className="bg-primary">
