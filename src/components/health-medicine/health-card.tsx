@@ -17,7 +17,7 @@ export default function HealthcareCard({
     <div className="bg-white py-4">
       <div className="group flex cursor-pointer items-start gap-4 sm:gap-5">
         {/* Image */}
-        <div className="relative h-28 w-28 flex-shrink-0 overflow-hidden sm:h-32 sm:w-32">
+        <div className="relative aspect-[3/2] h-28 w-auto flex-shrink-0 overflow-hidden sm:h-32">
           <Image
             src={imageUrl}
             alt={name}
@@ -29,11 +29,7 @@ export default function HealthcareCard({
 
         {/* Text */}
         <div className="min-w-0 flex-1">
-          {/* <span className="text-sm font-semibold text-gray-500">
-            {category}
-          </span> */}
-
-          <h3 className="line-clamp-3 text-base font-black decoration-1 underline-offset-4 group-hover:underline sm:text-lg md:text-xl">
+          <h3 className="line-clamp-3 text-lg font-black decoration-1 underline-offset-4 group-hover:underline sm:text-lg md:text-xl">
             {name}
           </h3>
 

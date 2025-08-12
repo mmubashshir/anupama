@@ -1,10 +1,10 @@
-'use client';
-
-import { type CATEGORY } from '~/enum/categories';
+import { CATEGORY } from '~/enum/categories';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { getPlaceholderImage } from '~/utils/get-placeholder-image';
+
+import SquareAd from '../square-ad';
 
 interface SidebarProps {
   recentPosts: {
@@ -67,6 +67,7 @@ export default function Sidebar({ recentPosts, category }: SidebarProps) {
               ))}
             </div>
           </div>
+          <SquareAd category={CATEGORY.DetailSideAd} />
 
           {/* Popular Tags */}
           {/* <div className="border border-gray-200 p-8">
