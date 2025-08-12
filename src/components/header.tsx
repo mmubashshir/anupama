@@ -110,7 +110,7 @@ export default function Header() {
               target="_blank"
               className="bg-white p-2 hover:scale-110"
             >
-              {/* eslint-disable-next-line react/jsx-no-undef -- Youtube icon is used even when deprecated */}
+              {/*eslint-disable-next-line @typescript-eslint/no-deprecated -- Deprecated icon used intentionally */}
               <Youtube className="text-primary h-8 w-8" />
             </Link>
 
@@ -119,7 +119,7 @@ export default function Header() {
               className="bg-white p-2 hover:scale-110"
               target="_blank"
             >
-              {/* eslint-disable-next-line react/jsx-no-undef -- Facebook icon is used even when deprecated*/}
+              {/*eslint-disable-next-line @typescript-eslint/no-deprecated -- Deprecated icon used intentionally */}
               <FacebookIcon className="text-primary h-8 w-8" />
             </Link>
           </div>
