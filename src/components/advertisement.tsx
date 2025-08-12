@@ -1,6 +1,8 @@
 import { type CATEGORY } from '~/enum/categories';
 import Image from 'next/image';
+
 import { fetchLimitedPosts } from '~/services/posts';
+
 import { Container } from './container';
 
 interface AdvertisementProps {
@@ -22,22 +24,16 @@ export default async function Advertisement({ category }: AdvertisementProps) {
   }
 
   return (
-    <Container className="p-4 pt-6 sm:px-6 lg:px-8 lg:pt-10">
-      <div className="flex justify-center">
-        <a
-          href={ad.addetails.adLink}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            src={ad.addetails.adImage.node.mediaItemUrl}
-            alt={ad.title ?? 'Advertisement'}
-            width={680}
-            height={84}
-            className="w-[680px] object-cover"
-          />
-        </a>
-      </div>
+    <Container className="mx-auto max-w-6xl p-4 sm:px-6 lg:px-8 lg:pt-10">
+      <a href={ad.addetails.adLink} target="_blank" rel="noopener noreferrer">
+        <Image
+          src={ad.addetails.adImage.node.mediaItemUrl}
+          alt={ad.title ?? 'Advertisement'}
+          width={680}
+          height={84}
+          className="w-full object-contain"
+        />
+      </a>
     </Container>
   );
 }
