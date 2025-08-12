@@ -1,4 +1,5 @@
 import 'server-only';
+import { CATEGORY } from '~/enum/categories';
 
 import { graphql, query } from '~/utils/graphql-client';
 
@@ -7,6 +8,7 @@ import type { ResultOf, VariablesOf } from '~/utils/graphql-client';
 interface FetchAllPostsOptions {
   filter?: {
     categoryName?: string;
+    categoryNameNotIn?: string[];
   };
 }
 
@@ -55,6 +57,14 @@ export const LIMITED_POSTS_QUERY = graphql(`
             }
           }
         }
+        addetails {
+        adImage {
+         node {
+         mediaItemUrl
+         }
+         }
+        adLink
+         }
       }
       pageInfo {
         offsetPagination {
@@ -190,6 +200,21 @@ export async function fetchAllPosts(
     query: FETCH_ALL_POSTS_QUERY,
     variables: {
       filter: options?.filter ?? {},
+    },
+  });
+
+  return result.data.posts?.nodes ?? [];
+}
+
+export async function fetchOnlyAds(): Promise<
+  NonNullable<ResultOf<typeof FETCH_ALL_POSTS_QUERY>['posts']>['nodes']
+> {
+  const result = await query({
+    query: FETCH_ALL_POSTS_QUERY,
+    variables: {
+      filter: {
+        categoryName: CATEGORY.Ads,
+      },
     },
   });
 
