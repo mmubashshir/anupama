@@ -23,7 +23,7 @@ export default function Header() {
             <Image
               className="mx-auto ml-2 h-[60px] w-auto select-none"
               draggable="false"
-              src="/anupama-logo.svg"
+              src="/anupama-header-logo.svg"
               alt="Anupama Logo"
               width={120}
               height={40}
@@ -91,7 +91,7 @@ export default function Header() {
             <Image
               className="h-[100px] w-auto select-none"
               draggable="false"
-              src="/anupama-logo.svg"
+              src="/anupama-header-logo.svg"
               alt="Anupama Logo"
               width={200}
               height={180}

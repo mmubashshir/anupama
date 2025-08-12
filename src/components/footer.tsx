@@ -54,7 +54,7 @@ export default function Footer() {
                   <Image
                     className="mix-blend-multiply select-none"
                     draggable="false"
-                    src="/anupama-logo.svg"
+                    src="/anupama-logo.png"
                     alt="Anupama Logo"
                     width={170}
                     height={40}

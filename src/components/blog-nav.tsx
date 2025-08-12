@@ -25,7 +25,7 @@ export default function DesktopBlogNav() {
         >
           <Image
             draggable="false"
-            src="/anupama-logo.svg"
+            src="/anupama-logo.png"
             alt="Anupama Logo"
             width={120}
             height={40}
@@ -60,7 +60,7 @@ export default function DesktopBlogNav() {
           <Link href="/">
             <Image
               draggable="false"
-              src="/anupama-logo.svg"
+              src="/anupama-logo.png"
               alt="Anupama Logo"
               width={140}
               height={48}
