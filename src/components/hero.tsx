@@ -114,7 +114,7 @@ export default async function Hero() {
                   category={post.categories.nodes[0].name}
                   categorySlug={post.categories.nodes[0].name}
                   headline={post.title ?? ''}
-                  subhead={''}
+                  subhead=""
                   author={
                     post.authorinfo?.writtenBy ??
                     post.author?.node.name ??
@@ -204,7 +204,6 @@ function TrendingPostsCard({
   title,
   imageUrl,
   category,
-  author,
 }: {
   url: string;
   title: string;

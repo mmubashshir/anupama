@@ -1,7 +1,5 @@
 import 'server-only';
 
-import { CATEGORY } from '~/enum/categories';
-
 import { graphql, query } from '~/utils/graphql-client';
 
 import type { ResultOf, VariablesOf } from '~/utils/graphql-client';
