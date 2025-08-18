@@ -10,6 +10,7 @@ import { BASE_URL } from '~/constants';
 import Footer from '~/components/footer';
 import GoogleAnalyticsScript from '~/components/google-analytics-script';
 import MicrosoftClarity from '~/components/microsoft-clarity';
+import PushNotifications from '~/components/push-notification';
 
 const balooTamma = Baloo_Tamma_2({
   variable: '--font-primary',
@@ -84,6 +85,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <Toaster />
+        <PushNotifications />
       </body>
       <GoogleAnalyticsScript />
       <MicrosoftClarity />

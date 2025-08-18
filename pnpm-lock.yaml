@@ -86,6 +86,9 @@ importers:
       react-hot-toast:
         specifier: 2.5.2
         version: 2.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react-onesignal:
+        specifier: 3.2.3
+        version: 3.2.3
       react-pdf:
         specifier: 10.0.1
         version: 10.0.1(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -3220,6 +3223,10 @@ packages:
 
   react-is@19.1.0:
     resolution: {integrity: sha512-Oe56aUPnkHyyDxxkvqtd7KkdQP5uIUfHxd5XTb3wE9d/kRnZLmKbDB0GWk919tdQ+mxxPtG6EAs6RMT6i1qtHg==}
+
+  react-onesignal@3.2.3:
+    resolution: {integrity: sha512-5LIbQbybNTQ8ngaMeJEBB1EEzDEYJ8SS10L7hHKNCIIWrTmeKpYFhCgwjwb1QFdZ+eRjil5y+ujJR6syf7SVVw==}
+    engines: {node: '>=14', npm: '>=6'}
 
   react-pdf@10.0.1:
     resolution: {integrity: sha512-dblLZ5BqubeNFZwTzHkRi7Rexev2+Xb9z7sEvNYT+IOxmih1KgrByeqD4Hm0RnwR9nTWludXbiHQMe9d47DK2w==}
@@ -6986,6 +6993,8 @@ snapshots:
   react-is@16.13.1: {}
 
   react-is@19.1.0: {}
+
+  react-onesignal@3.2.3: {}
 
   react-pdf@10.0.1(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
