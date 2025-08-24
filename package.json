@@ -45,6 +45,7 @@
     "server-only": "0.0.1",
     "tailwind-merge": "3.3.0",
     "tw-animate-css": "1.2.9",
+    "web-push": "3.6.7",
     "zod": "3.25.74"
   },
   "devDependencies": {
