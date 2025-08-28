@@ -9,12 +9,7 @@ interface NewsCardProps {
   authorName?: string;
 }
 
-export default function NewsCard({
-  category,
-  title,
-  imageUrl,
-  authorName,
-}: NewsCardProps) {
+export default function NewsCard({ category, title, imageUrl }: NewsCardProps) {
   return (
     <div className="group border-b border-gray-200 last:border-b-0">
       <div className="flex cursor-pointer items-center gap-2">
