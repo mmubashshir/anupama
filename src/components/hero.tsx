@@ -204,7 +204,6 @@ function TrendingPostsCard({
   title,
   imageUrl,
   category,
-  author,
 }: {
   url: string;
   title: string;
