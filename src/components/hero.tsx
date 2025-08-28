@@ -109,6 +109,7 @@ export default async function Hero() {
               {/* Desktop: ArticleCard */}
               <div className="hidden lg:block">
                 <ArticleCard
+                  key={post.categories.nodes[0].name}
                   image={post.featuredImage?.node.sourceUrl ?? ''}
                   category={post.categories.nodes[0].name}
                   categorySlug={post.categories.nodes[0].name}
@@ -120,6 +121,7 @@ export default async function Hero() {
                     'Unknown'
                   }
                   slug={post.slug}
+                  date={new Date()}
                 />
               </div>
             </React.Fragment>
