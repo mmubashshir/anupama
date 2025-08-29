@@ -55,7 +55,7 @@ export default async function Hero() {
     : [];
 
   return (
-    <Container className="mt-20 flex flex-col p-4 sm:px-6 md:mt-0 md:pt-10 lg:px-8">
+    <Container className="flex flex-col p-4 sm:px-6 md:mt-0 md:pt-10 lg:px-8">
       {/* Featured */}
       <h1 className="mb-5 text-3xl font-extrabold md:mb-7 md:text-5xl">
         ಮುಖ್ಯ ಸುದ್ದಿ
