@@ -1,56 +1,120 @@
 'use client';
 
-import { useEffect } from 'react';
-import OneSignal from 'react-onesignal';
+import { useEffect, useState } from 'react';
+import { registerFcmToken } from '~/app/actions/register-fcm-token ';
+import { LocalStorageKeys } from '~/constants/local-storage-keys';
+import { getToken } from 'firebase/messaging';
+import { toast } from 'react-hot-toast';
 
 import { env } from '~/env';
 
+import NotificationPermissionPrompt from './notification-permission-prompt';
+
+const ONE_DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
+const NOTIFICATION_TIMEOUT = 1;
+
 export default function PushNotifications() {
+  const [shouldShowPrompt, setShouldShowPrompt] = useState(false);
+  const [requestingPermission, setRequestingPermission] = useState(false);
+
   useEffect(() => {
-    const initOneSignal = async () => {
-      const appId = env.NEXT_PUBLIC_ONESIGNAL_APP_ID;
-
-      if (!appId) {
-        console.warn('OneSignal App ID not found');
-
-        return;
-      }
-
-      try {
-        await OneSignal.init({
-          appId,
-          allowLocalhostAsSecureOrigin: true,
-          notifyButton: {
-            enable: true,
-            prenotify: true,
-            showCredit: false,
-            text: {
-              'tip.state.unsubscribed': 'ಸೂಚನೆಗಳಿಗೆ ಸಬ್‌ಸ್ಕ್ರೈಬ್',
-              'tip.state.subscribed': 'ನೀವು ಸಬ್‌ಸ್ಕ್ರೈಬ್ ಮಾಡಿದ್ದೀರಿ',
-              'tip.state.blocked': 'ನೀವು ಸೂಚನೆಗಳನ್ನು ಬ್ಲಾಕ್ ಮಾಡಿದ್ದೀರಿ',
-              'message.prenotify': 'ಸೂಚನೆಗಳಿಗೆ ಸಬ್‌ಸ್ಕ್ರೈಬ್ ಮಾಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ',
-              'message.action.subscribed': 'ಸಬ್‌ಸ್ಕ್ರೈಬ್ ಮಾಡಿದಕ್ಕೆ ಧನ್ಯವಾದ',
-              'message.action.subscribing': 'ಸಬ್‌ಸ್ಕ್ರೈಬ್ ಆಗುತ್ತಿದೆ...',
-              'message.action.resubscribed':
-                'ಮತ್ತೆ ಸಬ್‌ಸ್ಕ್ರೈಬ್ ಮಾಡಿದಕ್ಕೆ ಧನ್ಯವಾದ',
-              'message.action.unsubscribed': 'ಅನ್‌ಸಬ್‌ಸ್ಕ್ರೈಬ್ ಮಾಡಲಾಗಿದೆ',
-              'dialog.main.title': 'ಸೂಚನೆ ಆಯ್ಕೆಗಳು',
-              'dialog.main.button.subscribe': 'ಸಬ್‌ಸ್ಕ್ರೈಬ್',
-              'dialog.main.button.unsubscribe': 'ಅನ್‌ಸಬ್‌ಸ್ಕ್ರೈಬ್',
-              'dialog.blocked.title': 'ಸೂಚನೆ ಬ್ಲಾಕ್ ತೆಗೆದುಹಾಕಿ',
-              'dialog.blocked.message':
-                'ಸೂಚನೆಗಳನ್ನು ಅನುಮತಿಸಲು ಈ ಹಂತಗಳನ್ನು ಮಾಡಿ:',
-            },
-          },
-          autoRegister: true,
-        });
-      } catch (error) {
-        console.error('Failed to initialize OneSignal:', error);
-      }
-    };
-
-    void initOneSignal();
+    initPushNotifications();
   }, []);
 
-  return null;
+  function initPushNotifications() {
+    if (!('Notification' in window)) {
+      return;
+    }
+
+    if (Notification.permission === 'granted') {
+      return;
+    }
+
+    if (Notification.permission === 'denied') {
+      return;
+    }
+
+    const lastNotificationShownOn = localStorage.getItem(
+      LocalStorageKeys.LAST_NOTIFICATION_PROMPT_SHOWN_TIME,
+    );
+    const now = Date.now();
+    const difference = now - Number(lastNotificationShownOn);
+    const daysSinceLastNotification = Math.floor(
+      difference / ONE_DAY_IN_MILLISECONDS,
+    );
+
+    if (daysSinceLastNotification < NOTIFICATION_TIMEOUT) {
+      return;
+    }
+
+    setTimeout(() => {
+      setShouldShowPrompt(true);
+    }, 6000);
+  }
+
+  async function handleOnAllow() {
+    const now = Date.now();
+
+    localStorage.setItem(
+      LocalStorageKeys.LAST_NOTIFICATION_PROMPT_SHOWN_TIME,
+      String(now),
+    );
+    setRequestingPermission(true);
+
+    const permission = await Notification.requestPermission();
+
+    setRequestingPermission(false);
+    setShouldShowPrompt(false);
+
+    if (permission === 'denied' || permission === 'default') {
+      toast.error(
+        'You have denied notification permissions. You can enable them in your browser settings if you change your mind.',
+        { position: 'bottom-right', removeDelay: 5000 },
+      );
+
+      return;
+    }
+
+    await (async () => {
+      const existingRegistration =
+        await navigator.serviceWorker.getRegistration('/');
+
+      if (existingRegistration) return existingRegistration;
+
+      const newRegistration = await navigator.serviceWorker.register(
+        '/firebase-messaging-sw.js',
+        {
+          scope: '/',
+        },
+      );
+
+      return newRegistration;
+    })();
+
+    await navigator.serviceWorker.ready;
+
+    const { messaging } = await import('~/utils/fcm-messaging');
+
+    const token = await getToken(messaging, {
+      vapidKey: env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+    });
+
+    await registerFcmToken(token);
+
+    toast.success('You have successfully enabled notifications.', {
+      position: 'bottom-right',
+      removeDelay: 5000,
+    });
+  }
+
+  return (
+    <NotificationPermissionPrompt
+      open={shouldShowPrompt}
+      loading={requestingPermission}
+      onAllow={handleOnAllow}
+      onLater={() => {
+        setShouldShowPrompt(false);
+      }}
+    />
+  );
 }
