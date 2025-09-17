@@ -17,6 +17,17 @@ export const env = createEnv({
     NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: z.string().optional(),
     NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: z.string().optional(),
   },
+  server: {
+    FIREBASE_CLIENT_EMAIL: z.string().email(),
+    FIREBASE_PRIVATE_KEY: z
+      .string()
+      .regex(
+        /^-----BEGIN PRIVATE KEY-----[\s\S]+-----END PRIVATE KEY-----\s*$/,
+        'Invalid Firebase private key format',
+      )
+      .transform((key) => key.replace(/\\n/g, '\n')),
+    // Replaces `\n` literal which is in string format from env file with actual \n (break line)
+  },
 
   experimental__runtimeEnv: {
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
