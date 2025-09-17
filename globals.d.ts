@@ -14,8 +14,10 @@ declare global {
       NEXT_PUBLIC_FIREBASE_VAPID_KEY: string | undefined;
       NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: string | undefined;
       NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: string | undefined;
+      FIREBASE_CLIENT_EMAIL: string | undefined;
+      FIREBASE_PRIVATE_KEY: string | undefined;
     }
   }
 }
 
-export { };
+export {};
