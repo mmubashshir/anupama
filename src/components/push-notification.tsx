@@ -27,6 +27,18 @@ export default function PushNotifications() {
     }
 
     if (Notification.permission === 'granted') {
+      navigator.serviceWorker
+        .getRegistration('/')
+        .then((existingRegistration) => {
+          return existingRegistration?.update();
+        })
+        .then(() => {
+          //
+        })
+        .catch(() => {
+          //
+        });
+
       return;
     }
 
