@@ -18,7 +18,8 @@ export const env = createEnv({
     NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: z.string().optional(),
   },
   server: {
-    FIREBASE_CLIENT_EMAIL: z.string().email(),
+    WORDPRESS_WEBHOOK_API_KEY: z.string(),
+    FIREBASE_CLIENT_EMAIL: z.email(),
     FIREBASE_PRIVATE_KEY: z
       .string()
       .regex(

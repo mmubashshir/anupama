@@ -21,13 +21,18 @@ importScripts(
     messaging.onBackgroundMessage((payload) => {
       console.log('Received background message: ', payload);
 
-      const notificationTitle = payload.notification?.title || 'New Message';
+      const notificationTitle = payload?.data?.title || 'New Message';
       const notificationOptions = {
-        body: payload.notification?.body || 'You have a new message',
-        icon: payload.notification?.icon || '/favicon.ico',
-        badge: '/favicon-96x96.png',
+        body: payload?.data?.title || 'New Message',
+        icon: 'https://anupama.co.in/favicon.ico', // small app icon
+        badge: 'https://anupama.co.in/favicon-96x96.png', // Android badge
+        image: payload?.data?.imageUrl,
         tag: 'notification-tag',
         requireInteraction: true,
+        data: {
+          clickAction: payload?.data?.clickAction,
+        },
+
         actions: [
           {
             action: 'open',
@@ -57,6 +62,8 @@ self.addEventListener('notificationclick', (event) => {
   // Open the app when notification is clicked
   event.waitUntil(
     clients.matchAll({ type: 'window' }).then((clientList) => {
+      const targetUrl = event.notification.data?.clickAction || '/';
+
       // Check if app is already open
       for (const client of clientList) {
         if (client.url === '/' && 'focus' in client) {
@@ -65,7 +72,7 @@ self.addEventListener('notificationclick', (event) => {
       }
       // If app is not open, open it
       if (clients.openWindow) {
-        return clients.openWindow('/');
+        return clients.openWindow(targetUrl);
       }
     }),
   );
