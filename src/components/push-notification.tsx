@@ -11,7 +11,7 @@ import { env } from '~/env';
 import NotificationPermissionPrompt from './notification-permission-prompt';
 
 const ONE_DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
-const NOTIFICATION_TIMEOUT = 1;
+const NOTIFICATION_TIMEOUT = 7; // Ask notification prompt every 7 days if permisson denied
 
 export default function PushNotifications() {
   const [shouldShowPrompt, setShouldShowPrompt] = useState(false);
@@ -119,14 +119,23 @@ export default function PushNotifications() {
     });
   }
 
+  function handleOnLaterClick() {
+    const now = Date.now();
+
+    localStorage.setItem(
+      LocalStorageKeys.LAST_NOTIFICATION_PROMPT_SHOWN_TIME,
+      String(now),
+    );
+    setRequestingPermission(false);
+    setShouldShowPrompt(false);
+  }
+
   return (
     <NotificationPermissionPrompt
       open={shouldShowPrompt}
       loading={requestingPermission}
       onAllow={handleOnAllow}
-      onLater={() => {
-        setShouldShowPrompt(false);
-      }}
+      onLater={handleOnLaterClick}
     />
   );
 }

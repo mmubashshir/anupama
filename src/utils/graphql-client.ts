@@ -19,6 +19,7 @@ import type {
   VariablesOf,
 } from 'gql.tada';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- appolo query is used for typig purpose
 const { query: apolloQuery, getClient } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
@@ -47,7 +48,7 @@ export async function query<TData, TVariables>(
     variables?: TVariables;
   },
 ): Promise<{ data: TData; errors?: unknown[] }> {
-  const result = await apolloQuery(options);
+  const result = await getClient().query(options);
 
   if (result.errors) {
     return {
