@@ -27,7 +27,7 @@ importScripts(
         icon: 'https://anupama.co.in/favicon.ico', // small app icon
         badge: 'https://anupama.co.in/favicon-96x96.png', // Android badge
         image: payload?.data?.imageUrl,
-        tag: 'notification-tag',
+        tag: payload?.messageId ?? payload?.data?.title ?? 'New Message',
         requireInteraction: true,
         data: {
           clickAction: payload?.data?.clickAction,
@@ -48,8 +48,6 @@ importScripts(
     });
   } catch (error) {
     console.error('Failed to load Firebase config:', error);
-    // Fallback configuration or throw error
-    throw new Error('Unable to load Firebase configuration');
   }
 })();
 
@@ -66,7 +64,7 @@ self.addEventListener('notificationclick', (event) => {
 
       // Check if app is already open
       for (const client of clientList) {
-        if (client.url === '/' && 'focus' in client) {
+        if (client.url.startsWith(self.location.origin) && 'focus' in client) {
           return client.focus();
         }
       }

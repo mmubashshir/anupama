@@ -108,21 +108,25 @@ export default async function Hero() {
 
               {/* Desktop: ArticleCard */}
               <div className="hidden lg:block">
-                <ArticleCard
-                  key={post.categories.nodes[0].name}
-                  image={post.featuredImage?.node.sourceUrl ?? ''}
-                  category={post.categories.nodes[0].name}
-                  categorySlug={post.categories.nodes[0].name}
-                  headline={post.title ?? ''}
-                  subhead={''}
-                  author={
-                    post.authorinfo?.writtenBy ??
-                    post.author?.node.name ??
-                    'Unknown'
-                  }
-                  slug={post.slug}
-                  date={new Date()}
-                />
+                <Link
+                  href={`/${post.categories.nodes[0].slug}/${post.slug}`}
+                  prefetch
+                >
+                  <ArticleCard
+                    key={post.categories.nodes[0].name}
+                    image={post.featuredImage?.node.sourceUrl ?? ''}
+                    category={post.categories.nodes[0].name}
+                    categorySlug={post.categories.nodes[0].name}
+                    headline={post.title ?? ''}
+                    author={
+                      post.authorinfo?.writtenBy ??
+                      post.author?.node.name ??
+                      'Unknown'
+                    }
+                    slug={post.slug}
+                    date={new Date()}
+                  />
+                </Link>
               </div>
             </React.Fragment>
           ))}
