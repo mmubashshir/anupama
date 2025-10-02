@@ -5,7 +5,6 @@ import { type Metadata } from 'next';
 import Advertisement from '~/components/advertisement';
 import Articles from '~/components/articles';
 import DailyNews from '~/components/daily-news';
-import Header from '~/components/header';
 import HealthAndMedicine from '~/components/health-medicine';
 import Hero from '~/components/hero';
 import Social from '~/components/social';
