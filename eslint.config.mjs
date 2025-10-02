@@ -11,6 +11,7 @@ export default [
       'eslint.config.mjs',
       './src/graphql-env.d.ts',
       'introspection.mjs',
+      'public/firebase-messaging-sw.js',
     ],
   },
   ...gvseslint.configs.flat.browser,

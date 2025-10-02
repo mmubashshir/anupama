@@ -20,6 +20,9 @@ export default function NewsCard({ category, title, imageUrl }: NewsCardProps) {
           <h3 className="text-md mt-1 line-clamp-3 font-extrabold decoration-1 underline-offset-4 group-hover:underline md:text-lg">
             {title}
           </h3>
+          {/* {authorName ? (
+            <p className="mt-1 text-sm text-gray-500">~{authorName}</p>
+          ) : null} */}
         </div>
         <div className="relative">
           <Image

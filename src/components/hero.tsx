@@ -55,7 +55,7 @@ export default async function Hero() {
     : [];
 
   return (
-    <Container className="mt-20 flex flex-col p-4 sm:px-6 md:mt-0 md:pt-10 lg:px-8">
+    <Container className="flex flex-col p-4 sm:px-6 md:mt-0 md:pt-10 lg:px-8">
       {/* Featured */}
       <h1 className="mb-5 text-3xl font-extrabold md:mb-7 md:text-5xl">
         ಮುಖ್ಯ ಸುದ್ದಿ
@@ -108,21 +108,25 @@ export default async function Hero() {
 
               {/* Desktop: ArticleCard */}
               <div className="hidden lg:block">
-                <ArticleCard
-                  key={post.slug}
-                  image={post.featuredImage?.node.sourceUrl ?? ''}
-                  category={post.categories.nodes[0].name}
-                  categorySlug={post.categories.nodes[0].name}
-                  headline={post.title ?? ''}
-                  subhead=""
-                  author={
-                    post.authorinfo?.writtenBy ??
-                    post.author?.node.name ??
-                    'Unknown'
-                  }
-                  date={new Date()}
-                  slug={post.slug}
-                />
+                <Link
+                  href={`/${post.categories.nodes[0].slug}/${post.slug}`}
+                  prefetch
+                >
+                  <ArticleCard
+                    key={post.categories.nodes[0].name}
+                    image={post.featuredImage?.node.sourceUrl ?? ''}
+                    category={post.categories.nodes[0].name}
+                    categorySlug={post.categories.nodes[0].name}
+                    headline={post.title ?? ''}
+                    author={
+                      post.authorinfo?.writtenBy ??
+                      post.author?.node.name ??
+                      'Unknown'
+                    }
+                    slug={post.slug}
+                    date={new Date()}
+                  />
+                </Link>
               </div>
             </React.Fragment>
           ))}

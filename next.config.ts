@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { hostname: 'placehold.co' },
       { hostname: 'localhost' },
-      { hostname: 'wordpress.anupama.co.in' },
+      { hostname: '*' },
     ],
   },
   webpack: (config) => {
