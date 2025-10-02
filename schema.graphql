@@ -6573,7 +6573,7 @@ interface PostConnectionEdge implements Edge {
 """
 A chronological content entry typically used for blog posts, news articles, or similar date-based content.
 """
-type Post implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithExcerpt & NodeWithComments & NodeWithTrackbacks & NodeWithRevisions & MenuItemLinkable & WithAcfAuthorinfo & WithAcfAddetails {
+type Post implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithExcerpt & NodeWithComments & NodeWithTrackbacks & NodeWithRevisions & MenuItemLinkable & WithAcfAddetails & WithAcfAuthorinfo {
   """Fields of the Addetails ACF Field Group"""
   addetails: Addetails
 
@@ -6980,47 +6980,6 @@ interface NodeWithTrackbacks implements Node {
 }
 
 """
-The &quot;Authorinfo&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;.
-"""
-type Authorinfo implements Authorinfo_Fields & AcfFieldGroup & AcfFieldGroupFields {
-  """The name of the field group"""
-  fieldGroupName: String @deprecated(reason: "Use __typename instead")
-
-  """
-  Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Authorinfo&quot; Field Group
-  """
-  writerImage: AcfMediaItemConnectionEdge
-
-  """
-  Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;Authorinfo&quot; Field Group
-  """
-  writtenBy: String
-}
-
-"""A Field Group managed by ACF"""
-interface AcfFieldGroup {
-  """The name of the field group"""
-  fieldGroupName: String @deprecated(reason: "Use __typename instead")
-}
-
-"""Fields associated with an ACF Field Group"""
-interface AcfFieldGroupFields {
-  """The name of the field group"""
-  fieldGroupName: String @deprecated(reason: "Use __typename instead")
-}
-
-"""Connection between the Authorinfo_Fields type and the MediaItem type"""
-type AcfMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItemConnectionEdge {
-  """
-  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
-  """
-  cursor: String
-
-  """The node of the connection, without the edges"""
-  node: MediaItem!
-}
-
-"""
 The &quot;Addetails&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;.
 """
 type Addetails implements Addetails_Fields & AcfFieldGroup & AcfFieldGroupFields {
@@ -7036,6 +6995,47 @@ type Addetails implements Addetails_Fields & AcfFieldGroup & AcfFieldGroupFields
 
   """The name of the field group"""
   fieldGroupName: String @deprecated(reason: "Use __typename instead")
+}
+
+"""A Field Group managed by ACF"""
+interface AcfFieldGroup {
+  """The name of the field group"""
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+}
+
+"""Fields associated with an ACF Field Group"""
+interface AcfFieldGroupFields {
+  """The name of the field group"""
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+}
+
+"""Connection between the Addetails_Fields type and the MediaItem type"""
+type AcfMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItemConnectionEdge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The node of the connection, without the edges"""
+  node: MediaItem!
+}
+
+"""
+The &quot;Authorinfo&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;.
+"""
+type Authorinfo implements Authorinfo_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  """The name of the field group"""
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  """
+  Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Authorinfo&quot; Field Group
+  """
+  writerImage: AcfMediaItemConnectionEdge
+
+  """
+  Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;Authorinfo&quot; Field Group
+  """
+  writtenBy: String
 }
 
 """Connection between the Post type and the post type"""
@@ -14959,32 +14959,6 @@ type Template_PageNoTitle implements ContentTemplate {
 }
 
 """
-Provides access to fields of the &quot;Authorinfo&quot; ACF Field Group via the &quot;authorinfo&quot; field
-"""
-interface WithAcfAuthorinfo {
-  """Fields of the Authorinfo ACF Field Group"""
-  authorinfo: Authorinfo
-}
-
-"""
-Interface representing fields of the ACF &quot;Authorinfo&quot; Field Group
-"""
-interface Authorinfo_Fields implements AcfFieldGroup & AcfFieldGroupFields {
-  """The name of the field group"""
-  fieldGroupName: String @deprecated(reason: "Use __typename instead")
-
-  """
-  Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Authorinfo&quot; Field Group
-  """
-  writerImage: AcfMediaItemConnectionEdge
-
-  """
-  Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;Authorinfo&quot; Field Group
-  """
-  writtenBy: String
-}
-
-"""
 Provides access to fields of the &quot;Addetails&quot; ACF Field Group via the &quot;addetails&quot; field
 """
 interface WithAcfAddetails {
@@ -15008,4 +14982,30 @@ interface Addetails_Fields implements AcfFieldGroup & AcfFieldGroupFields {
 
   """The name of the field group"""
   fieldGroupName: String @deprecated(reason: "Use __typename instead")
+}
+
+"""
+Provides access to fields of the &quot;Authorinfo&quot; ACF Field Group via the &quot;authorinfo&quot; field
+"""
+interface WithAcfAuthorinfo {
+  """Fields of the Authorinfo ACF Field Group"""
+  authorinfo: Authorinfo
+}
+
+"""
+Interface representing fields of the ACF &quot;Authorinfo&quot; Field Group
+"""
+interface Authorinfo_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  """The name of the field group"""
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
+
+  """
+  Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Authorinfo&quot; Field Group
+  """
+  writerImage: AcfMediaItemConnectionEdge
+
+  """
+  Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;Authorinfo&quot; Field Group
+  """
+  writtenBy: String
 }
