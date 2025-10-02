@@ -12,6 +12,7 @@ import Sidebar from '~/components/category/sidebar';
 import Comment from '~/components/comment';
 import { Container } from '~/components/container';
 import CreateComment from '~/components/create-comment';
+import DonationContainer from '~/components/donation-container';
 import NativeShareIcon from '~/components/native-share';
 import PostNavigation from '~/components/post-navigation';
 import { ShareType, SocialIcons } from '~/components/social-icons';
@@ -275,6 +276,8 @@ export default async function Blog({ params }: PageParams) {
               <NativeShareIcon url={pagePath} image={ShareType.NATIVE} />
             </div>
           </div>
+
+          <DonationContainer />
 
           {/* Leave a Comment */}
           <div>
