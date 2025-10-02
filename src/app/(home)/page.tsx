@@ -57,7 +57,6 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Home() {
   return (
     <>
-      <Header />
       <Advertisement category={CATEGORY.HomeTopAd} />
       <Hero />
       <DailyNews />
