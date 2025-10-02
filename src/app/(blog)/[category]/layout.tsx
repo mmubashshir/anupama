@@ -1,4 +1,3 @@
-import BlogNav from '~/components/blog-nav';
 import { Container } from '~/components/container';
 
 export default function BlogLayout({
@@ -8,8 +7,9 @@ export default function BlogLayout({
 }) {
   return (
     <>
-      <BlogNav />
-      <Container as="main">{children}</Container>
+      <Container className="mt-18 md:mt-4" as="main">
+        {children}
+      </Container>
     </>
   );
 }

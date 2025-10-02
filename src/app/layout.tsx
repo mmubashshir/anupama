@@ -9,6 +9,7 @@ import { BASE_URL } from '~/constants';
 
 import Footer from '~/components/footer';
 import GoogleAnalyticsScript from '~/components/google-analytics-script';
+import Header from '~/components/header';
 import MicrosoftClarity from '~/components/microsoft-clarity';
 import PushNotifications from '~/components/push-notification';
 
@@ -82,6 +83,7 @@ export default function RootLayout({
         <link href="/site.webmanifest" rel="manifest" />
       </head>
       <body className={`${balooTamma.variable} antialiased`}>
+        <Header />
         {children}
         <Footer />
         <Toaster />
