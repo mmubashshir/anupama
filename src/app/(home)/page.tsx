@@ -1,6 +1,8 @@
 import { BASE_URL } from '~/constants';
+import { CATEGORY } from '~/enum/categories';
 import { type Metadata } from 'next';
 
+import Advertisement from '~/components/advertisement';
 import Articles from '~/components/articles';
 import DailyNews from '~/components/daily-news';
 import Header from '~/components/header';
@@ -56,13 +58,16 @@ export default function Home() {
   return (
     <>
       <Header />
+      <Advertisement category={CATEGORY.HomeTopAd} />
       <Hero />
       <DailyNews />
       <VideoNews />
+      <Advertisement category={CATEGORY.HomeMiddleAd} />
       <Articles />
       <Social />
       <HealthAndMedicine />
       <Stories />
+      <Advertisement category={CATEGORY.HomeBottomAd} />
     </>
   );
 }

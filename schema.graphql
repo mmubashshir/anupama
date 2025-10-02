@@ -759,10 +759,7 @@ enum AdvertisementIdType {
 }
 
 """The advertisement type"""
-type Advertisement implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & MenuItemLinkable & WithAcfAddetails {
-  """Fields of the Addetails ACF Field Group"""
-  addetails: Addetails
-
+type Advertisement implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & MenuItemLinkable {
   """The id field matches the WP_Post-&gt;ID field."""
   advertisementId: Int! @deprecated(reason: "Deprecated in favor of the databaseId field")
 
@@ -6576,7 +6573,10 @@ interface PostConnectionEdge implements Edge {
 """
 A chronological content entry typically used for blog posts, news articles, or similar date-based content.
 """
-type Post implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithExcerpt & NodeWithComments & NodeWithTrackbacks & NodeWithRevisions & MenuItemLinkable & WithAcfAuthorinfo {
+type Post implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithExcerpt & NodeWithComments & NodeWithTrackbacks & NodeWithRevisions & MenuItemLinkable & WithAcfAuthorinfo & WithAcfAddetails {
+  """Fields of the Addetails ACF Field Group"""
+  addetails: Addetails
+
   """The ancestors of the content node."""
   ancestors(
     """The number of items to return after the referenced "after" cursor"""
@@ -7009,7 +7009,7 @@ interface AcfFieldGroupFields {
   fieldGroupName: String @deprecated(reason: "Use __typename instead")
 }
 
-"""Connection between the Addetails_Fields type and the MediaItem type"""
+"""Connection between the Authorinfo_Fields type and the MediaItem type"""
 type AcfMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItemConnectionEdge {
   """
   Opaque reference to the nodes position in the connection. Value can be used with pagination args.
@@ -7018,6 +7018,24 @@ type AcfMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItem
 
   """The node of the connection, without the edges"""
   node: MediaItem!
+}
+
+"""
+The &quot;Addetails&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;.
+"""
+type Addetails implements Addetails_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  """
+  Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Addetails&quot; Field Group
+  """
+  adImage: AcfMediaItemConnectionEdge
+
+  """
+  Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;Addetails&quot; Field Group
+  """
+  adLink: String
+
+  """The name of the field group"""
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
 }
 
 """Connection between the Post type and the post type"""
@@ -9952,24 +9970,6 @@ type UserToUserRoleConnectionPageInfo implements UserRoleConnectionPageInfo & WP
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
-}
-
-"""
-The &quot;Addetails&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;.
-"""
-type Addetails implements Addetails_Fields & AcfFieldGroup & AcfFieldGroupFields {
-  """
-  Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Addetails&quot; Field Group
-  """
-  adImage: AcfMediaItemConnectionEdge
-
-  """
-  Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;Addetails&quot; Field Group
-  """
-  adLink: String
-
-  """The name of the field group"""
-  fieldGroupName: String @deprecated(reason: "Use __typename instead")
 }
 
 """Connection between the Advertisement type and the advertisement type"""
@@ -14959,32 +14959,6 @@ type Template_PageNoTitle implements ContentTemplate {
 }
 
 """
-Provides access to fields of the &quot;Addetails&quot; ACF Field Group via the &quot;addetails&quot; field
-"""
-interface WithAcfAddetails {
-  """Fields of the Addetails ACF Field Group"""
-  addetails: Addetails
-}
-
-"""
-Interface representing fields of the ACF &quot;Addetails&quot; Field Group
-"""
-interface Addetails_Fields implements AcfFieldGroup & AcfFieldGroupFields {
-  """
-  Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Addetails&quot; Field Group
-  """
-  adImage: AcfMediaItemConnectionEdge
-
-  """
-  Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;Addetails&quot; Field Group
-  """
-  adLink: String
-
-  """The name of the field group"""
-  fieldGroupName: String @deprecated(reason: "Use __typename instead")
-}
-
-"""
 Provides access to fields of the &quot;Authorinfo&quot; ACF Field Group via the &quot;authorinfo&quot; field
 """
 interface WithAcfAuthorinfo {
@@ -15008,4 +14982,30 @@ interface Authorinfo_Fields implements AcfFieldGroup & AcfFieldGroupFields {
   Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;Authorinfo&quot; Field Group
   """
   writtenBy: String
+}
+
+"""
+Provides access to fields of the &quot;Addetails&quot; ACF Field Group via the &quot;addetails&quot; field
+"""
+interface WithAcfAddetails {
+  """Fields of the Addetails ACF Field Group"""
+  addetails: Addetails
+}
+
+"""
+Interface representing fields of the ACF &quot;Addetails&quot; Field Group
+"""
+interface Addetails_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  """
+  Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Addetails&quot; Field Group
+  """
+  adImage: AcfMediaItemConnectionEdge
+
+  """
+  Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;Addetails&quot; Field Group
+  """
+  adLink: String
+
+  """The name of the field group"""
+  fieldGroupName: String @deprecated(reason: "Use __typename instead")
 }

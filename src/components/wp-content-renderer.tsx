@@ -13,7 +13,11 @@ function WPContentRenderer(props: {
   }
 
   const sanitizedHtml = sanitizeHtml(content, {
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['iframe']),
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+      'iframe',
+      'img',
+      'figure',
+    ]),
     allowedAttributes: {
       ...sanitizeHtml.defaults.allowedAttributes,
       iframe: [
@@ -24,6 +28,17 @@ function WPContentRenderer(props: {
         'loading',
         'title',
         'referrerpolicy',
+      ],
+      img: [
+        'src',
+        'alt',
+        'title',
+        'width',
+        'height',
+        'srcset',
+        'sizes',
+        'loading',
+        'decoding',
       ],
     },
     allowedSchemes: ['https'],

@@ -8,43 +8,6 @@ export default function Footer() {
   return (
     <footer className="bg-gray-100">
       <Container className="bg-gray-100 p-4 sm:px-6 lg:px-8 lg:py-10">
-        {/* Newsletter Section */}
-        {/* <div className="mx-auto mb-16 max-w-6xl">
-        <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-          <div className="max-w-md">
-            <h2 className="text-3xl font-bold text-slate-900">
-              Get the best blog stories into your inbox
-            </h2>
-          </div>
-          <div className="w-full max-w-md">
-            <div className="bg-white">
-              <form className="flex gap-2 sm:flex-row">
-                <div className="relative flex-grow">
-                  <Mail className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-500" />
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="w-full py-2 pt-3 pr-3 pl-10 text-sm"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="text-md px-4 py-2 font-bold text-red-500"
-                >
-                  SUBSCRIBE
-                </button>
-              </form>
-            </div>
-            <p className="mt-2 text-xs text-slate-600 italic">
-              By subscribing, you accepted our{' '}
-              <Link href="/policy" className="underline">
-                Policy
-              </Link>
-            </p>
-          </div>
-        </div>
-      </div> */}
-
         <Container>
           <div className="mb-12 flex flex-col gap-12 pt-2 lg:flex-row lg:items-start">
             {/* Left: Company Info */}
@@ -54,7 +17,7 @@ export default function Footer() {
                   <Image
                     className="mix-blend-multiply select-none"
                     draggable="false"
-                    src="/anupama-logo.svg"
+                    src="/anupama-logo.png"
                     alt="Anupama Logo"
                     width={170}
                     height={40}
@@ -71,11 +34,6 @@ export default function Footer() {
                   <span className="font-medium">Operated by:</span> Sanmarga
                   Publication Trust
                 </p>
-
-                {/* <p>
-    <span className="font-medium">Tax Code:</span>{' '}
-    0514234567
-  </p> */}
 
                 <p>
                   <span className="font-medium">Address:</span> 1st floor,
@@ -164,7 +122,7 @@ export default function Footer() {
               >
                 Anupama.
               </Link>{' '}
-              All Rights Reserved. Developed by Mubashir and Co.
+              All Rights Reserved.
             </p>
           </div>
         </Container>

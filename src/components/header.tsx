@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { navLinks, subLinks } from '~/constants/nav-links';
-import { useScrollPosition } from '~/hooks/use-scroll-position';
 import { ChevronDown, FacebookIcon, Menu, Youtube } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,10 +10,7 @@ import { Container } from '~/components/container';
 import MobileNavbar from '~/components/mobile-nav';
 
 export default function Header() {
-  const scrollPosition = useScrollPosition();
   const [isNavBarOpen, setIsNavBarOpen] = useState(false);
-
-  const isQuickLinksHidden = scrollPosition > 120;
 
   return (
     <div className="bg-primary">
@@ -27,7 +23,7 @@ export default function Header() {
             <Image
               className="mx-auto ml-2 h-[60px] w-auto select-none"
               draggable="false"
-              src="/anupama-logo.svg"
+              src="/anupama-header-logo.svg"
               alt="Anupama Logo"
               width={120}
               height={40}
@@ -54,11 +50,13 @@ export default function Header() {
 
             {/* Right Side Menu */}
             <div className="flex flex-shrink-0 items-center gap-4 pr-4">
-              <div className="mb-1 h-6 w-0.5 bg-white"></div>
+              <div className="mb-1 h-6 w-0.5 bg-white" />
               <button
                 type="button"
                 className="size-10 cursor-pointer self-start bg-white"
-                onClick={() => setIsNavBarOpen(true)}
+                onClick={() => {
+                  setIsNavBarOpen(true);
+                }}
               >
                 <Menu className="text-primary m-auto size-10 stroke-[0.6]" />
               </button>
@@ -93,7 +91,7 @@ export default function Header() {
             <Image
               className="h-[100px] w-auto select-none"
               draggable="false"
-              src="/anupama-logo.svg"
+              src="/anupama-header-logo.svg"
               alt="Anupama Logo"
               width={200}
               height={180}
@@ -112,6 +110,7 @@ export default function Header() {
               target="_blank"
               className="bg-white p-2 hover:scale-110"
             >
+              {/*eslint-disable-next-line @typescript-eslint/no-deprecated -- Deprecated icon used intentionally */}
               <Youtube className="text-primary h-8 w-8" />
             </Link>
 
@@ -120,6 +119,7 @@ export default function Header() {
               className="bg-white p-2 hover:scale-110"
               target="_blank"
             >
+              {/*eslint-disable-next-line @typescript-eslint/no-deprecated -- Deprecated icon used intentionally */}
               <FacebookIcon className="text-primary h-8 w-8" />
             </Link>
           </div>
