@@ -7,6 +7,7 @@ import type { ResultOf, VariablesOf } from '~/utils/graphql-client';
 interface FetchAllPostsOptions {
   filter?: {
     categoryName?: string;
+    categoryNameNotIn?: string[];
   };
 }
 
@@ -54,6 +55,14 @@ export const LIMITED_POSTS_QUERY = graphql(`
               mediaItemUrl
             }
           }
+        }
+        addetails {
+          adImage {
+            node {
+              mediaItemUrl
+            }
+          }
+          adLink
         }
       }
       pageInfo {

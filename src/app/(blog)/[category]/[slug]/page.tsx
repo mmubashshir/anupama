@@ -1,16 +1,18 @@
 import { env } from 'process';
 import { createComment } from '~/app/actions/post-comment';
 import { BASE_URL } from '~/constants';
-import { type CATEGORY } from '~/enum/categories';
+import { CATEGORY } from '~/enum/categories';
 import { Clock, User } from 'lucide-react';
 import { type Metadata } from 'next';
 import Image from 'next/image';
 import { after } from 'next/server';
 
+import Advertisement from '~/components/advertisement';
 import Sidebar from '~/components/category/sidebar';
 import Comment from '~/components/comment';
 import { Container } from '~/components/container';
 import CreateComment from '~/components/create-comment';
+import DonationContainer from '~/components/donation-container';
 import NativeShareIcon from '~/components/native-share';
 import PostNavigation from '~/components/post-navigation';
 import { ShareType, SocialIcons } from '~/components/social-icons';
@@ -163,6 +165,7 @@ export default async function Blog({ params }: PageParams) {
 
   return (
     <Container className="p-4 sm:px-6 lg:px-8 lg:py-10">
+      <Advertisement category={CATEGORY.DetailTopAd} />
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* Main Content */}
         <div className="w-full lg:w-2/3">
@@ -274,6 +277,8 @@ export default async function Blog({ params }: PageParams) {
             </div>
           </div>
 
+          <DonationContainer />
+
           {/* Leave a Comment */}
           <div>
             <Comment post={post} />
@@ -310,6 +315,7 @@ export default async function Blog({ params }: PageParams) {
           category={category as CATEGORY}
         />
       </div>
+      <Advertisement category={CATEGORY.DetailBottomAd} />
     </Container>
   );
 }

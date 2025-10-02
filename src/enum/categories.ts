@@ -16,4 +16,10 @@ export enum CATEGORY {
   LifeTreasure = 'life-treasure',
   Editorial = 'editorial',
   MAGAZINE = 'magazine',
+  HomeTopAd = 'home-top-ad',
+  HomeMiddleAd = 'home-middle-ad',
+  HomeBottomAd = 'home-bottom-ad',
+  DetailTopAd = 'detail-top-ad',
+  DetailBottomAd = 'detail-bottom-ad',
+  DetailSideAd = 'detail-side-ad',
 }
