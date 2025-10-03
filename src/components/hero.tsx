@@ -60,14 +60,14 @@ export default async function Hero() {
       <h1 className="mb-4 text-3xl font-extrabold md:mb-7 md:text-5xl">
         ಮುಖ್ಯ ಸುದ್ದಿ
       </h1>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div className="md:col-span-1 lg:col-span-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:gap-6">
+        <div className="md:col-span-2">
           <FeaturedCard {...featuredPost} showBorder={false} />
         </div>
 
         {/* Magazine on Desktop */}
-        <div className="col-span-1 hidden flex-col gap-10 lg:flex lg:flex-row">
-          <div className="border-t border-l border-dashed border-black lg:mb-10 lg:ml-10 lg:border-solid lg:border-gray-200" />
+        <div className="col-span-1 hidden flex-col gap-10 md:flex md:flex-row">
+          <div className="border-t border-l border-dashed border-black md:mb-10 md:ml-10 md:border-solid md:border-gray-200" />
           {latestMagazine.pdfUrl !== undefined && (
             <MagazineView pdfUrl={latestMagazine.pdfUrl}>
               <MagazineCard
@@ -156,7 +156,7 @@ function MagazineCard({
   coverImageUrl: string;
 }) {
   return (
-    <Link className="group hidden lg:block" href="#">
+    <Link className="group hidden md:block" href="#">
       <div className="flex flex-col gap-y-4">
         <Image
           src={coverImageUrl}

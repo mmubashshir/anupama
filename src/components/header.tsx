@@ -76,17 +76,20 @@ export default function Header() {
         ) : null}
 
         {/* Desktop Top Bar */}
-        <div className="container mx-auto hidden items-center justify-between px-2 py-12 text-white md:flex">
+        <div className="hidden items-center justify-between px-2 py-3 text-white md:flex lg:py-14">
           {/* Left section - Date */}
 
-          <div className="text-primary bg-white px-4 py-4 text-3xl font-extrabold">
+          <div className="text-primary flex-.5 bg-white px-2 py-2 text-center text-2xl font-extrabold lg:text-3xl">
             ಚಂದಾದಾರರಾಗಿ
           </div>
+
+          {/* for alignment */}
+          <div className="flex-1 lg:hidden"></div>
 
           {/* Center section - Logo */}
           <Link
             href="/"
-            className="absolute left-1/2 -translate-x-1/2 transform"
+            className="flex flex-col lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:transform"
           >
             <Image
               className="h-[100px] w-auto select-none"
@@ -103,8 +106,11 @@ export default function Header() {
             </span>
           </Link>
 
+          {/* for alignment */}
+          <div className="flex-1 lg:hidden"></div>
+
           {/* Right section - Subscribe */}
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-1 flex-row-reverse gap-4">
             <Link
               href="https://www.youtube.com/@anupamamasika9395"
               target="_blank"
@@ -144,51 +150,49 @@ export function DesktopNavbar() {
 
 export function DesktopNavLinks() {
   return (
-    <>
-      <ul className="relative flex h-full items-center">
-        {/* <li className="mr-3 *:h-full hover:cursor-pointer">
+    <ul className="flex h-full items-center">
+      {/* <li className="mr-3 *:h-full hover:cursor-pointer">
           <Link href="/" className="group flex items-center text-red-500">
             <Home className="h-5 w-5" />
           </Link>
         </li> */}
-        {navLinks.map((link) => (
-          <li
-            key={link.title}
-            className="group relative h-full hover:cursor-pointer hover:bg-white"
-          >
-            {link.sublinks ? (
-              <span className="group-hover:text-primary mx-3 flex h-full items-center transition-all duration-75">
-                {link.title}
-                <ChevronDown className="group-hover:text-primary m-1 h-4 w-4 text-white transition-all duration-500 group-hover:rotate-180" />
-              </span>
-            ) : (
-              <Link
-                href={link.href ?? '/'}
-                className="group-hover:text-primary mx-3 flex h-full items-center transition-all duration-75"
-              >
-                {link.title}
-              </Link>
-            )}
+      {navLinks.map((link) => (
+        <li
+          key={link.title}
+          className="group relative h-full hover:cursor-pointer hover:bg-white"
+        >
+          {link.sublinks ? (
+            <span className="group-hover:text-primary mx-3 flex h-full items-center transition-all duration-75">
+              {link.title}
+              <ChevronDown className="group-hover:text-primary m-1 h-4 w-4 text-white transition-all duration-500 group-hover:rotate-180" />
+            </span>
+          ) : (
+            <Link
+              href={link.href ?? '/'}
+              className="group-hover:text-primary mx-3 flex h-full items-center transition-all duration-75"
+            >
+              {link.title}
+            </Link>
+          )}
 
-            {link.sublinks ? (
-              <ul className="absolute left-0 z-50 hidden w-40 border-t-2 border-red-500 bg-white py-2 text-sm shadow-lg transition-all delay-300 duration-200 ease-in-out group-hover:block">
-                {link.sublinks.map((sublink, index) => (
-                  <li key={sublink.href}>
-                    <Link
-                      href={sublink.href ?? '/'}
-                      className={`hover:text-primary block px-4 py-2 text-gray-700 ${
-                        index === 0 ? 'font-semibold' : 'text-current'
-                      }`}
-                    >
-                      {sublink.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-          </li>
-        ))}
-      </ul>
-    </>
+          {link.sublinks ? (
+            <ul className="absolute left-0 z-50 hidden w-40 border-t-2 border-red-500 bg-white py-2 text-sm shadow-lg transition-all delay-300 duration-200 ease-in-out group-hover:block">
+              {link.sublinks.map((sublink, index) => (
+                <li key={sublink.href}>
+                  <Link
+                    href={sublink.href ?? '/'}
+                    className={`hover:text-primary block px-4 py-2 text-gray-700 ${
+                      index === 0 ? 'font-semibold' : 'text-current'
+                    }`}
+                  >
+                    {sublink.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </li>
+      ))}
+    </ul>
   );
 }
