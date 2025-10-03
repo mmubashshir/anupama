@@ -8,7 +8,6 @@ export default function BlogLayout({
 }) {
   return (
     <>
-      <BlogNav />
       <Container as="main">{children}</Container>
     </>
   );
