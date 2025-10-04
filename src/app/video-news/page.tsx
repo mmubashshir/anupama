@@ -108,7 +108,7 @@ export default async function VideNews({
   }
 
   return (
-    <Container className="p-4 sm:px-6 lg:mb-6 lg:px-8 lg:py-10">
+    <Container className="mt-18 p-4 sm:px-6 md:mt-4 lg:mb-6 lg:px-8 lg:py-10">
       <div className="flex flex-col gap-8 lg:flex-row">
         <div className="w-full lg:w-2/3">
           {/* Blog Posts */}
