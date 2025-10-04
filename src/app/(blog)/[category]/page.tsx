@@ -138,9 +138,7 @@ export default async function CategoryListing({
                   href={`/${category}/${post.slug}`}
                   className="duration-300 hover:text-red-500"
                 >
-                  <h2 className="line-clamp-2 pt-4 text-3xl font-extrabold">
-                    {post.title}
-                  </h2>
+                  <h2 className="pt-4 text-3xl font-extrabold">{post.title}</h2>
                 </Link>
                 <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-500">
                   <div className="flex items-center gap-1">
