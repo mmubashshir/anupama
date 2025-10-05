@@ -99,17 +99,34 @@ export async function POST(request: Request): Promise<NextResponse> {
     },
   };
 
-  const { data: _data, error } = await tryCatch(
+  const { data: _dataFirst, error: errorFirst } = await tryCatch(
     firebaseMessaging.send(messagePayload),
   );
 
-  if (error) {
+  if (errorFirst) {
     console.error(
-      `Failed to send notification to topic ${POST_CREATED_TOPIC} failed with error ${JSON.stringify(error)}`,
+      `Trial-1: Failed to send notification to topic for  ${POST_CREATED_TOPIC} failed with error ${JSON.stringify(errorFirst)}`,
     );
 
     return NextResponse.json(
-      { error: error.message, details: error },
+      { error: errorFirst.message, details: errorFirst },
+      { status: 500 },
+    );
+  }
+
+  // Invoking send notification function once more to mititgate issue where insted of showing actual notification payload it displays this site has been upgraded in background
+
+  const { data: _dataSecond, error: errorSecond } = await tryCatch(
+    firebaseMessaging.send(messagePayload),
+  );
+
+  if (errorSecond) {
+    console.error(
+      `Trial-2: Failed to send notification to topic ${POST_CREATED_TOPIC} failed with error ${JSON.stringify(errorSecond)}`,
+    );
+
+    return NextResponse.json(
+      { error: errorSecond.message, details: errorSecond },
       { status: 500 },
     );
   }

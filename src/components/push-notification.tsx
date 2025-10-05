@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { registerFcmToken } from '~/app/actions/register-fcm-token ';
 import { LocalStorageKeys } from '~/constants/local-storage-keys';
-import { getToken } from 'firebase/messaging';
+import { getToken, onMessage } from 'firebase/messaging';
 import { toast } from 'react-hot-toast';
 
 import { env } from '~/env';
@@ -29,11 +29,48 @@ export default function PushNotifications() {
     if (Notification.permission === 'granted') {
       navigator.serviceWorker
         .getRegistration('/')
-        .then((existingRegistration) => {
-          return existingRegistration?.update();
+        .then(async (existingRegistration) => {
+          if (!existingRegistration) {
+            await navigator.serviceWorker.register(
+              '/firebase-messaging-sw.js',
+              {
+                scope: '/',
+              },
+            );
+
+            return;
+          }
+
+          return;
+          // return existingRegistration.update();
         })
-        .then(() => {
-          //
+        .then(async () => {
+          const { messaging } = await import('~/utils/fcm-messaging');
+
+          onMessage(messaging, (payload) => {
+            const title = payload.data?.title ?? 'Notification title';
+
+            // eslint-disable-next-line no-console -- Wanted to check issue in firebase foreground notification handler
+            console.info(
+              'recived notification in foreground with payload',
+              title,
+            );
+
+            const notificationOptions = {
+              body: `${payload.data?.title ?? 'New Message'}....`,
+              icon: 'https://anupama.co.in/favicon.ico', // small app icon
+              badge: 'https://anupama.co.in/favicon-96x96.png', // Android badge
+              image: payload.data?.imageUrl,
+              tag: payload.messageId,
+              requireInteraction: true,
+              data: {
+                clickAction: payload.data?.clickAction,
+              },
+            };
+
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars -- In future this variable is used to attach on click listener
+            const notification = new Notification(title, notificationOptions);
+          });
         })
         .catch(() => {
           //
