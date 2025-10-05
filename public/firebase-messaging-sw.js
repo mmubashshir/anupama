@@ -23,7 +23,7 @@ importScripts(
 
       const notificationTitle = payload?.data?.title || 'New Message';
       const notificationOptions = {
-        body: payload?.data?.title || 'New Message',
+        body: `${payload?.data?.title}....` || 'New Message',
         icon: 'https://anupama.co.in/favicon.ico', // small app icon
         badge: 'https://anupama.co.in/favicon-96x96.png', // Android badge
         image: payload?.data?.imageUrl,
