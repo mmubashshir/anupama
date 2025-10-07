@@ -5,6 +5,17 @@ importScripts(
   'https://www.gstatic.com/firebasejs/12.0.0/firebase-messaging-compat.js',
 );
 
+// Immediately install this   service worker without waiting for old service worker to uninstall
+self.addEventListener('install', (event) => {
+  event.waitUntil(self.skipWaiting());
+});
+
+// Immediately take control of page after installing
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
+
 (async () => {
   try {
     const response = await fetch('/api/firebase-config');
