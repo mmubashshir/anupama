@@ -11,16 +11,27 @@ import type { ServiceAccount } from 'firebase-admin/app';
 /**
  * Singelton firebase instance
  */
-const serviceAccount: ServiceAccount = {
-  projectId: env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  clientEmail: env.FIREBASE_CLIENT_EMAIL,
-  privateKey: env.FIREBASE_PRIVATE_KEY,
-} as const;
+const hasValidPrivateKey =
+  Boolean(env.FIREBASE_PRIVATE_KEY) &&
+  !env.FIREBASE_PRIVATE_KEY.includes('LOCAL_DEV_PRIVATE_KEY');
+
+const isFirebaseConfigured =
+  Boolean(env.NEXT_PUBLIC_FIREBASE_PROJECT_ID) &&
+  Boolean(env.FIREBASE_CLIENT_EMAIL) &&
+  hasValidPrivateKey;
 
 const firebaseApp = (() => {
+  if (!isFirebaseConfigured) {
+    return undefined;
+  }
+
   if (!getApps().length) {
     const app = initializeApp({
-      credential: cert(serviceAccount),
+      credential: cert({
+        projectId: env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+        clientEmail: env.FIREBASE_CLIENT_EMAIL,
+        privateKey: env.FIREBASE_PRIVATE_KEY,
+      } satisfies ServiceAccount),
     });
 
     return app;
@@ -29,7 +40,7 @@ const firebaseApp = (() => {
   return getApp();
 })();
 
-const firestoreDb = getFirestore(firebaseApp);
-const firebaseMessaging = getMessaging(firebaseApp);
+const firestoreDb = firebaseApp ? getFirestore(firebaseApp) : undefined;
+const firebaseMessaging = firebaseApp ? getMessaging(firebaseApp) : undefined;
 
-export { firebaseMessaging, firestoreDb };
+export { firebaseMessaging, firestoreDb, isFirebaseConfigured };

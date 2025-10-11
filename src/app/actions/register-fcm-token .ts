@@ -8,7 +8,11 @@ import {
 } from '~/constants/firebase';
 import { FieldValue } from 'firebase-admin/firestore';
 
-import { firebaseMessaging, firestoreDb } from '~/utils/firebase-admin-utils';
+import {
+  firebaseMessaging,
+  firestoreDb,
+  isFirebaseConfigured,
+} from '~/utils/firebase-admin-utils';
 import { tryCatch } from '~/utils/try-catch';
 
 interface FirestoreDBNotificationData {
@@ -21,6 +25,12 @@ interface FirestoreDBNotificationData {
 export async function registerFcmToken(token: string): Promise<boolean> {
   if (!token) {
     console.error('firebase messaging token not found');
+
+    return false;
+  }
+
+  if (!isFirebaseConfigured || !firebaseMessaging || !firestoreDb) {
+    console.warn('Firebase messaging is not configured for this environment');
 
     return false;
   }
