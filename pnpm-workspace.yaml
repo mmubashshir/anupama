@@ -1,8 +1,0 @@
-packages:
-  - src
-onlyBuiltDependencies:
-  - '@firebase/util'
-  - '@tailwindcss/oxide'
-  - protobufjs
-  - sharp
-  - unrs-resolver
