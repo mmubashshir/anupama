@@ -27,7 +27,7 @@ import {
   fetchPostBySlug,
 } from '~/services/posts';
 
-export const revalidate = 60; // Revalidate every 1 minute
+export const revalidate = false; // Static Site Generation (SSG)
 
 interface PageParams {
   params: Promise<{ slug: string; category: string }>;

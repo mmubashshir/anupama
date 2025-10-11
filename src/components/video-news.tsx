@@ -9,7 +9,7 @@ import { fetchLimitedPosts } from '~/services/posts';
 import { Container } from './container';
 import VideoCard from './video-card';
 
-export const revalidate = 60;
+export const revalidate = false; // Static Site Generation (SSG)
 
 export default async function VideoNews() {
   const videoPosts = await fetchLimitedPosts({

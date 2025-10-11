@@ -5,7 +5,10 @@ import { POST_CREATED_TOPIC } from '~/constants/firebase';
 import { NextResponse } from 'next/server';
 import * as z from 'zod';
 
-import { firebaseMessaging } from '~/utils/firebase-admin-utils';
+import {
+  firebaseMessaging,
+  isFirebaseConfigured,
+} from '~/utils/firebase-admin-utils';
 import { tryCatch } from '~/utils/try-catch';
 
 import { fetchLimitedPosts } from '~/services/posts';
@@ -24,6 +27,13 @@ const webHookRequestSchema = z.object({
 const WEBHOOK_AUTHENTICATION_HEADER = 'webhook-api-key';
 
 export async function POST(request: Request): Promise<NextResponse> {
+  if (!isFirebaseConfigured || !firebaseMessaging) {
+    return NextResponse.json(
+      { error: 'Firebase messaging is not configured' },
+      { status: 500 },
+    );
+  }
+
   const authenticationToken = request.headers.get(
     WEBHOOK_AUTHENTICATION_HEADER,
   );

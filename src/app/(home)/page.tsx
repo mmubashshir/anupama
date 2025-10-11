@@ -13,7 +13,7 @@ import VideoNews from '~/components/video-news';
 
 import { getLatestMagazinePdfUrl } from '~/utils/get-latest-magazine';
 
-export const revalidate = 60; // Revalidate every 1 minute
+export const revalidate = false; // Static Site Generation (SSG)
 
 export async function generateMetadata(): Promise<Metadata> {
   const { ogImageUrl } = await getLatestMagazinePdfUrl();
