@@ -90,6 +90,13 @@ export async function POST(request: Request): Promise<NextResponse> {
 
   const messagePayload: Message = {
     topic: POST_CREATED_TOPIC,
+    notification:{
+      title: article.title ?? 'Notification title',
+      imageUrl:
+        article.featuredImage?.node.sourceUrl ??
+        `${env.NEXT_PUBLIC_SITE_URL}/favicon-96x96.png`,
+      
+    },
     data: {
       title: article.title ?? 'Notification title',
       clickAction: `/${article.categories?.nodes[0].slug}/${article.slug}`,
