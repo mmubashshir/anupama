@@ -113,17 +113,40 @@ export default function Footer() {
           </div>
 
           {/* Copyright */}
-          <div className="relative border-t border-slate-300 pt-6 text-center text-sm text-gray-700">
-            <p>
-              © 2025 Copyrights by{' '}
-              <Link
-                href="/"
-                className="text-gray-500 underline hover:text-red-500"
-              >
-                Anupama.
-              </Link>{' '}
-              All Rights Reserved.
-            </p>
+          <div className="relative border-t border-slate-300 pt-6 text-sm text-gray-700">
+            <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
+              {/* Left Side */}
+              <p className="text-center sm:text-left">
+                © 2025 Copyrights by{' '}
+                <Link
+                  href="/"
+                  className="text-gray-500 underline hover:text-red-500"
+                >
+                  Anupama.
+                </Link>{' '}
+                All Rights Reserved.
+              </p>
+
+              {/* Right Side */}
+              <p className="flex items-center gap-2">
+                Designed & Developed by{' '}
+                <a
+                  href="https://craftyaam.com"
+                  target="_blank"
+                  rel="noopener"
+                  className="transition hover:opacity-80"
+                >
+                  <Image
+                    src="/Logo-CraftyAam.svg"
+                    alt="CraftyAam"
+                    width={100}
+                    height={24}
+                    className="h-6 w-auto select-none"
+                    draggable="false"
+                  />
+                </a>
+              </p>
+            </div>
           </div>
         </Container>
       </Container>
