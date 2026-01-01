@@ -153,7 +153,7 @@ export default async function Hero() {
 function MagazineCard({
   coverImageUrl = '/anupama-magazine.jpg',
 }: {
-  coverImageUrl: string;
+  coverImageUrl?: string;
 }) {
   return (
     <Link className="group hidden md:block" href="#">
@@ -180,7 +180,7 @@ function MagazineCard({
 function MobileMagazineCard({
   coverImageUrl = '/anupama-magazine.jpg',
 }: {
-  coverImageUrl: string;
+  coverImageUrl?: string;
 }) {
   return (
     <Link className="group block lg:hidden" href="#">
