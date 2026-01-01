@@ -39,7 +39,7 @@ export default function Comment({ post }: CommentProps) {
             {post.comments.nodes.map((comment, index) => (
               <div
                 key={comment.id}
-                data-commentid={String(comment.id)}
+                data-commentid={comment.id}
                 className={`pb-4 ${index !== (post.comments?.nodes.length ?? 0) - 1 ? '' : ''}`}
               >
                 <div className="mb-1 flex items-center justify-between">
@@ -67,7 +67,7 @@ export default function Comment({ post }: CommentProps) {
                 </div>
 
                 <WPContentRenderer
-                  className="break-words text-gray-700"
+                  className="wrap-break-words text-gray-700"
                   content={comment.content}
                 />
               </div>

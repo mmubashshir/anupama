@@ -49,7 +49,7 @@ export default function Header() {
             </div>
 
             {/* Right Side Menu */}
-            <div className="flex flex-shrink-0 items-center gap-4 pr-4">
+            <div className="flex shrink-0 items-center gap-4 pr-4">
               <div className="mb-1 h-6 w-0.5 bg-white" />
               <button
                 type="button"
