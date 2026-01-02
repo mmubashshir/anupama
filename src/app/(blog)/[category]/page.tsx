@@ -131,7 +131,7 @@ export default async function CategoryListing({
                     alt={post.title ?? ''}
                     width={400}
                     height={250}
-                    className="aspect-[3/2] w-full object-cover transition duration-400 hover:scale-110 hover:brightness-50"
+                    className="aspect-3/2 w-full object-cover transition duration-400 hover:scale-110 hover:brightness-50"
                   />
                 </div>
                 <Link

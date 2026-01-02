@@ -117,7 +117,7 @@ export default function Footer() {
             <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
               {/* Left Side */}
               <p className="text-center sm:text-left">
-                © 2025 Copyrights by{' '}
+                © {new Date().getFullYear()} Copyrights by{' '}
                 <Link
                   href="/"
                   className="text-gray-500 underline hover:text-red-500"

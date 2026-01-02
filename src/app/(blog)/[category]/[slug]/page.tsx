@@ -179,7 +179,7 @@ export default async function Blog({ params }: PageParams) {
                   alt={post.title ?? ''}
                   width={800}
                   height={400}
-                  className="aspect-[3/2] w-full object-cover group-hover:brightness-[1.1]"
+                  className="aspect-3/2 w-full object-cover group-hover:brightness-[1.1]"
                 />
               </div>
 

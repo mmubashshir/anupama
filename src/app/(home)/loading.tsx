@@ -30,7 +30,7 @@ export default function Loading() {
         <section className="mb-10 grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Featured card – left, spans 2 columns on desktop */}
           <div className="lg:col-span-2">
-            <div className="-lg aspect-[16/9] w-full bg-gray-200 dark:bg-gray-800" />
+            <div className="-lg aspect-video w-full bg-gray-200 dark:bg-gray-800" />
             <div className="mt-4 space-y-3">
               <div className="h-3 w-1/4 bg-gray-200 dark:bg-gray-800" />
               <div className="h-6 w-full bg-gray-200 dark:bg-gray-800" />

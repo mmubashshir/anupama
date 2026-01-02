@@ -4,7 +4,7 @@ export default function BlogPostSkeleton() {
       <div className="flex animate-pulse flex-col gap-8 lg:flex-row">
         <div className="w-full space-y-12 lg:w-2/3">
           <article className="pb-8">
-            <div className="h-56 w-full bg-gray-200 sm:h-80 md:h-[400px]" />
+            <div className="h-56 w-full bg-gray-200 sm:h-80 md:h-100" />
 
             <div className="mt-6 space-y-3">
               <div className="h-7 w-5/6 bg-gray-200" />
