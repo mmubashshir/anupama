@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-// import Link from 'next/link';
+import UPIOptions from './upi-options';
 
 function DonationContainer() {
   return (
@@ -27,16 +27,7 @@ function DonationContainer() {
           height={500}
           draggable={false}
         />
-
-        {/* <div>
-          <Link
-            className="rounded-lg bg-[#E73030] px-4 py-2 text-xl font-bold text-white"
-            href="upi://pay?pa=209423582000966@cnrb&pn=ANUPAMA%MAHILA%MASIK&mc=1740&tr=1234567887654321&am=0&mam=0&cu=INR&refUrl=http://npci.org/upi/schema/"
-          >
-            ₹ ದೇಣಿಗೆ ನೀಡಿ
-          </Link>
-        </div> */}
-
+        <UPIOptions />
         <div className="mt-10 h-2 w-full rounded-b-lg bg-[#E73030]" />
       </div>
     </>
