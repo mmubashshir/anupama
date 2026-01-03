@@ -1,5 +1,4 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,6 +10,7 @@ import { fetchLimitedPosts } from '~/services/posts';
 import ArticleCard from './articles/article-card';
 import { Container } from './container';
 import FeaturedCard from './featured-card';
+import MagazineCard from './magazine-card';
 import MagazineView from './magazine-viewer/magazine-view';
 
 export default async function Hero() {
@@ -135,10 +135,10 @@ export default async function Hero() {
 
       {/* Magazine on Mobile (after Trending) */}
       {latestMagazine.pdfUrl !== undefined && (
-        <div className="block lg:hidden">
+        <div className="block md:hidden">
           <div className="my-8 border-t border-dashed border-black md:hidden" />
           <MagazineView pdfUrl={latestMagazine.pdfUrl}>
-            <MobileMagazineCard
+            <MagazineCard
               coverImageUrl={
                 latestMagazine.coverImageUrl ?? '/anupama-magazine.jpg'
               }
@@ -147,59 +147,6 @@ export default async function Hero() {
         </div>
       )}
     </Container>
-  );
-}
-
-function MagazineCard({
-  coverImageUrl = '/anupama-magazine.jpg',
-}: {
-  coverImageUrl?: string;
-}) {
-  return (
-    <Link className="group hidden md:block" href="#">
-      <div className="flex flex-col gap-y-4">
-        <Image
-          src={coverImageUrl}
-          alt="anupama-magazine"
-          width={300}
-          height={434}
-          className="mx-auto w-[300px] object-contain group-hover:brightness-[1.1]"
-          priority
-        />
-        <div className="flex justify-between">
-          <span className="text-xl font-extrabold decoration-1 underline-offset-4 group-hover:underline">
-            ಇತ್ತೀಚಿನ ಮಾಸಪತ್ರಿಕೆ
-          </span>
-          <ArrowUpRight className="ml-1 inline h-6 w-6" />
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function MobileMagazineCard({
-  coverImageUrl = '/anupama-magazine.jpg',
-}: {
-  coverImageUrl?: string;
-}) {
-  return (
-    <Link className="group block lg:hidden" href="#">
-      <div className="flex flex-row-reverse items-center gap-x-4">
-        <Image
-          src={coverImageUrl}
-          alt="Anupama Magazine Cover"
-          width={136}
-          height={186}
-          className="mx-auto h-auto w-auto object-contain"
-          priority
-        />
-        <div className="text-xl font-extrabold underline-offset-4 group-hover:underline">
-          ಇತ್ತೀಚಿನ{' '}
-          <ArrowUpRight className="mb-1 ml-1 inline h-6 w-6 align-text-bottom" />{' '}
-          ಮಾಸಪತ್ರಿಕೆ
-        </div>
-      </div>
-    </Link>
   );
 }
 
