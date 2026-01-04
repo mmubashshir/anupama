@@ -66,7 +66,7 @@ export default async function Hero() {
         </div>
 
         {/* Magazine on Desktop */}
-        <div className="hidden flex-col gap-4 md:flex">
+        <div className="hidden flex-col gap-6 md:flex">
           <div className="col-span-1 flex flex-col gap-10 md:flex-row">
             {latestMagazine.pdfUrl !== undefined && (
               <MagazineView pdfUrl={latestMagazine.pdfUrl}>
@@ -78,12 +78,9 @@ export default async function Hero() {
               </MagazineView>
             )}
           </div>
-          <Link
-            href="/magazines"
-            className="group mx-4 inline-flex items-center self-end rounded-full border border-black bg-white px-4 py-2 text-sm font-semibold transition hover:border-white hover:bg-red-500 hover:text-white"
-          >
-            ಹಿಂದಿನ ಸಂಚಿಕೆಗಳು
-          </Link>
+          <div className="self-end">
+            <RedButton />
+          </div>
         </div>
       </div>
 
@@ -143,7 +140,7 @@ export default async function Hero() {
       <div className="my-8 border-t border-dashed border-black md:hidden" />
 
       {latestMagazine.pdfUrl !== undefined && (
-        <div className="flex flex-col items-center md:hidden">
+        <div className="flex flex-col items-center gap-4 md:hidden">
           <MagazineView pdfUrl={latestMagazine.pdfUrl}>
             <MagazineCard
               coverImageUrl={
@@ -151,15 +148,21 @@ export default async function Hero() {
               }
             />
           </MagazineView>
-          <Link
-            href="/magazines"
-            className="group mt-6 inline-flex items-center rounded-full border border-white bg-red-500 px-4 py-2 text-sm font-semibold text-white transition"
-          >
-            ಹಿಂದಿನ ಸಂಚಿಕೆಗಳು
-          </Link>
+          <RedButton />
         </div>
       )}
     </Container>
+  );
+}
+
+function RedButton() {
+  return (
+    <Link
+      href="/magazines"
+      className="bg-primary disabled:bg-primary hover:bg-primary mx-4 cursor-pointer px-5 py-1.5 text-white transition hover:brightness-125 disabled:cursor-none"
+    >
+      ಹಿಂದಿನ ಸಂಚಿಕೆಗಳು
+    </Link>
   );
 }
 
