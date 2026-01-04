@@ -1,4 +1,3 @@
-import React from 'react';
 import { CATEGORY } from '~/enum/categories';
 import { load as loadHtml } from 'cheerio';
 
@@ -10,9 +9,10 @@ import MagazineView from '../../components/magazine-viewer/magazine-view';
 import { getPlaceholderImage } from '../../utils/get-placeholder-image';
 
 interface MagazineData {
-  title?: string;
-  coverImageUrl?: string;
-  ogImageUrl?: string;
+  id: string;
+  title: string;
+  coverImageUrl: string;
+  ogImageUrl: string;
   pdfUrl?: string;
 }
 
@@ -25,27 +25,29 @@ async function getLatestMagazines(): Promise<MagazineData[]> {
   const posts = latestMagazineRaw.posts?.nodes ?? [];
 
   return posts.map((post) => {
-    const html = post?.content ?? '';
+    const html = post.content ?? '';
     const $ = loadHtml(html);
 
-    const pdfHref = $('a[href$=".pdf"]').attr('href') ?? undefined;
+    const pdfUrl = $('a[href$=".pdf"]').attr('href') ?? undefined;
+
+    const sizes = post.featuredImage?.node.mediaDetails?.sizes ?? [];
 
     const ogImageUrl =
-      post?.featuredImage?.node.mediaDetails?.sizes?.find(
-        (s) => s?.name === 'medium_large',
-      )?.sourceUrl ?? getPlaceholderImage();
+      sizes.find((s) => s?.name === 'medium_large')?.sourceUrl ??
+      getPlaceholderImage();
 
     return {
-      title: post?.title ?? 'Untitled Magazine',
+      id: post.id,
+      title: post.title ?? 'Untitled Magazine',
       coverImageUrl:
-        post?.featuredImage?.node.sourceUrl ??
+        post.featuredImage?.node.sourceUrl ??
         getPlaceholderImage({
           height: 500,
           width: 400,
           text: 'Magazine Image not found!',
         }),
       ogImageUrl,
-      pdfUrl: pdfHref,
+      pdfUrl,
     };
   });
 }
@@ -55,16 +57,18 @@ export default async function MagazinePage() {
 
   return (
     <Container className="mt-15 flex flex-col p-4 sm:px-6 md:mt-4 lg:px-8">
-      <h2 className="text-3xl font-extrabold md:text-4xl">ಮಾಸಪತ್ರಿಕೆ</h2>
+      <h2 className="text-3xl font-extrabold md:text-4xl">
+        ಪ್ರಕಟಿತ ಮಾಸಪತ್ರಿಕೆ ಸಂಚಿಕೆಗಳು
+      </h2>
 
       <div className="flex flex-row flex-wrap justify-around md:justify-between">
-        {magazines.map((magazine, index) => (
-          <div key={index} className="my-4">
-            {magazine.pdfUrl !== undefined && (
+        {magazines.map((magazine) => (
+          <div key={magazine.id} className="my-4">
+            {magazine.pdfUrl && (
               <MagazineView pdfUrl={magazine.pdfUrl}>
                 <MagazineCard
                   coverImageUrl={magazine.coverImageUrl}
-                  title={magazine.title}
+                  _title={magazine.title}
                   variant="desktop"
                 />
               </MagazineView>

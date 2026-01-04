@@ -66,17 +66,24 @@ export default async function Hero() {
         </div>
 
         {/* Magazine on Desktop */}
-        <div className="col-span-1 hidden flex-col gap-10 md:flex md:flex-row">
-          <div className="border-t border-l border-dashed border-black md:mb-10 md:ml-10 md:border-solid md:border-gray-200" />
-          {latestMagazine.pdfUrl !== undefined && (
-            <MagazineView pdfUrl={latestMagazine.pdfUrl}>
-              <MagazineCard
-                coverImageUrl={
-                  latestMagazine.coverImageUrl ?? '/anupama-magazine.jpg'
-                }
-              />
-            </MagazineView>
-          )}
+        <div className="hidden flex-col gap-4 md:flex">
+          <div className="col-span-1 flex flex-col gap-10 md:flex-row">
+            {latestMagazine.pdfUrl !== undefined && (
+              <MagazineView pdfUrl={latestMagazine.pdfUrl}>
+                <MagazineCard
+                  coverImageUrl={
+                    latestMagazine.coverImageUrl ?? '/anupama-magazine.jpg'
+                  }
+                />
+              </MagazineView>
+            )}
+          </div>
+          <Link
+            href="/magazines"
+            className="group mx-4 inline-flex items-center self-end rounded-full border border-black bg-white px-4 py-2 text-sm font-semibold transition hover:border-white hover:bg-red-500 hover:text-white"
+          >
+            ಹಿಂದಿನ ಸಂಚಿಕೆಗಳು
+          </Link>
         </div>
       </div>
 
@@ -132,11 +139,11 @@ export default async function Hero() {
           ))}
         </div>
       </div>
-
       {/* Magazine on Mobile (after Trending) */}
+      <div className="my-8 border-t border-dashed border-black md:hidden" />
+
       {latestMagazine.pdfUrl !== undefined && (
-        <div className="block md:hidden">
-          <div className="my-8 border-t border-dashed border-black md:hidden" />
+        <div className="flex flex-col items-center md:hidden">
           <MagazineView pdfUrl={latestMagazine.pdfUrl}>
             <MagazineCard
               coverImageUrl={
@@ -144,6 +151,12 @@ export default async function Hero() {
               }
             />
           </MagazineView>
+          <Link
+            href="/magazines"
+            className="group mt-6 inline-flex items-center rounded-full border border-white bg-red-500 px-4 py-2 text-sm font-semibold text-white transition"
+          >
+            ಹಿಂದಿನ ಸಂಚಿಕೆಗಳು
+          </Link>
         </div>
       )}
     </Container>

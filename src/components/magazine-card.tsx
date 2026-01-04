@@ -2,22 +2,22 @@ import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export type MagazineCardProps = {
+export interface MagazineCardProps {
   coverImageUrl?: string;
-  title?: string;
+  _title?: string;
   variant?: 'responsive' | 'desktop';
-};
+}
 
 export default function MagazineCard({
   coverImageUrl = '/anupama-magazine.jpg',
-  title = 'ಇತ್ತೀಚಿನ ಮಾಸಪತ್ರಿಕೆ',
+  _title = 'ಇತ್ತೀಚಿನ ಮಾಸಪತ್ರಿಕೆ',
   variant = 'responsive',
 }: MagazineCardProps) {
   if (variant === 'desktop') {
     return (
       <DesktopMagazineCard
         coverImageUrl={coverImageUrl}
-        title={title}
+        _title={_title}
         forceShow
       />
     );
@@ -25,19 +25,19 @@ export default function MagazineCard({
 
   return (
     <>
-      <MobileMagazineCard coverImageUrl={coverImageUrl} title={title} />
-      <DesktopMagazineCard coverImageUrl={coverImageUrl} title={title} />
+      <MobileMagazineCard coverImageUrl={coverImageUrl} _title={_title} />
+      <DesktopMagazineCard coverImageUrl={coverImageUrl} _title={_title} />
     </>
   );
 }
 
 function DesktopMagazineCard({
   coverImageUrl,
-  title,
+  _title,
   forceShow = false,
 }: {
   coverImageUrl?: string;
-  title?: string;
+  _title?: string;
   forceShow?: boolean;
 }) {
   return (
@@ -48,16 +48,16 @@ function DesktopMagazineCard({
       <div className="flex flex-col gap-y-4">
         <Image
           src={coverImageUrl ?? '/anupama-magazine.jpg'}
-          alt={title ?? 'Magazine cover'}
+          alt={_title ?? 'Magazine cover'}
           width={300}
           height={434}
-          className="mx-auto w-[300px] object-contain group-hover:brightness-[1.1]"
+          className="mx-auto w-75 object-contain group-hover:brightness-[1.1]"
           priority
         />
 
         <div className="flex items-center justify-between">
           <span className="text-xl font-extrabold underline-offset-4 group-hover:underline">
-            {title}
+            {_title}
           </span>
           <ArrowUpRight className="h-6 w-6" />
         </div>
@@ -68,26 +68,25 @@ function DesktopMagazineCard({
 
 function MobileMagazineCard({
   coverImageUrl,
-  title,
+  _title,
 }: {
   coverImageUrl?: string;
-  title?: string;
+  _title?: string;
 }) {
   return (
     <Link className="group block md:hidden" href="#">
       <div className="flex flex-row-reverse items-center gap-x-4">
         <Image
           src={coverImageUrl ?? '/anupama-magazine.jpg'}
-          alt="Anupama Magazine Cover"
+          alt={_title ?? 'Magazine cover'}
           width={136}
           height={186}
           className="object-contain"
           priority
         />
         <div className="text-xl font-extrabold underline-offset-4 group-hover:underline">
-          ಇತ್ತೀಚಿನ
-          <ArrowUpRight className="ml-1 inline h-6 w-6 align-text-bottom" />
-          ಮಾಸಪತ್ರಿಕೆ
+          {_title}
+          <ArrowUpRight className="ml-1 inline h-6 w-6" />
         </div>
       </div>
     </Link>
