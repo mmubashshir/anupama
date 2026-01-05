@@ -66,7 +66,7 @@ export default async function Hero() {
         </div>
 
         {/* Magazine on Desktop */}
-        <div className="hidden flex-col gap-6 md:flex">
+        <div className="hidden flex-col items-end gap-6 md:flex">
           <div className="col-span-1 flex flex-col gap-10 md:flex-row">
             {latestMagazine.pdfUrl !== undefined && (
               <MagazineView pdfUrl={latestMagazine.pdfUrl}>
@@ -157,7 +157,7 @@ function RedButton() {
   return (
     <Link
       href="/magazines"
-      className="bg-primary disabled:bg-primary hover:bg-primary cursor-pointer self-end px-5 py-1.5 text-white transition hover:brightness-125 disabled:cursor-none"
+      className="bg-primary disabled:bg-primary hover:bg-primary cursor-pointer self-end px-5 py-1.5 text-[14px] text-white transition hover:brightness-125 disabled:cursor-none"
     >
       ಹಿಂದಿನ ಸಂಚಿಕೆಗಳು
     </Link>
