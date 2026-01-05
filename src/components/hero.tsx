@@ -60,7 +60,7 @@ export default async function Hero() {
       <h1 className="mb-4 text-3xl font-extrabold md:mb-7 md:text-5xl">
         ಮುಖ್ಯ ಸುದ್ದಿ
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:gap-6">
+      <div className="mb-6 grid grid-cols-1 md:grid-cols-3 lg:gap-6">
         <div className="md:col-span-2">
           <FeaturedCard {...featuredPost} showBorder={false} />
         </div>
@@ -78,9 +78,7 @@ export default async function Hero() {
               </MagazineView>
             )}
           </div>
-          <div className="self-end">
-            <RedButton />
-          </div>
+          <RedButton />
         </div>
       </div>
 
@@ -140,7 +138,7 @@ export default async function Hero() {
       <div className="my-8 border-t border-dashed border-black md:hidden" />
 
       {latestMagazine.pdfUrl !== undefined && (
-        <div className="flex flex-col items-center gap-4 md:hidden">
+        <div className="mx-auto flex flex-col gap-4 md:hidden">
           <MagazineView pdfUrl={latestMagazine.pdfUrl}>
             <MagazineCard
               coverImageUrl={
@@ -159,7 +157,7 @@ function RedButton() {
   return (
     <Link
       href="/magazines"
-      className="bg-primary disabled:bg-primary hover:bg-primary mx-4 cursor-pointer px-5 py-1.5 text-white transition hover:brightness-125 disabled:cursor-none"
+      className="bg-primary disabled:bg-primary hover:bg-primary cursor-pointer self-end px-5 py-1.5 text-white transition hover:brightness-125 disabled:cursor-none"
     >
       ಹಿಂದಿನ ಸಂಚಿಕೆಗಳು
     </Link>
