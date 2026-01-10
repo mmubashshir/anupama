@@ -30,7 +30,7 @@ export default function Header() {
               priority
             />
             <span className="-mt-2 ml-4 block text-center text-sm font-bold text-white text-shadow-2xs">
-              ಸುಂಧರ ನಾಳೆಗೆ, ಸುಮಧುರ ಬಾಳಿಗೆ{' '}
+              ಸುಂದರ ನಾಳೆಗೆ, ಸುಮಧುರ ಬಾಳಿಗೆ{' '}
             </span>
           </Link>
 
@@ -102,7 +102,7 @@ export default function Header() {
             />
 
             <span className="mt-2 block text-center text-lg font-extrabold text-white text-shadow-2xs">
-              ಸುಂಧರ ನಾಳೆಗೆ, ಸುಮಧುರ ಬಾಳಿಗೆ{' '}
+              ಸುಂದರ ನಾಳೆಗೆ, ಸುಮಧುರ ಬಾಳಿಗೆ{' '}
             </span>
           </Link>
 
