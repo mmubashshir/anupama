@@ -12,7 +12,6 @@ import GlobalErrorHandler from '~/components/global-error-handler';
 import GoogleAnalyticsScript from '~/components/google-analytics-script';
 import Header from '~/components/header';
 import MicrosoftClarity from '~/components/microsoft-clarity';
-import PushNotifications from '~/components/push-notification';
 
 const balooTamma = Baloo_Tamma_2({
   variable: '--font-primary',
@@ -88,7 +87,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <Toaster />
-        <PushNotifications />
+
         <GlobalErrorHandler />
       </body>
       <GoogleAnalyticsScript />

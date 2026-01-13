@@ -1,0 +1,12 @@
+.env
+.env.*
+node_modules/
+.next/
+.husky/
+.vscode/
+wordpress/
+.gitignore
+.gitattributes
+Dockerfile
+docker-compose.yaml
+
