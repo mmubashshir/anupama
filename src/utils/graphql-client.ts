@@ -6,6 +6,7 @@ import {
   InMemoryCache,
   registerApolloClient,
 } from '@apollo/client-integration-nextjs';
+import * as Sentry from '@sentry/nextjs';
 import { initGraphQLTada, readFragment } from 'gql.tada';
 
 import { env } from '~/env';
@@ -51,6 +52,18 @@ export async function query<TData, TVariables>(
   const result = await getClient().query(options);
 
   if (result.errors) {
+    // Log GraphQL errors to Sentry
+    Sentry.captureException(new Error('GraphQL Query Error'), {
+      extra: {
+        errors: result.errors,
+        variables: options.variables,
+        queryName: options.query?.loc || 'Unknown Query',
+      },
+      tags: {
+        errorType: 'graphql',
+      },
+    });
+
     return {
       data: result.data,
       errors: [...result.errors],

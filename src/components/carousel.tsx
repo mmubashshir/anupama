@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import * as Sentry from '@sentry/nextjs';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
@@ -37,6 +38,7 @@ function useCarousel() {
   const context = React.useContext(CarouselContext);
 
   if (!context) {
+    Sentry.logger.error('useCarousel must be used within a <Carousel />');
     throw new Error('useCarousel must be used within a <Carousel />');
   }
 

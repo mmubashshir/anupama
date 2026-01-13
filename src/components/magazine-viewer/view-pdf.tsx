@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useMemo, useState } from 'react';
+import * as Sentry from '@sentry/nextjs';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -46,6 +47,12 @@ export default function ViewPDF({ pdfURL }: { pdfURL: string }) {
     setError(error.message);
     // Log detailed error for debugging
     console.error('PDF loading error:', error);
+
+    // Capture error in Sentry
+    Sentry.captureException(error, {
+      tags: { component: 'pdf-viewer' },
+      extra: { pdfURL },
+    });
   }, []);
 
   const containerHeight = useWindowHeight();
