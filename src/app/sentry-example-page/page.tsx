@@ -17,11 +17,14 @@ export default function Page() {
 
   useEffect(() => {
     Sentry.logger.info('Sentry example page loaded');
+
     async function checkConnectivity() {
       const result = await Sentry.diagnoseSdkConnectivity();
+
       setIsConnected(result !== 'sentry-unreachable');
     }
-    checkConnectivity();
+
+    void checkConnectivity();
   }, []);
 
   return (
@@ -81,6 +84,7 @@ export default function Page() {
               },
               async () => {
                 const res = await fetch('/api/sentry-example-api');
+
                 if (!res.ok) {
                   setHasSentError(true);
                 }
@@ -95,9 +99,8 @@ export default function Page() {
           <span>Throw Sample Error</span>
         </button>
 
-        {hasSentError ? (
-          <p className="success">Error sent to Sentry.</p>
-        ) : !isConnected ? (
+        {hasSentError && <p className="success">Error sent to Sentry.</p>}
+        {!hasSentError && !isConnected && (
           <div className="connectivity-error">
             <p>
               It looks like network requests to Sentry are being blocked, which
@@ -105,7 +108,8 @@ export default function Page() {
               ad-blocker to complete the test.
             </p>
           </div>
-        ) : (
+        )}
+        {!hasSentError && isConnected && (
           <div className="success_placeholder" />
         )}
 
