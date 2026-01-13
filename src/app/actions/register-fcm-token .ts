@@ -2,6 +2,7 @@
 
 import 'server-only';
 
+import * as Sentry from '@sentry/nextjs';
 import {
   FCM_TOPIC_SUBSCRIPTION_COLLECTION,
   POST_CREATED_TOPIC,
@@ -21,6 +22,7 @@ interface FirestoreDBNotificationData {
 export async function registerFcmToken(token: string): Promise<boolean> {
   if (!token) {
     console.error('firebase messaging token not found');
+    Sentry.captureMessage('FCM token not found', 'warning');
 
     return false;
   }
@@ -32,6 +34,13 @@ export async function registerFcmToken(token: string): Promise<boolean> {
 
   if (subscriptionStatus.failureCount > 0) {
     console.error('Error subscribing to topic:', subscriptionStatus.errors);
+    Sentry.captureException(new Error('FCM topic subscription failed'), {
+      extra: {
+        errors: subscriptionStatus.errors,
+        topic: POST_CREATED_TOPIC,
+      },
+      tags: { area: 'firebase-messaging' },
+    });
 
     return false;
   }
@@ -55,6 +64,7 @@ export async function registerFcmToken(token: string): Promise<boolean> {
       'Failed to store user subscription status failed with errror',
       JSON.stringify(error),
     );
+    // Error already captured by tryCatch, no need to capture again
 
     return false;
   }

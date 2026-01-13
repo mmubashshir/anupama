@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import * as Sentry from '@sentry/nextjs';
 import { registerFcmToken } from '~/app/actions/register-fcm-token ';
 import { LocalStorageKeys } from '~/constants/local-storage-keys';
 import { getToken, onMessage } from 'firebase/messaging';
@@ -72,8 +73,11 @@ export default function PushNotifications() {
             const notification = new Notification(title, notificationOptions);
           });
         })
-        .catch(() => {
-          //
+        .catch((error) => {
+          Sentry.captureException(error, {
+            tags: { area: 'push-notifications' },
+            extra: { context: 'Service worker registration failed' },
+          });
         });
 
       return;
