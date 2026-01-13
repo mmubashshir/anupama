@@ -57,7 +57,7 @@ export async function query<TData, TVariables>(
       extra: {
         errors: result.errors,
         variables: options.variables,
-        queryName: options.query?.loc || 'Unknown Query',
+        queryName: options.query.loc,
       },
       tags: {
         errorType: 'graphql',
