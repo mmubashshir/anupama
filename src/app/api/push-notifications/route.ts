@@ -1,6 +1,7 @@
 import 'server-only';
 
 import { env } from 'process';
+import * as Sentry from '@sentry/nextjs';
 import { POST_CREATED_TOPIC } from '~/constants/firebase';
 import { NextResponse } from 'next/server';
 import * as z from 'zod';
@@ -53,6 +54,14 @@ export async function POST(request: Request): Promise<NextResponse> {
       `Parsing of webhook request failed ${z.prettifyError(parsedData.error)}`,
     );
 
+    Sentry.captureException(new Error('Webhook validation failed'), {
+      extra: {
+        validationErrors: z.prettifyError(parsedData.error),
+        body,
+      },
+      tags: { area: 'webhook-validation' },
+    });
+
     return NextResponse.json(
       {
         error: z.prettifyError(parsedData.error),
@@ -70,6 +79,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     console.error(
       `Error while fetching post  with id ${parsedData.data.post_id}  from wordpress  failed with error ${JSON.stringify(postFetchingError)}`,
     );
+    // Error already captured by tryCatch
 
     return NextResponse.json(
       { error: 'Error while fetching post from wordpress' },
@@ -82,6 +92,11 @@ export async function POST(request: Request): Promise<NextResponse> {
   if (!article) {
     console.error(`Post with post id ${parsedData.data.post_id} not found`);
 
+    Sentry.captureMessage(
+      `Post ${parsedData.data.post_id} not found in WordPress`,
+      'error',
+    );
+
     return NextResponse.json(
       { error: `Post with post id ${parsedData.data.post_id} not found` },
       { status: 404 },
@@ -90,12 +105,11 @@ export async function POST(request: Request): Promise<NextResponse> {
 
   const messagePayload: Message = {
     topic: POST_CREATED_TOPIC,
-    notification:{
+    notification: {
       title: article.title ?? 'Notification title',
       imageUrl:
         article.featuredImage?.node.sourceUrl ??
         `${env.NEXT_PUBLIC_SITE_URL}/favicon-96x96.png`,
-      
     },
     data: {
       title: article.title ?? 'Notification title',

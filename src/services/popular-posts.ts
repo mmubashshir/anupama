@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/nextjs';
+
 import { env } from '~/env';
 
 import { graphql, query } from '~/utils/graphql-client';
@@ -137,6 +139,13 @@ export async function fetchPopularPosts(categories?: string[]) {
 
   if (!fetchedPopularPosts.data.posts) {
     console.warn('No popular posts found or invalid response structure');
+
+    Sentry.captureMessage('Invalid popular posts response structure', {
+      level: 'warning',
+      extra: {
+        popularPostsIds,
+      },
+    });
 
     return [];
   }

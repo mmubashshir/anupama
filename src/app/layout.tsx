@@ -8,6 +8,7 @@ import './globals.css';
 import { BASE_URL } from '~/constants';
 
 import Footer from '~/components/footer';
+import GlobalErrorHandler from '~/components/global-error-handler';
 import GoogleAnalyticsScript from '~/components/google-analytics-script';
 import Header from '~/components/header';
 import MicrosoftClarity from '~/components/microsoft-clarity';
@@ -88,6 +89,7 @@ export default function RootLayout({
         <Footer />
         <Toaster />
         <PushNotifications />
+        <GlobalErrorHandler />
       </body>
       <GoogleAnalyticsScript />
       <MicrosoftClarity />
