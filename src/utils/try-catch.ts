@@ -23,6 +23,7 @@ export async function tryCatch<T, E = Error>(
     return { data, error: null };
   } catch (error) {
     Sentry.captureException(error);
+
     return { data: null, error: error as E };
   }
 }
