@@ -57,10 +57,7 @@ export async function query<TData, TVariables>(
       extra: {
         errors: result.errors,
         variables: options.variables,
-        queryName:
-          options.query.definitions.find(
-            (def) => def.kind === 'OperationDefinition',
-          )?.name?.value || 'Unknown Query',
+        queryName: options.query?.loc || 'Unknown Query',
       },
       tags: {
         errorType: 'graphql',
