@@ -76,7 +76,9 @@
   "trustedDependencies": [
     "@firebase/util",
     "@sentry/cli",
+    "@tailwindcss/oxide",
     "protobufjs",
+    "sharp",
     "unrs-resolver"
   ]
 }
