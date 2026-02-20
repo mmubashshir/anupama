@@ -10,18 +10,10 @@ The official website for **Anupama Women's Monthly Magazine** - Karnataka's prem
 
 ## 🌟 Features
 
-### Content Management
-
 - **Headless WordPress CMS** - Content managed through WordPress backend
 - **GraphQL Integration** - Type-safe data fetching with Apollo Client and gql.tada
 - **Dynamic Content** - Real-time content updates from WordPress
-- **Multi-language Support** - Kannada and English content support
-
-### Magazine Features
-
 - **Digital Magazine Viewer** - PDF magazine viewing with modal interface
-- **Latest Magazine Display** - Automatic detection and display of latest magazine
-- **Magazine Cover Preview** - High-quality magazine cover images
 
 ## 🚀 Tech Stack
 
